@@ -81,6 +81,14 @@
 .hero {
   padding-block: var(--s-12);
 }
+/*
+ * Must span every column by default. Without this the text block is a plain
+ * grid item and takes ONE of the four mobile columns (~67px), which forces the
+ * headline to break after almost every word.
+ */
+.hero__inner {
+  grid-column: 1 / -1;
+}
 @media (min-width: 768px) {
   .hero__inner {
     grid-column: 1 / span 8;
@@ -89,17 +97,32 @@
 
 .hero__identity {
   margin-block-start: var(--s-6);
-  font-size: var(--t-2xl);
+  font-size: var(--t-xl);
   font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  /* Reserve the taller of EN/DE so the language swap cannot shift the page. */
-  min-block-size: 2.2em;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  /*
+   * `text-wrap: balance` is actively harmful at narrow widths: balancing line
+   * lengths against long German compounds (konstruiere, Ausführungssystem) in
+   * a 390px box resolves to roughly one word per line and eats the first
+   * screen. Explicitly reset to `wrap` — Safari and Firefox don't support
+   * `pretty`, so it can't be relied on as the fix.
+   */
+  text-wrap: wrap;
+}
+@media (min-width: 768px) {
+  .hero__identity {
+    font-size: var(--t-2xl);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    text-wrap: balance;
+    /* Reserve the taller of EN/DE so the language swap cannot shift the page. */
+    min-block-size: 2.2em;
+  }
 }
 @media (min-width: 900px) {
   .hero__identity {
     font-size: var(--t-3xl);
-    min-block-size: 2.2em;
   }
 }
 .hero__identity em {
@@ -109,23 +132,35 @@
 
 .hero__meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-2) var(--s-4);
+  flex-direction: column;
+  gap: var(--s-1);
   font-family: var(--font-mono);
   font-size: var(--t-sm);
   color: var(--text-dim);
   margin-block-start: var(--s-6);
 }
-.hero__meta span {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-3);
-}
-.hero__meta span + span::before {
-  content: "";
-  inline-size: 1px;
-  block-size: 1em;
-  background: var(--line-bright);
+/*
+ * Stacked on mobile, inline with hairline separators from 480px up. A wrapping
+ * flex row leaves orphaned separators at the start of wrapped lines, which
+ * reads as a rendering bug rather than a design.
+ */
+@media (min-width: 480px) {
+  .hero__meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--s-2) var(--s-4);
+  }
+  .hero__meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-4);
+  }
+  .hero__meta span + span::before {
+    content: "";
+    inline-size: 1px;
+    block-size: 1em;
+    background: var(--line-bright);
+  }
 }
 
 .hero__portrait {
