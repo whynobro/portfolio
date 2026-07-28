@@ -57,7 +57,7 @@ export const de = {
   "proj.ramps.title": "Chameleon Ramps",
   "proj.ramps.spec1": "Seit 2019",
   "proj.ramps.spec2": "40+ Produkte",
-  "proj.ramps.spec3": "30.000 $ Umsatz",
+  "proj.ramps.spec3": "50.000 $ Umsatz",
   "proj.bot.title": "Autonomes Ausführungssystem",
   // "Optionen" and "Futures" are the standard German trading terms; "Futures"
   // stays untranslated because German finance uses the English word.

@@ -47,7 +47,7 @@ export const en = {
   "proj.ramps.title": "Chameleon Ramps",
   "proj.ramps.spec1": "Since 2019",
   "proj.ramps.spec2": "40+ products",
-  "proj.ramps.spec3": "$30k revenue",
+  "proj.ramps.spec3": "$50k revenue",
   "proj.bot.title": "Autonomous Execution System",
   "proj.bot.spec3": "Options live · futures demo",
 
