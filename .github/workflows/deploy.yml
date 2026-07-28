@@ -1,0 +1,63 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deploys at once, but let a newer push finish rather than
+# cancelling it — a half-deployed portfolio is worse than a slightly stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      # tsc runs first and independently: it is what catches a German string
+      # missing from de.ts, which is the failure this project is most exposed to.
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Build
+        run: npx vite build
+
+      # Fails the deploy if the single file exceeds its budget, rather than
+      # silently shipping a multi-megabyte page to a recruiter.
+      - name: Size budget
+        run: node scripts/size.mjs
+
+      - name: Verify single-file output
+        run: |
+          count=$(find dist -type f | wc -l)
+          echo "dist contains $count file(s)"
+          test "$count" -eq 1 || { echo "Expected exactly one file"; find dist -type f; exit 1; }
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
