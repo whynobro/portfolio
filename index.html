@@ -97,9 +97,12 @@
 
           <figure class="hero__portrait">
             <picture>
-              <source srcset="/img/headshot.avif" type="image/avif" />
+              <!-- Relative paths so the bundler pulls these into the graph and
+                   inlines them. Anything left in public/ is copied verbatim and
+                   would break the single-file build. -->
+              <source srcset="./src/assets/img/headshot.avif" type="image/avif" />
               <img
-                src="/img/headshot.jpg"
+                src="./src/assets/img/headshot.jpg"
                 width="480"
                 height="600"
                 alt="Michael Fischbach"
