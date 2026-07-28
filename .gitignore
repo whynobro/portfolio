@@ -5,3 +5,4 @@ screenshots/
 .DS_Store
 Thumbs.db
 .vite/
+assets-src/

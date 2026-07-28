@@ -55,11 +55,13 @@ export const de = {
   "proj.wave.spec2": "Zahnstange & Ritzel",
   "proj.wave.spec3": "1. Platz",
   "proj.ramps.title": "Chameleon Ramps",
-  "proj.ramps.spec1": "6 Jahre",
+  "proj.ramps.spec1": "Seit 2019",
   "proj.ramps.spec2": "40+ Produkte",
-  "proj.ramps.spec3": "-30 % Ausschuss",
+  "proj.ramps.spec3": "30.000 $ Umsatz",
   "proj.bot.title": "Autonomes Ausführungssystem",
-  "proj.bot.spec3": "Live",
+  // "Optionen" and "Futures" are the standard German trading terms; "Futures"
+  // stays untranslated because German finance uses the English word.
+  "proj.bot.spec3": "Optionen live · Futures Demo",
 
   "footer.location": "Malibu, Kalifornien",
 } satisfies Dict;

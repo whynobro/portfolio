@@ -45,11 +45,11 @@ export const en = {
   "proj.wave.spec2": "Rack & pinion",
   "proj.wave.spec3": "1st place",
   "proj.ramps.title": "Chameleon Ramps",
-  "proj.ramps.spec1": "6 years",
+  "proj.ramps.spec1": "Since 2019",
   "proj.ramps.spec2": "40+ products",
-  "proj.ramps.spec3": "-30% waste",
+  "proj.ramps.spec3": "$30k revenue",
   "proj.bot.title": "Autonomous Execution System",
-  "proj.bot.spec3": "Live",
+  "proj.bot.spec3": "Options live · futures demo",
 
   "footer.location": "Malibu, California",
 } as const;

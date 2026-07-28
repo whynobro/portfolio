@@ -144,13 +144,13 @@
   }
   .hero__portrait img {
     inline-size: 100%;
+    block-size: auto;
     /* Fixed ratio reserves the box before the image decodes — no layout shift. */
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    object-position: 50% 20%;
-    /* Desaturated so the photo sits inside the palette instead of fighting the
-     * one amber accent for attention. */
-    filter: grayscale(1) contrast(1.06) brightness(0.95);
+    /* Desaturation is baked into the asset at build time (prep-images.mjs)
+     * rather than applied as a CSS filter: no per-frame compositing work, and
+     * a grayscale source compresses considerably smaller. */
     border: 1px solid var(--line);
   }
   /* Caption reads like a drawing annotation rather than a photo credit.

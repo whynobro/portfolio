@@ -94,14 +94,17 @@
           </div>
 
           <figure class="hero__portrait">
-            <img
-              src="/img/headshot.jpg"
-              width="400"
-              height="500"
-              alt="Michael Fischbach"
-              loading="eager"
-              decoding="async"
-            />
+            <picture>
+              <source srcset="/img/headshot.avif" type="image/avif" />
+              <img
+                src="/img/headshot.jpg"
+                width="480"
+                height="600"
+                alt="Michael Fischbach"
+                loading="eager"
+                decoding="async"
+              />
+            </picture>
             <figcaption data-i18n="hero.visa">US citizen · EU internship visa eligible</figcaption>
           </figure>
         </div>
@@ -170,9 +173,9 @@
               Chameleon Ramps
             </h2>
             <div class="tile__specs">
-              <span data-i18n="proj.ramps.spec1">6 years</span>
+              <span data-i18n="proj.ramps.spec1">Since 2019</span>
               <span data-i18n="proj.ramps.spec2">40+ products</span>
-              <span data-measured data-i18n="proj.ramps.spec3">-30% waste</span>
+              <span data-measured data-i18n="proj.ramps.spec3">$30k revenue</span>
             </div>
           </a>
 
@@ -185,7 +188,7 @@
             <div class="tile__specs">
               <span>Python</span>
               <span data-measured>1553 tests</span>
-              <span data-i18n="proj.bot.spec3">Live</span>
+              <span data-i18n="proj.bot.spec3">Options live · futures demo</span>
             </div>
           </a>
         </div>
