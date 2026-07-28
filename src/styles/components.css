@@ -361,3 +361,97 @@
   font-size: var(--t-sm);
   color: var(--text-mute);
 }
+
+/* ---- Case study -------------------------------------------------------- */
+.case__back {
+  display: inline-block;
+  margin-block-end: var(--s-8);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--text-dim);
+  min-block-size: 44px; /* touch target */
+  padding-block: var(--s-3);
+}
+.case__back:hover {
+  color: var(--accent);
+}
+
+.case__title {
+  margin-block-start: var(--s-4);
+  font-size: var(--t-xl);
+  letter-spacing: -0.02em;
+}
+@media (min-width: 768px) {
+  .case__title {
+    font-size: var(--t-2xl);
+  }
+}
+
+.case__lede {
+  margin-block-start: var(--s-6);
+  font-size: var(--t-md);
+  color: var(--text-dim);
+}
+
+.case__figure {
+  margin-block-start: var(--s-12);
+  aspect-ratio: 16 / 9;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+@media (min-width: 900px) {
+  .case__figure {
+    /* Wide and shallow. At 21:9 the figure still dominated the first screen
+     * on a laptop; the reader should reach the written brief without scrolling
+     * past a full-height chart. */
+    aspect-ratio: 32 / 9;
+    max-block-size: 340px;
+  }
+}
+.case__caption {
+  margin-block-start: var(--s-3);
+  font-size: var(--t-xs);
+  color: var(--text-mute);
+  letter-spacing: 0.04em;
+}
+
+.case__body {
+  margin-block-start: var(--s-16);
+  display: grid;
+  gap: var(--s-12);
+}
+@media (min-width: 900px) {
+  .case__body {
+    /* Asymmetric: text hangs off the left margin with the right column free,
+     * the way a technical document sets body copy against annotations. */
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: var(--s-12) var(--s-16);
+  }
+}
+
+.case__h {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-block-end: var(--s-3);
+  border-block-end: 1px solid var(--line);
+  margin-block-end: var(--s-4);
+}
+
+/* Active nav item */
+.masthead__nav a[data-active] {
+  color: var(--text);
+  border-block-end-color: var(--accent);
+}
+
+/* The router focuses the active view; it should not draw a focus ring, since
+ * the user did not tab to it. Interactive elements inside keep theirs. */
+[data-view]:focus {
+  outline: none;
+}

@@ -70,9 +70,44 @@ export function initScenes(): void {
   const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-scene]"));
   if (!nodes.length) return;
 
+  // A scene inside a hidden view measures 0x0 at mount, so its canvas backing
+  // store would be 1px. Re-measure whenever a view is shown — the router
+  // toggles `hidden`, and only then does the element have a real box.
+  const remeasure = (el: HTMLElement): void => {
+    const scene = mounted.get(el);
+    if (!scene) return;
+    const box = el.getBoundingClientRect();
+    if (box.width > 0 && box.height > 0) scene.resize?.(box.width, box.height);
+  };
+
+  const viewObserver = new MutationObserver((records) => {
+    for (const rec of records) {
+      const view = rec.target as HTMLElement;
+      if (view.hidden) continue;
+      for (const el of view.querySelectorAll<HTMLElement>("[data-scene]")) {
+        void mount(el).then(() => remeasure(el));
+      }
+    }
+  });
+  for (const view of document.querySelectorAll<HTMLElement>("[data-view]")) {
+    viewObserver.observe(view, { attributes: true, attributeFilter: ["hidden"] });
+  }
+
   // Screenshot mode: mount everything now, no observer, no animation.
+  // Mount, then remeasure on the next frame — at mount time the element may
+  // still be inside a view the router has not revealed yet.
   if (shotsMode()) {
-    void Promise.all(nodes.map(mount));
+    // `data-ready` is only set after the remeasure, so the capture script
+    // cannot photograph a scene that mounted at 0x0 and has not been sized yet.
+    for (const el of nodes) delete el.dataset["ready"];
+    void Promise.all(nodes.map(mount)).then(() => {
+      requestAnimationFrame(() => {
+        for (const el of nodes) {
+          remeasure(el);
+          el.dataset["ready"] = "1";
+        }
+      });
+    });
     return;
   }
 
