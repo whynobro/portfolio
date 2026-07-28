@@ -1,0 +1,29 @@
+{
+  "name": "michael-fischbach-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Interactive engineering portfolio — builds to a single self-contained dist/index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "shots": "tsx scripts/screenshot.ts",
+    "size": "node scripts/size.mjs"
+  },
+  "devDependencies": {
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@fontsource/ibm-plex-sans": "^5.3.0",
+    "@types/node": "^22.10.2",
+    "playwright": "^1.49.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.7",
+    "vite-plugin-singlefile": "^2.1.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "esbuild@0.25.12": true
+  }
+}

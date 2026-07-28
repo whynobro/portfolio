@@ -1,0 +1,328 @@
+/* ---- Header ----------------------------------------------------------- */
+.masthead {
+  position: relative;
+  border-block-end: 1px solid var(--line);
+}
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-6);
+  padding-block: var(--s-4);
+}
+.masthead__name {
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.masthead__nav {
+  display: none;
+  gap: var(--s-6);
+}
+@media (min-width: 900px) {
+  .masthead__nav {
+    display: flex;
+  }
+}
+.masthead__nav a {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  padding-block: var(--s-1);
+  border-block-end: 1px solid transparent;
+  /* Sized from the longer German label so switching language never reflows
+   * the nav. */
+  min-inline-size: 5.5ch;
+  text-align: center;
+}
+.masthead__nav a:hover {
+  color: var(--text);
+  border-block-end-color: var(--accent);
+}
+
+/* ---- Language toggle --------------------------------------------------- */
+/*
+ * A segmented control, not a <select> (extra interaction cost) and not a flag
+ * (flags are countries, not languages — Austria and Switzerland also read German).
+ */
+.lang {
+  display: flex;
+  border: 1px solid var(--line-bright);
+}
+.lang__btn {
+  padding: var(--s-1) var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-mute);
+  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  /* Fixed width: EN and DE are both 2 chars, so the control never resizes. */
+  min-inline-size: 4.5ch;
+  /* Touch target: the visual box is small, so pad the hit area vertically. */
+  min-block-size: 32px;
+}
+.lang__btn[aria-pressed="true"] {
+  background: var(--accent-dim);
+  color: var(--text);
+}
+.lang__btn:hover[aria-pressed="false"] {
+  color: var(--text-dim);
+}
+
+/* ---- Hero -------------------------------------------------------------- */
+.hero {
+  padding-block: var(--s-12);
+}
+@media (min-width: 768px) {
+  .hero__inner {
+    grid-column: 1 / span 8;
+  }
+}
+
+.hero__identity {
+  margin-block-start: var(--s-6);
+  font-size: var(--t-2xl);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  /* Reserve the taller of EN/DE so the language swap cannot shift the page. */
+  min-block-size: 2.2em;
+}
+@media (min-width: 900px) {
+  .hero__identity {
+    font-size: var(--t-3xl);
+    min-block-size: 2.2em;
+  }
+}
+.hero__identity em {
+  font-style: normal;
+  color: var(--measured);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  color: var(--text-dim);
+  margin-block-start: var(--s-6);
+}
+.hero__meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+.hero__meta span + span::before {
+  content: "";
+  inline-size: 1px;
+  block-size: 1em;
+  background: var(--line-bright);
+}
+
+.hero__portrait {
+  display: none;
+}
+@media (min-width: 768px) {
+  .hero__portrait {
+    display: block;
+    grid-column: 10 / span 3;
+    /* Top-aligned, not stretched: letting it fill the row leaves a dead gap
+     * under the shorter text column. */
+    align-self: start;
+    margin: 0;
+    max-inline-size: 240px;
+    margin-inline-start: auto;
+  }
+  .hero__portrait img {
+    inline-size: 100%;
+    /* Fixed ratio reserves the box before the image decodes — no layout shift. */
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 20%;
+    /* Desaturated so the photo sits inside the palette instead of fighting the
+     * one amber accent for attention. */
+    filter: grayscale(1) contrast(1.06) brightness(0.95);
+    border: 1px solid var(--line);
+  }
+  /* Caption reads like a drawing annotation rather than a photo credit.
+   * Two lines are reserved because the German string wraps where the English
+   * one does not — without this the strip below shifts on language change. */
+  .hero__portrait figcaption {
+    margin-block-start: var(--s-2);
+    font-family: var(--font-mono);
+    font-size: var(--t-xs);
+    line-height: 1.5;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-mute);
+    text-align: end;
+    min-block-size: 3em;
+  }
+}
+
+/* ---- Buttons ----------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-6);
+  min-block-size: 44px; /* touch target */
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--line-bright);
+  color: var(--text);
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+.btn--primary {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-block-start: var(--s-8);
+}
+
+/* ---- Spec strip -------------------------------------------------------- */
+/*
+ * A row of measured figures directly under the hero. Every value is a real
+ * number from a real project; the label sits under the number, drawing-style.
+ */
+.strip {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-block: 1px solid var(--line);
+}
+@media (min-width: 640px) {
+  .strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.strip__cell {
+  padding: var(--s-6) var(--s-4);
+  border-inline-start: 1px solid var(--line);
+}
+.strip__cell:first-child {
+  border-inline-start: 0;
+}
+@media (max-width: 639px) {
+  .strip__cell:nth-child(3) {
+    border-block-start: 1px solid var(--line);
+  }
+  .strip__cell:nth-child(4) {
+    border-block-start: 1px solid var(--line);
+  }
+  .strip__cell:nth-child(odd) {
+    border-inline-start: 0;
+  }
+}
+.strip__value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-xl);
+  font-weight: 500;
+  color: var(--measured);
+  line-height: 1;
+}
+.strip__label {
+  margin-block-start: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  /* German labels are longer; reserve two lines so the row never jumps. */
+  min-block-size: 2.6em;
+}
+
+/* ---- Project tiles ----------------------------------------------------- */
+.tiles {
+  display: grid;
+  margin-block-start: var(--s-8);
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+@media (min-width: 768px) {
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  padding: var(--s-6);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--dur) var(--ease);
+  min-block-size: 320px;
+}
+.tile:hover {
+  background: var(--surface);
+}
+.tile__index {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  color: var(--accent);
+  letter-spacing: 0.14em;
+}
+.tile__figure {
+  flex: 1;
+  margin-block: var(--s-6);
+  /* Reserves the scene box before any canvas mounts — zero layout shift. */
+  aspect-ratio: 16 / 9;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.tile__title {
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  /* Two lines reserved: German project titles wrap where English does not. */
+  min-block-size: 2.4em;
+}
+.tile__specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-4);
+  margin-block-start: var(--s-3);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.tile__specs [data-measured] {
+  color: var(--measured);
+}
+
+/* ---- Footer ------------------------------------------------------------ */
+.footer {
+  border-block-start: 1px solid var(--line);
+  padding-block: var(--s-12);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  color: var(--text-mute);
+}

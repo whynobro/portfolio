@@ -1,0 +1,128 @@
+/*
+ * Layout: a strict 12-column grid with asymmetric placement.
+ *
+ * Asymmetry is the point. Centered-everything is the clearest signal of a
+ * generated template; real technical documents hang content off a left margin
+ * and let the right column carry annotations.
+ */
+
+.page {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --gutter: var(--s-8);
+  }
+}
+@media (min-width: 1280px) {
+  :root {
+    --gutter: var(--s-12);
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-6);
+}
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--s-6);
+  }
+}
+
+/* ---- Rules ------------------------------------------------------------ */
+/*
+ * A hairline with a short tick at the left end, like a drawing's section
+ * divider. Cheaper and more distinctive than a border on a card.
+ */
+.rule {
+  position: relative;
+  height: 1px;
+  background: var(--line);
+  border: 0;
+}
+.rule::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -3px;
+  width: 1px;
+  height: 7px;
+  background: var(--line-bright);
+}
+
+/* ---- Section labels --------------------------------------------------- */
+/*
+ * Numbered like drawing callouts (01, 02, 03). Reads as a document index
+ * rather than a marketing section header.
+ */
+.section-label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+}
+.section-label__num {
+  color: var(--accent);
+}
+
+/* ---- Spec list -------------------------------------------------------- */
+/*
+ * Key/value pairs as they appear on a title block: label left in muted mono,
+ * value right in tabular figures, hairline between rows.
+ */
+.spec {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  gap: var(--s-2) var(--s-6);
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  font-variant-numeric: tabular-nums;
+}
+.spec dt {
+  color: var(--text-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--t-xs);
+  align-self: center;
+}
+.spec dd {
+  color: var(--text);
+  margin: 0;
+}
+/* Measured results are the only amber thing on the page. */
+.spec dd[data-measured] {
+  color: var(--measured);
+}
+
+/* ---- Section rhythm --------------------------------------------------- */
+.section {
+  padding-block: var(--s-16);
+}
+@media (min-width: 768px) {
+  .section {
+    padding-block: var(--s-24);
+  }
+}
+
+.stack > * + * {
+  margin-block-start: var(--flow, var(--s-4));
+}
+
+.prose {
+  max-width: var(--measure);
+  color: var(--text-dim);
+}
+.prose strong {
+  color: var(--text);
+  font-weight: 600;
+}

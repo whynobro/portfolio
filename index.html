@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Michael Fischbach — Mechanical Engineering</title>
+    <meta
+      name="description"
+      content="Mechanical engineering student at Cal Poly SLO. CAD-to-part manufacturing, 4-axis CNC machining, tolerance analysis, and production software."
+    />
+    <script>
+      // Runs before first paint so a returning German visitor never sees an
+      // EN→DE flash, and [data-lang="de"] CSS applies to the very first frame.
+      (function () {
+        try {
+          var p = new URLSearchParams(location.search);
+          var q = p.get("lang");
+          var stored = localStorage.getItem("lang");
+          var nav = (navigator.languages || [navigator.language || "en"]).join(",");
+          var lang =
+            q === "de" || q === "en"
+              ? q
+              : stored === "de" || stored === "en"
+                ? stored
+                : /\bde\b|de-/i.test(nav)
+                  ? "de"
+                  : "en";
+          var el = document.documentElement;
+          el.lang = lang;
+          el.dataset.lang = lang;
+          if (p.get("shots") === "1") el.dataset.shots = "1";
+        } catch (e) {
+          /* private mode: fall through to the English default in the markup */
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+    <header class="masthead">
+      <div class="page masthead__inner">
+        <a class="masthead__name" href="#/" aria-label="Michael Fischbach — home"
+          >Michael&nbsp;Fischbach</a
+        >
+
+        <nav class="masthead__nav" aria-label="Primary">
+          <a href="#/work" data-i18n="nav.work">Work</a>
+          <a href="#/about" data-i18n="nav.about">About</a>
+          <a href="#/contact" data-i18n="nav.contact">Contact</a>
+        </nav>
+
+        <div
+          class="lang"
+          role="group"
+          data-i18n-attr="aria-label:a11y.langGroup"
+          aria-label="Language"
+        >
+          <button class="lang__btn" type="button" data-lang-btn="en" aria-pressed="true">
+            EN
+          </button>
+          <button class="lang__btn" type="button" data-lang-btn="de" aria-pressed="false">
+            DE
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Landing: identity line, then straight into the work. -->
+      <section class="hero page">
+        <div class="grid">
+          <div class="hero__inner">
+            <p class="section-label">
+              <span class="section-label__num">01</span>
+              <span data-i18n="hero.eyebrow">Mechanical Engineering</span>
+            </p>
+
+            <h1 class="hero__identity">
+              <span data-i18n="hero.line1">I design parts and build the systems</span>
+              <em data-i18n="hero.line2">that test them.</em>
+            </h1>
+
+            <div class="hero__meta">
+              <span data-i18n="hero.school">Cal Poly San Luis Obispo</span>
+              <span data-i18n="hero.honors">Honors Program</span>
+              <span class="mono">GPA 3.78</span>
+            </div>
+
+            <div class="btn-row">
+              <a class="btn btn--primary" href="#/work" data-i18n="cta.work">View work</a>
+              <a class="btn" href="#/contact" data-i18n="cta.contact">Contact</a>
+            </div>
+          </div>
+
+          <figure class="hero__portrait">
+            <img
+              src="/img/headshot.jpg"
+              width="400"
+              height="500"
+              alt="Michael Fischbach"
+              loading="eager"
+              decoding="async"
+            />
+            <figcaption data-i18n="hero.visa">US citizen · EU internship visa eligible</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <!-- Measured figures. Every value is real and traceable to a project. -->
+      <div class="page">
+        <div class="strip">
+          <div class="strip__cell">
+            <div class="strip__value mono">±0.05</div>
+            <div class="strip__label" data-i18n="strip.tolerance">mm tolerance held</div>
+          </div>
+          <div class="strip__cell">
+            <div class="strip__value mono">533%</div>
+            <div class="strip__label" data-i18n="strip.cost">unit cost reduction</div>
+          </div>
+          <div class="strip__cell">
+            <div class="strip__value mono">40+</div>
+            <div class="strip__label" data-i18n="strip.products">products to market</div>
+          </div>
+          <div class="strip__cell">
+            <div class="strip__value mono">1553</div>
+            <div class="strip__label" data-i18n="strip.tests">tests passing in production</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The tile grid is the spine of the site. -->
+      <section class="section page" id="work">
+        <p class="section-label">
+          <span class="section-label__num">02</span>
+          <span data-i18n="work.label">Selected work</span>
+        </p>
+
+        <div class="tiles">
+          <a class="tile" href="#/work/cnc">
+            <span class="tile__index mono">01</span>
+            <div class="tile__figure" data-scene="tolerance-stack" aria-hidden="true"></div>
+            <h2 class="tile__title" data-i18n="proj.putter.title">
+              CNC-Milled Aluminium Putter
+            </h2>
+            <div class="tile__specs">
+              <span>4-Axis HAAS</span>
+              <span>Al 6061</span>
+              <span data-measured>$15.78/unit</span>
+            </div>
+          </a>
+
+          <a class="tile" href="#/work/wave">
+            <span class="tile__index mono">02</span>
+            <div class="tile__figure" data-scene="power-curve" aria-hidden="true"></div>
+            <h2 class="tile__title" data-i18n="proj.wave.title">
+              Wave Energy Converter
+            </h2>
+            <div class="tile__specs">
+              <span data-i18n="proj.wave.spec1">Bridgeport mill</span>
+              <span data-i18n="proj.wave.spec2">Rack &amp; pinion</span>
+              <span data-measured data-i18n="proj.wave.spec3">1st place</span>
+            </div>
+          </a>
+
+          <a class="tile" href="#/work/ramps">
+            <span class="tile__index mono">03</span>
+            <div class="tile__figure" data-scene="generations" aria-hidden="true"></div>
+            <h2 class="tile__title" data-i18n="proj.ramps.title">
+              Chameleon Ramps
+            </h2>
+            <div class="tile__specs">
+              <span data-i18n="proj.ramps.spec1">6 years</span>
+              <span data-i18n="proj.ramps.spec2">40+ products</span>
+              <span data-measured data-i18n="proj.ramps.spec3">-30% waste</span>
+            </div>
+          </a>
+
+          <a class="tile" href="#/work/bot">
+            <span class="tile__index mono">04</span>
+            <div class="tile__figure" data-scene="stop-policy" aria-hidden="true"></div>
+            <h2 class="tile__title" data-i18n="proj.bot.title">
+              Autonomous Execution System
+            </h2>
+            <div class="tile__specs">
+              <span>Python</span>
+              <span data-measured>1553 tests</span>
+              <span data-i18n="proj.bot.spec3">Live</span>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="page">
+        <span>Michael Fischbach</span>
+        <span aria-hidden="true"> · </span>
+        <span data-i18n="footer.location">Malibu, California</span>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
