@@ -1,55 +1,83 @@
 /**
  * Prepares raster assets for the single-file build.
  *
- *   node scripts/prep-images.mjs <source-image>
+ *   node scripts/prep-images.mjs            # process the whole manifest
+ *   node scripts/prep-images.mjs headshot   # one entry by name
  *
- * Everything ends up base64-inlined in one HTML file, which costs ~33% over the
- * binary size, so source images cannot be shipped as-is: the headshot alone is
- * 1.65 MB, or ~2.2 MB inlined, against a 900 KB budget for the whole page.
+ * Everything is base64-inlined into one HTML file, which costs ~33% over the
+ * binary size, so source images cannot ship as-is: several of the product
+ * photographs are over 3 MB against a 900 KB budget for the entire page.
  *
- * The portrait is rendered at 2x its 240px display width (480px) so it stays
- * sharp on retina, converted to AVIF, and desaturated at build time rather than
- * with a CSS filter — baking it in means the browser does no per-frame work and
- * the file compresses better.
+ * Each entry renders at roughly 2x its display width so it stays sharp on a
+ * retina screen, then AVIF (with a JPEG fallback for the few corporate browsers
+ * that still lack AVIF).
  */
 import sharp from "sharp";
-import { stat } from "node:fs/promises";
+import { stat, mkdir } from "node:fs/promises";
 import path from "node:path";
 
-const src = process.argv[2];
-if (!src) {
-  console.error("usage: node scripts/prep-images.mjs <source-image>");
-  process.exit(1);
-}
-
-const OUT_DIR = "public/img";
-const DISPLAY_WIDTH = 240;
-const OUT_WIDTH = DISPLAY_WIDTH * 2;
+const OUT = "src/assets/img";
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
 
-const before = (await stat(src)).size;
+/**
+ * width: the rendered pixel width (already 2x the intended display size).
+ * fit "cover" + position bias the crop toward the subject.
+ */
+const MANIFEST = [
+  {
+    name: "headshot",
+    src: "assets-src/headshot-original.png",
+    width: 900,
+    height: 1125,
+    grayscale: true,
+    quality: 76,
+  },
+  // Chameleon Ramps — real product photography from chameleonramps.com.
+  { name: "ramps-bank", src: "assets-src/chameleon/p4.jpg", width: 1600, height: 1600, quality: 72 },
+  { name: "ramps-quarter", src: "assets-src/chameleon/p9.jpg", width: 1600, height: 1600, quality: 72 },
+  { name: "ramps-alt1", src: "assets-src/chameleon/p5.jpg", width: 1100, height: 1100, quality: 68 },
+  { name: "ramps-alt2", src: "assets-src/chameleon/p8.jpg", width: 1100, height: 1100, quality: 68 },
+  { name: "ramps-logo", src: "assets-src/old-portfolio/img5.jpeg", width: 400, height: 400, quality: 60 },
+  // CNC putter: renders + the capstone drawing.
+  { name: "cnc-part", src: "assets-src/old-portfolio/img0.jpeg", width: 1400, quality: 74 },
+  { name: "cnc-drawing", src: "assets-src/old-portfolio/img1.jpeg", width: 1600, quality: 78 },
+  // Nicaragua water distribution.
+  { name: "water-1", src: "assets-src/old-portfolio/img2.jpeg", width: 1300, quality: 70 },
+];
 
-// 4:5 portrait crop, anchored high so the crop favours the face over the
-// jacket when the source is squarer than the target box.
-const base = sharp(src)
-  .resize(OUT_WIDTH, Math.round(OUT_WIDTH * 1.25), {
-    fit: "cover",
-    position: sharp.strategy.attention,
-  })
-  .grayscale()
-  .linear(1.06, -6); // slight contrast lift, matches the old CSS filter
+const only = process.argv[2];
+await mkdir(OUT, { recursive: true });
 
-const avif = path.join(OUT_DIR, "headshot.avif");
-const jpg = path.join(OUT_DIR, "headshot.jpg");
+let total = 0;
+for (const item of MANIFEST) {
+  if (only && item.name !== only) continue;
 
-await base.clone().avif({ quality: 62, effort: 6 }).toFile(avif);
-// JPEG fallback: AVIF is universally supported in current browsers, but a
-// recruiter on a locked-down corporate machine may be on an old build.
-await base.clone().jpeg({ quality: 78, mozjpeg: true }).toFile(jpg);
+  let srcBytes;
+  try {
+    srcBytes = (await stat(item.src)).size;
+  } catch {
+    console.log(`skip ${item.name} — missing ${item.src}`);
+    continue;
+  }
 
-const aAvif = (await stat(avif)).size;
-const aJpg = (await stat(jpg)).size;
+  const resize = { width: item.width, fit: "cover", position: sharp.strategy.attention };
+  if (item.height) resize.height = item.height;
 
-console.log(`source        ${kb(before)}`);
-console.log(`headshot.avif ${kb(aAvif)}  (inlined ≈ ${kb(aAvif * 1.34)})`);
-console.log(`headshot.jpg  ${kb(aJpg)}  (fallback)`);
+  let pipe = sharp(item.src).resize(resize);
+  if (item.grayscale) pipe = pipe.grayscale().linear(1.06, -6);
+
+  const avifPath = path.join(OUT, `${item.name}.avif`);
+  const jpgPath = path.join(OUT, `${item.name}.jpg`);
+
+  await pipe.clone().avif({ quality: item.quality ?? 58, effort: 6 }).toFile(avifPath);
+  await pipe.clone().jpeg({ quality: 76, mozjpeg: true }).toFile(jpgPath);
+
+  const a = (await stat(avifPath)).size;
+  total += a;
+  console.log(
+    `${item.name.padEnd(14)} ${kb(srcBytes).padStart(10)} -> ${kb(a).padStart(9)} avif` +
+      `  (inlined ~${kb(a * 1.34)})`,
+  );
+}
+
+console.log(`\nAVIF total: ${kb(total)}  (inlined ~${kb(total * 1.34)} inlined)`);

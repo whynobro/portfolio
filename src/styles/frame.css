@@ -1,0 +1,164 @@
+/*
+ * The gilded frame.
+ *
+ * The moulding is a real photographed frame sliced as a CSS border-image, so
+ * the carved acanthus scrollwork and beaded band survive at any size: the four
+ * corners are drawn at fixed size and the four edges repeat between them.
+ *
+ * Structure, outside in:
+ *   .frame        the moulding (border-image)
+ *   .frame__mat   the white mat, generous, as a framer would cut it
+ *   .frame__win   the window holding the work
+ */
+
+.frame {
+  position: relative;
+  display: block;
+  /* Border width sets how thick the moulding renders. The slice value comes
+   * from scripts/prep-frame.mjs, which measures the real moulding band. */
+  border: clamp(18px, 2.6vw, 34px) solid transparent;
+  border-image-source: url("../assets/img/frame-gold.png");
+  border-image-slice: 45;
+  /* `repeat` keeps the ornament at a constant scale along each edge; `stretch`
+   * would smear the scrollwork on wide frames. */
+  border-image-repeat: repeat;
+  background: #fff;
+  box-shadow: var(--hang-shadow);
+}
+
+.frame__mat {
+  position: relative;
+  /* The white space the brief asks for: artwork floats inside a wide mat
+   * rather than running to the moulding. */
+  padding: clamp(14px, 3vw, 40px);
+  background: #fff;
+}
+
+.frame__win {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background: var(--wall-deep);
+  /* A hairline around the work, the way a mat's bevel edge catches it. */
+  box-shadow: 0 0 0 1px rgba(20, 17, 14, 0.14);
+}
+
+.frame__win img,
+.frame__win canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* Aspect presets size the window before the image decodes, so nothing shifts. */
+.frame--portrait .frame__win {
+  aspect-ratio: 4 / 5;
+}
+.frame--landscape .frame__win {
+  aspect-ratio: 3 / 2;
+}
+.frame--square .frame__win {
+  aspect-ratio: 1 / 1;
+}
+.frame--wide .frame__win {
+  aspect-ratio: 16 / 9;
+}
+
+/* ---- Caption ------------------------------------------------------------ */
+/*
+ * Gallery label: serif italic title, a short gold rule, then the description.
+ * Centred under the work, as in the reference layout.
+ */
+.label {
+  margin-block-start: var(--s-6);
+  text-align: center;
+}
+
+.label__rule {
+  inline-size: 34px;
+  block-size: 2px;
+  background: var(--gilt);
+  margin: 0 auto var(--s-4);
+}
+
+.label__title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--t-lg);
+  color: var(--ink);
+  line-height: var(--lh-snug);
+  /* Reserved so a two-line German title does not shift the row below. */
+  min-block-size: 2.2em;
+}
+
+.label__body {
+  margin-block-start: var(--s-2);
+  margin-inline: auto;
+  max-inline-size: 44ch;
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-mute);
+}
+
+.label__meta {
+  margin-block-start: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.label__meta [data-measured] {
+  color: var(--measured);
+}
+
+/* ---- The wall ----------------------------------------------------------- */
+.works {
+  display: grid;
+  gap: var(--s-16) var(--s-12);
+  /* Rows come in pairs — frame row, then label row — so the works can subgrid
+   * onto them and share hanging and caption lines across the wall. */
+  grid-auto-rows: auto auto;
+}
+@media (min-width: 820px) {
+  .works {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-24) var(--s-16);
+  }
+}
+
+/*
+ * Each work is a two-row subgrid: frame, then label. Because the works span the
+ * grid's rows, every frame in a row shares a baseline and every label starts on
+ * the same line, even though the pieces have different aspect ratios. Without
+ * this the wall looks like a ragged collage.
+ */
+.work {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+  text-decoration: none;
+  color: inherit;
+}
+/* Frames sit at the BOTTOM of their row, so works hang from a common line the
+ * way pieces on a real wall share a hanging height. */
+.work > .frame {
+  align-self: end;
+}
+/* The work lifts very slightly off the wall on hover — a hung piece, not a
+ * card. Transform only, so nothing reflows. */
+.work .frame {
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.work:hover .frame {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(20, 17, 14, 0.12), 0 20px 44px rgba(20, 17, 14, 0.18);
+}
+@media (prefers-reduced-motion: reduce) {
+  .work:hover .frame {
+    transform: none;
+  }
+}

@@ -1,14 +1,38 @@
 /*
- * Design tokens.
+ * Design tokens — gallery.
  *
- * Reference: engineering drawings and instrument panels, not web-design trends.
- * Hairlines, tick marks, tabular figures, square corners. Contrast ratios below
- * are measured against --bg (#0B0E13) and verified, not estimated.
+ * Reference: a small museum wall and a printed exhibition catalogue. Warm
+ * off-white walls, works hung in gilded frames, engraved caption plates.
+ * Never pure #FFF: a real wall has warmth, and pure white makes the gilt
+ * frames read as clip-art.
  */
 
-/* IBM Plex — designed for technical documentation, so it carries genuine
- * engineering provenance rather than reading as a default UI font. The `latin`
- * subset includes ä ö ü ß Ä Ö Ü, which German copy requires. */
+/* Cormorant Garamond — high-contrast old-style serif for the gallery voice:
+ * work titles, the visitor's name, plate headings. */
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/cormorant-garamond-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../assets/fonts/cormorant-garamond-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Cormorant Garamond";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/cormorant-garamond-latin-400-italic.woff2") format("woff2");
+}
+
+/* IBM Plex stays for body and for every number. It already carries the German
+ * glyphs (ä ö ü ß) and reads as engineering rather than decoration. */
 @font-face {
   font-family: "IBM Plex Sans";
   font-style: normal;
@@ -22,13 +46,6 @@
   font-weight: 600;
   font-display: swap;
   src: url("../assets/fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2");
-}
-@font-face {
-  font-family: "IBM Plex Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("../assets/fonts/ibm-plex-sans-latin-700-normal.woff2") format("woff2");
 }
 @font-face {
   font-family: "IBM Plex Mono";
@@ -46,49 +63,56 @@
 }
 
 :root {
-  /* ---- Surface ------------------------------------------------------- */
-  --bg: #0b0e13;
-  --surface: #12171f;
-  --surface-2: #171d27;
-  /* Hairlines. Deliberately low-contrast: they should read as drawn rules,
-   * not as boxes around content. */
-  --line: #232b38;
-  --line-bright: #38455a;
+  /* ---- The wall ------------------------------------------------------- */
+  --wall: #f7f5f1;
+  --wall-deep: #efebe3; /* vignette under a hung work */
+  --wall-line: #ded8cc;
+  --mat: #f2eee5; /* the linen mat inside each frame */
 
-  /* ---- Text (ratios vs --bg) ----------------------------------------- */
-  --text: #e6ebf2; /* 15.1:1 — AAA */
-  --text-dim: #97a3b4; /* 7.0:1  — AAA */
-  --text-mute: #6b7788; /* 4.0:1  — large/secondary only, never body */
+  /* ---- Ink (ratios vs --wall) ----------------------------------------- */
+  --ink: #14110e; /* 16.8:1 */
+  --ink-soft: #4a443c; /* 8.4:1  */
+  --ink-mute: #6f675c; /* 4.9:1  — still AA for body */
 
-  /* ---- Accents -------------------------------------------------------- */
-  /* Blue: structure, links, focus. Adjacent to HWA's identity without
-   * impersonating their brand. */
-  --accent: #4c8dff; /* 6.9:1 on --bg */
-  --accent-dim: #1e3a63;
-  /* Amber is scarce ON PURPOSE: it marks a MEASURED result and nothing else.
-   * That scarcity is what makes the numbers register. */
-  --measured: #f2a03d; /* 9.4:1 on --bg */
-  --ok: #3ecf8e;
+  /* ---- Gilt ------------------------------------------------------------ */
+  /* Three stops, always lit from the upper left, so every frame on the page
+   * agrees about where the light is. That consistency is what separates a
+   * drawn moulding from a gold-coloured border. */
+  --gilt-hi: #e8c77a;
+  --gilt: #b8873a;
+  --gilt-lo: #8a5f22;
 
-  /* ---- Type ----------------------------------------------------------- */
-  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* ---- Caption plate --------------------------------------------------- */
+  --plate: #171310;
+  --plate-ink: #ede6d8;
+  --plate-dim: #a2988a;
 
-  /* Modular scale, 1.25. Explicit steps beat arbitrary px values. */
-  --t-xs: 0.75rem; /* 12 — spec labels only */
-  --t-sm: 0.8125rem; /* 13 */
-  --t-base: 1rem; /* 16 — body floor, avoids iOS auto-zoom */
-  --t-md: 1.125rem; /* 18 */
-  --t-lg: 1.5rem; /* 24 */
-  --t-xl: 2rem; /* 32 */
-  --t-2xl: 2.75rem; /* 44 */
-  --t-3xl: 3.75rem; /* 60 */
+  /* ---- Accents --------------------------------------------------------- */
+  /* Measured values keep a distinct colour, but a deep oxblood rather than the
+   * amber of v1 — amber against gilt is mud. */
+  --measured: #8c2f1f;
+  --ok: #2f6b43;
 
-  --lh-tight: 1.15;
-  --lh-snug: 1.35;
-  --lh-body: 1.6;
+  /* ---- Type ------------------------------------------------------------ */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 
-  /* ---- Space: 8px base ------------------------------------------------ */
+  --t-xs: 0.75rem;
+  --t-sm: 0.8125rem;
+  --t-base: 1rem;
+  --t-md: 1.125rem;
+  --t-lg: 1.375rem;
+  --t-xl: 1.875rem;
+  --t-2xl: 2.5rem;
+  --t-3xl: 3.5rem;
+  --t-4xl: 4.5rem;
+
+  --lh-tight: 1.1;
+  --lh-snug: 1.3;
+  --lh-body: 1.65;
+
+  /* ---- Space: 8px base -------------------------------------------------- */
   --s-1: 0.25rem;
   --s-2: 0.5rem;
   --s-3: 0.75rem;
@@ -98,28 +122,28 @@
   --s-12: 3rem;
   --s-16: 4rem;
   --s-24: 6rem;
+  --s-32: 8rem;
 
-  --measure: 68ch; /* readable line length */
-  --page-max: 1440px;
+  --measure: 62ch;
+  --page-max: 1320px;
   --gutter: var(--s-6);
 
-  /* ---- Motion --------------------------------------------------------- */
-  --dur-fast: 120ms;
-  --dur: 200ms;
-  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+  /* ---- Motion ----------------------------------------------------------- */
+  --dur-fast: 140ms;
+  --dur: 260ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 
-  /* Square corners throughout. Rounded cards are the single strongest
-   * "generated template" tell; drawings don't have them. */
-  --radius: 0;
+  /* Wall shadow, not a UI card shadow: two layers, warm, offset downward as if
+   * lit from above. */
+  --hang-shadow: 0 2px 4px rgba(20, 17, 14, 0.1), 0 14px 32px rgba(20, 17, 14, 0.14);
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-/*
- * German runs ~30% longer than English. Rather than scattering fixes, tighten
- * the two global levers here and let the layout absorb the rest.
- */
+/* German runs ~30% longer; ease the display sizes so long compounds
+ * (Gesamtfahrzeugentwicklung) do not force awkward breaks. */
 [data-lang="de"] {
-  --t-3xl: 3.25rem;
-  --t-2xl: 2.5rem;
+  --t-4xl: 3.75rem;
+  --t-3xl: 3rem;
+  --t-2xl: 2.125rem;
 }
