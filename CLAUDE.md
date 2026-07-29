@@ -4,6 +4,23 @@ Targets the HWA AG opening **Praktikant im Bereich Gesamtfahrzeugentwicklung**
 (Affalterbach, start Feb/March 2027). Other versions get forked from this one
 later; every content decision here optimises for that reader.
 
+## Asking Michael for assets
+
+**Michael can source stock PNGs, photographs and reference images on request —
+ask whenever one would improve the result instead of working around a poor
+source.** He supplied the gold frame this way after the first attempt (a JPEG
+with a baked white halo) proved unusable.
+
+When asking, state: the exact filename and folder, the minimum resolution, the
+format, and **how he can verify it himself before sending**. For transparency:
+zoom in — if the checkerboard squares scale with the zoom it is real alpha; if
+they stay fixed it is a picture of a checkerboard and will ship a white halo.
+
+Assets live in `assets-src/` (gitignored), sorted per project:
+`putter/ ramps/ wave/ nicaragua/ smc-bot/ campus-native/ brand/ misc/ docs/`.
+Anything unsorted goes in `assets-src/inbox/`. Processed output lands in
+`src/assets/img/` via `scripts/prep-images.mjs` and `scripts/prep-frame.mjs`.
+
 ## Invariants
 
 - **The build must stay ONE file.** `dist/index.html` with everything inlined,
@@ -62,6 +79,23 @@ German runs ~30% longer than English.
 `Ausschuss` (scrap). Keep sentences short and declarative. Leave established
 anglicisms alone (CNC, CAD, Python, Live, Futures). Numbers use German
 convention: `30.000 $`, `42 %`, `±0,14 mm`.
+
+## Projects on the wall
+
+Six works, decided with Michael. Sources in `assets-src/<folder>/`.
+
+| Work | Folder | Notes |
+|---|---|---|
+| CNC-milled putter (capstone) | `putter/` | 11 HEIC photos of the real part — **convert, browsers cannot read HEIC**. Also the capstone drawing (has a mint-green slide background baked in that needs masking on a white wall). |
+| Chameleon Ramps | `ramps/` | 11 product photos from chameleonramps.com. `p4` (Beachside Bank on wet rock) and `p9` (quarter pipe against foliage) are the strongest. |
+| Wave energy converter | `wave/` | inside / base views + a diagram. **1st place, highest measured wattage.** |
+| Net-Zero shipping container | — | Apricot Lane Farms, real client, ADA + net-zero CO₂. No photo yet. |
+| Campus Native | `campus-native/` | Transparent logo only; needs a screenshot of the live site. |
+| SMC execution system | `smc-bot/` | Jarvis display screenshot. |
+
+Not on the wall but referenced: Nicaragua water system (`nicaragua/`),
+Doorknob-Inator, 1st-place noodle bridge (won by 38.5%, has a force–deflection
+graph — good material if a seventh work is ever wanted).
 
 ## Facts
 

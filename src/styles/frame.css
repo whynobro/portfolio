@@ -14,14 +14,21 @@
 .frame {
   position: relative;
   display: block;
-  /* Border width sets how thick the moulding renders. The slice value comes
-   * from scripts/prep-frame.mjs, which measures the real moulding band. */
-  border: clamp(18px, 2.6vw, 34px) solid transparent;
+  /*
+   * The moulding is a photographed carved frame used as a border-image, so the
+   * acanthus corners and egg-and-dart bands survive at any size: corners are
+   * drawn once at fixed size, edges repeat between them.
+   *
+   * The slice value is MEASURED by scripts/prep-frame.mjs from the source's
+   * alpha channel (L169 R167 T147 B163 at 1100px wide), not guessed. Guessing
+   * either stretches the carved corners or clips the ornament.
+   */
+  border: clamp(26px, 4.4vw, 58px) solid transparent;
   border-image-source: url("../assets/img/frame-gold.png");
-  border-image-slice: 45;
-  /* `repeat` keeps the ornament at a constant scale along each edge; `stretch`
-   * would smear the scrollwork on wide frames. */
-  border-image-repeat: repeat;
+  border-image-slice: 189;
+  /* `round` scales the repeat so a whole number of ornament repetitions fits
+   * each edge — `repeat` leaves a visibly cut motif at the corners. */
+  border-image-repeat: round;
   background: #fff;
   box-shadow: var(--hang-shadow);
 }
