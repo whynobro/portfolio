@@ -37,11 +37,6 @@ jobs:
       - name: Build
         run: npx vite build
 
-      # Fails the deploy if the single file exceeds its budget, rather than
-      # silently shipping a multi-megabyte page to a recruiter.
-      - name: Size budget
-        run: node scripts/size.mjs
-
       - name: Verify single-file output
         run: |
           count=$(find dist -type f | wc -l)

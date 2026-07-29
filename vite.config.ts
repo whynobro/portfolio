@@ -6,8 +6,10 @@ import { viteSingleFile } from "vite-plugin-singlefile";
  * inlined. It must open correctly from file:// with no server, so `base` stays
  * relative and no asset may be emitted as a separate file.
  *
- * Budget: the built file stays under 900 KB (see scripts/size.mjs). Development
- * keeps real ES modules and TypeScript; only the output is flattened.
+ * Development keeps real ES modules and TypeScript; only the output is
+ * flattened. There is no size ceiling: the gallery's argument is the quality of
+ * the photography, so images are encoded for how they look rather than to hit a
+ * number. CI still asserts the output is exactly one file.
  */
 export default defineConfig({
   // Relative base so the file works from file:// and from any subpath on Pages.

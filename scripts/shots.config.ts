@@ -44,10 +44,7 @@ export const SHOTS: Shot[] = [
     route: "",
     viewports: ["desktop", "mobile", "wide"],
   },
-  { name: "cnc", route: "#/work/cnc" },
-  { name: "wave", route: "#/work/wave" },
-  { name: "ramps", route: "#/work/ramps" },
-  { name: "bot", route: "#/work/bot" },
+  { name: "awards", route: "#/awards" },
   { name: "about", route: "#/about" },
   { name: "contact", route: "#/contact" },
 ];
