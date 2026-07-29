@@ -96,7 +96,7 @@
  * Centred under the work, as in the reference layout.
  */
 .label {
-  margin-block-start: var(--s-6);
+  margin-block-start: var(--s-3);
   text-align: center;
 }
 
@@ -104,7 +104,7 @@
   inline-size: 34px;
   block-size: 2px;
   background: var(--gilt);
-  margin: 0 auto var(--s-4);
+  margin: 0 auto var(--s-3);
 }
 
 .label__title {
@@ -152,6 +152,22 @@
   .works {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--s-24) var(--s-16);
+  }
+}
+
+/*
+ * `.works` has one row-gap, but its rows alternate frame / label, so that single
+ * value sets BOTH the space between a work and its own caption and the space
+ * between rows of the wall. A caption should sit close to the piece it names
+ * while the wall keeps its air, so the caption row is pulled back up by the
+ * difference rather than shrinking the gap for everything.
+ */
+.works > .work > .label {
+  margin-block-start: calc(var(--s-3) - var(--s-16));
+}
+@media (min-width: 820px) {
+  .works > .work > .label {
+    margin-block-start: calc(var(--s-3) - var(--s-24));
   }
 }
 

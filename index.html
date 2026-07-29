@@ -78,6 +78,31 @@
     <main id="main">
       <!-- ================= ENTRANCE ================= -->
       <div data-view id="view-home">
+        <!-- ================= INTERACTIVE WORKS ================= -->
+        <!-- Deliberately unframed and uncaptioned: these two are toys, not
+             works on the wall, and a gilt frame around a playable board reads
+             as a claim the pieces below have earned and these have not. -->
+        <section class="page section section--tight" id="games">
+          <div class="playables">
+            <!-- With the captions gone these are the only names a screen reader
+                 has for the two boards. -->
+            <div
+              class="playable"
+              data-scene="tictactoe"
+              role="group"
+              data-i18n-attr="aria-label:game.ttt.title"
+              aria-label="Unbeatable Tic-Tac-Toe"
+            ></div>
+            <div
+              class="playable"
+              data-scene="ringtoss"
+              role="group"
+              data-i18n-attr="aria-label:game.ring.title"
+              aria-label="Water Ring Toss"
+            ></div>
+          </div>
+        </section>
+
         <section class="page section">
           <div class="entrance">
             <div class="entrance__portrait">
@@ -144,54 +169,6 @@
               <div class="btn-row">
                 <a class="btn btn--gilt" href="#/work" data-i18n="cta.work">View the collection</a>
                 <a class="btn" href="#/contact" data-i18n="cta.contact">Contact</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ================= INTERACTIVE WORKS ================= -->
-        <section class="page section" id="games">
-          <div class="intro">
-            <span class="eyebrow" data-i18n="games.eyebrow">Interactive works</span>
-            <h2 class="display" data-i18n="games.title">Two pieces you can play</h2>
-            <p class="intro__lede" data-i18n="games.lede">
-              Both run real algorithms rather than animations: perfect play by
-              exhaustive search, and rigid-body physics with buoyancy and drag.
-            </p>
-          </div>
-
-          <div class="works">
-            <div class="work">
-              <div class="frame frame--landscape">
-                <div class="frame__mat">
-                  <div class="frame__win" data-scene="tictactoe"></div>
-                </div>
-              </div>
-              <div class="label">
-                <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="game.ttt.title">Unbeatable Tic-Tac-Toe</h3>
-                <p class="label__body" data-i18n="game.ttt.body">
-                  Minimax with alpha-beta pruning searches every remaining position,
-                  so it cannot be beaten. The best result available against it is a
-                  draw. It plays itself until you take a square.
-                </p>
-              </div>
-            </div>
-
-            <div class="work">
-              <div class="frame frame--landscape">
-                <div class="frame__mat">
-                  <div class="frame__win" data-scene="ringtoss"></div>
-                </div>
-              </div>
-              <div class="label">
-                <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="game.ring.title">Water Ring Toss</h3>
-                <p class="label__body" data-i18n="game.ring.body">
-                  The handheld water game, simulated: Verlet integration, buoyancy,
-                  drag and collision. Press the button to fire a jet and lift a ring
-                  onto a peg.
-                </p>
               </div>
             </div>
           </div>

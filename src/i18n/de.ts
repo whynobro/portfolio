@@ -45,13 +45,7 @@ export const de = {
   "cta.contact": "Kontakt",
 
   // Interaktive Arbeiten
-  "games.eyebrow": "Interaktive Arbeiten",
-  "games.title": "Zwei Arbeiten zum Ausprobieren",
-  "games.lede":
-    "Beide rechnen tatsächlich, statt nur zu animieren: perfektes Spiel durch vollständige Suche und Starrkörperphysik mit Auftrieb und Strömungswiderstand.",
   "game.ttt.title": "Unschlagbares Tic-Tac-Toe",
-  "game.ttt.body":
-    "Minimax mit Alpha-Beta-Pruning durchsucht jede verbleibende Stellung und ist deshalb nicht zu schlagen. Das beste erreichbare Ergebnis ist ein Unentschieden. Es spielt gegen sich selbst, bis Sie ein Feld belegen.",
   "game.ttt.status.thinking": "Berechnet…",
   "game.ttt.status.yourTurn": "Sie sind am Zug",
   "game.ttt.status.draw": "Unentschieden — das bestmögliche Ergebnis",
@@ -59,8 +53,6 @@ export const de = {
   "game.ttt.status.demo": "Spielt gegen sich selbst — Feld wählen zum Übernehmen",
   "game.ttt.reset": "Neues Spiel",
   "game.ring.title": "Wasser-Ringspiel",
-  "game.ring.body":
-    "Das Wasserspiel aus der Hand, simuliert: Verlet-Integration, Auftrieb, Strömungswiderstand und Kollision. Taste drücken, um einen Wasserstrahl auszulösen und einen Ring auf einen Stift zu heben.",
   "game.ring.button": "Zum Pumpen drücken",
   "game.ring.scored": "aufgesetzt",
 

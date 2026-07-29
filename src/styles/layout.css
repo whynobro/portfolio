@@ -31,6 +31,14 @@
   }
 }
 
+/* The playables sit immediately under the masthead, so the usual gallery
+ * breathing room above them would just read as an empty page. The bottom is
+ * pulled in too: the next section brings its own top padding, and the two
+ * stacking left a dead band between the boards and the entrance. */
+.section--tight {
+  padding-block: var(--s-8) 0;
+}
+
 /* The introduction above a wall of works: centred, narrow, unhurried. */
 .intro {
   text-align: center;

@@ -1,3 +1,36 @@
+/* ---- Playables ----------------------------------------------------------- */
+/*
+ * The two interactive pieces sit directly under the masthead, unframed and
+ * uncaptioned. A scene measures its own `[data-scene]` box, so the aspect ratio
+ * has to live here now that the frame's `.frame--landscape` no longer supplies
+ * one — without it the container collapses and the canvas backing store is 1px.
+ */
+.playables {
+  display: grid;
+  gap: var(--s-8);
+}
+@media (min-width: 820px) {
+  .playables {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-12);
+  }
+}
+
+.playable {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  background: #fbfaf7;
+  /* A hairline only: enough to separate the board from the warm wall without
+   * reading as a frame. */
+  box-shadow: 0 0 0 1px var(--wall-line);
+}
+.playable canvas {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 /* ---- Tic-tac-toe --------------------------------------------------------- */
 /*
  * Real buttons in a grid rather than a canvas, so the board is keyboard

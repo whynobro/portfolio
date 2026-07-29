@@ -35,14 +35,9 @@ export const en = {
   "cta.work": "View the collection",
   "cta.contact": "Contact",
 
-  // Interactive works
-  "games.eyebrow": "Interactive works",
-  "games.title": "Two pieces you can play",
-  "games.lede":
-    "Both run real algorithms rather than animations: perfect play by exhaustive search, and rigid-body physics with buoyancy and drag.",
+  // Interactive works. The two boards are shown unframed and uncaptioned, so
+  // the titles survive only as accessible names for the regions.
   "game.ttt.title": "Unbeatable Tic-Tac-Toe",
-  "game.ttt.body":
-    "Minimax with alpha-beta pruning searches every remaining position, so it cannot be beaten. The best result available against it is a draw. It plays itself until you take a square.",
   "game.ttt.status.thinking": "Thinking…",
   "game.ttt.status.yourTurn": "Your move",
   "game.ttt.status.draw": "Draw — the best result available",
@@ -50,8 +45,6 @@ export const en = {
   "game.ttt.status.demo": "Playing itself — take a square to interrupt",
   "game.ttt.reset": "New game",
   "game.ring.title": "Water Ring Toss",
-  "game.ring.body":
-    "The handheld water game, simulated: Verlet integration, buoyancy, drag and collision. Press the button to fire a jet and lift a ring onto a peg.",
   "game.ring.button": "Press to pump",
   "game.ring.scored": "ringed",
 
