@@ -9,10 +9,8 @@ import type { SceneFactory } from "./types";
  * saves CPU even when it no longer saves bytes.
  */
 export const REGISTRY: Record<string, () => Promise<{ default: SceneFactory }>> = {
-  "tolerance-stack": () => import("./tolerance-stack/index"),
-  "power-curve": () => import("./power-curve/index"),
-  generations: () => import("./generations/index"),
-  "stop-policy": () => import("./stop-policy/index"),
+  tictactoe: () => import("./tictactoe/index"),
+  ringtoss: () => import("./ringtoss/index"),
 };
 
 export function hasScene(id: string): boolean {

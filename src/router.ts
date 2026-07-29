@@ -14,10 +14,7 @@ const ROUTES: Record<string, Route> = {
   "": { id: "view-home", title: "Michael Fischbach — Mechanical Engineering" },
   "/": { id: "view-home", title: "Michael Fischbach — Mechanical Engineering" },
   "/work": { id: "view-home", title: "Work — Michael Fischbach" },
-  "/work/cnc": { id: "view-cnc", title: "CNC-Milled Putter — Michael Fischbach" },
-  "/work/wave": { id: "view-wave", title: "Wave Energy Converter — Michael Fischbach" },
-  "/work/ramps": { id: "view-ramps", title: "Chameleon Ramps — Michael Fischbach" },
-  "/work/bot": { id: "view-bot", title: "Execution System — Michael Fischbach" },
+  "/awards": { id: "view-awards", title: "Awards — Michael Fischbach" },
   "/about": { id: "view-about", title: "About — Michael Fischbach" },
   "/contact": { id: "view-contact", title: "Contact — Michael Fischbach" },
 };

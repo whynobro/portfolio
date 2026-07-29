@@ -5,11 +5,17 @@ import "./styles/tokens.css";
 import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/frame.css";
+import "./styles/chrome.css";
+import "./styles/games.css";
 import { initI18n } from "./i18n";
+import { initRouter } from "./router";
 import { initScenes } from "./scenes/runtime";
+import { initAwards } from "./awards";
 
 function boot(): void {
   initI18n();
+  initAwards();
+  initRouter();
   initScenes();
   document.documentElement.dataset["booted"] = "1";
 }

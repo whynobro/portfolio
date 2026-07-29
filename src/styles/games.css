@@ -1,0 +1,119 @@
+/* ---- Tic-tac-toe --------------------------------------------------------- */
+/*
+ * Real buttons in a grid rather than a canvas, so the board is keyboard
+ * playable and every square is announced to a screen reader.
+ */
+.ttt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-4);
+  padding: var(--s-4);
+  block-size: 100%;
+  background: #fbfaf7;
+}
+
+.ttt__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--ink);
+  border: 2px solid var(--ink);
+  /* Sized off the shorter axis so the board stays square in any frame. */
+  inline-size: min(58%, 220px);
+  aspect-ratio: 1;
+}
+
+.ttt__cell {
+  display: grid;
+  place-items: center;
+  background: #fbfaf7;
+  padding: 0;
+  transition: background var(--dur-fast) var(--ease);
+}
+.ttt__cell:hover:not(:disabled) {
+  background: rgba(184, 135, 58, 0.16);
+}
+.ttt__cell.is-win {
+  background: rgba(184, 135, 58, 0.3);
+}
+.ttt__cell:disabled {
+  cursor: default;
+}
+
+.ttt__mark {
+  inline-size: 74%;
+  block-size: 74%;
+  fill: none;
+  stroke-width: 11;
+  stroke-linecap: round;
+}
+.ttt__mark--x {
+  stroke: var(--ink);
+}
+.ttt__mark--o {
+  stroke: var(--gilt);
+}
+
+.ttt__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.ttt__status {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.04em;
+  color: var(--ink-mute);
+  /* Reserved so the longest German status does not resize the frame. */
+  min-block-size: 2.4em;
+  max-inline-size: 30ch;
+  text-align: center;
+}
+.ttt__reset {
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border-block-end: 1px solid var(--gilt);
+  padding-block-end: 2px;
+  min-block-size: 32px;
+}
+
+/* ---- Water ring toss ----------------------------------------------------- */
+.ring {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  block-size: 100%;
+  background: #fbfaf7;
+}
+.ring__canvas {
+  flex: 1;
+  inline-size: 100%;
+  min-block-size: 0;
+}
+.ring__button {
+  position: absolute;
+  inset-block-end: var(--s-3);
+  inset-inline: 0;
+  margin-inline: auto;
+  inline-size: fit-content;
+  padding: var(--s-2) var(--s-4);
+  min-block-size: 44px;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: rgba(251, 250, 247, 0.9);
+  border: 1px solid var(--ink);
+}
+.ring__button:hover {
+  background: var(--ink);
+  color: var(--wall);
+}

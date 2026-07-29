@@ -76,6 +76,40 @@ async function capture(page: Page, shot: Shot, lang: Lang, vp: ViewportKey): Pro
   // text metrics, and you chase phantom layout bugs.
   await page.evaluate(() => document.fonts.ready).catch(() => {});
 
+  // Full-page capture resizes the viewport, but `loading="lazy"` images below
+  // the fold will not have started decoding, so they photograph as empty
+  // frames. Scroll the page once to trigger them, then wait for every image to
+  // report complete.
+  await page
+    .evaluate(async () => {
+      // Snapshot the height first and cap the number of steps: scrolling makes
+      // lazy images load, which grows scrollHeight, so reading it inside the
+      // loop condition never terminates.
+      const step = Math.max(200, window.innerHeight * 0.8);
+      const steps = Math.min(40, Math.ceil(document.body.scrollHeight / step));
+      for (let i = 0; i <= steps; i++) {
+        window.scrollTo(0, i * step);
+        await new Promise((r) => requestAnimationFrame(() => r(null)));
+      }
+      window.scrollTo(0, 0);
+
+      // Wait for decoding, but never hang on an image that will not resolve.
+      await Promise.race([
+        Promise.all(
+          Array.from(document.images).map((img) =>
+            img.complete
+              ? Promise.resolve()
+              : new Promise((resolve) => {
+                  img.addEventListener("load", resolve, { once: true });
+                  img.addEventListener("error", resolve, { once: true });
+                }),
+          ),
+        ),
+        new Promise((r) => setTimeout(r, 5000)),
+      ]);
+    })
+    .catch(() => {});
+
   await waitForScenes(page);
 
   if (shot.scrollTo) {

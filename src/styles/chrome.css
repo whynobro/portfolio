@@ -1,0 +1,343 @@
+/*
+ * Site chrome: the dark header bar with its gold rule, and the matching footer.
+ * Taken from the reference design — a dark band top and bottom holds the warm
+ * gallery wall between them, the way a museum's signage frames its rooms.
+ */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--plate);
+  color: var(--plate-ink);
+  /* The gold rule under the bar is the single strongest cue that this is a
+   * gallery rather than a generic dark header. */
+  border-block-end: 3px solid var(--gilt);
+}
+
+.masthead__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-4);
+}
+
+.masthead__name {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--plate-ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.masthead__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+}
+@media (min-width: 640px) {
+  .masthead__nav {
+    gap: var(--s-8);
+  }
+}
+
+.masthead__nav a {
+  font-family: var(--font-sans);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(237, 230, 216, 0.72);
+  text-decoration: none;
+  padding-block: var(--s-2);
+  border-block-end: 1px solid transparent;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+  /* Sized from the longer German label so the bar never reflows on toggle. */
+  min-inline-size: 7ch;
+  text-align: center;
+}
+.masthead__nav a:hover,
+.masthead__nav a[data-active] {
+  color: var(--plate-ink);
+  border-block-end-color: var(--gilt);
+}
+
+/* Nav labels are hidden on the smallest screens; the awards badge and language
+ * toggle stay, since those are the two controls with no other route in. */
+@media (max-width: 560px) {
+  .masthead__nav a:not(.badge) {
+    display: none;
+  }
+}
+
+/* ---- Awards badge -------------------------------------------------------- */
+/*
+ * A small gold rosette in the bar. Deliberately understated — it is a way in to
+ * the awards room, not a boast on every page.
+ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid rgba(184, 135, 58, 0.55) !important;
+  color: var(--gilt) !important;
+  min-block-size: 34px;
+}
+.badge:hover {
+  background: rgba(184, 135, 58, 0.14);
+  border-color: var(--gilt) !important;
+}
+.badge svg {
+  inline-size: 15px;
+  block-size: 15px;
+  flex: none;
+}
+
+/* ---- Language toggle ----------------------------------------------------- */
+.lang {
+  display: flex;
+  border: 1px solid rgba(237, 230, 216, 0.28);
+}
+.lang__btn {
+  padding: var(--s-1) var(--s-3);
+  min-block-size: 34px;
+  min-inline-size: 4.5ch;
+  font-family: var(--font-sans);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: rgba(237, 230, 216, 0.6);
+  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+}
+.lang__btn[aria-pressed="true"] {
+  background: var(--gilt);
+  color: var(--plate);
+}
+.lang__btn:hover[aria-pressed="false"] {
+  color: var(--plate-ink);
+}
+
+/* ---- Footer -------------------------------------------------------------- */
+.colophon {
+  background: var(--plate);
+  color: var(--plate-ink);
+  border-block-start: 3px solid var(--gilt);
+  padding-block: var(--s-12);
+  margin-block-start: var(--s-24);
+}
+.colophon__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-6);
+}
+.colophon__name {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--t-md);
+}
+.colophon__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-6);
+}
+.colophon__links a {
+  font-size: var(--t-sm);
+  color: rgba(237, 230, 216, 0.78);
+  text-decoration: none;
+  border-block-end: 1px solid transparent;
+}
+.colophon__links a:hover {
+  color: var(--plate-ink);
+  border-block-end-color: var(--gilt);
+}
+
+/* ---- Entrance hall ------------------------------------------------------- */
+/*
+ * The landing: portrait hung left, introduction to its right. Asymmetric, the
+ * way a real entrance wall is hung — a centred portrait would read as a
+ * template.
+ */
+.entrance {
+  display: grid;
+  gap: var(--s-12);
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .entrance {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: var(--s-24);
+  }
+}
+
+.entrance__portrait {
+  max-inline-size: 380px;
+  inline-size: 100%;
+  margin-inline: auto;
+}
+
+.entrance__name {
+  font-family: var(--font-display);
+  font-size: var(--t-3xl);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+@media (min-width: 1100px) {
+  .entrance__name {
+    font-size: var(--t-4xl);
+  }
+}
+
+.entrance__role {
+  margin-block-start: var(--s-4);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--t-lg);
+  color: var(--gilt);
+  /* Two lines reserved: the German role line wraps where the English does not. */
+  min-block-size: 2.6em;
+}
+
+.entrance__bio {
+  margin-block-start: var(--s-6);
+  color: var(--ink-soft);
+  max-inline-size: 54ch;
+}
+.entrance__bio p + p {
+  margin-block-start: var(--s-4);
+}
+
+/* ---- Quick facts --------------------------------------------------------- */
+/*
+ * A row of measured figures under the introduction. Hairline rules between
+ * them rather than boxes: this is a catalogue, not a dashboard.
+ */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-6);
+  margin-block-start: var(--s-8);
+  padding-block-start: var(--s-8);
+  border-block-start: 1px solid var(--wall-line);
+}
+@media (min-width: 640px) {
+  .facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.facts__value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-xl);
+  color: var(--ink);
+  line-height: 1;
+}
+.facts__label {
+  margin-block-start: var(--s-2);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  /* German labels run longer; reserve two lines so the row never jumps. */
+  min-block-size: 2.8em;
+}
+
+/* ---- Buttons ------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-6);
+  min-block-size: 46px;
+  font-size: var(--t-sm);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.btn:hover {
+  background: var(--ink);
+  color: var(--wall);
+}
+.btn--gilt {
+  border-color: var(--gilt);
+  background: var(--gilt);
+  color: var(--plate);
+}
+.btn--gilt:hover {
+  background: var(--gilt-lo);
+  border-color: var(--gilt-lo);
+  color: #fff;
+}
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-block-start: var(--s-8);
+}
+
+/* ---- Awards room --------------------------------------------------------- */
+/*
+ * A list, not a grid of cards: awards read as a catalogue of honours, and a
+ * grid would inflate them into something they are not. The figure column is
+ * fixed width so every entry's text starts on the same line.
+ */
+.award {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  gap: var(--s-6);
+  padding-block: var(--s-8);
+  border-block-start: 1px solid var(--wall-line);
+  max-inline-size: 74ch;
+  margin-inline: auto;
+}
+.award:first-child {
+  border-block-start: 0;
+}
+
+.award__figure {
+  font-size: var(--t-lg);
+  color: var(--gilt);
+  line-height: 1.2;
+  text-align: end;
+}
+
+.award__title {
+  font-family: var(--font-display);
+  font-size: var(--t-lg);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+}
+.award__meta {
+  margin-block-start: var(--s-1);
+  font-size: var(--t-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.award__body {
+  margin-block-start: var(--s-3);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+@media (max-width: 560px) {
+  .award {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-2);
+  }
+  .award__figure {
+    text-align: start;
+  }
+}

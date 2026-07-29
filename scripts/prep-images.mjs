@@ -32,17 +32,36 @@ const MANIFEST = [
     grayscale: true,
     quality: 76,
   },
-  // Chameleon Ramps — real product photography from chameleonramps.com.
-  { name: "ramps-bank", src: "assets-src/chameleon/p4.jpg", width: 1600, height: 1600, quality: 72 },
-  { name: "ramps-quarter", src: "assets-src/chameleon/p9.jpg", width: 1600, height: 1600, quality: 72 },
-  { name: "ramps-alt1", src: "assets-src/chameleon/p5.jpg", width: 1100, height: 1100, quality: 68 },
-  { name: "ramps-alt2", src: "assets-src/chameleon/p8.jpg", width: 1100, height: 1100, quality: 68 },
-  { name: "ramps-logo", src: "assets-src/old-portfolio/img5.jpeg", width: 400, height: 400, quality: 60 },
-  // CNC putter: renders + the capstone drawing.
-  { name: "cnc-part", src: "assets-src/old-portfolio/img0.jpeg", width: 1400, quality: 74 },
-  { name: "cnc-drawing", src: "assets-src/old-portfolio/img1.jpeg", width: 1600, quality: 78 },
-  // Nicaragua water distribution.
-  { name: "water-1", src: "assets-src/old-portfolio/img2.jpeg", width: 1300, quality: 70 },
+
+  // --- CNC putter: the strongest sequence, CAD -> cut -> part -> course ---
+  // Hero: the finished aluminium head on the green.
+  { name: "putter-hero", src: "assets-src/putter/converted/IMG_9594.jpg", width: 1500, height: 1125, quality: 72 },
+  { name: "putter-green", src: "assets-src/putter/converted/IMG_9596.jpg", width: 1200, height: 1500, quality: 70 },
+  // In the vise, mid-cut, chips on the fixture.
+  { name: "putter-machining", src: "assets-src/putter/converted/IMG_9580.jpg", width: 1400, quality: 70 },
+  // The scooping geometry, held.
+  { name: "putter-inhand", src: "assets-src/putter/converted/IMG_9582.jpg", width: 1400, quality: 70 },
+  // Fusion 360 tool setup — evidence of the CAM work behind the part.
+  { name: "putter-cam", src: "assets-src/putter/converted/IMG_9035.jpg", width: 1400, quality: 68 },
+  // In use at Westlake Golf Course.
+  { name: "putter-inuse", src: "assets-src/putter/converted/IMG_4440.jpg", width: 1400, quality: 70 },
+  { name: "cnc-drawing", src: "assets-src/putter/capstone-drawing.jpeg", width: 1600, quality: 78 },
+
+  // --- Chameleon Ramps: real product photography ---
+  { name: "ramps-bank", src: "assets-src/ramps/p4.jpg", width: 1600, height: 1600, quality: 72 },
+  { name: "ramps-quarter", src: "assets-src/ramps/p9.jpg", width: 1600, height: 1600, quality: 72 },
+  { name: "ramps-alt1", src: "assets-src/ramps/p5.jpg", width: 1100, height: 1100, quality: 68 },
+  { name: "ramps-alt2", src: "assets-src/ramps/p8.jpg", width: 1100, height: 1100, quality: 68 },
+
+  // --- Wave energy converter ---
+  { name: "wave-inside", src: "assets-src/wave/wave-inside.jpg", width: 1200, quality: 72 },
+  { name: "wave-base", src: "assets-src/wave/wave-base.jpg", width: 1000, quality: 72 },
+
+  // --- Nicaragua water distribution ---
+  { name: "water-site", src: "assets-src/nicaragua/system-on-site.png", width: 1400, quality: 70 },
+
+  // --- SMC execution system ---
+  { name: "bot-display", src: "assets-src/smc-bot/jarvis-display.jpg", width: 1200, quality: 70 },
 ];
 
 const only = process.argv[2];

@@ -61,3 +61,14 @@
 .stack > * + * {
   margin-block-start: var(--flow, var(--s-4));
 }
+
+/* A prose block centred in the page, used on the about and awards rooms where
+ * there is no adjacent artwork to hang the text off. */
+.prose--centred {
+  margin-inline: auto;
+  --flow: var(--s-4);
+}
+
+.btn-row--centred {
+  justify-content: center;
+}
