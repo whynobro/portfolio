@@ -29,8 +29,26 @@
   /* `round` scales the repeat so a whole number of ornament repetitions fits
    * each edge — `repeat` leaves a visibly cut motif at the corners. */
   border-image-repeat: round;
-  background: #fff;
-  box-shadow: var(--hang-shadow);
+
+  /*
+   * The white mat must stop at the inside edge of the moulding.
+   *
+   * A plain `background` fills the whole border box, and the carved frame has
+   * an irregular silhouette with transparent gaps around the ornament — so
+   * white showed through beside every carving and read as a pale band between
+   * the frame and the wall. `padding-box` clips the fill to the inside of the
+   * border, letting the wall show through the ornament's gaps as it should.
+   */
+  background: #fff padding-box;
+
+  /*
+   * The wall shadow is dropped from the moulding image itself rather than from
+   * the element box. `box-shadow` traces the rectangular border box, which
+   * would draw a hard rectangle out past the carved silhouette — exactly the
+   * artefact `padding-box` above was introduced to remove.
+   */
+  filter: drop-shadow(0 2px 3px rgba(20, 17, 14, 0.16))
+    drop-shadow(0 12px 26px rgba(20, 17, 14, 0.18));
 }
 
 .frame__mat {
@@ -158,11 +176,12 @@
 /* The work lifts very slightly off the wall on hover — a hung piece, not a
  * card. Transform only, so nothing reflows. */
 .work .frame {
-  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  /* Transform only: animating `filter` re-rasterises the drop-shadow every
+   * frame, which is expensive on a page holding six carved frames. */
+  transition: transform var(--dur) var(--ease);
 }
 .work:hover .frame {
   transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(20, 17, 14, 0.12), 0 20px 44px rgba(20, 17, 14, 0.18);
 }
 @media (prefers-reduced-motion: reduce) {
   .work:hover .frame {
