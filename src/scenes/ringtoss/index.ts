@@ -323,29 +323,40 @@ function createScene(): SceneModule {
         if (!peg) continue;
         const tipY = peg.y - peg.h;
 
-        // Seated if the ring's centre is close to the peg axis and it is
-        // falling near the tip — the real toy's win condition.
+        // A ring can only go on OVER THE TIP. It is a hoop: to capture the peg
+        // its centre has to pass the tip from above while moving downward, the
+        // way the real toy works. The seating window used to run most of the
+        // way down the shaft, so a ring drifting sideways into the middle of a
+        // peg snapped onto it — it appeared to pass straight through the shaft.
         //
         // A peg holds a limited number of rings, and each one seats at its own
         // height. Without both, every ring that met the condition was moved to
         // the same point on the same peg and then skipped by the integrator, so
         // they fused into one frozen stack that could never come apart.
-        // The last ring on the board is given a wider mouth to fall into. With
-        // a uniform window it could be the only one left, circling between two
+        // The last ring on the board is given a slightly wider mouth. With a
+        // uniform window it could be the only one left, circling between two
         // pegs that both already held rings, and the round would never finish.
         const loose = rings.filter((o) => o.onPeg < 0).length;
-        const help = loose <= 1 ? 1.9 : 1;
+        const help = loose <= 1 ? 1.35 : 1;
 
         const seatedHere = rings.filter((o) => o.onPeg === pi).length;
-        const overAxis = Math.abs(ring.x - peg.x) < ring.r * 0.9 * help;
-        const nearTip = ring.y > tipY - ring.r * 1.5 && ring.y < tipY + peg.h * 0.9;
-        if (
-          seatLock <= 0 &&
-          seatedHere < PEG_CAPACITY &&
-          overAxis &&
-          nearTip &&
-          ring.y - ring.py > -0.4
-        ) {
+        const dx = ring.x - peg.x;
+        const dxPrev = ring.px - peg.x;
+
+        // The mouth is the ring's own hole: the tip must be inside it.
+        const mouth = Math.max(ring.r * 0.8 * help, peg.r + 1);
+        const overMouth = Math.abs(dx) < mouth;
+
+        // Coming down onto the tip from ABOVE it. The whole column of water
+        // above the peg counts, not a thin band at tip height: a ring is lifted
+        // well clear by the jet and sinks back quickly, so it was almost never
+        // sampled inside a narrow band and the toy became unplayable. What
+        // matters for "only from the top" is that the ring approaches from
+        // above the tip and is descending, which is exactly this test.
+        const falling = ring.y >= ring.py;
+        const crossedTip = ring.py <= tipY + ring.r * 0.6 && ring.y < tipY + ring.r * 0.9;
+
+        if (seatLock <= 0 && seatedHere < PEG_CAPACITY && overMouth && falling && crossedTip) {
           ring.onPeg = pi;
           ring.seatDepth = seatedHere;
           ring.x = peg.x;
@@ -360,13 +371,24 @@ function createScene(): SceneModule {
           break;
         }
 
-        // Otherwise the peg shaft is a solid obstacle.
-        const dx = ring.x - peg.x;
-        const withinShaft = ring.y > tipY && ring.y < peg.y;
-        if (withinShaft && Math.abs(dx) < peg.r + ring.r * 0.25) {
-          const push = (peg.r + ring.r * 0.25) * Math.sign(dx || 1);
-          ring.x = peg.x + push;
-          ring.px = ring.x + (ring.x - ring.px) * rest;
+        // Otherwise the shaft is solid and the ring's RIM strikes it. A ring is
+        // a hoop, so it is blocked when the shaft would cut its band — around
+        // |dx| = r — and passes freely when it is centred over the shaft. The
+        // old test blocked near |dx| = 0, which is exactly the case that should
+        // be open, and left the band free to slide through.
+        // Only below the tip: at tip height the ring is either going on or
+        // passing over, and blocking there stopped rings from ever lining up.
+        const overlapsShaft = ring.y > tipY + ring.r * 1.2 && ring.y - ring.r * 0.35 < peg.y;
+        if (overlapsShaft && !overMouth) {
+          const reach = mouth + peg.r;
+          if (Math.abs(dx) < reach) {
+            // Swept test: a fast ring could cross the shaft entirely between
+            // frames, so the side it came from decides which way it is pushed
+            // back out rather than its position after the fact.
+            const side = Math.sign((Math.abs(dxPrev) > 1e-3 ? dxPrev : dx) || 1);
+            ring.x = peg.x + reach * side;
+            ring.px = ring.x + (ring.x - ring.px) * rest;
+          }
         }
       }
     }
