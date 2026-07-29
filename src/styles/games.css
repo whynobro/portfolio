@@ -7,23 +7,29 @@
  */
 .playables {
   display: grid;
+  justify-content: center;
   gap: var(--s-8);
 }
 @media (min-width: 820px) {
   .playables {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, auto);
     gap: var(--s-12);
   }
 }
 
+/*
+ * The box is sized in absolute terms rather than as a fraction of the column.
+ * A percentage box is re-measured on every layout pass, and because each scene
+ * sizes its canvas from its own box, the boards visibly jumped as they mounted
+ * and again as images below them loaded. A fixed size settles once.
+ */
 .playable {
   position: relative;
-  overflow: hidden;
-  aspect-ratio: 3 / 2;
-  background: #fbfaf7;
-  /* A hairline only: enough to separate the board from the warm wall without
-   * reading as a frame. */
-  box-shadow: 0 0 0 1px var(--wall-line);
+  inline-size: min(100%, 190px);
+  block-size: 210px;
+  /* No panel and no hairline: the boards sit straight on the wall, so nothing
+   * reads as a frame around them. */
+  background: none;
 }
 .playable canvas {
   display: block;
@@ -41,29 +47,45 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--s-4);
-  padding: var(--s-4);
+  gap: var(--s-3);
   block-size: 100%;
-  background: #fbfaf7;
+  /* Transparent: the scene used to paint its own off-white panel, which is what
+   * showed as a white box once the frame around it was removed. */
+  background: none;
 }
 
+/*
+ * Four rules and nothing else, as in the reference: no outer border and no
+ * filled squares. The lines are drawn as the inner edges of the cells rather
+ * than as a coloured backdrop showing through gaps, so the board's outside
+ * stays open and the marks float on the wall.
+ */
 .ttt__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--ink);
-  border: 2px solid var(--ink);
-  /* Sized off the shorter axis so the board stays square in any frame. */
-  inline-size: min(58%, 220px);
-  aspect-ratio: 1;
+  /* Fixed, not a fraction of the container. As a flex item the board used to be
+   * shrunk by whatever the status line below it needed, so placing a mark that
+   * changed the status to a longer string visibly resized the whole board. */
+  inline-size: 108px;
+  block-size: 108px;
+  flex: none;
 }
 
 .ttt__cell {
   display: grid;
   place-items: center;
-  background: #fbfaf7;
+  background: none;
   padding: 0;
   transition: background var(--dur-fast) var(--ease);
+}
+/* Interior rules only: a right edge except on the last column, a bottom edge
+ * except on the last row. That leaves the four lines of the reference and no
+ * box around the outside. */
+.ttt__cell:not(:nth-child(3n)) {
+  border-inline-end: 2px solid var(--ink);
+}
+.ttt__cell:nth-child(-n + 6) {
+  border-block-end: 2px solid var(--ink);
 }
 .ttt__cell:hover:not(:disabled) {
   background: rgba(184, 135, 58, 0.16);
@@ -82,28 +104,37 @@
   stroke-width: 11;
   stroke-linecap: round;
 }
+/* Red and green, matching the reference board Michael supplied. These are the
+ * one place on the site outside --measured that leaves the gilt palette; the
+ * toy is the exception, deliberately, so the marks read as a real game. */
 .ttt__mark--x {
-  stroke: var(--ink);
+  stroke: #d93a2b;
 }
 .ttt__mark--o {
-  stroke: var(--gilt);
+  stroke: #7fb733;
 }
 
+/* The bar's height is reserved rather than derived: every status string is a
+ * different length, and letting the bar grow to fit moved the board above it
+ * on every single move. */
 .ttt__bar {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--s-4);
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: var(--s-1);
+  justify-content: flex-start;
+  block-size: 4.6em;
+  flex: none;
 }
 .ttt__status {
+  margin: 0;
   font-family: var(--font-mono);
   font-size: var(--t-xs);
   letter-spacing: 0.04em;
   color: var(--ink-mute);
-  /* Reserved so the longest German status does not resize the frame. */
+  /* Reserved so the longest German status does not resize the board. */
   min-block-size: 2.4em;
-  max-inline-size: 30ch;
+  max-inline-size: 26ch;
   text-align: center;
 }
 .ttt__reset {
@@ -123,30 +154,92 @@
   flex-direction: column;
   align-items: center;
   block-size: 100%;
-  background: #fbfaf7;
+  background: none;
 }
 .ring__canvas {
   flex: 1;
   inline-size: 100%;
+  /* The fullscreen control sits under the toy, so the canvas stops short of the
+   * bottom edge rather than running underneath it. */
   min-block-size: 0;
+  margin-block-end: 1.4em;
+  /* The pump is drawn on the toy and hit-tested on the canvas. */
+  cursor: pointer;
+  touch-action: manipulation;
 }
-.ring__button {
+
+/* Score, above the toy. Reads as an instrument panel, not gallery copy. */
+.ring__score {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: center;
+  min-block-size: 1.6em;
+  flex: none;
+}
+.ring__score b {
+  color: var(--measured);
+  font-weight: 500;
+}
+/*
+ * The pump is the button drawn on the toy: the canvas handles the click. This
+ * control exists only so the pump is reachable by keyboard and announced to a
+ * screen reader, so it is visually hidden until focused.
+ */
+.ring__pump-a11y {
   position: absolute;
-  inset-block-end: var(--s-3);
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.ring__pump-a11y:focus-visible {
+  inset-block-end: 2.2em;
   inset-inline: 0;
   margin-inline: auto;
   inline-size: fit-content;
+  block-size: auto;
   padding: var(--s-2) var(--s-4);
-  min-block-size: 44px;
+  overflow: visible;
+  clip-path: none;
   font-family: var(--font-mono);
   font-size: var(--t-xs);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink);
-  background: rgba(251, 250, 247, 0.9);
+  background: rgba(251, 250, 247, 0.95);
   border: 1px solid var(--ink);
 }
-.ring__button:hover {
-  background: var(--ink);
-  color: var(--wall);
+
+/* Fullscreen control: quiet, below the toy, so it never competes with the pump
+ * button that is part of the piece itself. */
+.ring__expand {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  margin-inline: auto;
+  inline-size: fit-content;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  border-block-end: 1px solid var(--gilt);
+  padding-block-end: 2px;
+}
+.ring__expand:hover {
+  color: var(--ink);
+}
+
+/* In fullscreen the wrapper IS the viewport, so it has to fill it — it is
+ * normally sized by .playable, which is no longer its parent box. */
+.ring:fullscreen {
+  inline-size: 100vw;
+  block-size: 100vh;
+  background: var(--wall);
+  padding-block-end: var(--s-8);
 }

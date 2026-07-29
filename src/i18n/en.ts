@@ -41,11 +41,14 @@ export const en = {
   "game.ttt.status.thinking": "Thinking…",
   "game.ttt.status.yourTurn": "Your move",
   "game.ttt.status.draw": "Draw — the best result available",
-  "game.ttt.status.aiWins": "Machine wins",
+  "game.ttt.status.aiWins": "Michael wins",
   "game.ttt.status.demo": "Playing itself — take a square to interrupt",
   "game.ttt.reset": "New game",
   "game.ring.title": "Water Ring Toss",
   "game.ring.button": "Press to pump",
+  "game.ring.expand": "Fullscreen",
+  "game.ring.score": "Score",
+  "game.ring.side": "Side jets",
   "game.ring.scored": "ringed",
 
   // The collection
@@ -76,6 +79,11 @@ export const en = {
   "proj.campus.body":
     "A production marketplace for student-led campus tours: sixteen data models and payment handling, with double-booking prevented by a database constraint rather than application logic.",
   "proj.campus.meta": "live in production",
+  "proj.water.title": "Water Distribution System",
+  "proj.water.body":
+    "A gravity-fed distribution network for a rural community in Nicaragua: source survey, tank siting and pipe routing worked out from the terrain rather than from a standard layout.",
+  "proj.water.meta": "Nicaragua",
+  "proj.water.meta2": "gravity-fed",
 
   // Awards
   "awards.eyebrow": "Honours",

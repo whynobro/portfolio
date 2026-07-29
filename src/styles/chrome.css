@@ -171,7 +171,20 @@
 @media (min-width: 900px) {
   .entrance {
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-    gap: var(--s-24);
+    /* Two rows: portrait over the playables on the left, the introduction
+     * spanning both on the right. Aligned to the top so the portrait sits up
+     * against the introduction rather than being centred against a column that
+     * the games have made taller. */
+    grid-template-rows: auto auto;
+    align-items: start;
+    column-gap: var(--s-24);
+    row-gap: 0;
+  }
+  /* The introduction spans both rows, so the games tuck under the portrait
+   * instead of pushing the whole row down. */
+  .entrance__intro {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
 }
 
@@ -179,6 +192,13 @@
   max-inline-size: 380px;
   inline-size: 100%;
   margin-inline: auto;
+}
+@media (min-width: 900px) {
+  .entrance__portrait {
+    grid-column: 1;
+    grid-row: 1;
+    margin-inline: 0;
+  }
 }
 
 .entrance__name {
@@ -211,6 +231,30 @@
 }
 .entrance__bio p + p {
   margin-block-start: var(--s-4);
+}
+
+/*
+ * The two playable pieces, side by side under the portrait and in the
+ * portrait's own column, so they sit left and the entrance row ends level with
+ * the contact button instead of pushing the page down.
+ */
+.entrance__play {
+  margin-block-start: var(--s-8);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: end;
+  gap: var(--s-6);
+}
+@media (min-width: 900px) {
+  .entrance__play {
+    /* Row two of the first column: directly under the portrait, with the
+     * introduction alongside in column two. */
+    grid-column: 1;
+    grid-row: 2;
+    justify-content: flex-start;
+    margin-block-start: var(--s-6);
+  }
 }
 
 /* ---- Quick facts --------------------------------------------------------- */

@@ -60,6 +60,22 @@ const MANIFEST = [
   // --- Nicaragua water distribution ---
   { name: "water-site", src: "assets-src/nicaragua/system-on-site.png", width: 1400, quality: 70 },
 
+  // --- Campus Native ---
+  // The logo, on the brand's own dark green, until a screenshot of the live
+  // site arrives: the map that stood in before was the Nicaragua tank slide,
+  // which belongs to a different project entirely.
+  {
+    name: "campus-logo",
+    src: "assets-src/campus-native/logo-transparent.png",
+    width: 1200,
+    height: 900,
+    fit: "contain",
+    // A warm off-white, not the brand green: the mark IS that green, so on its
+    // own colour it disappeared entirely.
+    background: "#f2eee5",
+    quality: 72,
+  },
+
   // --- SMC execution system ---
   { name: "bot-display", src: "assets-src/smc-bot/jarvis-display.jpg", width: 1200, quality: 70 },
 ];
@@ -79,10 +95,19 @@ for (const item of MANIFEST) {
     continue;
   }
 
-  const resize = { width: item.width, fit: "cover", position: sharp.strategy.attention };
+  // `cover` crops to fill, which is right for photographs. A logo has to be
+  // shown whole, so an entry can ask for `contain` and supply the colour to pad
+  // with — cropping a mark to a 3:2 window cuts the mark itself.
+  const resize = { width: item.width, fit: item.fit ?? "cover" };
+  if (resize.fit === "cover") resize.position = sharp.strategy.attention;
+  if (item.background) resize.background = item.background;
   if (item.height) resize.height = item.height;
 
   let pipe = sharp(item.src).resize(resize);
+  // A transparent source has to be flattened onto the same colour it is padded
+  // with. `resize({background})` only fills the padding, so the mark's own
+  // transparent interior came through as black once JPEG dropped the alpha.
+  if (item.background) pipe = pipe.flatten({ background: item.background });
   if (item.grayscale) pipe = pipe.grayscale().linear(1.06, -6);
 
   const avifPath = path.join(OUT, `${item.name}.avif`);

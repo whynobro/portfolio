@@ -49,11 +49,14 @@ export const de = {
   "game.ttt.status.thinking": "Berechnet…",
   "game.ttt.status.yourTurn": "Sie sind am Zug",
   "game.ttt.status.draw": "Unentschieden — das bestmögliche Ergebnis",
-  "game.ttt.status.aiWins": "Maschine gewinnt",
+  "game.ttt.status.aiWins": "Michael gewinnt",
   "game.ttt.status.demo": "Spielt gegen sich selbst — Feld wählen zum Übernehmen",
   "game.ttt.reset": "Neues Spiel",
   "game.ring.title": "Wasser-Ringspiel",
   "game.ring.button": "Zum Pumpen drücken",
+  "game.ring.expand": "Vollbild",
+  "game.ring.score": "Punkte",
+  "game.ring.side": "Seitendüsen",
   "game.ring.scored": "aufgesetzt",
 
   // Die Sammlung
@@ -84,6 +87,11 @@ export const de = {
   "proj.campus.body":
     "Ein produktiver Marktplatz für studentisch geführte Campus-Touren: sechzehn Datenmodelle und Zahlungsabwicklung. Doppelbuchungen verhindert eine Datenbank-Bedingung, nicht die Anwendungslogik.",
   "proj.campus.meta": "im Produktivbetrieb",
+  "proj.water.title": "Wasserverteilungssystem",
+  "proj.water.body":
+    "Ein Wasserverteilungsnetz mit natürlichem Gefälle für eine ländliche Gemeinde in Nicaragua: Quellvermessung, Standortwahl des Tanks und Leitungsführung wurden aus dem Gelände abgeleitet statt aus einem Standardschema übernommen.",
+  "proj.water.meta": "Nicaragua",
+  "proj.water.meta2": "mit natürlichem Gefälle",
 
   // Auszeichnungen
   "awards.eyebrow": "Auszeichnungen",

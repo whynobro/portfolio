@@ -78,31 +78,6 @@
     <main id="main">
       <!-- ================= ENTRANCE ================= -->
       <div data-view id="view-home">
-        <!-- ================= INTERACTIVE WORKS ================= -->
-        <!-- Deliberately unframed and uncaptioned: these two are toys, not
-             works on the wall, and a gilt frame around a playable board reads
-             as a claim the pieces below have earned and these have not. -->
-        <section class="page section section--tight" id="games">
-          <div class="playables">
-            <!-- With the captions gone these are the only names a screen reader
-                 has for the two boards. -->
-            <div
-              class="playable"
-              data-scene="tictactoe"
-              role="group"
-              data-i18n-attr="aria-label:game.ttt.title"
-              aria-label="Unbeatable Tic-Tac-Toe"
-            ></div>
-            <div
-              class="playable"
-              data-scene="ringtoss"
-              role="group"
-              data-i18n-attr="aria-label:game.ring.title"
-              aria-label="Water Ring Toss"
-            ></div>
-          </div>
-        </section>
-
         <section class="page section">
           <div class="entrance">
             <div class="entrance__portrait">
@@ -125,7 +100,7 @@
               </div>
             </div>
 
-            <div>
+            <div class="entrance__intro">
               <span class="eyebrow" data-i18n="home.eyebrow">Permanent collection</span>
               <h1 class="entrance__name">Michael Fischbach</h1>
               <p class="entrance__role" data-i18n="home.role">
@@ -170,6 +145,32 @@
                 <a class="btn btn--gilt" href="#/work" data-i18n="cta.work">View the collection</a>
                 <a class="btn" href="#/contact" data-i18n="cta.contact">Contact</a>
               </div>
+            </div>
+
+            <!-- ===== INTERACTIVE WORKS =====
+                 A grid item of .entrance, placed in row two of the portrait's
+                 column, so the pair sits left and the row ends level with the
+                 contact button rather than pushing the page down. Deliberately
+                 unframed and uncaptioned: they are toys, not works on the wall,
+                 and a gilt frame around a playable board would read as a claim
+                 the six pieces below have earned and these have not. -->
+            <div class="entrance__play" id="games">
+              <!-- With no captions these are the only names a screen reader has
+                   for the two boards. -->
+              <div
+                class="playable"
+                data-scene="tictactoe"
+                role="group"
+                data-i18n-attr="aria-label:game.ttt.title"
+                aria-label="Unbeatable Tic-Tac-Toe"
+              ></div>
+              <div
+                class="playable"
+                data-scene="ringtoss"
+                role="group"
+                data-i18n-attr="aria-label:game.ring.title"
+                aria-label="Water Ring Toss"
+              ></div>
             </div>
           </div>
         </section>
@@ -356,10 +357,10 @@
                 <div class="frame__mat">
                   <div class="frame__win">
                     <picture>
-                      <source srcset="./src/assets/img/water-site.avif" type="image/avif" />
+                      <source srcset="./src/assets/img/campus-logo.avif" type="image/avif" />
                       <img
-                        src="./src/assets/img/water-site.jpg"
-                        width="1400"
+                        src="./src/assets/img/campus-logo.jpg"
+                        width="1200"
                         height="900"
                         alt="Campus Native"
                         loading="lazy"
@@ -379,6 +380,41 @@
                 </p>
                 <p class="label__meta">
                   Next.js · <span data-i18n="proj.campus.meta">live in production</span>
+                </p>
+              </div>
+            </a>
+
+            <a class="work" href="#/work/water">
+              <div class="frame frame--landscape">
+                <div class="frame__mat">
+                  <div class="frame__win">
+                    <picture>
+                      <source srcset="./src/assets/img/water-site.avif" type="image/avif" />
+                      <img
+                        src="./src/assets/img/water-site.jpg"
+                        width="1400"
+                        height="900"
+                        alt="Gravity-fed water distribution system, tank siting"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
+                  </div>
+                </div>
+              </div>
+              <div class="label">
+                <div class="label__rule"></div>
+                <h3 class="label__title" data-i18n="proj.water.title">
+                  Water Distribution System
+                </h3>
+                <p class="label__body" data-i18n="proj.water.body">
+                  A gravity-fed distribution network for a rural community in
+                  Nicaragua: source survey, tank siting and pipe routing worked out
+                  from the terrain rather than from a standard layout.
+                </p>
+                <p class="label__meta">
+                  <span data-i18n="proj.water.meta">Nicaragua</span> ·
+                  <span data-i18n="proj.water.meta2">gravity-fed</span>
                 </p>
               </div>
             </a>

@@ -19,7 +19,9 @@ Live: <https://whynobro.github.io/portfolio/> · repo `whynobro/portfolio`
   **no native-speaker review in the loop**, so the type system is the only net.
   Terminology, number format and the layout rules German forces: `docs/german.md`.
 - **Gilt (`--gilt`) is the accent; `--measured` (oxblood) marks measured results
-  and nothing else.** That scarcity is what makes the numbers land.
+  and nothing else.** That scarcity is what makes the numbers land. The one
+  sanctioned exception is the tic-tac-toe board: its marks are red and green, to
+  Michael's reference image, because the toy should read as a real game.
 - **Reduced motion suppresses autonomous motion only.** Every scene must still
   paint a full static frame via `renderStatic()` and stay interactive on input.
 - **Claims on labels must be true and, where testable, tested.** The
@@ -43,6 +45,30 @@ Two failures already fixed here; do not reintroduce them:
   traces the rectangular border box and draws a hard rectangle past the carved
   edge. Hover animates `transform` only — animating `filter` re-rasterises the
   shadow every frame across six frames.
+
+## The two playable pieces
+
+They hang **unframed and uncaptioned**, under the portrait in the entrance's
+left column. They are toys, not works: a gilt frame around a playable board
+claims what the seven pieces on the wall have earned. Their titles stay in the
+dictionaries as the `aria-label` for each board, which is the only name a
+screen reader now has.
+
+- **The box is fixed** (`.playable`), never a fraction of the column. Each
+  scene sizes its canvas from its own box, so a percentage box re-measured on
+  every layout pass made the boards visibly jump as they mounted.
+- **Ring toss sizes from the CANVAS, not the root.** The score line above and
+  the fullscreen control below take part of the root's height; sizing to the
+  root drew the toy's base — and the pump button with it — past the bottom of
+  the visible canvas, where it could not be clicked.
+- **Its forces scale with tank height**, not in absolute pixels, so the physics
+  plays the same at 190px on the wall and in fullscreen.
+- The pump and the side jets are **drawn on the toy** and hit-tested on the
+  canvas; the two `.ring__pump-a11y` buttons exist only for keyboard and
+  screen-reader access.
+- `__ring.state()` on the scene root exposes the live simulation (seating,
+  score, both jets, button geometry) so the physics is verified against real
+  state rather than by reading pixels.
 
 ## The screenshot loop
 
@@ -115,7 +141,7 @@ of memory". Only the WIC path in `heic-to-jpg.ps1` works.
 
 ## Projects on the wall
 
-Six works. Sources in `assets-src/<folder>/`.
+Seven works. Sources in `assets-src/<folder>/`.
 
 | Work | Folder | Notes |
 | --- | --- | --- |
@@ -124,7 +150,8 @@ Six works. Sources in `assets-src/<folder>/`.
 | Wave energy converter | `wave/` | inside / base views. 1st place, highest measured wattage. |
 | SMC execution system | `smc-bot/` | Jarvis operator display. |
 | Net-Zero shipping container | — | Apricot Lane Farms, real client, ADA + net-zero CO₂. **No image yet** — currently borrows the capstone drawing. |
-| Campus Native | `campus-native/` | Transparent logo only. **Needs a screenshot of the live site**; currently borrows the Nicaragua map. |
+| Campus Native | `campus-native/` | Transparent logo only, shown whole on the mat colour (`fit: "contain"` in the manifest). **Still wants a screenshot of the live site.** |
+| Water distribution system | `nicaragua/` | Gravity-fed network, tank siting on the site survey. |
 
 Deliberately **not** on the wall: Doorknob-Inator and the noodle bridge (too
 slight as works). The noodle bridge lives in the awards room instead.
