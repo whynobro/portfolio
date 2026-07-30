@@ -61,23 +61,39 @@ const MANIFEST = [
   { name: "water-site", src: "assets-src/nicaragua/system-on-site.png", width: 1400, quality: 70 },
 
   // --- Campus Native ---
-  // The logo, on the brand's own dark green, until a screenshot of the live
-  // site arrives: the map that stood in before was the Nicaragua tank slide,
-  // which belongs to a different project entirely.
+  // The live marketplace at campusnative.com, captured by scripts/shoot-campus.mjs
+  // and shot at 3:2 so it needs no crop. The logo hung here before, which showed
+  // the brand rather than the software the label claims is in production.
   {
     name: "campus-logo",
-    src: "assets-src/campus-native/logo-transparent.png",
-    width: 1200,
-    height: 900,
-    fit: "contain",
-    // A warm off-white, not the brand green: the mark IS that green, so on its
-    // own colour it disappeared entirely.
-    background: "#f2eee5",
-    quality: 72,
+    src: "assets-src/campus-native/site-home.png",
+    width: 1500,
+    height: 1000,
+    quality: 74,
   },
 
   // --- SMC execution system ---
-  { name: "bot-display", src: "assets-src/smc-bot/jarvis-display.jpg", width: 1200, quality: 70 },
+  // The operator dashboard, captured by scripts/shoot-jarvis.mjs, which composes
+  // the frame to exclude account state. Monospace tabular data on a near-black
+  // ground, so quality runs higher than the photographs: AVIF at 70 puts visible
+  // mosquito noise around the type, and `contain` keeps the table's right-hand
+  // FILL column from being cropped off by an attention crop.
+  // The capture is ~2:1 but every frame on the wall is 3:2 and the works
+  // subgrid onto shared hanging and caption lines, so a one-off aspect ratio
+  // would break the row. `contain` onto a 3:2 canvas letterboxes it on the
+  // dashboard's own near-black ground instead — `cover` would crop a quarter off
+  // the sides, taking the TIME and FILL columns with it.
+  {
+    name: "bot-display",
+    src: "assets-src/smc-bot/jarvis-operator.png",
+    width: 1800,
+    height: 1200,
+    fit: "contain",
+    // Sampled from the capture's own corner, not guessed, so the letterbox is
+    // invisible against the dashboard's ground.
+    background: "#05080d",
+    quality: 82,
+  },
 ];
 
 const only = process.argv[2];

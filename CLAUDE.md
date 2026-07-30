@@ -130,6 +130,8 @@ src/scenes/{tictactoe,ringtoss}/   SceneModule: mount/resize/dispose/renderStati
 src/styles/                    tokens, base, layout, frame, chrome, games
 scripts/prep-frame.mjs         frame PNG -> border-image + measured slice
 scripts/prep-images.mjs        manifest-driven raster -> AVIF + JPEG fallback
+scripts/shoot-jarvis.mjs       live bot dashboard -> a work (composed, see above)
+scripts/shoot-campus.mjs       campusnative.com -> a work
 scripts/heic-to-jpg.ps1        iPhone HEIC -> JPEG (see note below)
 scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
 docs/german.md                 German terminology, numbers, layout rules
@@ -141,20 +143,29 @@ of memory". Only the WIC path in `heic-to-jpg.ps1` works.
 
 ## Projects on the wall
 
-Seven works. Sources in `assets-src/<folder>/`.
+Six works. Sources in `assets-src/<folder>/`.
 
 | Work | Folder | Notes |
 | --- | --- | --- |
 | CNC-milled putter | `putter/` | 11 converted photos: CAD → in the vise → in hand → on the green. The strongest sequence on the site. Capstone drawing has a mint-green slide background baked in that still needs masking. |
 | Chameleon Ramps | `ramps/` | 11 product photos. `p4` (Beachside Bank on wet rock) and `p9` (quarter pipe against foliage) are the strongest. |
 | Wave energy converter | `wave/` | inside / base views. 1st place, highest measured wattage. |
-| SMC execution system | `smc-bot/` | Jarvis operator display. |
-| Net-Zero shipping container | — | Apricot Lane Farms, real client, ADA + net-zero CO₂. **No image yet** — currently borrows the capstone drawing. |
-| Campus Native | `campus-native/` | Transparent logo only, shown whole on the mat colour (`fit: "contain"` in the manifest). **Still wants a screenshot of the live site.** |
+| SMC execution system | `smc-bot/` | Jarvis operator display, captured from the live dashboard over Tailscale by `scripts/shoot-jarvis.mjs`. **Account figures are never published** — see the rule below. |
+| Campus Native | `campus-native/` | The live site at <https://www.campusnative.com>, captured by `scripts/shoot-campus.mjs`. The logo it replaced showed the brand, not the software the label calls live. |
 | Water distribution system | `nicaragua/` | Gravity-fed network, tank siting on the site survey. |
 
-Deliberately **not** on the wall: Doorknob-Inator and the noodle bridge (too
-slight as works). The noodle bridge lives in the awards room instead.
+Deliberately **not** on the wall: the Net-Zero shipping container (removed at
+Michael's request, 2026-07-29), Doorknob-Inator and the noodle bridge (the last
+two too slight as works). The noodle bridge lives in the awards room instead.
+
+**The execution system's dashboard is a live real-money display, so no capture
+of it may publish account state** — realized/unrealized P&L, cash balance,
+per-analyst win rates, the account ID. Shoot the architecture instead (masthead,
+link status, position table, analyst grid), and never retouch a figure into a
+better one: an edited P&L on a portfolio is a fabricated financial record, which
+is a firing-and-rescinded-offer problem rather than a design choice. The
+verifiable claims (1553 tests, options live, worst-case parameter selection over
+two disjoint windows) are what the label carries.
 
 Open request: a **putter STL** for a rotating 3D piece in a frame. Not on the
 machine — must come from Fusion 360.
@@ -184,6 +195,8 @@ npm run shots        # screenshot loop (dev server must be running)
 npm run verify:ttt   # prove the tic-tac-toe engine never loses
 node scripts/prep-images.mjs [name]   # whole manifest, or one entry
 node scripts/prep-frame.mjs           # rebuild the frame border-image
+node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
+node scripts/shoot-campus.mjs         # re-shoot campusnative.com
 ```
 
 ## Deploy

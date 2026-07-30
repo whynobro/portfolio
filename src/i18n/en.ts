@@ -71,10 +71,6 @@ export const en = {
   "proj.bot.body":
     "A Python system that ingests live data and executes autonomously, with parameters chosen on their worst case across two disjoint validation windows rather than their best.",
   "proj.bot.meta": "options live",
-  "proj.container.title": "Net-Zero Shipping Container",
-  "proj.container.body":
-    "An L-shaped modular dwelling for a real client, designed for net-zero CO₂ and ADA accessibility, taken from brief to deliverable.",
-  "proj.container.meta": "Apricot Lane Farms",
   "proj.campus.title": "Campus Native",
   "proj.campus.body":
     "A production marketplace for student-led campus tours: sixteen data models and payment handling, with double-booking prevented by a database constraint rather than application logic.",

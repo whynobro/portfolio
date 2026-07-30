@@ -79,10 +79,6 @@ export const de = {
   "proj.bot.body":
     "Ein Python-System, das Live-Daten aufnimmt und autonom ausführt. Die Parameter wurden nach ihrem schlechtesten Ergebnis aus zwei disjunkten Validierungsfenstern gewählt, nicht nach ihrem besten.",
   "proj.bot.meta": "Optionen live",
-  "proj.container.title": "Netto-Null-Wohncontainer",
-  "proj.container.body":
-    "Ein L-förmiges modulares Wohnmodul für einen realen Kunden, ausgelegt auf netto null CO₂ und Barrierefreiheit nach ADA, von der Aufgabenstellung bis zur Übergabe.",
-  "proj.container.meta": "Apricot Lane Farms",
   "proj.campus.title": "Campus Native",
   "proj.campus.body":
     "Ein produktiver Marktplatz für studentisch geführte Campus-Touren: sechzehn Datenmodelle und Zahlungsabwicklung. Doppelbuchungen verhindert eine Datenbank-Bedingung, nicht die Anwendungslogik.",
