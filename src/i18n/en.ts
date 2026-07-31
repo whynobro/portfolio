@@ -202,6 +202,8 @@ export const en = {
   "alt.putter.inuse": "The putter in use at Westlake Golf Course",
   "alt.putter.drawing": "The dimensioned engineering drawing",
   "cap.putter.cad": "The model, before any of it existed in metal.",
+  "putter.aria": "The putter head in three dimensions. Drag, or use the arrow keys, to turn it.",
+  "cap.putter.stl": "The part itself, from the capstone's own model. Drag to turn it.",
   "cap.putter.cam": "The CAM simulation: every toolpath the single fixture had to reach.",
   "cap.putter.machining": "Mid-cut on the 4-axis HAAS.",
   "cap.putter.inhand": "The scooping face, the feature the geometry was built around.",
@@ -217,6 +219,7 @@ export const en = {
   "cap.ramps.alt2": "From the current range.",
 
   "alt.wave.hero": "The wave energy converter's internal mechanism",
+  "cap.wave.inside": "The built prototype: the rack and its housing.",
   "alt.wave.base": "The converter's base and mounting",
   "cap.wave.base": "The base, machined in-house on the Bridgeport.",
   "alt.wave.section": "A cutaway of the housing: the rack running between two pinion stages",

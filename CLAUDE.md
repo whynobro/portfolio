@@ -146,6 +146,7 @@ scripts/prep-images.mjs        manifest-driven raster -> AVIF + JPEG fallback
 scripts/shoot-jarvis.mjs       live bot dashboard -> a work (composed, see above)
 scripts/shoot-campus.mjs       campusnative.com -> a work
 scripts/heic-to-jpg.ps1        iPhone HEIC -> JPEG (see note below)
+scripts/prep-mesh.mjs          putter STL -> quantised inline mesh
 scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
 docs/german.md                 German terminology, numbers, layout rules
 ```
@@ -180,8 +181,13 @@ is a firing-and-rescinded-offer problem rather than a design choice. The
 verifiable claims (1553 tests, options live, worst-case parameter selection over
 two disjoint windows) are what the label carries.
 
-Open request: a **putter STL** for a rotating 3D piece in a frame. Not on the
-machine — must come from Fusion 360.
+The putter room carries a **rotating 3D piece** built from the capstone's own
+STL. `scripts/prep-mesh.mjs` turns the 427 KB binary STL into a quantised
+uint16 mesh (200 KB base64) that the bundler inlines as code; the scene is a
+z-buffered software rasteriser on a 2D canvas, NOT WebGL, so there is no shader
+pipeline, no context-loss path and nothing to load. A painter's-algorithm sort
+was tried first and cannot work here: the scooping cavity's triangles genuinely
+interleave in depth, so only a per-pixel test resolves them.
 
 ## Facts
 

@@ -60,6 +60,12 @@ type Project = {
    * three-up prints would make it unreadable.
    */
   poster?: Shot;
+  /**
+   * A scene id from the scene registry, mounted under the hero. The putter has
+   * one: its own STL, turning, which is the only place on the site where a part
+   * can be inspected rather than looked at.
+   */
+  scene?: { id: string; capKey: TranslationKey };
 };
 
 const PROJECTS: Project[] = [
@@ -79,6 +85,7 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.approach", bodyKeys: ["case.putter.approach1", "case.putter.approach2"] },
       { hKey: "case.h.result", bodyKeys: ["case.putter.outcome"] },
     ],
+    scene: { id: "putter", capKey: "cap.putter.stl" },
     gallery: [
       {
         img: "putter-cad",
@@ -161,7 +168,17 @@ const PROJECTS: Project[] = [
     slug: "wave",
     titleKey: "proj.wave.title",
     ledeKey: "case.wave.lede",
-    hero: { img: "wave-inside", w: 600, h: 800, aspect: "frame--photo", altKey: "alt.wave.hero" },
+    // The cutaway leads, not a photograph: it is the only picture that shows
+    // what the machine actually DOES, and the two photographs of the built
+    // prototype are both low-resolution phone shots that read poorly at hero
+    // size. They follow it as prints.
+    hero: {
+      img: "wave-section",
+      w: 1189,
+      h: 657,
+      aspect: "frame--landscape",
+      altKey: "alt.wave.section",
+    },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.wave.role" },
       { labelKey: "case.spec.tools", valueKey: "case.wave.tools" },
@@ -174,15 +191,15 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.wave.outcome"] },
     ],
     gallery: [
-      { img: "wave-base", w: 360, h: 480, aspect: "frame--photo", altKey: "alt.wave.base", capKey: "cap.wave.base" },
       {
-        img: "wave-section",
-        w: 1189,
-        h: 657,
-        aspect: "frame--landscape",
-        altKey: "alt.wave.section",
-        capKey: "cap.wave.section",
+        img: "wave-inside",
+        w: 600,
+        h: 800,
+        aspect: "frame--photo",
+        altKey: "alt.wave.hero",
+        capKey: "cap.wave.inside",
       },
+      { img: "wave-base", w: 360, h: 480, aspect: "frame--photo", altKey: "alt.wave.base", capKey: "cap.wave.base" },
     ],
     poster: {
       img: "wave-poster",
@@ -357,6 +374,25 @@ function render(slug: string): void {
     body.append(el("h2", "case__h", t(section.hKey)));
     for (const key of section.bodyKeys) body.append(el("p", "case__p", t(key)));
   }
+  // The turning part sits under the hero, in the picture column, so the room
+  // reads as one work seen two ways rather than as a gallery with a gadget in
+  // it. The scene runtime mounts it when the view is revealed.
+  if (project.scene) {
+    const figure = document.createElement("figure");
+    figure.className = "case__scene";
+
+    const stage = document.createElement("div");
+    stage.className = "putter";
+    stage.dataset["scene"] = project.scene.id;
+    figure.append(stage);
+
+    const caption = document.createElement("figcaption");
+    caption.className = "case__caption case__caption--scene";
+    caption.textContent = t(project.scene.capKey);
+    figure.append(caption);
+    top.append(figure);
+  }
+
   // A live site is evidence, not a claim: the two rooms whose work IS a running
   // product link straight to it, under the text that describes it.
   if (project.link) {

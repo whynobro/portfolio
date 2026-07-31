@@ -208,6 +208,8 @@ export const de = {
   "alt.putter.inuse": "Der Putter im Einsatz auf dem Westlake Golf Course",
   "alt.putter.drawing": "Die bemaßte technische Zeichnung",
   "cap.putter.cad": "Das Modell, bevor es das Bauteil in Metall gab.",
+  "putter.aria": "Der Putterkopf in drei Dimensionen. Zum Drehen ziehen oder die Pfeiltasten verwenden.",
+  "cap.putter.stl": "Das Bauteil selbst, aus dem Modell des Abschlussprojekts. Zum Drehen ziehen.",
   "cap.putter.cam": "Die CAM-Simulation: jede Bahn, die die eine Aufspannung erreichen musste.",
   "cap.putter.machining": "Während der Bearbeitung auf der 4-Achs-HAAS.",
   "cap.putter.inhand": "Die Schöpffläche, das Merkmal, um das die Geometrie gebaut ist.",
@@ -223,6 +225,7 @@ export const de = {
   "cap.ramps.alt2": "Aus der aktuellen Produktreihe.",
 
   "alt.wave.hero": "Der innere Mechanismus des Wellenenergie-Wandlers",
+  "cap.wave.inside": "Der gebaute Prototyp: die Zahnstange und ihr Gehäuse.",
   "alt.wave.base": "Grundplatte und Lagerung des Wandlers",
   "cap.wave.base": "Die Grundplatte, im Eigenbau auf der Bridgeport gefertigt.",
   "alt.wave.section": "Schnittdarstellung des Gehäuses: die Zahnstange zwischen zwei Ritzelstufen",

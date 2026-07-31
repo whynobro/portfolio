@@ -83,14 +83,36 @@ function show(route: Route, opts: { focus: boolean }): void {
     target.focus({ preventScroll: true });
   }
 
-  // Leaving a room returns the visitor to the piece they clicked rather than to
-  // the top of a long wall. Only when arriving at the collection itself, and
-  // only once, a later visit to #/work should start at the top.
-  if (route.id === "view-home" && path.startsWith("/work") && lastSlug) {
-    const work = document.querySelector<HTMLElement>(`a[href="#/work/${lastSlug}"]`);
+  /*
+   * `#/work` means the collection, so it lands on the collection: the section's
+   * own heading at the top of the screen.
+   *
+   * This used to centre the work the visitor had clicked, which put them 900px
+   * BELOW that heading, in the middle of the grid with no title in view. The
+   * effect was a "back" button that looked like it had done nothing, or worse,
+   * had jumped somewhere arbitrary. Landing on the heading is the behaviour the
+   * link's own label promises.
+   *
+   * The clicked work is still brought back into view, but by highlighting where
+   * it sits rather than by scrolling past the heading to reach it.
+   */
+  if (route.id === "view-home" && path.startsWith("/work")) {
+    const section = document.getElementById("work");
+    const clicked = lastSlug
+      ? document.querySelector<HTMLElement>(`a[href="#/work/${lastSlug}"]`)
+      : null;
     lastSlug = null;
-    if (work) {
-      work.scrollIntoView({ block: "center", behavior: "instant" as ScrollBehavior });
+
+    if (section) {
+      section.scrollIntoView({ block: "start", behavior: "instant" as ScrollBehavior });
+      // The masthead is sticky, so `start` tucks the heading underneath it.
+      window.scrollBy({ top: -80, behavior: "instant" as ScrollBehavior });
+      // Mark the piece just visited so returning to a wall of six says which one
+      // was open, without moving the page away from the heading.
+      for (const el of document.querySelectorAll("[data-returned]")) {
+        el.removeAttribute("data-returned");
+      }
+      clicked?.setAttribute("data-returned", "");
       return;
     }
   }

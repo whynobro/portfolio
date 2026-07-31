@@ -80,11 +80,16 @@
     gap: var(--s-12);
     align-items: start;
   }
-  /* The hero is sticky so it stays with the reader while the text beside it
+  /*
+   * The hero is sticky so it stays with the reader while the text beside it
    * scrolls: in a room about one object, the object should not leave the
-   * screen. `align-self: start` is what gives the sticky element room to move
-   * inside its own grid area. */
-  .case__top > .frame {
+   * screen.
+   *
+   * NOT sticky in a room that also has a turning part below the hero: a sticky
+   * frame lifts out of the flow and sits ON TOP of whatever follows it in the
+   * same column, which hid the model completely.
+   */
+  .case__top:not(:has(.case__scene)) > .frame {
     position: sticky;
     top: calc(var(--masthead-h, 64px) + var(--s-6));
   }
@@ -147,6 +152,47 @@
   font-size: var(--t-base);
   line-height: var(--lh-body);
   color: var(--ink-mute);
+}
+
+/* ---- The part, turning --------------------------------------------------- */
+/*
+ * Sits under the hero in the picture column. A fixed aspect box, so the canvas
+ * has a real size at mount: a scene measured at 0x0 gets a 1px backing store,
+ * which is the bug the games hit on the entrance.
+ */
+.case__scene {
+  margin: var(--s-6) 0 0;
+  grid-column: 1;
+}
+@media (max-width: 859px) {
+  .case__scene {
+    grid-column: auto;
+  }
+}
+
+.putter {
+  aspect-ratio: 4 / 3;
+  inline-size: 100%;
+  background: var(--wall-deep);
+  box-shadow: inset 0 0 0 1px rgba(20, 17, 14, 0.1);
+  /* The drag gesture is the scene's, not the browser's. */
+  touch-action: none;
+  cursor: grab;
+}
+.putter:active {
+  cursor: grabbing;
+}
+.putter__canvas {
+  display: block;
+}
+.putter:focus-within {
+  outline: 2px solid var(--gilt);
+  outline-offset: 2px;
+}
+
+.case__caption--scene {
+  text-align: center;
+  margin-inline: auto;
 }
 
 /* ---- A link to the live thing -------------------------------------------- */
@@ -229,10 +275,17 @@
     grid-template-rows: subgrid;
     grid-row: span 2;
   }
-  /* Images sit at the BOTTOM of their row, so the prints share a hanging line
-   * the way the works on the wall do. */
+  /*
+   * Prints are CENTRED in their row rather than hung from its bottom edge.
+   *
+   * `align-self: end` gave a shared baseline, which is right on the wall where
+   * every work is the same shape. Here a row can hold a tall 3:4 photograph
+   * beside a wide 16:9 cutaway, and bottom-aligning them left the shorter one
+   * floating at the foot of a tall row with all the empty space above it. That
+   * reads as a mistake. Centred, the two sit on a common axis instead.
+   */
   .case__plate > .case__img {
-    align-self: end;
+    align-self: center;
   }
 }
 

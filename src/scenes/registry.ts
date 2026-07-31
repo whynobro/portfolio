@@ -11,6 +11,7 @@ import type { SceneFactory } from "./types";
 export const REGISTRY: Record<string, () => Promise<{ default: SceneFactory }>> = {
   tictactoe: () => import("./tictactoe/index"),
   ringtoss: () => import("./ringtoss/index"),
+  putter: () => import("./putter/index"),
 };
 
 export function hasScene(id: string): boolean {
