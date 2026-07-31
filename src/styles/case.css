@@ -89,7 +89,7 @@
    * frame lifts out of the flow and sits ON TOP of whatever follows it in the
    * same column, which hid the model completely.
    */
-  .case__top:not(:has(.case__scene)) > .frame {
+  .case__top:not(:has(.case__scene)) > .case__pictures > .frame {
     position: sticky;
     top: calc(var(--masthead-h, 64px) + var(--s-6));
   }
@@ -162,12 +162,6 @@
  */
 .case__scene {
   margin: var(--s-6) 0 0;
-  grid-column: 1;
-}
-@media (max-width: 859px) {
-  .case__scene {
-    grid-column: auto;
-  }
 }
 
 .putter {

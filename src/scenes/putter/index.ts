@@ -36,7 +36,12 @@ export default function createPutterScene(): SceneModule {
   let zbuf: Float32Array | null = null;
   let image: ImageData | null = null;
 
-  let angle = 0.6;
+  /**
+ * The starting angle presents the scooping face to the viewer. At 0.6 the part
+ * showed its plain back edge, which is the one view that says nothing about the
+ * design.
+ */
+let angle = 3.9;
   /** Dragging takes over from the idle turn, and keeps its momentum after. */
   let velocity = 0;
   let dragging = false;
@@ -47,15 +52,20 @@ export default function createPutterScene(): SceneModule {
   const LX = -0.42, LY = -0.66, LZ = 0.62;
 
   function project(): void {
-    const s = Math.min(width, height) * 1.05;
+    const s = Math.min(width, height) * 0.82;
     const cxp = width / 2;
     const cyp = height / 2;
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
-    // A gentle tilt so the scooping face reads rather than being edge-on. The
-    // Z-up-to-Y-down correction is the negated Y in the projection below, not
-    // this angle.
-    const TILT = 0.55;
+    /*
+     * A gentle tilt DOWN onto the part, so the top face and the scooping
+     * cavity both read.
+     *
+     * Negative. With the projection's Y flip in place, a positive tilt raises
+     * the camera below the part and shows the floor of the scoop pocket, which
+     * is the one surface a putter never presents to anyone.
+     */
+    const TILT = -0.55;
     const ct = Math.cos(TILT);
     const st = Math.sin(TILT);
 

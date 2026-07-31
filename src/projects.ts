@@ -354,7 +354,16 @@ function render(slug: string): void {
   // other. Keeping the text in the same grid as the work is what stops the
   // right-hand side of the room being empty wall for its entire height.
   const top = el("div", "case__top");
-  top.append(framed(project.hero));
+
+  /*
+   * The picture column holds the hero AND anything shown with it, as one grid
+   * cell. Appending the turning part straight to the grid made it the SECOND
+   * cell, which pushed the whole description down into row two and left the
+   * text no longer beside the work it describes.
+   */
+  const pictures = el("div", "case__pictures");
+  pictures.append(framed(project.hero));
+  top.append(pictures);
 
   const column = el("div", "case__column");
 
@@ -390,7 +399,7 @@ function render(slug: string): void {
     caption.className = "case__caption case__caption--scene";
     caption.textContent = t(project.scene.capKey);
     figure.append(caption);
-    top.append(figure);
+    pictures.append(figure);
   }
 
   // A live site is evidence, not a claim: the two rooms whose work IS a running
