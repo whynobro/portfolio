@@ -100,6 +100,8 @@ export const de = {
   "case.h.brief": "Die Aufgabe",
   "case.h.approach": "Das Vorgehen",
   "case.h.result": "Das Messergebnis",
+  "case.link.ramps": "chameleonramps.com aufrufen",
+  "case.link.campus": "campusnative.com aufrufen",
 
   // CNC-Putter
   "case.putter.lede":
@@ -136,18 +138,18 @@ export const de = {
   // Wellenenergie-Wandler
   "case.wave.lede":
     "Ein Zahnstangen-Ritzel-Generator, der die Hubbewegung einer Welle in Drehung und die Drehung in Strom wandelt.",
-  "case.wave.role": "Konstruktion und Fertigung",
+  "case.wave.role": "Konstruktion und Fertigung, Team aus fünf Personen",
   "case.wave.tools": "Fusion 360 · AutoCAD · Bridgeport-Fräse",
   "case.wave.material": "Stahl und Aluminium, spanend gefertigt",
-  "case.wave.result": "1. Platz",
+  "case.wave.result": "15 V pro Motor",
   "case.wave.brief":
     "Drei Teams, eine Aufgabe: die größte elektrische Leistung aus Wellenbewegung. Verglichen wurde gemessen, nicht argumentiert.",
   "case.wave.approach1":
     "Ein Schwimmer treibt eine senkrechte Zahnstange, die Zahnstange dreht ein Ritzel, das Ritzel den Generator. Der Aufbau ist bewusst einfach: Jede weitere Stufe zwischen Welle und Anker verliert Energie durch Reibung.",
   "case.wave.approach2":
-    "Alle Bauteile entstanden im Eigenbau auf einer Bridgeport-Fräse. Die Toleranzen mussten also solche sein, die sich tatsächlich einhalten ließen. Ein klemmender Zahnstangentrieb wandelt gar nichts.",
+    "Alle Bauteile entstanden im Eigenbau auf einer Bridgeport-Fräse. Die Toleranzen mussten also solche sein, die sich tatsächlich einhalten ließen. Ein klemmender Zahnstangentrieb wandelt gar nichts. Die erste Übersetzung war falsch gewählt: Der 50-min⁻¹-Motor kam nicht dagegen an, daher der Wechsel auf 100 min⁻¹.",
   "case.wave.outcome":
-    "Die Maschine erreichte die höchste gemessene Leistung aller Teams und gewann den 1. Platz.",
+    "Der Prototyp lieferte 15 Volt pro Motor im Maßstab 1:12, hochgerechnet 360 Volt bei voller Baugröße. Das war die höchste gemessene Leistung der drei Teams und gewann den 1. Platz.",
 
   // Ausführungssystem
   "case.bot.lede":
@@ -223,6 +225,10 @@ export const de = {
   "alt.wave.hero": "Der innere Mechanismus des Wellenenergie-Wandlers",
   "alt.wave.base": "Grundplatte und Lagerung des Wandlers",
   "cap.wave.base": "Die Grundplatte, im Eigenbau auf der Bridgeport gefertigt.",
+  "alt.wave.section": "Schnittdarstellung des Gehäuses: die Zahnstange zwischen zwei Ritzelstufen",
+  "cap.wave.section": "Der Schnitt: eine Zahnstange, zwei Ritzelstufen, darauf beruht alles.",
+  "alt.wave.poster": "Das Capstone-Poster des Based-Sea WEC: Aufgabe, Vorgehen, Probleme, Fazit",
+  "cap.wave.poster": "Das Capstone-Poster, vorgestellt an der Oaks Christian School, Mai 2023.",
 
   "alt.bot.hero": "Die Betriebsanzeige: Broker-Verbindung und ausgeführte Orders",
 

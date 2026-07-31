@@ -94,6 +94,8 @@ export const en = {
   "case.h.brief": "The brief",
   "case.h.approach": "The approach",
   "case.h.result": "What it measured",
+  "case.link.ramps": "Visit chameleonramps.com",
+  "case.link.campus": "Visit campusnative.com",
 
   // CNC putter
   "case.putter.lede":
@@ -130,18 +132,18 @@ export const en = {
   // Wave energy converter
   "case.wave.lede":
     "A rack-and-pinion generator that turns the up-and-down of a wave into rotation, and rotation into current.",
-  "case.wave.role": "Design and manufacture",
+  "case.wave.role": "Design and manufacture, team of five",
   "case.wave.tools": "Fusion 360 · AutoCAD · Bridgeport mill",
   "case.wave.material": "Machined steel and aluminium",
-  "case.wave.result": "1st place",
+  "case.wave.result": "15 V per motor",
   "case.wave.brief":
     "Three teams, one problem: get the most electrical power out of wave oscillation. The comparison was measured, not argued.",
   "case.wave.approach1":
     "A float drives a vertical rack; the rack turns a pinion; the pinion drives the generator. The mechanism is deliberately plain, because every extra stage between the wave and the armature is another place to lose energy to friction.",
   "case.wave.approach2":
-    "Every component was machined in-house on a Bridgeport mill, which meant the tolerances had to be ones we could actually hold. A rack and pinion that binds converts nothing at all.",
+    "Every component was machined in-house on a Bridgeport mill, which meant the tolerances had to be ones we could actually hold. A rack and pinion that binds converts nothing at all. The first gear ratio was wrong: the 50 rpm motor could not turn against it, so the design moved to 100 rpm.",
   "case.wave.outcome":
-    "The machine produced the highest measured wattage of the competing teams and took first place.",
+    "The prototype produced 15 volts per motor at 1:12 scale, which is 360 volts if the same arrangement is built full size. It was the highest measured output of the three competing teams and took first place.",
 
   // Execution system
   "case.bot.lede":
@@ -217,6 +219,10 @@ export const en = {
   "alt.wave.hero": "The wave energy converter's internal mechanism",
   "alt.wave.base": "The converter's base and mounting",
   "cap.wave.base": "The base, machined in-house on the Bridgeport.",
+  "alt.wave.section": "A cutaway of the housing: the rack running between two pinion stages",
+  "cap.wave.section": "The cutaway: one rack, two pinion stages, which is the whole idea.",
+  "alt.wave.poster": "The Based-Sea WEC capstone poster: task, strategy, problems and conclusions",
+  "cap.wave.poster": "The capstone poster, presented at Oaks Christian, May 2023.",
 
   "alt.bot.hero": "The operator display: broker link status and filled orders",
 

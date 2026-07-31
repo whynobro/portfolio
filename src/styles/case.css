@@ -149,6 +149,46 @@
   color: var(--ink-mute);
 }
 
+/* ---- A link to the live thing -------------------------------------------- */
+/*
+ * Two of the works are running products rather than descriptions of products,
+ * so the room links straight to them. Styled as a quiet outlined control, not a
+ * call to action: this is a gallery label pointing at the object, not a advert.
+ */
+.case__link {
+  display: inline-block;
+  margin-block-start: var(--s-6);
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gilt);
+  text-decoration: none;
+  border: 1px solid var(--gilt);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.case__link::after {
+  content: " ↗";
+}
+.case__link:hover {
+  background: var(--gilt);
+  color: #fff;
+}
+
+/* ---- A document at the foot of the room ---------------------------------- */
+/*
+ * Full width, because it is meant to be READ. In the three-up print grid the
+ * poster's body text would be about four pixels tall.
+ */
+.case__poster {
+  margin: var(--s-16) 0 0;
+}
+.case__caption--poster {
+  max-inline-size: none;
+  text-align: center;
+}
+
 /* ---- The rest of the sequence -------------------------------------------- */
 /*
  * UNFRAMED. Only the hero wears the carved moulding; these are the supporting
@@ -167,7 +207,16 @@
 }
 @media (min-width: 720px) {
   .case__gallery {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /*
+     * Fixed-width tracks rather than fractions, and the whole set of tracks
+     * centred. With `1fr` columns a trailing row of one or two prints stayed
+     * pinned left against an empty column, which reads as a mistake on a wall
+     * where everything else is deliberate. Sized tracks let `justify-content`
+     * centre whatever the last row happens to hold.
+     */
+    grid-template-columns: repeat(3, minmax(0, 300px));
+    justify-content: center;
+    justify-items: center;
     gap: var(--s-8) var(--s-6);
     /* Each print is a row of its own inside the grid: image, then caption, both
      * subgridded, so every image in a row bottoms out on the same line and
@@ -188,16 +237,40 @@
 }
 
 /*
+ * A row of two inside a three-track grid centres as a PAIR, which leaves a
+ * track-sized hole beside them and reads as a missing picture rather than as a
+ * deliberate arrangement. Galleries of one and two get their own track count.
+ */
+@media (min-width: 720px) {
+  .case__gallery:has(.case__plate:nth-child(1):nth-last-child(1)) {
+    grid-template-columns: minmax(0, 380px);
+  }
+  .case__gallery:has(.case__plate:nth-child(2):nth-last-child(1)) {
+    grid-template-columns: repeat(2, minmax(0, 330px));
+  }
+}
+
+/*
  * The white border is the print's own margin, not a mat: a few pixels of paper
- * around the image, with the hairline the frames use to catch a mat's bevel.
+ * around the image, over the wall.
+ *
+ * The edge has to be drawn, not implied. Four of these pictures are renders and
+ * drawings whose own content runs to white at the edge (the CAD model, the CAM
+ * simulation, the engineering drawing, the Nicaragua schematic), so a white
+ * border on a white image simply vanished and those prints read as edgeless
+ * beside the photographs. The inner line separates picture from paper; the
+ * outer one separates paper from wall.
  */
 .case__img {
   display: block;
   inline-size: 100%;
   block-size: auto;
   background: #fff;
-  padding: clamp(6px, 0.8vw, 10px);
-  box-shadow: 0 0 0 1px rgba(20, 17, 14, 0.12), 0 1px 2px rgba(20, 17, 14, 0.07);
+  padding: clamp(7px, 0.9vw, 12px);
+  box-shadow:
+    inset 0 0 0 1px rgba(20, 17, 14, 0.1),
+    0 0 0 1px rgba(20, 17, 14, 0.18),
+    0 1px 3px rgba(20, 17, 14, 0.1);
 }
 
 .case__caption {

@@ -100,6 +100,26 @@ const MANIFEST = [
   // since enlarging them only makes the softness bigger. Both want re-shooting.
   { name: "wave-inside", src: "assets-src/wave/wave-inside.jpg", width: 600, quality: 78 },
   { name: "wave-base", src: "assets-src/wave/wave-base.jpg", width: 360, quality: 80 },
+  // The cutaway of the mechanism: the rack running down between the two pinion
+  // stages, which is the whole idea and the one thing no photograph shows.
+  {
+    name: "wave-section",
+    src: "assets-src/wave/cross-section-clipart.jpg",
+    width: 1189,
+    fit: "contain",
+    background: "#ffffff",
+    quality: 80,
+  },
+  // The capstone poster, rendered from the PDF at 200dpi. It hangs at the foot
+  // of the room and has to stay READABLE at full width, so it keeps far more
+  // resolution than a photograph would and a much higher quality: this is dense
+  // black text on white, where AVIF's usual settings smear the serifs.
+  {
+    name: "wave-poster",
+    src: "assets-src/wave/capstone-poster.png",
+    width: 2600,
+    quality: 88,
+  },
   // Deliberately NOT here: assets-src/wave/wave-diagram.jpg. The source is a
   // 2.6 KB clip-art sketch and upscales to a blurry mess — the wave room shows
   // two real photographs instead. Worth asking Michael for the CAD.

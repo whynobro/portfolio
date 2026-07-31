@@ -53,6 +53,13 @@ type Project = {
   specs: Spec[];
   sections: { hKey: TranslationKey; bodyKeys: TranslationKey[] }[];
   gallery: Shot[];
+  /** A live site the work IS, rather than a description of one. */
+  link?: { href: string; labelKey: TranslationKey };
+  /**
+   * A document shown full width at the foot of the room, where the gallery's
+   * three-up prints would make it unreadable.
+   */
+  poster?: Shot;
 };
 
 const PROJECTS: Project[] = [
@@ -136,6 +143,7 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.approach", bodyKeys: ["case.ramps.approach1", "case.ramps.approach2"] },
       { hKey: "case.h.result", bodyKeys: ["case.ramps.outcome"] },
     ],
+    link: { href: "https://www.chameleonramps.com", labelKey: "case.link.ramps" },
     gallery: [
       {
         img: "ramps-quarter",
@@ -167,7 +175,23 @@ const PROJECTS: Project[] = [
     ],
     gallery: [
       { img: "wave-base", w: 360, h: 480, aspect: "frame--photo", altKey: "alt.wave.base", capKey: "cap.wave.base" },
+      {
+        img: "wave-section",
+        w: 1189,
+        h: 657,
+        aspect: "frame--landscape",
+        altKey: "alt.wave.section",
+        capKey: "cap.wave.section",
+      },
     ],
+    poster: {
+      img: "wave-poster",
+      w: 2600,
+      h: 1950,
+      aspect: "frame--slide",
+      altKey: "alt.wave.poster",
+      capKey: "cap.wave.poster",
+    },
   },
 
   {
@@ -205,6 +229,7 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.approach", bodyKeys: ["case.campus.approach1", "case.campus.approach2"] },
       { hKey: "case.h.result", bodyKeys: ["case.campus.outcome"] },
     ],
+    link: { href: "https://www.campusnative.com", labelKey: "case.link.campus" },
     gallery: [],
   },
 
@@ -332,6 +357,18 @@ function render(slug: string): void {
     body.append(el("h2", "case__h", t(section.hKey)));
     for (const key of section.bodyKeys) body.append(el("p", "case__p", t(key)));
   }
+  // A live site is evidence, not a claim: the two rooms whose work IS a running
+  // product link straight to it, under the text that describes it.
+  if (project.link) {
+    const link = document.createElement("a");
+    link.className = "case__link";
+    link.href = project.link.href;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = t(project.link.labelKey);
+    column.append(link);
+  }
+
   column.append(body);
   top.append(column);
 
@@ -366,6 +403,32 @@ function render(slug: string): void {
       gallery.append(figure);
     }
     host.append(gallery);
+  }
+
+  // The poster hangs full width at the foot: it is a document to be READ, and
+  // at a third of the width in the print grid its body text would be unusable.
+  if (project.poster) {
+    const shot = project.poster;
+    const figure = document.createElement("figure");
+    figure.className = "case__poster";
+
+    const img = document.createElement("img");
+    img.className = "case__img";
+    img.src = src(shot.img);
+    img.width = shot.w;
+    img.height = shot.h;
+    img.alt = t(shot.altKey);
+    img.loading = "lazy";
+    img.decoding = "async";
+    figure.append(img);
+
+    if (shot.capKey) {
+      const caption = document.createElement("figcaption");
+      caption.className = "case__caption case__caption--poster";
+      caption.textContent = t(shot.capKey);
+      figure.append(caption);
+    }
+    host.append(figure);
   }
 
   const foot = el("div", "case__foot");
