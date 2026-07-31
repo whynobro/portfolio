@@ -147,6 +147,7 @@ scripts/shoot-jarvis.mjs       live bot dashboard -> a work (composed, see above
 scripts/shoot-campus.mjs       campusnative.com -> a work
 scripts/heic-to-jpg.ps1        iPhone HEIC -> JPEG (see note below)
 scripts/prep-mesh.mjs          putter STL -> quantised inline mesh
+scripts/make-bot-poster.mjs    draws the bot poster, EN + DE, from real source
 scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
 docs/german.md                 German terminology, numbers, layout rules
 ```
@@ -164,7 +165,8 @@ Six works. Sources in `assets-src/<folder>/`.
 | CNC-milled putter | `putter/` | 11 converted photos, the Fusion CAM export, the STL behind the turning piece, and the capstone poster exported from `CapstonePoster_MichaelFischbach.pptx` (PowerPoint COM, 4x slide size, see the wave row for why posters are prepped at 2600px/q88). Capstone drawing still has a mint-green slide background baked in. **The poster says 3-axis HAAS; every label on the site says 4-axis. Unresolved, ask Michael.** |
 | Chameleon Ramps | `ramps/` | 11 product photos. `p4` (Beachside Bank on wet rock) and `p9` (quarter pipe against foliage) are the strongest. |
 | Wave energy converter | `wave/` | inside / base views, the cutaway, and the capstone poster rendered from `wec-report.pdf` at 200dpi. The poster hangs full width at the foot of the room and must stay readable, so it is the one image prepped at 2600px / q88. |
-| SMC execution system | `smc-bot/` | Jarvis operator display, captured from the live dashboard over Tailscale by `scripts/shoot-jarvis.mjs`. **Account figures are never published** — see the rule below. |
+| SMC execution system | `smc-bot/` | Poster DRAWN by `scripts/make-bot-poster.mjs` (SVG -> PNG, both languages, ~270 KB each as AVIF): the only poster on the site that is not a scan, so it is the only one that exists in German too, switched by a tab in the room. |
+| SMC execution system (capture) | `smc-bot/` | Jarvis operator display, captured from the live dashboard over Tailscale by `scripts/shoot-jarvis.mjs`. **Account figures are never published** — see the rule below. |
 | Campus Native | `campus-native/` | The live site at <https://www.campusnative.com>, captured by `scripts/shoot-campus.mjs`. The logo it replaced showed the brand, not the software the label calls live. |
 | Water distribution system | `nicaragua/` | Gravity-fed network, tank siting on the site survey. |
 
@@ -201,7 +203,7 @@ Sources disagree; these are current. The resume is stale on several points.
 - Wave energy converter: 1st place, highest measured output of three teams.
   **15 V per motor at 1:12 scale, 360 V scaled** (from the capstone poster,
   `assets-src/wave/wec-report.pdf`). A five-person team, so the room says so.
-- Chameleon Ramps: since 2019, 40+ products, **$50k revenue** (resume says $25k,
+- Chameleon Ramps: since 2019, 40+ products, **1358 orders fulfilled**, **$50k revenue** (resume says $25k,
   LinkedIn $30k; $50k is Michael's current figure).
 - Execution system: **1553 tests passing**, **options live, futures in demo**.
   Resume says "190 tests, paper trading" — badly understated.

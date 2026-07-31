@@ -21,6 +21,14 @@
   justify-content: space-between;
   gap: var(--s-4);
   padding-block: var(--s-4);
+  /*
+   * The bar WRAPS rather than overflowing. In German the nav measured 595px
+   * beside a 164px wordmark, so from 561px all the way to about 900px the
+   * masthead pushed the whole PAGE sideways: `scrollWidth` 823 against a 768
+   * viewport. Wrapping costs a second line at those widths and keeps the
+   * document from scrolling horizontally, which is the worse failure.
+   */
+  flex-wrap: wrap;
 }
 
 .masthead__name {
@@ -38,9 +46,14 @@
   align-items: center;
   gap: var(--s-4);
 }
-@media (min-width: 640px) {
+/* 1000px, not 900: at exactly 900 the German nav plus the wordmark still came
+ * to 903px against the viewport. */
+@media (min-width: 1000px) {
   .masthead__nav {
     gap: var(--s-8);
+  }
+  .masthead__nav a {
+    min-inline-size: 7ch;
   }
 }
 
@@ -55,8 +68,9 @@
   padding-block: var(--s-2);
   border-block-end: 1px solid transparent;
   transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
-  /* Sized from the longer German label so the bar never reflows on toggle. */
-  min-inline-size: 7ch;
+  /* Sized from the longer German label so the bar never reflows on toggle.
+   * Dropped below 900px, where reserving for German is what pushed the bar
+   * past the viewport in the first place. */
   text-align: center;
 }
 .masthead__nav a:hover,
@@ -70,6 +84,30 @@
 @media (max-width: 560px) {
   .masthead__nav a:not(.badge) {
     display: none;
+  }
+}
+
+/*
+ * Below ~420px the badge sheds its word and keeps only the rosette.
+ *
+ * German is the case that forces this: "AUSZEICHNUNGEN" beside the EN/DE
+ * toggle ran the masthead 101px past a 390px viewport, which scrolled the whole
+ * PAGE sideways, not just the bar. The badge keeps its `aria-label`, so the
+ * accessible name is unchanged and only the redundant visible text goes.
+ */
+@media (max-width: 420px) {
+  .badge span {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .badge {
+    padding-inline: var(--s-2);
   }
 }
 
@@ -287,7 +325,13 @@
 .facts__value {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: var(--t-xl);
+  /*
+   * Fluid, not fixed. At 900px the entrance splits into two columns and the
+   * figures get a 79px track, where a fixed --t-xl set "±0,05 mm" at 90px and
+   * pushed the whole PAGE 3px sideways. Clamping to the viewport lets the
+   * figures shrink at exactly the width where the column does.
+   */
+  font-size: clamp(1.25rem, 2.2vw, var(--t-xl));
   color: var(--ink);
   line-height: 1;
 }
@@ -299,6 +343,15 @@
   color: var(--ink-mute);
   /* German labels run longer; reserve two lines so the row never jumps. */
   min-block-size: 2.8em;
+  /*
+   * German compounds are single unbreakable tokens: "Produktivbetrieb" wanted
+   * 130px inside a 79px cell at 900px, and with nowhere to break it pushed the
+   * whole PAGE 3px sideways. Hyphenation gives it a legal break; the
+   * belt-and-braces `anywhere` catches any future compound the dictionary
+   * cannot hyphenate.
+   */
+  hyphens: auto;
+  overflow-wrap: anywhere;
 }
 
 /* ---- Buttons ------------------------------------------------------------- */

@@ -229,6 +229,51 @@
   text-align: center;
 }
 
+/* ---- The poster's own language tab --------------------------------------- */
+/*
+ * Sits above the poster it controls, with a line saying what it does. It is
+ * deliberately separate from the masthead's language switch: this one changes
+ * the poster only, and a control that looks like the site's would imply
+ * otherwise.
+ */
+.poster-tabs {
+  display: flex;
+  gap: 0;
+  margin-block-end: var(--s-2);
+}
+
+.poster-tabs__btn {
+  padding: var(--s-2) var(--s-4);
+  min-inline-size: 5ch;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--ink-mute);
+  background: transparent;
+  border: 1px solid var(--wall-line);
+  cursor: pointer;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.poster-tabs__btn + .poster-tabs__btn {
+  border-inline-start: none;
+}
+.poster-tabs__btn:hover {
+  color: var(--ink);
+}
+.poster-tabs__btn[aria-pressed="true"] {
+  background: var(--gilt);
+  border-color: var(--gilt);
+  color: #fff;
+}
+
+.poster-tabs__hint {
+  margin: 0 0 var(--s-4);
+  font-family: var(--font-sans);
+  font-size: var(--t-xs);
+  color: var(--ink-mute);
+}
+
 /* ---- The rest of the sequence -------------------------------------------- */
 /*
  * UNFRAMED. Only the hero wears the carved moulding; these are the supporting

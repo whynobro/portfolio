@@ -125,7 +125,7 @@ export const de = {
   "case.ramps.role": "Gründer · Konstruktion und Fertigung",
   "case.ramps.tools": "CAD · Formenbau · Betonguss",
   "case.ramps.material": "Gussbeton",
-  "case.ramps.result": "50.000 $ Umsatz",
+  "case.ramps.result": "1358 Bestellungen erfüllt",
   "case.ramps.brief":
     "Skate-Hindernisse im Miniaturformat, gegossen statt gedruckt, haltbar genug für die Tasche und den Außeneinsatz.",
   "case.ramps.approach1":
@@ -133,7 +133,7 @@ export const de = {
   "case.ramps.approach2":
     "Das Gießverfahren wurde über mehrere Jahre selbst entwickelt. Erst das machte die Produktreihe möglich. Beton verzeiht bei Mischung und Aushärtung wenig, und jedes Produkt, das hielt, lieferte den Hinweis für das nächste.",
   "case.ramps.outcome":
-    "Seit 2019 sind über vierzig Produkte auf den Markt gegangen, bei rund 50.000 $ Umsatz. Das Unternehmen läuft weiter.",
+    "Seit 2019 sind über vierzig Produkte auf den Markt gegangen und 1358 Bestellungen wurden erfüllt, bei rund 50.000 $ Umsatz. Das Unternehmen läuft weiter.",
 
   // Wellenenergie-Wandler
   "case.wave.lede":
@@ -235,6 +235,9 @@ export const de = {
   "alt.wave.poster": "Das Capstone-Poster des Based-Sea WEC: Aufgabe, Vorgehen, Probleme, Fazit",
   "cap.wave.poster": "Vorgestellt bei der Capstone Night der Oaks Christian School, Mai 2023.",
 
+  "alt.bot.poster": "Ein Poster des Ausführungssystems: der Weg einer Meldung von Discord bis zur ausgelösten Order, mit Parser, Absicherung und Positionsgröße",
+  "cap.bot.poster": "Das System als Poster: der Weg einer Meldung von der Chat-Nachricht zur ausgelösten Order.",
+  "cap.bot.posterHint": "EN / DE ändert nur die Sprache des Posters, nicht die der Seite.",
   "alt.bot.hero": "Die Betriebsanzeige: Broker-Verbindung und ausgeführte Orders",
 
   "alt.campus.hero": "Der Marktplatz Campus Native, live unter campusnative.com",

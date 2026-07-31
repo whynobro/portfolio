@@ -119,7 +119,7 @@ export const en = {
   "case.ramps.role": "Founder · design and production",
   "case.ramps.tools": "CAD · mould-making · casting",
   "case.ramps.material": "Cast concrete",
-  "case.ramps.result": "$50k revenue",
+  "case.ramps.result": "1358 orders fulfilled",
   "case.ramps.brief":
     "Miniature skate obstacles, cast rather than printed, that survive being thrown in a bag and used outdoors.",
   "case.ramps.approach1":
@@ -127,7 +127,7 @@ export const en = {
   "case.ramps.approach2":
     "The casting process was developed in-house over several years, which is what made the range possible. Concrete is unforgiving about cure and mix, and every product that survived taught the next one something about both.",
   "case.ramps.outcome":
-    "Over forty products have gone to market since 2019, with about $50k in revenue. The company still runs.",
+    "Over forty products have gone to market since 2019 and 1358 orders have been fulfilled, for about $50k in revenue. The company still runs.",
 
   // Wave energy converter
   "case.wave.lede":
@@ -229,6 +229,9 @@ export const en = {
   "alt.wave.poster": "The Based-Sea WEC capstone poster: task, strategy, problems and conclusions",
   "cap.wave.poster": "Presented at Capstone Night, Oaks Christian School, May 2023.",
 
+  "alt.bot.poster": "A poster of the execution system: the path an alert takes from Discord to a placed order, with the parser, safety and sizing stages",
+  "cap.bot.poster": "The system drawn as a poster: an alert's path from a chat message to a placed order.",
+  "cap.bot.posterHint": "EN / DE switches the poster's language only, not the site's.",
   "alt.bot.hero": "The operator display: broker link status and filled orders",
 
   "alt.campus.hero": "The Campus Native marketplace, live at campusnative.com",

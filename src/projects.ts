@@ -1,4 +1,4 @@
-import { t } from "./i18n";
+import { getLang, t } from "./i18n";
 import type { TranslationKey } from "./i18n/en";
 import { registerProjectRenderer, registerProjectRoutes } from "./router";
 
@@ -60,6 +60,18 @@ type Project = {
    * three-up prints would make it unreadable.
    */
   poster?: Shot;
+  /**
+   * A poster that exists in BOTH languages as two separate images, with a tab
+   * to switch between them. The bot's poster is drawn rather than scanned, so
+   * unlike the capstone posters it could be set in German as well; the tab
+   * changes only the poster, not the site.
+   */
+  posterPair?: {
+    en: Shot;
+    de: Shot;
+    capKey: TranslationKey;
+    hintKey: TranslationKey;
+  };
   /**
    * A scene id from the scene registry, mounted under the hero. The putter has
    * one: its own STL, turning, which is the only place on the site where a part
@@ -236,6 +248,12 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.bot.outcome"] },
     ],
     gallery: [],
+    posterPair: {
+      en: { img: "bot-poster-en", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },
+      de: { img: "bot-poster-de", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },
+      capKey: "cap.bot.poster",
+      hintKey: "cap.bot.posterHint",
+    },
   },
 
   {
@@ -481,6 +499,59 @@ function render(slug: string): void {
       caption.textContent = t(shot.capKey);
       figure.append(caption);
     }
+    host.append(figure);
+  }
+
+  /*
+   * A poster that exists in both languages, with a tab to switch between them.
+   *
+   * The tab is deliberately INDEPENDENT of the site's own language switch: a
+   * German-speaking reader may still want the English poster beside an English
+   * CV, and an English reader may want to see that the German exists. It opens
+   * on whichever language the site is in, then follows the reader's choice.
+   */
+  if (project.posterPair) {
+    const pair = project.posterPair;
+    const figure = document.createElement("figure");
+    figure.className = "case__poster";
+
+    const tabs = el("div", "poster-tabs");
+    const hint = el("p", "poster-tabs__hint", t(pair.hintKey));
+
+    const img = document.createElement("img");
+    img.className = "case__img";
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    const show = (lang: "en" | "de"): void => {
+      const shot = lang === "de" ? pair.de : pair.en;
+      img.src = src(shot.img);
+      img.width = shot.w;
+      img.height = shot.h;
+      img.alt = t(shot.altKey);
+      for (const b of tabs.querySelectorAll("button")) {
+        b.setAttribute("aria-pressed", String(b.dataset["posterLang"] === lang));
+      }
+    };
+
+    for (const lang of ["en", "de"] as const) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "poster-tabs__btn";
+      btn.dataset["posterLang"] = lang;
+      btn.textContent = lang.toUpperCase();
+      btn.addEventListener("click", () => show(lang));
+      tabs.append(btn);
+    }
+
+    figure.append(tabs, hint, img);
+
+    const caption = document.createElement("figcaption");
+    caption.className = "case__caption case__caption--poster";
+    caption.textContent = t(pair.capKey);
+    figure.append(caption);
+
+    show(getLang());
     host.append(figure);
   }
 

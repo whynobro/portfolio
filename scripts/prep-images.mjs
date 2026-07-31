@@ -176,6 +176,21 @@ const MANIFEST = [
   },
 
   // --- SMC execution system ---
+  // The two poster languages, drawn by scripts/make-bot-poster.mjs. Vector art
+  // rather than photography, so these compress far below the photo-dense
+  // capstone posters while staying readable at full width.
+  {
+    name: "bot-poster-en",
+    src: "assets-src/smc-bot/bot-poster.en.png",
+    width: 2600,
+    quality: 82,
+  },
+  {
+    name: "bot-poster-de",
+    src: "assets-src/smc-bot/bot-poster.de.png",
+    width: 2600,
+    quality: 82,
+  },
   // The operator dashboard, captured by scripts/shoot-jarvis.mjs, which composes
   // the frame to exclude account state. Monospace tabular data on a near-black
   // ground, so quality runs higher than the photographs: AVIF at 70 puts visible
