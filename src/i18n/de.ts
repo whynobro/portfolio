@@ -247,6 +247,9 @@ export const de = {
   "cap.bot.live": "Die Anzeige an dem Tag, an dem das System erstmals live am Broker lief.",
 
   "alt.campus.hero": "Der Marktplatz Campus Native, live unter campusnative.com",
+  "alt.campus.guides":
+    "Der Marktplatz mit Guides an der Cal Poly, jeweils mit Studienfach, Bewertung und Preis pro Tour",
+  "cap.campus.guides": "Guides an der Cal Poly, mit dem Preis, den jeder für eine Tour festlegt.",
 
   "alt.water.hero": "Das Verteilungssystem auf der Geländevermessung",
   "alt.water.map": "Das Netzschema: Quelle, zwei Tanks und dasselbe Netz mit Druckangaben",

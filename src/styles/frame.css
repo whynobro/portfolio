@@ -148,17 +148,28 @@
   min-block-size: 0;
 }
 /*
- * Sized in `em` so the mark tracks the title's own size at every breakpoint,
- * and pushed back onto the text baseline: an inline image sits on the baseline
- * by default, which leaves a round mark looking as though it floats above the
- * italic it labels.
+ * Sized to the TITLE'S CAP HEIGHT, so the mark is exactly as tall as the
+ * capitals beside it.
+ *
+ * `1em` is the full em box, which includes ascender and descender space no
+ * capital occupies: at 22px it drew the mark 18.4px against a cap height of
+ * 15px, and the logo stood visibly taller than the word next to it.
+ *
+ * NOT the `cap` unit, which looks like the right tool and is not: Chrome
+ * resolves `1cap` here to 13.75px (0.625em, its fallback ratio) rather than
+ * reading Cormorant Garamond's real metric. Measured from the font itself
+ * (`measureText('H').actualBoundingBoxAscent`), the ratio is 0.682.
+ *
+ * The `font-size` line matters as much as the ratio: the image is a sibling of
+ * the heading, not a child, so it inherits the wrapper's 16px and `0.682em`
+ * resolved against THAT (10.9px) rather than against the title's 22px. Taking
+ * the title's own size first makes the em mean what it reads as.
  */
 .label__mark {
   inline-size: auto;
-  block-size: 1.15em;
+  font-size: var(--t-lg);
+  block-size: 0.682em;
   flex: none;
-  position: relative;
-  inset-block-start: 0.14em;
   object-fit: contain;
 }
 

@@ -53,6 +53,12 @@ type Project = {
    * ARE companies carry one; the rest are projects and have no mark to show.
    */
   mark?: string;
+  /**
+   * Tints the room to the company's own palette, via `data-brand` on the view.
+   * Only for a work that IS a brand: the wall's gilt accent is the site's, and
+   * a room that borrows a client's colours everywhere would dilute it.
+   */
+  brand?: string;
   hero: Shot;
   /** The plate beside the hero: role, tools, materials, result. */
   specs: Spec[];
@@ -285,6 +291,7 @@ const PROJECTS: Project[] = [
     titleKey: "proj.campus.title",
     ledeKey: "case.campus.lede",
     mark: "campus-mark",
+    brand: "campus",
     hero: { img: "campus-logo", w: 1500, h: 1000, aspect: "frame--landscape", altKey: "alt.campus.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.campus.role" },
@@ -298,7 +305,17 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.campus.outcome"] },
     ],
     link: { href: "https://www.campusnative.com", labelKey: "case.link.campus" },
-    gallery: [],
+    gallery: [
+      {
+        img: "campus-guides",
+        w: 1600,
+        h: 1067,
+        aspect: "frame--landscape",
+        altKey: "alt.campus.guides",
+        capKey: "cap.campus.guides",
+      },
+    ],
+    galleryInPictures: true,
   },
 
   {
@@ -424,6 +441,11 @@ function render(slug: string): void {
   const host = document.getElementById("view-project");
   const project = bySlug.get(slug);
   if (!host || !project) return;
+
+  // A room that IS a brand is tinted to that brand's palette; every other room
+  // clears the attribute so a stale tint cannot survive navigation.
+  if (project.brand) host.dataset["brand"] = project.brand;
+  else delete host.dataset["brand"];
 
   const back = document.createElement("a");
   back.className = "case__back";

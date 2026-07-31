@@ -238,6 +238,9 @@ export const en = {
     "The operator display running live: the broker link, the analyst grid and the open options positions",
   "cap.bot.live": "The display on the day the system first ran live against the broker.",
 
+  "alt.campus.guides":
+    "The marketplace listing guides at Cal Poly, each with their major, rating and rate per tour",
+  "cap.campus.guides": "Guides listed at Cal Poly, with the rate each one sets for a tour.",
   "alt.campus.hero": "The Campus Native marketplace, live at campusnative.com",
 
   "alt.water.hero": "The distribution system on the site survey",

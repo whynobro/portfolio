@@ -254,9 +254,15 @@
   inline-size: 2.9rem;
   block-size: auto;
   align-self: flex-start;
-  /* Points back LEFT and down at the toy. The source curves down to the right,
-   * so it is mirrored horizontally and leaned to meet the tank. */
-  transform: scaleX(-1) rotate(-24deg);
+  /*
+   * Points back LEFT and down at the toy. The source curves down to the right,
+   * so it is mirrored horizontally and leaned to meet the tank.
+   *
+   * The mirror REVERSES the sense of the rotation: after `scaleX(-1)` a
+   * positive angle turns anticlockwise on screen. So 15 degrees clockwise is
+   * -24 - 15 = -39, not -9.
+   */
+  transform: scaleX(-1) rotate(-39deg);
 }
 .play-hint__text {
   font-family: var(--font-mono);

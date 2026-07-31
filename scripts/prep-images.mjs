@@ -174,6 +174,20 @@ const MANIFEST = [
     height: 1000,
     quality: 74,
   },
+  // The guides listing: the marketplace with real guides, real rates and the
+  // brand's own furniture (masthead, filter, cards). This is the screen that
+  // shows the thing works, where the home page only shows that it exists.
+  // `contain` on the site's own warm off-white, since the capture is 1537x718
+  // and a crop to 3:2 would take the masthead or the cards.
+  {
+    name: "campus-guides",
+    src: "assets-src/campus-native/guides-listing.png",
+    width: 1600,
+    height: 1067,
+    fit: "contain",
+    background: "#fdfbf5",
+    quality: 80,
+  },
 
   // --- The arrow pointing at the ring toss ---
   //

@@ -45,6 +45,33 @@
   margin-block-start: var(--s-2);
 }
 
+/* ---- Brand-tinted rooms -------------------------------------------------- */
+/*
+ * A room whose work IS a company takes that company's palette, by overriding
+ * the accent TOKENS rather than by restating any rule: the eyebrow, the plate's
+ * rule, the link, the back link and the focus ring all already draw from
+ * `--gilt`, so they follow at once and nothing can be missed.
+ *
+ * Campus Native's colours, read off the mark and the live site rather than
+ * guessed: a deep forest green (#2e4632 in the logo, #27453a on the site) and
+ * the warm sand it pairs with (#c8b285).
+ *
+ * `--measured` is deliberately NOT touched. The oxblood means "this figure was
+ * measured" everywhere on the site, and a room that recoloured it would be
+ * making the one promise the palette is not allowed to break.
+ */
+[data-brand="campus"] {
+  --gilt-hi: #6f8c6a;
+  --gilt: #2e4632;
+  --gilt-lo: #1e3122;
+  /* The sand, for the one place a second brand colour earns its place: the
+   * rule under the room's title. */
+  --brand-sand: #c8b285;
+}
+[data-brand="campus"] .case__title {
+  color: #24361f;
+}
+
 /*
  * The company's mark beside the room's title, for the two works that are
  * companies. Sized in `em` so it tracks the display face at every breakpoint,
@@ -52,20 +79,47 @@
  * in German, and a centred mark would drift to the middle of the block while
  * the first line of type stayed put.
  */
+/*
+ * The ROW carries the display face's size, so the mark's `em` resolves against
+ * the same value the title is set in. Restating the token on the mark instead
+ * drifted from whatever `.display` actually computed to (38.2px against a 35px
+ * cap), and `inherit` on the mark alone just picked up the body size.
+ */
 .case__name {
   display: flex;
   align-items: baseline;
   gap: var(--s-4);
+  font-size: var(--t-2xl);
+}
+@media (min-width: 720px) {
+  .case__name {
+    font-size: var(--t-3xl);
+  }
 }
 .case__name .case__title {
   min-inline-size: 0;
 }
+/*
+ * Cap height, for the same reason and by the same measured ratio as
+ * `.label__mark` on the wall: `em` is the full em box and drew the mark taller
+ * than the letters, and the `cap` unit resolves to a fallback rather than to
+ * this face's real metric.
+ *
+ * It takes the title's font-size first, since as a SIBLING of the heading it
+ * would otherwise resolve the em against the inherited body size. `.display`
+ * steps up a size at 720px, so this follows it.
+ */
 .case__mark {
   inline-size: auto;
-  block-size: 0.92em;
+  /*
+   * 0.625, NOT the wall's 0.682. Same family, but the room's title is upright
+   * where the wall's is italic, and Cormorant Garamond's italic H measures
+   * taller against the em: 0.6818 there, 0.625 here (both read off
+   * `measureText('H').actualBoundingBoxAscent`). Using one number for both left
+   * this mark 38.2px against a 35px cap.
+   */
+  block-size: 0.625em;
   flex: none;
-  position: relative;
-  inset-block-start: 0.1em;
   object-fit: contain;
 }
 
