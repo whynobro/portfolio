@@ -84,6 +84,15 @@
 .frame--portrait .frame__win {
   aspect-ratio: 4 / 5;
 }
+/* A phone shoots 3:4, not the 4:5 a framer cuts, and the difference still costs
+ * about 6% off the top and bottom of every photograph taken on one. */
+.frame--photo .frame__win {
+  aspect-ratio: 3 / 4;
+}
+/* Slides and drawings come 4:3. */
+.frame--slide .frame__win {
+  aspect-ratio: 4 / 3;
+}
 .frame--landscape .frame__win {
   aspect-ratio: 3 / 2;
 }

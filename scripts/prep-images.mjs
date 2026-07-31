@@ -41,28 +41,44 @@ const MANIFEST = [
   },
 
   // --- CNC putter: the strongest sequence, CAD -> cut -> part -> course ---
-  // Hero: the finished aluminium head on the green.
-  { name: "putter-hero", src: "assets-src/putter/converted/IMG_9594.jpg", width: 1500, height: 1125, quality: 72 },
-  { name: "putter-green", src: "assets-src/putter/converted/IMG_9596.jpg", width: 1200, height: 1500, quality: 70 },
+  //
+  // Every one of these is a 3:4 PORTRAIT photograph off a phone. They used to
+  // be forced into a landscape window, which threw away half of each frame, so
+  // no height is given here: omitting it keeps the source's own shape, and the
+  // room hangs each one in a portrait frame to match.
+  { name: "putter-hero", src: "assets-src/putter/converted/IMG_9594.jpg", width: 1400, quality: 72 },
+  { name: "putter-green", src: "assets-src/putter/converted/IMG_9596.jpg", width: 1200, quality: 70 },
   // In the vise, mid-cut, chips on the fixture.
-  { name: "putter-machining", src: "assets-src/putter/converted/IMG_9580.jpg", width: 1400, quality: 70 },
+  { name: "putter-machining", src: "assets-src/putter/converted/IMG_9580.jpg", width: 1200, quality: 64 },
   // The scooping geometry, held.
   { name: "putter-inhand", src: "assets-src/putter/converted/IMG_9582.jpg", width: 1400, quality: 70 },
-  // Fusion 360 tool setup — evidence of the CAM work behind the part.
-  { name: "putter-cam", src: "assets-src/putter/converted/IMG_9035.jpg", width: 1400, quality: 68 },
+  // Fusion 360 tool setup, evidence of the CAM work behind the part.
+  { name: "putter-cam", src: "assets-src/putter/converted/IMG_9035.jpg", width: 1200, quality: 62 },
   // In use at Westlake Golf Course.
-  { name: "putter-inuse", src: "assets-src/putter/converted/IMG_4440.jpg", width: 1400, quality: 70 },
-  { name: "cnc-drawing", src: "assets-src/putter/capstone-drawing.jpeg", width: 1600, quality: 78 },
+  { name: "putter-inuse", src: "assets-src/putter/converted/IMG_4440.jpg", width: 1200, quality: 62 },
+  // A drawing, so `contain`: cropping the title block off a drawing is worse
+  // than a little padding. LOW RESOLUTION at source (660x432), wants re-export.
+  {
+    name: "cnc-drawing",
+    src: "assets-src/putter/capstone-drawing.jpeg",
+    width: 1600,
+    height: 1067,
+    fit: "contain",
+    background: "#ffffff",
+    quality: 80,
+  },
 
-  // --- Chameleon Ramps: real product photography ---
-  { name: "ramps-bank", src: "assets-src/ramps/p4.jpg", width: 1600, height: 1600, quality: 72 },
-  { name: "ramps-quarter", src: "assets-src/ramps/p9.jpg", width: 1600, height: 1600, quality: 72 },
-  { name: "ramps-alt1", src: "assets-src/ramps/p5.jpg", width: 1100, height: 1100, quality: 68 },
-  { name: "ramps-alt2", src: "assets-src/ramps/p8.jpg", width: 1100, height: 1100, quality: 68 },
+  // --- Chameleon Ramps: real product photography, all SQUARE at source ---
+  { name: "ramps-bank", src: "assets-src/ramps/p4.jpg", width: 1400, height: 1400, quality: 72 },
+  { name: "ramps-quarter", src: "assets-src/ramps/p9.jpg", width: 1400, height: 1400, quality: 72 },
+  { name: "ramps-alt1", src: "assets-src/ramps/p5.jpg", width: 1200, height: 1200, quality: 70 },
+  { name: "ramps-alt2", src: "assets-src/ramps/p8.jpg", width: 1200, height: 1200, quality: 70 },
 
-  // --- Wave energy converter ---
-  { name: "wave-inside", src: "assets-src/wave/wave-inside.jpg", width: 1200, quality: 72 },
-  { name: "wave-base", src: "assets-src/wave/wave-base.jpg", width: 1000, quality: 72 },
+  // --- Wave energy converter: both 3:4 portrait, both LOW RESOLUTION ---
+  // 600x800 and 360x480 at source. Held at their own size rather than upscaled,
+  // since enlarging them only makes the softness bigger. Both want re-shooting.
+  { name: "wave-inside", src: "assets-src/wave/wave-inside.jpg", width: 600, quality: 78 },
+  { name: "wave-base", src: "assets-src/wave/wave-base.jpg", width: 360, quality: 80 },
   // Deliberately NOT here: assets-src/wave/wave-diagram.jpg. The source is a
   // 2.6 KB clip-art sketch and upscales to a blurry mess — the wave room shows
   // two real photographs instead. Worth asking Michael for the CAD.

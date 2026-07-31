@@ -68,6 +68,13 @@
     gap: var(--s-12);
     align-items: start;
   }
+  /* A portrait hero at the full column width runs to something like 900px tall
+   * and pushes the whole specification plate off the first screen, so the tall
+   * shapes take a narrower column than the wide ones. */
+  .case__top:has(.frame--portrait),
+  .case__top:has(.frame--photo) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
 
 .plate {
@@ -138,11 +145,33 @@
   .case__gallery {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--s-16) var(--s-12);
+    /* Plates now come in different shapes, since each picture is framed to its
+     * own proportions. Aligning them to the top of their row keeps the sequence
+     * hanging from a common line instead of floating at mixed heights. */
+    align-items: start;
   }
 }
 
 .case__plate {
   margin: 0;
+}
+
+/*
+ * A portrait plate is half again as tall as a square one at the same width, so
+ * unchecked it dwarfs everything beside it. Narrowing the portraits brings the
+ * two shapes to a similar HEIGHT, which is what the eye actually compares on a
+ * wall, and centres them in their column.
+ */
+.case__plate:has(.frame--portrait),
+.case__plate:has(.frame--photo) {
+  inline-size: min(100%, 88%);
+  margin-inline: auto;
+}
+/* The mat is a percentage of the frame's width, so a narrowed portrait plate
+ * was paying it twice over and the picture sat in a field of white. */
+.case__plate:has(.frame--photo) .frame__mat,
+.case__plate:has(.frame--portrait) .frame__mat {
+  padding: clamp(10px, 1.8vw, 22px);
 }
 
 .case__caption {

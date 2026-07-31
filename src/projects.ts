@@ -17,11 +17,27 @@ import { registerProjectRenderer, registerProjectRoutes } from "./router";
  * complete portfolio; a room only adds depth.
  */
 
+/**
+ * `aspect` is the frame the picture hangs in, and it must match the shape of
+ * the photograph. Everything used to hang in a 3:2 landscape frame, which meant
+ * `object-fit: cover` threw away HALF of every portrait photograph (all six
+ * putter shots and both wave shots are 3:4) and a third of every square one
+ * (the whole ramps range). A framer cuts the mat to the picture; so does this.
+ */
+type Aspect =
+  | "frame--photo" // 3:4, what a phone shoots
+  | "frame--portrait" // 4:5
+  | "frame--square"
+  | "frame--slide" // 4:3, slides and drawings
+  | "frame--landscape" // 3:2
+  | "frame--wide";
+
 type Shot = {
   /** Image stem in src/assets/img; .avif and .jpg are both expected. */
   img: string;
   w: number;
   h: number;
+  aspect: Aspect;
   altKey: TranslationKey;
   capKey?: TranslationKey;
 };
@@ -44,7 +60,7 @@ const PROJECTS: Project[] = [
     slug: "cnc",
     titleKey: "proj.putter.title",
     ledeKey: "case.putter.lede",
-    hero: { img: "putter-hero", w: 1500, h: 1125, altKey: "alt.putter.hero" },
+    hero: { img: "putter-hero", w: 1400, h: 1867, aspect: "frame--photo", altKey: "alt.putter.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.putter.role" },
       { labelKey: "case.spec.tools", valueKey: "case.putter.tools" },
@@ -57,32 +73,32 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.putter.outcome"] },
     ],
     gallery: [
-      { img: "putter-cam", w: 1400, h: 1050, altKey: "alt.putter.cam", capKey: "cap.putter.cam" },
+      { img: "putter-cam", w: 1400, h: 1867, aspect: "frame--photo", altKey: "alt.putter.cam", capKey: "cap.putter.cam" },
       {
         img: "putter-machining",
         w: 1400,
-        h: 1050,
+        h: 1867, aspect: "frame--photo",
         altKey: "alt.putter.machining",
         capKey: "cap.putter.machining",
       },
       {
         img: "putter-inhand",
         w: 1400,
-        h: 1050,
+        h: 1867, aspect: "frame--photo",
         altKey: "alt.putter.inhand",
         capKey: "cap.putter.inhand",
       },
       {
         img: "putter-inuse",
         w: 1400,
-        h: 1050,
+        h: 1867, aspect: "frame--photo",
         altKey: "alt.putter.inuse",
         capKey: "cap.putter.inuse",
       },
       {
         img: "cnc-drawing",
         w: 1600,
-        h: 1100,
+        h: 1067, aspect: "frame--landscape",
         altKey: "alt.putter.drawing",
         capKey: "cap.putter.drawing",
       },
@@ -93,7 +109,7 @@ const PROJECTS: Project[] = [
     slug: "ramps",
     titleKey: "proj.ramps.title",
     ledeKey: "case.ramps.lede",
-    hero: { img: "ramps-bank", w: 1600, h: 1600, altKey: "alt.ramps.hero" },
+    hero: { img: "ramps-bank", w: 1400, h: 1400, aspect: "frame--square", altKey: "alt.ramps.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.ramps.role" },
       { labelKey: "case.spec.tools", valueKey: "case.ramps.tools" },
@@ -108,13 +124,13 @@ const PROJECTS: Project[] = [
     gallery: [
       {
         img: "ramps-quarter",
-        w: 1600,
-        h: 1600,
+        w: 1400,
+        h: 1400, aspect: "frame--square",
         altKey: "alt.ramps.quarter",
         capKey: "cap.ramps.quarter",
       },
-      { img: "ramps-alt1", w: 1100, h: 1100, altKey: "alt.ramps.alt1", capKey: "cap.ramps.alt1" },
-      { img: "ramps-alt2", w: 1100, h: 1100, altKey: "alt.ramps.alt2", capKey: "cap.ramps.alt2" },
+      { img: "ramps-alt1", w: 1200, h: 1200, aspect: "frame--square", altKey: "alt.ramps.alt1", capKey: "cap.ramps.alt1" },
+      { img: "ramps-alt2", w: 1200, h: 1200, aspect: "frame--square", altKey: "alt.ramps.alt2", capKey: "cap.ramps.alt2" },
     ],
   },
 
@@ -122,7 +138,7 @@ const PROJECTS: Project[] = [
     slug: "wave",
     titleKey: "proj.wave.title",
     ledeKey: "case.wave.lede",
-    hero: { img: "wave-inside", w: 1200, h: 900, altKey: "alt.wave.hero" },
+    hero: { img: "wave-inside", w: 600, h: 800, aspect: "frame--photo", altKey: "alt.wave.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.wave.role" },
       { labelKey: "case.spec.tools", valueKey: "case.wave.tools" },
@@ -135,7 +151,7 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.wave.outcome"] },
     ],
     gallery: [
-      { img: "wave-base", w: 1000, h: 750, altKey: "alt.wave.base", capKey: "cap.wave.base" },
+      { img: "wave-base", w: 360, h: 480, aspect: "frame--photo", altKey: "alt.wave.base", capKey: "cap.wave.base" },
     ],
   },
 
@@ -143,7 +159,7 @@ const PROJECTS: Project[] = [
     slug: "bot",
     titleKey: "proj.bot.title",
     ledeKey: "case.bot.lede",
-    hero: { img: "bot-display", w: 1800, h: 1200, altKey: "alt.bot.hero" },
+    hero: { img: "bot-display", w: 1800, h: 1200, aspect: "frame--landscape", altKey: "alt.bot.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.bot.role" },
       { labelKey: "case.spec.tools", valueKey: "case.bot.tools" },
@@ -162,7 +178,7 @@ const PROJECTS: Project[] = [
     slug: "campus",
     titleKey: "proj.campus.title",
     ledeKey: "case.campus.lede",
-    hero: { img: "campus-logo", w: 1500, h: 1000, altKey: "alt.campus.hero" },
+    hero: { img: "campus-logo", w: 1500, h: 1000, aspect: "frame--landscape", altKey: "alt.campus.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.campus.role" },
       { labelKey: "case.spec.tools", valueKey: "case.campus.tools" },
@@ -181,7 +197,7 @@ const PROJECTS: Project[] = [
     slug: "water",
     titleKey: "proj.water.title",
     ledeKey: "case.water.lede",
-    hero: { img: "water-site", w: 1400, h: 933, altKey: "alt.water.hero" },
+    hero: { img: "water-site", w: 1400, h: 933, aspect: "frame--landscape", altKey: "alt.water.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.water.role" },
       { labelKey: "case.spec.tools", valueKey: "case.water.tools" },
@@ -194,7 +210,7 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.water.outcome"] },
     ],
     gallery: [
-      { img: "water-1", w: 1400, h: 1050, altKey: "alt.water.map", capKey: "cap.water.map" },
+      { img: "water-1", w: 1400, h: 933, aspect: "frame--slide", altKey: "alt.water.map", capKey: "cap.water.map" },
     ],
   },
 ];
@@ -229,9 +245,9 @@ function src(stem: string): string {
 }
 
 /** Builds one framed picture, matching the wall's frame > mat > window nesting. */
-function framed(shot: Shot, aspect: string): HTMLElement {
+function framed(shot: Shot): HTMLElement {
   const frame = document.createElement("div");
-  frame.className = `frame ${aspect}`;
+  frame.className = `frame ${shot.aspect}`;
 
   const mat = document.createElement("div");
   mat.className = "frame__mat";
@@ -279,7 +295,7 @@ function render(slug: string): void {
 
   // Hero and plate: the picture large, the specification beside it.
   const top = el("div", "case__top");
-  top.append(framed(project.hero, "frame--landscape"));
+  top.append(framed(project.hero));
 
   const plate = el("dl", "plate");
   for (const spec of project.specs) {
@@ -305,7 +321,7 @@ function render(slug: string): void {
     for (const shot of project.gallery) {
       const figure = document.createElement("figure");
       figure.className = "case__plate";
-      figure.append(framed(shot, "frame--landscape"));
+      figure.append(framed(shot));
       if (shot.capKey) {
         const caption = document.createElement("figcaption");
         caption.className = "case__caption";
