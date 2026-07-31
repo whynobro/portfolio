@@ -47,7 +47,6 @@ export const en = {
   "game.ttt.reset": "New game",
   "game.ring.title": "Water Ring Toss",
   "game.ring.button": "Press to pump",
-  "game.ring.expand": "Fullscreen",
   "game.ring.score": "Score",
   "game.ring.side": "Side jets",
   "game.ring.scored": "ringed",
@@ -234,6 +233,9 @@ export const en = {
   "cap.bot.poster": "The system drawn as a poster: an alert's path from a chat message to a placed order.",
   "cap.bot.posterHint": "EN / DE switches the poster's language only, not the site's.",
   "alt.bot.hero": "The operator display: broker link status and filled orders",
+  "alt.bot.live":
+    "The operator display running live: the broker link, the analyst grid and the open options positions",
+  "cap.bot.live": "The display on the day the system first ran live against the broker.",
 
   "alt.campus.hero": "The Campus Native marketplace, live at campusnative.com",
 

@@ -159,10 +159,7 @@
 .ring__canvas {
   flex: 1;
   inline-size: 100%;
-  /* The fullscreen control sits under the toy, so the canvas stops short of the
-   * bottom edge rather than running underneath it. */
   min-block-size: 0;
-  margin-block-end: 1.4em;
   /* The pump is drawn on the toy and hit-tested on the canvas. */
   cursor: pointer;
   touch-action: manipulation;
@@ -215,31 +212,6 @@
   border: 1px solid var(--ink);
 }
 
-/* Fullscreen control: quiet, below the toy, so it never competes with the pump
- * button that is part of the piece itself. */
-.ring__expand {
-  position: absolute;
-  inset-block-end: 0;
-  inset-inline: 0;
-  margin-inline: auto;
-  inline-size: fit-content;
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-mute);
-  border-block-end: 1px solid var(--gilt);
-  padding-block-end: 2px;
-}
-.ring__expand:hover {
-  color: var(--ink);
-}
-
-/* In fullscreen the wrapper IS the viewport, so it has to fill it, it is
- * normally sized by .playable, which is no longer its parent box. */
-.ring:fullscreen {
-  inline-size: 100vw;
-  block-size: 100vh;
-  background: var(--wall);
-  padding-block-end: var(--s-8);
-}
+/* The toy had a fullscreen control below it. It is gone: the piece is played on
+ * the wall at the size it hangs, and the canvas now runs to the bottom of its
+ * box rather than stopping short to leave room for a control. */

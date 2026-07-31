@@ -229,6 +229,21 @@ const MANIFEST = [
   // would break the row. `contain` onto a 3:2 canvas letterboxes it on the
   // dashboard's own near-black ground instead — `cover` would crop a quarter off
   // the sides, taking the TIME and FILL columns with it.
+  // The operator display as it ran on the day the system first went live, shot
+  // off the screen rather than composed by the capture script. PORTRAIT at
+  // source (1179x1958) because it is a phone frame, so `contain` onto a 4:5
+  // window: a `cover` crop to the room's usual landscape would throw away the
+  // analyst grid and the position table, which is the half worth showing.
+  // Padded with the dashboard's own ground so the letterbox is invisible.
+  {
+    name: "bot-live",
+    src: "assets-src/smc-bot/jarvis.jpg",
+    width: 1100,
+    height: 1375,
+    fit: "contain",
+    background: "#05080d",
+    quality: 76,
+  },
   {
     name: "bot-display",
     src: "assets-src/smc-bot/jarvis-operator.png",

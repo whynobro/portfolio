@@ -33,7 +33,7 @@ const COL = {
   ink: "#14110e",
 };
 
-const RING_COLOURS = ["#e8b33a", "#3f9d54", "#2f6fb5", "#d1483c", "#8a56a8"];
+const RING_COLOURS = ["#e8b33a", "#3f9d54", "#2f6fb5", "#d1483c", "#8a56a8", "#2fa8a0"];
 
 type Ring = {
   x: number;
@@ -65,13 +65,13 @@ type Ring = {
 };
 
 /**
- * Rings a single peg will hold. Five rings over two pegs, so the board can be
- * cleared completely.
+ * Rings a single peg will hold. Six rings over two pegs at three each, so the
+ * board fills exactly and can be cleared completely.
  */
 const PEG_CAPACITY = 3;
 
 /** Point values, one per ring, so some are worth chasing more than others. */
-const RING_POINTS = [10, 25, 50, 15, 30];
+const RING_POINTS = [10, 25, 50, 15, 30, 20];
 
 /**
  * How far off edge-on a ring settles once it is threaded on a peg, in radians.
@@ -90,9 +90,7 @@ function createScene(): SceneModule {
   let c: CanvasRenderingContext2D | null = null;
   let button: HTMLButtonElement | null = null;
   let sideBtn: HTMLButtonElement | null = null;
-  let expand: HTMLButtonElement | null = null;
   let scoreEl: HTMLElement | null = null;
-  let onFsChange: (() => void) | null = null;
   let score = 0;
   /** Simulation clock for the jet's sway. */
   let wobble = 0;
@@ -157,12 +155,16 @@ function createScene(): SceneModule {
   }
 
   function seed(): void {
-    const ringR = box.w * 0.1;
-    // Spread across the floor by more than a ring DIAMETER (2 * 0.1 = 0.2 of
-    // the tank width). At the old 0.14 spacing five rings of radius 0.1w
-    // overlapped each other by a third, so on the still frame they merged into
-    // a single band of colour rather than reading as five separate rings.
-    const gap = 0.21;
+    // Sized so the whole set fits the floor in one row without overlapping:
+    // six rings need six diameters plus a hair, and 0.078 * 2 * 6 is just under
+    // the tank's width. At the old 0.1 the six would not fit and the outer two
+    // were pushed through the glass by the wall correction on the first frame.
+    const ringR = box.w * 0.078;
+    // Spread across the floor by more than a ring DIAMETER. At the original
+    // 0.14 spacing the rings overlapped each other by a third, so on the still
+    // frame they merged into a single band of colour rather than reading as
+    // separate rings.
+    const gap = 0.163;
     const span = gap * (RING_COLOURS.length - 1);
     rings = RING_COLOURS.map((colour, i) => {
       const x = box.x + box.w * (0.5 - span / 2 + gap * i);
@@ -370,8 +372,17 @@ function createScene(): SceneModule {
         const dx = ring.x - peg.x;
         const dxPrev = ring.px - peg.x;
 
-        // The mouth is the ring's own hole: the tip must be inside it.
-        const mouth = Math.max(ring.r * 0.8 * help, peg.r + 1);
+        // The mouth is the ring's own hole: the tip must be inside it. The ring
+        // is stroked at `r * 0.42`, so the hole's inner edge is about `r * 0.79`
+        // and that is where the geometric figure comes from.
+        //
+        // It also carries a floor measured against the TANK, not the ring. On
+        // the wall the toy is 190px wide, which puts `r * 0.8` at about 8px: the
+        // rings crossed the tips 20px out and nothing ever seated, because the
+        // jet cannot steer a ring to eight pixels. The floor is what keeps the
+        // piece playable at the size it actually hangs, and it scales with the
+        // tank so fullscreen-sized play is unchanged.
+        const mouth = Math.max(ring.r * 0.8 * help, peg.r + 1, box.w * 0.17 * help);
         const overMouth = Math.abs(dx) < mouth;
 
         // Coming down onto the tip from ABOVE it. The whole column of water
@@ -381,7 +392,18 @@ function createScene(): SceneModule {
         // matters for "only from the top" is that the ring approaches from
         // above the tip and is descending, which is exactly this test.
         const falling = ring.y >= ring.py;
-        const crossedTip = ring.py <= tipY + ring.r * 0.6 && ring.y < tipY + ring.r * 0.9;
+        // The ring's CENTRE has to have come down PAST the tip. The window used
+        // to close at `tipY + r * 0.9`, which let a ring seat while its centre
+        // was still most of a radius ABOVE the tip: it visibly snapped onto the
+        // peg before reaching it.
+        //
+        // Tested as a SPAN across the frame rather than as two thresholds on
+        // the current position: the ring was above the tip and now is not. A
+        // pair of fixed thresholds fails whenever a fast ring clears both in a
+        // single step, which is the common case here, and nothing ever seated.
+        // The shaft below is still open for a descent that starts below the
+        // tip, so a ring already alongside the peg is not captured by it.
+        const crossedTip = ring.py < tipY && ring.y >= tipY;
 
         if (seatLock <= 0 && seatedHere < PEG_CAPACITY && overMouth && falling && crossedTip) {
           ring.onPeg = pi;
@@ -720,8 +742,7 @@ function createScene(): SceneModule {
       const wrap = document.createElement("div");
       wrap.className = "ring";
 
-      // Score above the toy, so it is read before the piece and stays visible
-      // in fullscreen (it is inside the element that goes fullscreen).
+      // Score above the toy, so it is read before the piece.
       scoreEl = document.createElement("p");
       scoreEl.className = "ring__score";
       scoreEl.setAttribute("role", "status");
@@ -765,27 +786,6 @@ function createScene(): SceneModule {
       sideBtn.addEventListener("click", fireSide);
       wrap.appendChild(sideBtn);
 
-      // Fullscreen: the toy is small on the wall, and the chamber is where the
-      // physics is legible. Sized off the element, so the same scene simply
-      // re-measures rather than being remounted.
-      expand = document.createElement("button");
-      expand.type = "button";
-      expand.className = "ring__expand";
-      expand.textContent = (sc.t as unknown as (k: string) => string)("game.ring.expand");
-      expand.addEventListener("click", () => {
-        if (document.fullscreenElement) void document.exitFullscreen();
-        else void wrap.requestFullscreen?.().catch(() => {});
-      });
-      wrap.appendChild(expand);
-
-      // The fullscreen box is a different size, and a canvas scene only knows
-      // what it is told, so re-measure on entering and leaving.
-      onFsChange = () => {
-        const el = document.fullscreenElement === wrap ? wrap : sc.root;
-        this.resize?.(el.clientWidth, el.clientHeight);
-      };
-      document.addEventListener("fullscreenchange", onFsChange);
-
       sc.root.appendChild(wrap);
 
       this.resize?.(sc.root.clientWidth, sc.root.clientHeight);
@@ -814,12 +814,19 @@ function createScene(): SceneModule {
           score,
           pumping,
           sideJet,
+          // Radii are reported too: the seating window is derived from them, so
+          // without them the geometry cannot be checked from outside.
           rings: rings.map((r) => ({
             x: Math.round(r.x),
             y: Math.round(r.y),
+            r: r.r,
             onPeg: r.onPeg,
           })),
-          pegs: pegs.map((p) => ({ x: Math.round(p.x), tipY: Math.round(p.y - p.h) })),
+          pegs: pegs.map((p) => ({
+            x: Math.round(p.x),
+            r: p.r,
+            tipY: Math.round(p.y - p.h),
+          })),
           pump: pumpButton(),
           side: sideButton(),
         }),
@@ -833,10 +840,10 @@ function createScene(): SceneModule {
     resize(width, height) {
       if (!canvas || !c) return;
       // Measured from the CANVAS, not from the root that the runtime reports:
-      // the score line above and the fullscreen control below take part of the
-      // root's height, so sizing to the root drew the toy's base, and with it
-      // the pump button, past the bottom of the visible canvas, where it could
-      // not be clicked. Fall back to the reported size before first layout.
+      // the score line above takes part of the root's height, so sizing to the
+      // root drew the toy's base, and with it the pump button, past the bottom
+      // of the visible canvas, where it could not be clicked. Fall back to the
+      // reported size before first layout.
       const rect = canvas.getBoundingClientRect();
       w = Math.max(1, Math.round(rect.width || width));
       h = Math.max(1, Math.round(rect.height || height));
@@ -871,18 +878,14 @@ function createScene(): SceneModule {
     dispose() {
       if (tick) unsubscribe(tick);
       tick = null;
-      if (onFsChange) document.removeEventListener("fullscreenchange", onFsChange);
-      onFsChange = null;
       button?.remove();
       sideBtn?.remove();
-      expand?.remove();
       scoreEl?.remove();
       canvas?.remove();
       canvas = null;
       c = null;
       button = null;
       sideBtn = null;
-      expand = null;
       scoreEl = null;
     },
   };

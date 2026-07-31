@@ -55,7 +55,6 @@ export const de = {
   "game.ttt.reset": "Neues Spiel",
   "game.ring.title": "Wasser-Ringspiel",
   "game.ring.button": "Zum Pumpen drücken",
-  "game.ring.expand": "Vollbild",
   "game.ring.score": "Punkte",
   "game.ring.side": "Seitendüsen",
   "game.ring.scored": "aufgesetzt",
@@ -240,6 +239,9 @@ export const de = {
   "cap.bot.poster": "Das System als Poster: der Weg einer Meldung von der Chat-Nachricht zur ausgelösten Order.",
   "cap.bot.posterHint": "EN / DE ändert nur die Sprache des Posters, nicht die der Seite.",
   "alt.bot.hero": "Die Betriebsanzeige: Broker-Verbindung und ausgeführte Orders",
+  "alt.bot.live":
+    "Die Betriebsanzeige im Live-Betrieb: die Broker-Verbindung, das Analystenraster und die offenen Optionspositionen",
+  "cap.bot.live": "Die Anzeige an dem Tag, an dem das System erstmals live am Broker lief.",
 
   "alt.campus.hero": "Der Marktplatz Campus Native, live unter campusnative.com",
 

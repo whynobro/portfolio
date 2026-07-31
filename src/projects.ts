@@ -253,7 +253,16 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.approach", bodyKeys: ["case.bot.approach1", "case.bot.approach2"] },
       { hKey: "case.h.result", bodyKeys: ["case.bot.outcome"] },
     ],
-    gallery: [],
+    gallery: [
+      {
+        img: "bot-live",
+        w: 1100,
+        h: 1375,
+        aspect: "frame--portrait",
+        altKey: "alt.bot.live",
+        capKey: "cap.bot.live",
+      },
+    ],
     posterPair: {
       en: { img: "bot-poster-en", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },
       de: { img: "bot-poster-de", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },
