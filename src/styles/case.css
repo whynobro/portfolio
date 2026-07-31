@@ -350,6 +350,20 @@
   .case__plate > .case__img {
     align-self: center;
   }
+
+  /*
+   * A gallery hung in the PICTURE column, under the hero, rather than full
+   * width at the foot of the room. The three fixed 300px tracks above would
+   * overflow that column, so it drops back to a single full-width track and
+   * keeps the plate on the hero's own left-hand axis, beside the description
+   * instead of stranded below it.
+   */
+  .case__gallery--aside {
+    grid-template-columns: minmax(0, 1fr);
+    justify-content: stretch;
+    justify-items: stretch;
+    margin-block-start: var(--s-8);
+  }
 }
 
 /*

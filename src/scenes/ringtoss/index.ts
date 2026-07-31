@@ -277,8 +277,26 @@ function createScene(): SceneModule {
           // the ceiling and nothing ever landed.
           const depth = Math.max(0, (ring.y - box.y) / box.h);
           ay -= H * 11 * falloff * depth * depth;
-          // The side jets blow towards the middle; the centre one spreads out.
-          const inward = frac === 0.5 ? dx * 5.5 : (box.x + box.w * 0.5 - ring.x) * 5.0;
+          // The side jets blow towards the middle. The centre one used to blow
+          // rings AWAY from itself (`dx * 5.5`), which drove them past the pegs
+          // and into the glass: over fifteen seconds of pumping the rings
+          // crossed the peg tips only twice, at x=40 and x=143 with the pegs at
+          // 64 and 126, so almost nothing could ever land.
+          //
+          // It now carries a ring towards the nearer PEG instead. The plume
+          // still spreads a ring off the centre line, which is what stops it
+          // hovering over the nozzle, but the direction it spreads to is a peg
+          // rather than a wall.
+          let inward: number;
+          if (frac === 0.5) {
+            const target = pegs.reduce(
+              (best, peg) => (Math.abs(peg.x - ring.x) < Math.abs(best - ring.x) ? peg.x : best),
+              pegs[0]?.x ?? nozzleX,
+            );
+            inward = (target - ring.x) * 4.5;
+          } else {
+            inward = (box.x + box.w * 0.5 - ring.x) * 5.0;
+          }
           ax += inward * falloff;
         }
 
@@ -842,11 +860,28 @@ function createScene(): SceneModule {
       // Measured from the CANVAS, not from the root that the runtime reports:
       // the score line above takes part of the root's height, so sizing to the
       // root drew the toy's base, and with it the pump button, past the bottom
-      // of the visible canvas, where it could not be clicked. Fall back to the
-      // reported size before first layout.
+      // of the visible canvas, where it could not be clicked.
+      //
+      // The measurement can come back as ZERO, though, and that is the case
+      // that has to be handled rather than clamped. Leaving a project room
+      // un-hides this view and the scene is re-measured while the layout for
+      // the newly shown box has not been computed yet, so the canvas reports
+      // 0 wide. Clamping that to 1 with Math.max wrote a 1px canvas, which
+      // stuck: every later pass measured the 1px element and agreed with it,
+      // the toy drew as a vertical line, and the degenerate box then threw
+      // "roundRect ... Radius value -6.3456 is negative" every frame.
+      //
+      // A zero measurement is not a size, it means "not laid out yet", so it
+      // falls back to the size the runtime reported and, failing that, keeps
+      // the size already in use.
       const rect = canvas.getBoundingClientRect();
-      w = Math.max(1, Math.round(rect.width || width));
-      h = Math.max(1, Math.round(rect.height || height));
+      const mw = Math.round(rect.width) || Math.round(width) || w;
+      const mh = Math.round(rect.height) || Math.round(height) || h;
+      // Nothing usable anywhere: leave the last good size in place rather than
+      // rebuilding the scene around a degenerate box.
+      if (mw <= 0 || mh <= 0) return;
+      w = mw;
+      h = mh;
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       canvas.style.width = `${w}px`;

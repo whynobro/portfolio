@@ -58,6 +58,14 @@ type Project = {
   specs: Spec[];
   sections: { hKey: TranslationKey; bodyKeys: TranslationKey[] }[];
   gallery: Shot[];
+  /**
+   * Hang the gallery in the PICTURE column, under the hero, instead of full
+   * width at the foot of the room. For a room whose supporting plate is a
+   * single image, the full-width strip left it stranded below the text with
+   * the whole right-hand side empty; beside the description it reads as part
+   * of the same work.
+   */
+  galleryInPictures?: boolean;
   /** A live site the work IS, rather than a description of one. */
   link?: { href: string; labelKey: TranslationKey };
   /**
@@ -311,6 +319,7 @@ const PROJECTS: Project[] = [
     gallery: [
       { img: "water-1", w: 1400, h: 933, aspect: "frame--slide", altKey: "alt.water.map", capKey: "cap.water.map" },
     ],
+    galleryInPictures: true,
   },
 ];
 
@@ -373,6 +382,41 @@ function el(tag: string, cls: string, text?: string): HTMLElement {
   node.className = cls;
   if (text !== undefined) node.textContent = text;
   return node;
+}
+
+/**
+ * The supporting plates.
+ *
+ * These hang UNFRAMED, with a plain white border and a caption. Only the hero
+ * gets the carved moulding: a gilt frame around every supporting photograph
+ * spends the gesture until it means nothing, and the room would read as a wall
+ * of frames rather than as one work.
+ */
+function buildGallery(shots: Shot[], extraClass = ""): HTMLElement {
+  const gallery = el("div", `case__gallery${extraClass ? ` ${extraClass}` : ""}`);
+  for (const shot of shots) {
+    const figure = document.createElement("figure");
+    figure.className = "case__plate";
+
+    const img = document.createElement("img");
+    img.className = "case__img";
+    img.src = src(shot.img);
+    img.width = shot.w;
+    img.height = shot.h;
+    img.alt = t(shot.altKey);
+    img.loading = "lazy";
+    img.decoding = "async";
+    figure.append(img);
+
+    if (shot.capKey) {
+      const caption = document.createElement("figcaption");
+      caption.className = "case__caption";
+      caption.textContent = t(shot.capKey);
+      figure.append(caption);
+    }
+    gallery.append(figure);
+  }
+  return gallery;
 }
 
 function render(slug: string): void {
@@ -474,35 +518,12 @@ function render(slug: string): void {
 
   host.replaceChildren(back, head, top);
 
-  if (project.gallery.length) {
-    // The rest of the sequence hangs UNFRAMED, with a plain white border and
-    // its caption. Only the hero gets the carved moulding: a gilt frame around
-    // every supporting photograph spends the gesture until it means nothing,
-    // and the room reads as a wall of frames rather than as one work.
-    const gallery = el("div", "case__gallery");
-    for (const shot of project.gallery) {
-      const figure = document.createElement("figure");
-      figure.className = "case__plate";
-
-      const img = document.createElement("img");
-      img.className = "case__img";
-      img.src = src(shot.img);
-      img.width = shot.w;
-      img.height = shot.h;
-      img.alt = t(shot.altKey);
-      img.loading = "lazy";
-      img.decoding = "async";
-      figure.append(img);
-
-      if (shot.capKey) {
-        const caption = document.createElement("figcaption");
-        caption.className = "case__caption";
-        caption.textContent = t(shot.capKey);
-        figure.append(caption);
-      }
-      gallery.append(figure);
-    }
-    host.append(gallery);
+  // Built before it is placed: a room can ask for the gallery in the picture
+  // column beside the description rather than full width under it.
+  if (project.gallery.length && project.galleryInPictures) {
+    pictures.append(buildGallery(project.gallery, "case__gallery--aside"));
+  } else if (project.gallery.length) {
+    host.append(buildGallery(project.gallery));
   }
 
   // The poster hangs full width at the foot: it is a document to be READ, and
