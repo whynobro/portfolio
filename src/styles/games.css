@@ -3,7 +3,7 @@
  * The two interactive pieces sit directly under the masthead, unframed and
  * uncaptioned. A scene measures its own `[data-scene]` box, so the aspect ratio
  * has to live here now that the frame's `.frame--landscape` no longer supplies
- * one — without it the container collapses and the canvas backing store is 1px.
+ * one, without it the container collapses and the canvas backing store is 1px.
  */
 .playables {
   display: grid;
@@ -88,10 +88,10 @@
   border-block-end: 2px solid var(--ink);
 }
 .ttt__cell:hover:not(:disabled) {
-  background: rgba(184, 135, 58, 0.16);
+  background: rgba(37, 150, 190, 0.16);
 }
 .ttt__cell.is-win {
-  background: rgba(184, 135, 58, 0.3);
+  background: rgba(37, 150, 190, 0.3);
 }
 .ttt__cell:disabled {
   cursor: default;
@@ -235,7 +235,7 @@
   color: var(--ink);
 }
 
-/* In fullscreen the wrapper IS the viewport, so it has to fill it — it is
+/* In fullscreen the wrapper IS the viewport, so it has to fill it, it is
  * normally sized by .playable, which is no longer its parent box. */
 .ring:fullscreen {
   inline-size: 100vw;

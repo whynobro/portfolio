@@ -39,6 +39,15 @@
   padding-block: var(--s-8) 0;
 }
 
+/*
+ * The collection follows the entrance, and both were paying full section
+ * padding, so the wall started an entire empty screen below the playables. The
+ * entrance's own bottom padding is enough of a break between the two rooms.
+ */
+.section--after-entrance {
+  padding-block-start: 0;
+}
+
 /* The introduction above a wall of works: centred, narrow, unhurried. */
 .intro {
   text-align: center;

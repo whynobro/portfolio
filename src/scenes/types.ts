@@ -6,7 +6,7 @@ export type SceneContext = {
   t: (key: TranslationKey) => string;
   /** True when the user asked for reduced motion, or in screenshot mode. */
   reducedMotion: boolean;
-  /** Capped at 2 — a 3x phone costs 2.25x fill rate for no visible gain. */
+  /** Capped at 2, a 3x phone costs 2.25x fill rate for no visible gain. */
   dpr: number;
 };
 

@@ -1,5 +1,5 @@
 /**
- * English strings — the source of truth.
+ * English strings: the source of truth.
  *
  * Flat dotted keys, not nested: nesting breaks the exhaustiveness check in
  * de.ts into per-branch checks and makes keys harder to grep.
@@ -40,9 +40,9 @@ export const en = {
   "game.ttt.title": "Unbeatable Tic-Tac-Toe",
   "game.ttt.status.thinking": "Thinking…",
   "game.ttt.status.yourTurn": "Your move",
-  "game.ttt.status.draw": "Draw — the best result available",
+  "game.ttt.status.draw": "Draw: the best result available",
   "game.ttt.status.aiWins": "Michael wins",
-  "game.ttt.status.demo": "Playing itself — take a square to interrupt",
+  "game.ttt.status.demo": "Playing itself. Take a square to interrupt",
   "game.ttt.reset": "New game",
   "game.ring.title": "Water Ring Toss",
   "game.ring.button": "Press to pump",
@@ -55,7 +55,7 @@ export const en = {
   "work.eyebrow": "The collection",
   "work.title": "Works in Mechanical Engineering",
   "work.lede":
-    "Design, analysis and fabrication — each piece shown with what it was built to do and what it measured.",
+    "Design, analysis and fabrication: each piece shown with what it was built to do and what it measured.",
 
   "proj.putter.title": "CNC-Milled Aluminium Putter",
   "proj.putter.body":
@@ -157,7 +157,7 @@ export const en = {
   "case.bot.approach2":
     "Parameters were chosen on their worst case across two disjoint validation windows rather than their best on either. Picking the best fit is how a system that looks excellent in a backtest loses money in the market.",
   "case.bot.outcome":
-    "1553 tests pass in the production suite. The options lane runs live, the futures lane runs against a paper broker, and the operator display above is read-only telemetry — the controls live elsewhere.",
+    "1553 tests pass in the production suite. The options lane runs live, the futures lane runs against a paper broker, and the operator display above is read-only telemetry, and the controls live elsewhere.",
 
   // Campus Native
   "case.campus.lede":
@@ -198,7 +198,7 @@ export const en = {
   "alt.putter.inhand": "The finished head held, showing the scooping geometry",
   "alt.putter.inuse": "The putter in use at Westlake Golf Course",
   "alt.putter.drawing": "The dimensioned engineering drawing",
-  "cap.putter.cam": "Toolpaths in Fusion 360 — the setup the single fixture had to satisfy.",
+  "cap.putter.cam": "Toolpaths in Fusion 360: the setup the single fixture had to satisfy.",
   "cap.putter.machining": "Mid-cut on the 4-axis HAAS.",
   "cap.putter.inhand": "The scooping face, the feature the geometry was built around.",
   "cap.putter.inuse": "In use at Westlake Golf Course.",
@@ -208,7 +208,7 @@ export const en = {
   "alt.ramps.quarter": "A cast-concrete quarter pipe against foliage",
   "alt.ramps.alt1": "A cast-concrete obstacle from the range",
   "alt.ramps.alt2": "A cast-concrete obstacle from the range",
-  "cap.ramps.quarter": "The quarter pipe — the hardest mould in the range to release.",
+  "cap.ramps.quarter": "The quarter pipe: the hardest mould in the range to release.",
   "cap.ramps.alt1": "From the current range.",
   "cap.ramps.alt2": "From the current range.",
 
@@ -240,15 +240,15 @@ export const en = {
   "award.deans.issuer": "California Polytechnic State University, San Luis Obispo",
   "award.deans.body":
     "Fall, Winter and Spring 2025–26, for maintaining a minimum 3.50 GPA across all units.",
-  "award.bridge.title": "1st Place — Noodle Bridge Design",
+  "award.bridge.title": "1st Place: Noodle Bridge Design",
   "award.bridge.issuer": "Cal Poly College of Engineering",
   "award.bridge.body":
     "Longest structurally sound span from twenty 12-inch pieces and three feet of tape. The design worked the material's compressive strength against its poor shear resistance, and won by a 38.5% margin over second place.",
-  "award.capstone.title": "Capstone Finalist — CNC Milled Putter",
+  "award.capstone.title": "Capstone Finalist: CNC Milled Putter",
   "award.capstone.issuer": "Oaks Christian School, Institute of Engineering",
   "award.capstone.body":
     "One of eight presentations chosen from more than forty capstone students, presented to an audience of 300+ alumni, industry professionals and students.",
-  "award.wave.title": "1st Place — Wave Energy Converter",
+  "award.wave.title": "1st Place: Wave Energy Converter",
   "award.wave.issuer": "Oaks Christian School, Institute of Engineering",
   "award.wave.body":
     "Highest measured wattage of any competing team, converting wave oscillation to electrical power through a rack-and-pinion mechanism.",

@@ -7,7 +7,7 @@ import type { TranslationKey } from "./i18n/en";
  * Rendered from data rather than written into the markup so the list stays
  * ordered by date and every string routes through the dictionary. Two entries
  * (the noodle bridge and the Institute of Engineering) are here rather than on
- * the gallery wall — they are real achievements but too slight to hang as works.
+ * the gallery wall; they are real achievements but too slight to hang as works.
  */
 
 type Award = {

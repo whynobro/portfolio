@@ -1,6 +1,6 @@
 /*
  * Site chrome: the dark header bar with its gold rule, and the matching footer.
- * Taken from the reference design — a dark band top and bottom holds the warm
+ * Taken from the reference design, a dark band top and bottom holds the warm
  * gallery wall between them, the way a museum's signage frames its rooms.
  */
 
@@ -75,7 +75,7 @@
 
 /* ---- Awards badge -------------------------------------------------------- */
 /*
- * A small gold rosette in the bar. Deliberately understated — it is a way in to
+ * A small gold rosette in the bar. Deliberately understated, it is a way in to
  * the awards room, not a boast on every page.
  */
 .badge {
@@ -83,12 +83,12 @@
   align-items: center;
   gap: var(--s-2);
   padding: var(--s-2) var(--s-3);
-  border: 1px solid rgba(184, 135, 58, 0.55) !important;
+  border: 1px solid rgba(37, 150, 190, 0.55) !important;
   color: var(--gilt) !important;
   min-block-size: 34px;
 }
 .badge:hover {
-  background: rgba(184, 135, 58, 0.14);
+  background: rgba(37, 150, 190, 0.14);
   border-color: var(--gilt) !important;
 }
 .badge svg {
@@ -160,7 +160,7 @@
 /* ---- Entrance hall ------------------------------------------------------- */
 /*
  * The landing: portrait hung left, introduction to its right. Asymmetric, the
- * way a real entrance wall is hung — a centred portrait would read as a
+ * way a real entrance wall is hung, a centred portrait would read as a
  * template.
  */
 .entrance {
@@ -246,7 +246,7 @@
  * the contact button instead of pushing the page down.
  */
 .entrance__play {
-  margin-block-start: var(--s-8);
+  margin-block-start: var(--s-12);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -256,11 +256,13 @@
 @media (min-width: 900px) {
   .entrance__play {
     /* Row two of the first column: directly under the portrait, with the
-     * introduction alongside in column two. */
+     * introduction alongside in column two. Set down from the portrait rather
+     * than tucked under it, the toys read as a separate, quieter thing when
+     * they are not crowding the frame above them. */
     grid-column: 1;
     grid-row: 2;
     justify-content: flex-start;
-    margin-block-start: var(--s-6);
+    margin-block-start: var(--s-12);
   }
 }
 

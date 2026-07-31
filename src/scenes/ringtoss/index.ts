@@ -2,7 +2,7 @@ import type { SceneContext, SceneFactory, SceneModule } from "../types";
 import { subscribe, unsubscribe } from "../../lib/raf";
 
 /**
- * Water ring toss — the handheld toy, simulated.
+ * Water ring toss, the handheld toy, simulated.
  *
  * Rings are Verlet particles. Verlet rather than Euler because it stays stable
  * under the stiff positional corrections used for collisions: position is
@@ -45,8 +45,8 @@ type Ring = {
   /** Index of the peg this ring is seated on, or -1. */
   onPeg: number;
   /**
-   * Orientation. The simulation stays 2D — it is the only tractable thing on a
-   * flat canvas — but a real ring is a disc in space, so it is drawn as an
+   * Orientation. The simulation stays 2D, it is the only tractable thing on a
+   * flat canvas, but a real ring is a disc in space, so it is drawn as an
    * ellipse whose minor axis is the disc seen edge-on.
    *
    * `spin` is the disc's angle about the screen normal (which way the ellipse
@@ -131,7 +131,7 @@ function createScene(): SceneModule {
     };
 
     // Two tall pegs standing off the floor, closer together than the tank is
-    // wide — the reference shows them well inboard with the rings threaded on.
+    // wide, the reference shows them well inboard with the rings threaded on.
     // They are tall relative to the tank so there is clear water above the tips
     // for a ring to be lifted into and dropped onto them.
     const pegR = box.w * 0.028;
@@ -214,7 +214,7 @@ function createScene(): SceneModule {
       let ax = 0;
       let ay = g + buoyancy;
 
-      // Quadratic drag — water resists much more strongly than air, which is
+      // Quadratic drag, water resists much more strongly than air, which is
       // what makes the rings drift rather than fall. Scaled by tank height for
       // the same reason the other forces are.
       const speed = Math.hypot(vx, vy) / Math.max(dt, 1e-4);
@@ -222,7 +222,7 @@ function createScene(): SceneModule {
       ax -= vx * speed * dragK;
       ay -= vy * speed * dragK;
 
-      // The jets: three plumes rising from nozzles across the floor — one at
+      // The jets: three plumes rising from nozzles across the floor, one at
       // the centre and one at each side. The side pair is what keeps rings off
       // the glass: a ring pinned against a wall used to sit outside the centre
       // The centre nozzle belongs to the pump; the two wall nozzles belong to
@@ -269,8 +269,7 @@ function createScene(): SceneModule {
       // --- orientation ---
       //
       // The rings hang in the plane of the screen with their edge towards the
-      // viewer, and tumble about their horizontal (x) axis as they are flung —
-      // the way a thrown quoit turns over rather than spinning like a coin on a
+      // viewer, and tumble about their horizontal (x) axis as they are flung, // the way a thrown quoit turns over rather than spinning like a coin on a
       // table. `tilt` IS that rotation about x: it runs continuously rather
       // than being nudged towards a target, so a ring keeps turning over for as
       // long as the water is carrying it.
@@ -282,7 +281,7 @@ function createScene(): SceneModule {
       ring.tiltV += -vyPerSec * 0.011 * dt;
 
       // Viscous damping, the angular counterpart of the drag on the linear
-      // motion — water stops a tumble quickly once the jet is off.
+      // motion, water stops a tumble quickly once the jet is off.
       ring.tiltV *= 1 - Math.min(0.9, 1.1 * dt);
       ring.tilt += ring.tiltV * dt;
 
@@ -327,7 +326,7 @@ function createScene(): SceneModule {
         // its centre has to pass the tip from above while moving downward, the
         // way the real toy works. The seating window used to run most of the
         // way down the shaft, so a ring drifting sideways into the middle of a
-        // peg snapped onto it — it appeared to pass straight through the shaft.
+        // peg snapped onto it, it appeared to pass straight through the shaft.
         //
         // A peg holds a limited number of rings, and each one seats at its own
         // height. Without both, every ring that met the condition was moved to
@@ -361,7 +360,7 @@ function createScene(): SceneModule {
           ring.seatDepth = seatedHere;
           ring.x = peg.x;
           // The ring slides all the way down the peg and rests on the floor,
-          // with each later ring stacking on top of the one before — the way
+          // with each later ring stacking on top of the one before, the way
           // the real toy fills a peg from the bottom up.
           ring.y = peg.y - ring.r * 0.5 - seatedHere * ring.r * 0.62;
           ring.px = ring.x;
@@ -372,8 +371,8 @@ function createScene(): SceneModule {
         }
 
         // Otherwise the shaft is solid and the ring's RIM strikes it. A ring is
-        // a hoop, so it is blocked when the shaft would cut its band — around
-        // |dx| = r — and passes freely when it is centred over the shaft. The
+        // a hoop, so it is blocked when the shaft would cut its band, around
+        // |dx| = r, and passes freely when it is centred over the shaft. The
         // old test blocked near |dx| = 0, which is exactly the case that should
         // be open, and left the band free to slide through.
         // Only below the tip: at tip height the ring is either going on or
@@ -707,7 +706,7 @@ function createScene(): SceneModule {
       wrap.appendChild(canvas);
       c = canvas.getContext("2d");
 
-      // The pump is the button drawn on the toy itself — there is no separate
+      // The pump is the button drawn on the toy itself, there is no separate
       // HTML control over the top of it. The canvas carries the hit test, and a
       // visually-hidden button keeps the pump reachable by keyboard and
       // announced to a screen reader.
@@ -807,8 +806,8 @@ function createScene(): SceneModule {
       if (!canvas || !c) return;
       // Measured from the CANVAS, not from the root that the runtime reports:
       // the score line above and the fullscreen control below take part of the
-      // root's height, so sizing to the root drew the toy's base — and with it
-      // the pump button — past the bottom of the visible canvas, where it could
+      // root's height, so sizing to the root drew the toy's base, and with it
+      // the pump button, past the bottom of the visible canvas, where it could
       // not be clicked. Fall back to the reported size before first layout.
       const rect = canvas.getBoundingClientRect();
       w = Math.max(1, Math.round(rect.width || width));

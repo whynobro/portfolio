@@ -44,7 +44,7 @@ function detect(): Lang {
 /**
  * Swap every translated string in the document.
  *
- * Text swaps instantly and without transition — cross-fading a language change
+ * Text swaps instantly and without transition, cross-fading a language change
  * makes layout shift more visible, not less.
  */
 export function applyLang(lang: Lang): void {

@@ -129,7 +129,7 @@ a {
 /* ---- Motion ------------------------------------------------------------- */
 /*
  * Reduced motion suppresses UNSOLICITED movement only. Interactive pieces still
- * respond to input — a visitor pressing the pump button is asking for the
+ * respond to input, a visitor pressing the pump button is asking for the
  * water to move.
  */
 @media (prefers-reduced-motion: reduce) {

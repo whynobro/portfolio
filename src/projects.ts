@@ -14,7 +14,7 @@ import { registerProjectRenderer, registerProjectRoutes } from "./router";
  * The trade-off, shared with the awards room: these rooms need JavaScript,
  * where the wall itself is readable as plain HTML. The wall carries every
  * work's title, description and figures, so the no-JS document is still a
- * complete portfolio — a room only adds depth.
+ * complete portfolio; a room only adds depth.
  */
 
 type Shot = {
@@ -181,7 +181,7 @@ const PROJECTS: Project[] = [
     slug: "water",
     titleKey: "proj.water.title",
     ledeKey: "case.water.lede",
-    hero: { img: "water-site", w: 1400, h: 788, altKey: "alt.water.hero" },
+    hero: { img: "water-site", w: 1400, h: 933, altKey: "alt.water.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.water.role" },
       { labelKey: "case.spec.tools", valueKey: "case.water.tools" },
@@ -201,6 +201,33 @@ const PROJECTS: Project[] = [
 
 const bySlug = new Map(PROJECTS.map((p) => [p.slug, p]));
 
+/**
+ * Every AVIF in the folder, resolved AT BUILD TIME.
+ *
+ * This has to be a glob rather than `./src/assets/img/${name}.avif` built at
+ * runtime: the bundler only inlines assets it can see statically, so a template
+ * literal produced a path to a file that does not exist in a single-file build.
+ * The rooms rendered with empty frames and the build quietly stopped being
+ * self-contained. `eager` returns the data URI directly.
+ *
+ * AVIF only, deliberately. Globbing the JPEG fallbacks as well doubled the
+ * page: every fallback is roughly the weight of the AVIF it backs up, and the
+ * rooms would carry both for every plate. The wall keeps its `<picture>`
+ * fallbacks in markup, so a browser without AVIF still gets the whole
+ * portfolio; it loses only the photographs inside a room.
+ */
+const IMAGES = import.meta.glob<string>("./assets/img/*.avif", {
+  eager: true,
+  query: "?url",
+  import: "default",
+});
+
+function src(stem: string): string {
+  const url = IMAGES[`./assets/img/${stem}.avif`];
+  if (!url) console.error(`missing image: ${stem}.avif`);
+  return url ?? "";
+}
+
 /** Builds one framed picture, matching the wall's frame > mat > window nesting. */
 function framed(shot: Shot, aspect: string): HTMLElement {
   const frame = document.createElement("div");
@@ -212,21 +239,15 @@ function framed(shot: Shot, aspect: string): HTMLElement {
   const win = document.createElement("div");
   win.className = "frame__win";
 
-  const picture = document.createElement("picture");
-  const source = document.createElement("source");
-  source.srcset = `./src/assets/img/${shot.img}.avif`;
-  source.type = "image/avif";
-
   const img = document.createElement("img");
-  img.src = `./src/assets/img/${shot.img}.jpg`;
+  img.src = src(shot.img);
   img.width = shot.w;
   img.height = shot.h;
   img.alt = t(shot.altKey);
   img.loading = "lazy";
   img.decoding = "async";
 
-  picture.append(source, img);
-  win.append(picture);
+  win.append(img);
   mat.append(win);
   frame.append(mat);
   return frame;
@@ -265,7 +286,7 @@ function render(slug: string): void {
     plate.append(el("dt", "plate__k", t(spec.labelKey)));
     const value = el("dd", "plate__v", t(spec.valueKey));
     // The oxblood is reserved for measured results, so only the result row
-    // carries it — the same rule the labels on the wall follow.
+    // carries it, the same rule the labels on the wall follow.
     if (spec.measured) value.setAttribute("data-measured", "");
     plate.append(value);
   }

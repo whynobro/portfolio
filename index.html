@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Michael Fischbach — Mechanical Engineering</title>
+    <title>Michael Fischbach, Mechanical Engineering</title>
     <meta
       name="description"
       content="Mechanical engineering student at Cal Poly San Luis Obispo. CAD-to-part manufacturing, 4-axis CNC machining, tolerance analysis and production software."
@@ -16,7 +16,9 @@
           var p = new URLSearchParams(location.search);
           var q = p.get("lang");
           var stored = localStorage.getItem("lang");
-          var nav = (navigator.languages || [navigator.language || "en"]).join(",");
+          var nav = (navigator.languages || [navigator.language || "en"]).join(
+            ",",
+          );
           var lang =
             q === "de" || q === "en"
               ? q
@@ -55,9 +57,18 @@
             data-i18n-attr="aria-label:a11y.awards"
             aria-label="Awards and honours"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              aria-hidden="true"
+            >
               <circle cx="12" cy="9" r="6" />
-              <path d="M8.5 14.5 7 22l5-2.5L17 22l-1.5-7.5" stroke-linejoin="round" />
+              <path
+                d="M8.5 14.5 7 22l5-2.5L17 22l-1.5-7.5"
+                stroke-linejoin="round"
+              />
             </svg>
             <span data-i18n="nav.awards">Awards</span>
           </a>
@@ -68,8 +79,22 @@
             data-i18n-attr="aria-label:a11y.langGroup"
             aria-label="Language"
           >
-            <button class="lang__btn" type="button" data-lang-btn="en" aria-pressed="true">EN</button>
-            <button class="lang__btn" type="button" data-lang-btn="de" aria-pressed="false">DE</button>
+            <button
+              class="lang__btn"
+              type="button"
+              data-lang-btn="en"
+              aria-pressed="true"
+            >
+              EN
+            </button>
+            <button
+              class="lang__btn"
+              type="button"
+              data-lang-btn="de"
+              aria-pressed="false"
+            >
+              DE
+            </button>
           </div>
         </nav>
       </div>
@@ -84,24 +109,23 @@
               <div class="frame frame--portrait">
                 <div class="frame__mat">
                   <div class="frame__win">
-                    <picture>
-                      <source srcset="./src/assets/img/headshot.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/img/headshot.jpg"
-                        width="900"
-                        height="1125"
-                        alt="Michael Fischbach"
-                        loading="eager"
-                        decoding="async"
-                      />
-                    </picture>
+                    <img
+                      src="./src/assets/img/headshot.avif"
+                      width="900"
+                      height="1125"
+                      alt="Michael Fischbach"
+                      loading="eager"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="entrance__intro">
-              <span class="eyebrow" data-i18n="home.eyebrow">Permanent collection</span>
+              <span class="eyebrow" data-i18n="home.eyebrow"
+                >Permanent collection</span
+              >
               <h1 class="entrance__name">Michael Fischbach</h1>
               <p class="entrance__role" data-i18n="home.role">
                 Mechanical engineering · Cal Poly San Luis Obispo
@@ -109,41 +133,53 @@
 
               <div class="entrance__bio">
                 <p data-i18n="home.bio1">
-                  I design parts and build the systems that test them. Six years of
-                  taking products from a sketch to a finished object: CAD, tolerance
-                  analysis, machining, and the measurement that says whether the model
-                  was right.
+                  I design parts and build the systems that test them. Six years
+                  of taking products from a sketch to a finished object: CAD,
+                  tolerance analysis, machining, and the measurement that says
+                  whether the model was right.
                 </p>
                 <p data-i18n="home.bio2">
-                  I started a cast-concrete product company in 2019 and still run it.
-                  I grew up in an Air Force family and moved nine times across seven
-                  states, so relocating for an internship is normal rather than
-                  daunting.
+                  I started a cast-concrete product company in 2019 and still
+                  run it. I grew up in an Air Force family and moved nine times
+                  across seven states, so relocating for an internship is normal
+                  rather than daunting.
                 </p>
               </div>
 
               <div class="facts">
                 <div>
                   <div class="facts__value mono">3.78</div>
-                  <div class="facts__label" data-i18n="fact.gpa">GPA · Honors Program</div>
+                  <div class="facts__label" data-i18n="fact.gpa">
+                    GPA · Honors Program
+                  </div>
                 </div>
                 <div>
                   <div class="facts__value mono">±0.05</div>
-                  <div class="facts__label" data-i18n="fact.tol">mm tolerance held</div>
+                  <div class="facts__label" data-i18n="fact.tol">
+                    mm tolerance held
+                  </div>
                 </div>
                 <div>
                   <div class="facts__value mono">40+</div>
-                  <div class="facts__label" data-i18n="fact.products">products to market</div>
+                  <div class="facts__label" data-i18n="fact.products">
+                    products to market
+                  </div>
                 </div>
                 <div>
                   <div class="facts__value mono">1553</div>
-                  <div class="facts__label" data-i18n="fact.tests">tests in production</div>
+                  <div class="facts__label" data-i18n="fact.tests">
+                    tests in production
+                  </div>
                 </div>
               </div>
 
               <div class="btn-row">
-                <a class="btn btn--gilt" href="#/work" data-i18n="cta.work">View the collection</a>
-                <a class="btn" href="#/contact" data-i18n="cta.contact">Contact</a>
+                <a class="btn btn--gilt" href="#/work" data-i18n="cta.work"
+                  >View the collection</a
+                >
+                <a class="btn" href="#/contact" data-i18n="cta.contact"
+                  >Contact</a
+                >
               </div>
             </div>
 
@@ -176,13 +212,15 @@
         </section>
 
         <!-- ================= THE COLLECTION ================= -->
-        <section class="page section" id="work">
+        <section class="page section section--after-entrance" id="work">
           <div class="intro">
             <span class="eyebrow" data-i18n="work.eyebrow">The collection</span>
-            <h2 class="display" data-i18n="work.title">Works in Mechanical Engineering</h2>
+            <h2 class="display" data-i18n="work.title">
+              Works in Mechanical Engineering
+            </h2>
             <p class="intro__lede" data-i18n="work.lede">
-              Design, analysis and fabrication — each piece shown with what it was
-              built to do and what it measured.
+              Design, analysis and fabrication: each piece shown with what it
+              was built to do and what it measured.
             </p>
           </div>
 
@@ -191,17 +229,14 @@
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
-                    <picture>
-                      <source srcset="./src/assets/img/putter-hero.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/img/putter-hero.jpg"
-                        width="1500"
-                        height="1125"
-                        alt="The finished aluminium putter head"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
+                    <img
+                      src="./src/assets/img/putter-hero.avif"
+                      width="1500"
+                      height="1125"
+                      alt="The finished aluminium putter head"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               </div>
@@ -212,8 +247,8 @@
                 </h3>
                 <p class="label__body" data-i18n="proj.putter.body">
                   A putter head machined from 6061 on a 4-axis HAAS in a single
-                  setup, with a cost model behind it. One of eight finalists from
-                  over forty.
+                  setup, with a cost model behind it. One of eight finalists
+                  from over forty.
                 </p>
                 <p class="label__meta">
                   4-Axis HAAS · Al 6061 · <span data-measured>$15.78/unit</span>
@@ -225,30 +260,30 @@
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
-                    <picture>
-                      <source srcset="./src/assets/img/ramps-bank.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/img/ramps-bank.jpg"
-                        width="1600"
-                        height="1600"
-                        alt="Beachside Bank, cast concrete"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
+                    <img
+                      src="./src/assets/img/ramps-bank.avif"
+                      width="1600"
+                      height="1600"
+                      alt="Beachside Bank, cast concrete"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.ramps.title">Chameleon Ramps</h3>
+                <h3 class="label__title" data-i18n="proj.ramps.title">
+                  Chameleon Ramps
+                </h3>
                 <p class="label__body" data-i18n="proj.ramps.body">
-                  A cast-concrete product company founded in 2019: forty designs taken
-                  from CAD through mould-making to a shipped product, with the casting
-                  process developed in-house.
+                  A cast-concrete product company founded in 2019: forty designs
+                  taken from CAD through mould-making to a shipped product, with
+                  the casting process developed in-house.
                 </p>
                 <p class="label__meta">
-                  Since 2019 · 40+ products · <span data-measured>$50k revenue</span>
+                  Since 2019 · 40+ products ·
+                  <span data-measured>$50k revenue</span>
                 </p>
               </div>
             </a>
@@ -257,29 +292,32 @@
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
-                    <picture>
-                      <source srcset="./src/assets/img/wave-inside.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/img/wave-inside.jpg"
-                        width="1200"
-                        height="900"
-                        alt="Wave energy converter, internal mechanism"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
+                    <img
+                      src="./src/assets/img/wave-inside.avif"
+                      width="1200"
+                      height="900"
+                      alt="Wave energy converter, internal mechanism"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.wave.title">Wave Energy Converter</h3>
+                <h3 class="label__title" data-i18n="proj.wave.title">
+                  Wave Energy Converter
+                </h3>
                 <p class="label__body" data-i18n="proj.wave.body">
-                  A rack-and-pinion generator turning wave oscillation into electrical
-                  power, every component machined in-house on a Bridgeport mill.
+                  A rack-and-pinion generator turning wave oscillation into
+                  electrical power, every component machined in-house on a
+                  Bridgeport mill.
                 </p>
                 <p class="label__meta">
-                  Rack &amp; pinion · Bridgeport · <span data-measured data-i18n="proj.wave.meta">1st place</span>
+                  Rack &amp; pinion · Bridgeport ·
+                  <span data-measured data-i18n="proj.wave.meta"
+                    >1st place</span
+                  >
                 </p>
               </div>
             </a>
@@ -288,17 +326,14 @@
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
-                    <picture>
-                      <source srcset="./src/assets/img/bot-display.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/img/bot-display.jpg"
-                        width="1800"
-                        height="1200"
-                        alt="The system's operator display: broker link status and a table of filled orders"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
+                    <img
+                      src="./src/assets/img/bot-display.avif"
+                      width="1800"
+                      height="1200"
+                      alt="The system's operator display: broker link status and a table of filled orders"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               </div>
@@ -308,9 +343,9 @@
                   Autonomous Execution System
                 </h3>
                 <p class="label__body" data-i18n="proj.bot.body">
-                  A Python system that ingests live data and executes autonomously,
-                  with parameters chosen on their worst case across two disjoint
-                  validation windows rather than their best.
+                  A Python system that ingests live data and executes
+                  autonomously, with parameters chosen on their worst case
+                  across two disjoint validation windows rather than their best.
                 </p>
                 <p class="label__meta">
                   Python · <span data-measured>1553 tests</span> ·
@@ -323,30 +358,31 @@
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
-                    <picture>
-                      <source srcset="./src/assets/img/campus-logo.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/img/campus-logo.jpg"
-                        width="1500"
-                        height="1000"
-                        alt="The Campus Native marketplace, live at campusnative.com"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
+                    <img
+                      src="./src/assets/img/campus-logo.avif"
+                      width="1500"
+                      height="1000"
+                      alt="The Campus Native marketplace, live at campusnative.com"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.campus.title">Campus Native</h3>
+                <h3 class="label__title" data-i18n="proj.campus.title">
+                  Campus Native
+                </h3>
                 <p class="label__body" data-i18n="proj.campus.body">
-                  A production marketplace for student-led campus tours: sixteen data
-                  models and payment handling, with double-booking prevented by a
-                  database constraint rather than application logic.
+                  A production marketplace for student-led campus tours: sixteen
+                  data models and payment handling, with double-booking
+                  prevented by a database constraint rather than application
+                  logic.
                 </p>
                 <p class="label__meta">
-                  Next.js · <span data-i18n="proj.campus.meta">live in production</span>
+                  Next.js ·
+                  <span data-i18n="proj.campus.meta">live in production</span>
                 </p>
               </div>
             </a>
@@ -355,17 +391,14 @@
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
-                    <picture>
-                      <source srcset="./src/assets/img/water-site.avif" type="image/avif" />
-                      <img
-                        src="./src/assets/img/water-site.jpg"
-                        width="1400"
-                        height="900"
-                        alt="Gravity-fed water distribution system, tank siting"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </picture>
+                    <img
+                      src="./src/assets/img/water-site.avif"
+                      width="1400"
+                      height="933"
+                      alt="Gravity-fed water distribution system, tank siting"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </div>
                 </div>
               </div>
@@ -376,8 +409,8 @@
                 </h3>
                 <p class="label__body" data-i18n="proj.water.body">
                   A gravity-fed distribution network for a rural community in
-                  Nicaragua: source survey, tank siting and pipe routing worked out
-                  from the terrain rather than from a standard layout.
+                  Nicaragua: source survey, tank siting and pipe routing worked
+                  out from the terrain rather than from a standard layout.
                 </p>
                 <p class="label__meta">
                   <span data-i18n="proj.water.meta">Nicaragua</span> ·
@@ -394,13 +427,20 @@
            slug in the hash. Empty in the markup: writing six rooms by hand
            would mean six more copies of the frame structure, each needing its
            own translated defaults. -->
-      <article data-view id="view-project" class="page section case" hidden></article>
+      <article
+        data-view
+        id="view-project"
+        class="page section case"
+        hidden
+      ></article>
 
       <!-- ================= AWARDS ================= -->
       <article data-view id="view-awards" class="page section" hidden>
         <div class="intro">
           <span class="eyebrow" data-i18n="awards.eyebrow">Honours</span>
-          <h1 class="display" data-i18n="awards.title">Awards &amp; Recognition</h1>
+          <h1 class="display" data-i18n="awards.title">
+            Awards &amp; Recognition
+          </h1>
         </div>
         <div id="awards-list"></div>
       </article>
@@ -413,20 +453,20 @@
         </div>
         <div class="prose prose--centred stack">
           <p data-i18n="about.p1">
-            I am a mechanical engineering student at Cal Poly San Luis Obispo, in the
-            Honors Program, with a 3.78 GPA and Dean's List in all three quarters of my
-            first year.
+            I am a mechanical engineering student at Cal Poly San Luis Obispo,
+            in the Honors Program, with a 3.78 GPA and Dean's List in all three
+            quarters of my first year.
           </p>
           <p data-i18n="about.p2">
-            What interests me is the loop between a drawing and a measurement: design
-            it, make it, test it, find out where the model was wrong, change it. That
-            applies to a part on a mill and to a system in production, which is why
-            both appear here.
+            What interests me is the loop between a drawing and a measurement:
+            design it, make it, test it, find out where the model was wrong,
+            change it. That applies to a part on a mill and to a system in
+            production, which is why both appear here.
           </p>
           <p data-i18n="about.p3">
-            I grew up in an Air Force family and moved nine times across seven states.
-            I am a US citizen and eligible for a German study-related internship
-            residence permit.
+            I grew up in an Air Force family and moved nine times across seven
+            states. I am a US citizen and eligible for a German study-related
+            internship residence permit.
           </p>
         </div>
       </article>
@@ -437,11 +477,14 @@
           <span class="eyebrow" data-i18n="nav.contact">Contact</span>
           <h1 class="display" data-i18n="contact.title">Get in touch</h1>
           <p class="intro__lede" data-i18n="contact.lede">
-            Available for a mechanical engineering internship. Open to relocation.
+            Available for a mechanical engineering internship. Open to
+            relocation.
           </p>
         </div>
         <div class="btn-row btn-row--centred">
-          <a class="btn btn--gilt" href="mailto:mef126906@icloud.com">mef126906@icloud.com</a>
+          <a class="btn btn--gilt" href="mailto:mef126906@icloud.com"
+            >mef126906@icloud.com</a
+          >
           <a
             class="btn"
             href="https://www.linkedin.com/in/michael-fischbach-a8a937235"
@@ -455,9 +498,14 @@
 
     <footer class="colophon">
       <div class="page colophon__inner">
-        <span class="colophon__name">Michael Fischbach — <span data-i18n="footer.role">Mechanical Engineer</span></span>
+        <span class="colophon__name"
+          >Michael Fischbach,
+          <span data-i18n="footer.role">Mechanical Engineer</span></span
+        >
         <div class="colophon__links">
-          <a href="mailto:mef126906@icloud.com" data-i18n="footer.email">Email</a>
+          <a href="mailto:mef126906@icloud.com" data-i18n="footer.email"
+            >Email</a
+          >
           <a
             href="https://www.linkedin.com/in/michael-fischbach-a8a937235"
             target="_blank"

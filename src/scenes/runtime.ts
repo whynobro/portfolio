@@ -71,7 +71,7 @@ export function initScenes(): void {
   if (!nodes.length) return;
 
   // A scene inside a hidden view measures 0x0 at mount, so its canvas backing
-  // store would be 1px. Re-measure whenever a view is shown — the router
+  // store would be 1px. Re-measure whenever a view is shown, the router
   // toggles `hidden`, and only then does the element have a real box.
   const remeasure = (el: HTMLElement): void => {
     const scene = mounted.get(el);
@@ -94,7 +94,7 @@ export function initScenes(): void {
   }
 
   // Screenshot mode: mount everything now, no observer, no animation.
-  // Mount, then remeasure on the next frame — at mount time the element may
+  // Mount, then remeasure on the next frame, at mount time the element may
   // still be inside a view the router has not revealed yet.
   if (shotsMode()) {
     // `data-ready` is only set after the remeasure, so the capture script

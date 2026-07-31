@@ -50,7 +50,7 @@
 /* ---- Language toggle --------------------------------------------------- */
 /*
  * A segmented control, not a <select> (extra interaction cost) and not a flag
- * (flags are countries, not languages — Austria and Switzerland also read German).
+ * (flags are countries, not languages, Austria and Switzerland also read German).
  */
 .lang {
   display: flex;
@@ -105,7 +105,7 @@
    * `text-wrap: balance` is actively harmful at narrow widths: balancing line
    * lengths against long German compounds (konstruiere, Ausführungssystem) in
    * a 390px box resolves to roughly one word per line and eats the first
-   * screen. Explicitly reset to `wrap` — Safari and Firefox don't support
+   * screen. Explicitly reset to `wrap`, Safari and Firefox don't support
    * `pretty`, so it can't be relied on as the fix.
    */
   text-wrap: wrap;
@@ -180,7 +180,7 @@
   .hero__portrait img {
     inline-size: 100%;
     block-size: auto;
-    /* Fixed ratio reserves the box before the image decodes — no layout shift. */
+    /* Fixed ratio reserves the box before the image decodes, no layout shift. */
     aspect-ratio: 4 / 5;
     object-fit: cover;
     /* Desaturation is baked into the asset at build time (prep-images.mjs)
@@ -190,7 +190,7 @@
   }
   /* Caption reads like a drawing annotation rather than a photo credit.
    * Two lines are reserved because the German string wraps where the English
-   * one does not — without this the strip below shifts on language change. */
+   * one does not, without this the strip below shifts on language change. */
   .hero__portrait figcaption {
     margin-block-start: var(--s-2);
     font-family: var(--font-mono);
@@ -325,7 +325,7 @@
 .tile__figure {
   flex: 1;
   margin-block: var(--s-6);
-  /* Reserves the scene box before any canvas mounts — zero layout shift. */
+  /* Reserves the scene box before any canvas mounts, zero layout shift. */
   aspect-ratio: 16 / 9;
   background: var(--surface);
   border: 1px solid var(--line);

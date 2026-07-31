@@ -11,7 +11,7 @@ import { subscribe, unsubscribe } from "../../lib/raf";
  * in scripts/verify-tictactoe.mjs rather than merely asserted here.
  *
  * Depth is folded into the score so the machine prefers a win in fewer moves
- * and a loss in more. Without that it plays "lazily" — it sees a forced win as
+ * and a loss in more. Without that it plays "lazily", it sees a forced win as
  * equal whether it takes two moves or five, which looks like a bug to anyone
  * watching.
  *

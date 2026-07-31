@@ -68,7 +68,17 @@ const MANIFEST = [
   // two real photographs instead. Worth asking Michael for the CAD.
 
   // --- Nicaragua water distribution ---
-  { name: "water-site", src: "assets-src/nicaragua/system-on-site.png", width: 1400, quality: 70 },
+  // Also a slide, so also `contain`: the attention crop sliced its heading in
+  // half ("bicación del ... nque") exactly as it did on water-1 below.
+  {
+    name: "water-site",
+    src: "assets-src/nicaragua/system-on-site.png",
+    width: 1400,
+    height: 933,
+    fit: "contain",
+    background: "#ffffff",
+    quality: 72,
+  },
   // The presentation slide showing the sequence: source, catchment, tank, tap.
   // `contain` because it is a slide, not a photograph — an attention crop cut
   // the heading off mid-word and dropped the last step out of the frame.

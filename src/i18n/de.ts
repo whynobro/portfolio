@@ -48,9 +48,9 @@ export const de = {
   "game.ttt.title": "Unschlagbares Tic-Tac-Toe",
   "game.ttt.status.thinking": "Berechnet…",
   "game.ttt.status.yourTurn": "Sie sind am Zug",
-  "game.ttt.status.draw": "Unentschieden — das bestmögliche Ergebnis",
+  "game.ttt.status.draw": "Unentschieden: das bestmögliche Ergebnis",
   "game.ttt.status.aiWins": "Michael gewinnt",
-  "game.ttt.status.demo": "Spielt gegen sich selbst — Feld wählen zum Übernehmen",
+  "game.ttt.status.demo": "Spielt gegen sich selbst. Feld wählen zum Übernehmen",
   "game.ttt.reset": "Neues Spiel",
   "game.ring.title": "Wasser-Ringspiel",
   "game.ring.button": "Zum Pumpen drücken",
@@ -63,7 +63,7 @@ export const de = {
   "work.eyebrow": "Die Sammlung",
   "work.title": "Arbeiten im Maschinenbau",
   "work.lede":
-    "Konstruktion, Berechnung und Fertigung — jede Arbeit mit ihrer Aufgabe und ihrem Messergebnis.",
+    "Konstruktion, Berechnung und Fertigung: jede Arbeit mit ihrer Aufgabe und ihrem Messergebnis.",
 
   "proj.putter.title": "CNC-gefräster Putter aus Aluminium",
   "proj.putter.body":
@@ -204,7 +204,7 @@ export const de = {
   "alt.putter.inhand": "Der fertige Kopf in der Hand, mit Blick auf die Schöpfgeometrie",
   "alt.putter.inuse": "Der Putter im Einsatz auf dem Westlake Golf Course",
   "alt.putter.drawing": "Die bemaßte technische Zeichnung",
-  "cap.putter.cam": "Werkzeugbahnen in Fusion 360 — der Aufbau, den die eine Aufspannung erfüllen musste.",
+  "cap.putter.cam": "Werkzeugbahnen in Fusion 360: der Aufbau, den die eine Aufspannung erfüllen musste.",
   "cap.putter.machining": "Während der Bearbeitung auf der 4-Achs-HAAS.",
   "cap.putter.inhand": "Die Schöpffläche, das Merkmal, um das die Geometrie gebaut ist.",
   "cap.putter.inuse": "Im Einsatz auf dem Westlake Golf Course.",
@@ -214,7 +214,7 @@ export const de = {
   "alt.ramps.quarter": "Eine Quarter Pipe aus Gussbeton vor Blattwerk",
   "alt.ramps.alt1": "Ein Hindernis aus Gussbeton aus der Produktreihe",
   "alt.ramps.alt2": "Ein Hindernis aus Gussbeton aus der Produktreihe",
-  "cap.ramps.quarter": "Die Quarter Pipe — die Form, die sich am schwersten entformen lässt.",
+  "cap.ramps.quarter": "Die Quarter Pipe: die Form, die sich am schwersten entformen lässt.",
   "cap.ramps.alt1": "Aus der aktuellen Produktreihe.",
   "cap.ramps.alt2": "Aus der aktuellen Produktreihe.",
 
@@ -246,15 +246,15 @@ export const de = {
   "award.deans.issuer": "California Polytechnic State University, San Luis Obispo",
   "award.deans.body":
     "Herbst, Winter und Frühjahr 2025–26, für einen GPA von mindestens 3,50 über alle Leistungspunkte.",
-  "award.bridge.title": "1. Platz — Nudelbrücken-Konstruktion",
+  "award.bridge.title": "1. Platz: Nudelbrücken-Konstruktion",
   "award.bridge.issuer": "Cal Poly College of Engineering",
   "award.bridge.body":
     "Größte tragfähige Spannweite aus zwanzig 12-Zoll-Stücken und drei Fuß Klebeband. Die Konstruktion nutzt die Druckfestigkeit des Materials gegen seine geringe Schubfestigkeit und gewann mit 38,5 % Vorsprung auf den zweiten Platz.",
-  "award.capstone.title": "Capstone-Finalist — CNC-gefräster Putter",
+  "award.capstone.title": "Capstone-Finalist: CNC-gefräster Putter",
   "award.capstone.issuer": "Oaks Christian School, Institute of Engineering",
   "award.capstone.body":
     "Eine von acht Präsentationen, ausgewählt aus über vierzig Capstone-Projekten, vorgestellt vor mehr als 300 Alumni, Fachleuten und Studierenden.",
-  "award.wave.title": "1. Platz — Wellenenergie-Wandler",
+  "award.wave.title": "1. Platz: Wellenenergie-Wandler",
   "award.wave.issuer": "Oaks Christian School, Institute of Engineering",
   "award.wave.body":
     "Höchste gemessene Leistung aller teilnehmenden Teams, gewandelt aus Wellenbewegung über einen Zahnstangen-Ritzel-Antrieb.",

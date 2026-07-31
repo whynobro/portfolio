@@ -2,7 +2,7 @@ import type { Page } from "playwright";
 
 /**
  * The shot manifest. Kept separate from the driver so adding a shot is a
- * one-line data edit — that's what makes the loop actually get used.
+ * one-line data edit, that's what makes the loop actually get used.
  */
 
 export type Lang = "en" | "de";
@@ -22,7 +22,7 @@ export type Shot = {
   /** Reach a state that no URL can express (open menu, drag a slider, Tab focus). */
   act?: (page: Page) => Promise<void>;
   /**
-   * Full-page by default. Set false for pages over ~6000px — a 12000px PNG is
+   * Full-page by default. Set false for pages over ~6000px, a 12000px PNG is
    * hard for a human or an agent to read usefully.
    */
   fullPage?: boolean;
@@ -31,7 +31,7 @@ export type Shot = {
 export const VIEWPORTS: Record<ViewportKey, { width: number; height: number }> = {
   // Recruiter on a laptop.
   desktop: { width: 1280, height: 900 },
-  // Worst case for German text overflow — scrutinize these.
+  // Worst case for German text overflow, scrutinize these.
   mobile: { width: 390, height: 844 },
   // HWA engineers sit at docked monitors; a hero that reads at 1280 can look
   // sparse at 1920.
@@ -48,8 +48,8 @@ export const SHOTS: Shot[] = [
   { name: "about", route: "#/about" },
   { name: "contact", route: "#/contact" },
 
-  // A room per work. These run long — the putter's is five plates below the
-  // text — so they are captured at the fold rather than full-page; a 7000px
+  // A room per work. These run long, the putter's is five plates below the
+  // text, so they are captured at the fold rather than full-page; a 7000px
   // PNG is not something a human or an agent reads usefully.
   { name: "work-cnc", route: "#/work/cnc", fullPage: false },
   { name: "work-ramps", route: "#/work/ramps", fullPage: false },

@@ -1,5 +1,5 @@
 /*
- * Design tokens — gallery.
+ * Design tokens, gallery.
  *
  * Reference: a small museum wall and a printed exhibition catalogue. Warm
  * off-white walls, works hung in gilded frames, engraved caption plates.
@@ -7,7 +7,7 @@
  * frames read as clip-art.
  */
 
-/* Cormorant Garamond — high-contrast old-style serif for the gallery voice:
+/* Cormorant Garamond, high-contrast old-style serif for the gallery voice:
  * work titles, the visitor's name, plate headings. */
 @font-face {
   font-family: "Cormorant Garamond";
@@ -72,15 +72,24 @@
   /* ---- Ink (ratios vs --wall) ----------------------------------------- */
   --ink: #14110e; /* 16.8:1 */
   --ink-soft: #4a443c; /* 8.4:1  */
-  --ink-mute: #6f675c; /* 4.9:1  — still AA for body */
+  --ink-mute: #6f675c; /* 4.9:1, still AA for body */
 
-  /* ---- Gilt ------------------------------------------------------------ */
-  /* Three stops, always lit from the upper left, so every frame on the page
-   * agrees about where the light is. That consistency is what separates a
-   * drawn moulding from a gold-coloured border. */
-  --gilt-hi: #e8c77a;
-  --gilt: #b8873a;
-  --gilt-lo: #8a5f22;
+  /* ---- Accent ----------------------------------------------------------- */
+  /*
+   * The interface accent: rules, the masthead's underline, the awards badge,
+   * the active nav item, the label rule under each work.
+   *
+   * Michael's colour, a clear cyan-blue rather than the amber this started as.
+   * It reads as ink on the wall rather than as more gilding, which leaves the
+   * REAL gold, the photographed moulding, as the only gold on the page. The
+   * three stops stay because several rules and the badge fill derive from them.
+   *
+   * The names are still `gilt`: they are threaded through six stylesheets and a
+   * rename is a wider change than a colour swap.
+   */
+  --gilt-hi: #6fc4de;
+  --gilt: #2596be;
+  --gilt-lo: #17698a;
 
   /* ---- Caption plate --------------------------------------------------- */
   --plate: #171310;
@@ -89,7 +98,7 @@
 
   /* ---- Accents --------------------------------------------------------- */
   /* Measured values keep a distinct colour, but a deep oxblood rather than the
-   * amber of v1 — amber against gilt is mud. */
+   * amber of v1, amber against gilt is mud. */
   --measured: #8c2f1f;
   --ok: #2f6b43;
 

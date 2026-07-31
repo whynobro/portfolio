@@ -4,19 +4,19 @@
  * The whole site is one HTML file, so "pages" are sections that show and hide.
  * Hash routing (rather than the History API) is deliberate: it is the only
  * scheme that also works when the file is opened from file://, which is a
- * requirement here — the built page has to survive being emailed as an
+ * requirement here, the built page has to survive being emailed as an
  * attachment.
  */
 
 export type Route = { id: string; title: string };
 
 const ROUTES: Record<string, Route> = {
-  "": { id: "view-home", title: "Michael Fischbach — Mechanical Engineering" },
-  "/": { id: "view-home", title: "Michael Fischbach — Mechanical Engineering" },
-  "/work": { id: "view-home", title: "Work — Michael Fischbach" },
-  "/awards": { id: "view-awards", title: "Awards — Michael Fischbach" },
-  "/about": { id: "view-about", title: "About — Michael Fischbach" },
-  "/contact": { id: "view-contact", title: "Contact — Michael Fischbach" },
+  "": { id: "view-home", title: "Michael Fischbach, Mechanical Engineering" },
+  "/": { id: "view-home", title: "Michael Fischbach, Mechanical Engineering" },
+  "/work": { id: "view-home", title: "Work, Michael Fischbach" },
+  "/awards": { id: "view-awards", title: "Awards, Michael Fischbach" },
+  "/about": { id: "view-about", title: "About, Michael Fischbach" },
+  "/contact": { id: "view-contact", title: "Contact, Michael Fischbach" },
 };
 
 /**
@@ -85,7 +85,7 @@ function show(route: Route, opts: { focus: boolean }): void {
 
   // Leaving a room returns the visitor to the piece they clicked rather than to
   // the top of a long wall. Only when arriving at the collection itself, and
-  // only once — a later visit to #/work should start at the top.
+  // only once, a later visit to #/work should start at the top.
   if (route.id === "view-home" && path.startsWith("/work") && lastSlug) {
     const work = document.querySelector<HTMLElement>(`a[href="#/work/${lastSlug}"]`);
     lastSlug = null;
@@ -105,10 +105,10 @@ function resolve(): Route {
   if (slug) {
     const title = resolveSlug(slug);
     // An unknown slug falls through to the collection rather than showing an
-    // empty room — a stale link from a CV should land somewhere real.
+    // empty room, a stale link from a CV should land somewhere real.
     if (title) {
       lastSlug = slug;
-      return { id: "view-project", title: `${title} — Michael Fischbach` };
+      return { id: "view-project", title: `${title}, Michael Fischbach` };
     }
     return ROUTES["/work"]!;
   }
@@ -117,7 +117,7 @@ function resolve(): Route {
 }
 
 export function initRouter(): void {
-  // The first render must not steal focus or scroll — the visitor has not
+  // The first render must not steal focus or scroll, the visitor has not
   // navigated anywhere yet.
   show(resolve(), { focus: false });
   window.addEventListener("hashchange", () => show(resolve(), { focus: true }));
