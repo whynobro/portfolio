@@ -50,8 +50,11 @@ const MANIFEST = [
   { name: "putter-green", src: "assets-src/putter/converted/IMG_9596.jpg", width: 1200, quality: 70 },
   // In the vise, mid-cut, chips on the fixture.
   { name: "putter-machining", src: "assets-src/putter/converted/IMG_9580.jpg", width: 1200, quality: 64 },
-  // The scooping geometry, held.
-  { name: "putter-inhand", src: "assets-src/putter/converted/IMG_9582.jpg", width: 1400, quality: 70 },
+  // The part tilted on a 3D-printed shim to cut the 3-degree loft angle. The
+  // photograph that was here (IMG_9582, the head held in one hand) was captioned
+  // as the scooping face, which it was not: this one shows an actual fixturing
+  // decision, which is the more interesting picture anyway.
+  { name: "putter-loft", src: "assets-src/putter/converted/IMG_9591.jpg", width: 1400, quality: 70 },
   // The CAM simulation itself, exported from Fusion rather than photographed
   // off a monitor: the toolpaths, the stock and the cutter in one frame. The
   // photograph this replaced carried screen moiré and showed a tool dialogue

@@ -204,7 +204,7 @@ export const de = {
   "alt.putter.cad": "Der fertige Putterkopf als CAD-Modell, schattiert",
   "alt.putter.cam": "Die CAM-Simulation: Werkzeugbahnen, Fräser und Rohteil",
   "alt.putter.machining": "Der Kopf im Schraubstock während der Bearbeitung, Späne auf der Vorrichtung",
-  "alt.putter.inhand": "Der fertige Kopf in der Hand, mit Blick auf die Schöpfgeometrie",
+  "alt.putter.loft": "Das Bauteil auf einer pinken, 3D-gedruckten Unterlage im Schraubstock, aufgespannt für den Steigungswinkel",
   "alt.putter.inuse": "Der Putter im Einsatz auf dem Westlake Golf Course",
   "alt.putter.drawing": "Die bemaßte technische Zeichnung",
   "cap.putter.cad": "Das Modell, bevor es das Bauteil in Metall gab.",
@@ -212,7 +212,7 @@ export const de = {
   "cap.putter.stl": "Das Bauteil selbst, aus dem Modell des Abschlussprojekts. Zum Drehen ziehen.",
   "cap.putter.cam": "Die CAM-Simulation: jede Bahn, die die eine Aufspannung erreichen musste.",
   "cap.putter.machining": "Während der Bearbeitung auf der 4-Achs-HAAS.",
-  "cap.putter.inhand": "Die Schöpffläche, das Merkmal, um das die Geometrie gebaut ist.",
+  "cap.putter.loft": "Der Steigungswinkel von 3 Grad: Das Bauteil liegt auf einer 3D-gedruckten Unterlage statt in einer geneigten Vorrichtung.",
   "cap.putter.inuse": "Im Einsatz auf dem Westlake Golf Course.",
   "cap.putter.drawing": "Die Zeichnung, nach der gefertigt wurde.",
 

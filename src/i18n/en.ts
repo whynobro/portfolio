@@ -198,7 +198,7 @@ export const en = {
   "alt.putter.cad": "The finished putter head modelled in CAD, shaded",
   "alt.putter.cam": "The CAM simulation: toolpaths, cutter and stock",
   "alt.putter.machining": "The head in the vise mid-cut, chips on the fixture",
-  "alt.putter.inhand": "The finished head held, showing the scooping geometry",
+  "alt.putter.loft": "The part tilted on a pink 3D-printed shim in the vise, set up to cut the loft angle",
   "alt.putter.inuse": "The putter in use at Westlake Golf Course",
   "alt.putter.drawing": "The dimensioned engineering drawing",
   "cap.putter.cad": "The model, before any of it existed in metal.",
@@ -206,7 +206,7 @@ export const en = {
   "cap.putter.stl": "The part itself, from the capstone's own model. Drag to turn it.",
   "cap.putter.cam": "The CAM simulation: every toolpath the single fixture had to reach.",
   "cap.putter.machining": "Mid-cut on the 4-axis HAAS.",
-  "cap.putter.inhand": "The scooping face, the feature the geometry was built around.",
+  "cap.putter.loft": "Cutting the 3-degree loft angle: the part sits on a 3D-printed shim rather than in a tilted fixture.",
   "cap.putter.inuse": "In use at Westlake Golf Course.",
   "cap.putter.drawing": "The drawing the part was cut from.",
 

@@ -111,11 +111,11 @@ const PROJECTS: Project[] = [
         capKey: "cap.putter.machining",
       },
       {
-        img: "putter-inhand",
+        img: "putter-loft",
         w: 1400,
         h: 1867, aspect: "frame--photo",
-        altKey: "alt.putter.inhand",
-        capKey: "cap.putter.inhand",
+        altKey: "alt.putter.loft",
+        capKey: "cap.putter.loft",
       },
       {
         img: "putter-inuse",
