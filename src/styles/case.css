@@ -1,0 +1,163 @@
+/*
+ * A project room.
+ *
+ * The wall shows six works at a glance; a room shows one of them at length.
+ * The structure follows a gallery's own: the piece large, a specification
+ * plate beside it, then the text, then the rest of the sequence beneath.
+ *
+ * Every frame here reuses .frame / .frame__mat / .frame__win unchanged, so the
+ * two fixed frame bugs (padding-box background, drop-shadow rather than
+ * box-shadow) stay fixed in one place.
+ */
+
+.case {
+  max-inline-size: 1100px;
+}
+
+/* ---- Back to the collection --------------------------------------------- */
+.case__back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-decoration: none;
+  border-block-end: 1px solid transparent;
+  transition: color var(--dur) var(--ease), border-color var(--dur) var(--ease);
+}
+.case__back::before {
+  content: "←";
+  margin-inline-end: 0.6em;
+}
+.case__back:hover {
+  color: var(--gilt);
+  border-block-end-color: var(--gilt);
+}
+
+/* ---- Title block --------------------------------------------------------- */
+.case__head {
+  margin-block-start: var(--s-8);
+  max-inline-size: 46ch;
+}
+
+.case__title {
+  margin-block-start: var(--s-2);
+}
+
+.case__lede {
+  margin-block-start: var(--s-4);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--t-lg);
+  line-height: var(--lh-snug);
+  color: var(--ink-mute);
+}
+
+/* ---- The piece and its plate --------------------------------------------- */
+.case__top {
+  margin-block-start: var(--s-12);
+  display: grid;
+  gap: var(--s-8);
+}
+@media (min-width: 860px) {
+  .case__top {
+    /* The picture takes the room; the plate is a column beside it, the way a
+     * wall label sits next to the work rather than under it. */
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: var(--s-12);
+    align-items: start;
+  }
+}
+
+.plate {
+  display: grid;
+  /* A label column wide enough for the German words, which run about a third
+   * longer than the English ones and would otherwise wrap every row. */
+  grid-template-columns: minmax(7.5em, auto) minmax(0, 1fr);
+  gap: var(--s-3) var(--s-4);
+  padding-block: var(--s-4);
+  border-block-start: 2px solid var(--gilt);
+}
+
+.plate__k {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  line-height: var(--lh-body);
+}
+
+.plate__v {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--ink);
+}
+/* The oxblood marks a measured result and nothing else, exactly as on the wall. */
+.plate__v[data-measured] {
+  font-family: var(--font-mono);
+  color: var(--measured);
+}
+
+/* ---- The text ------------------------------------------------------------ */
+.case__body {
+  margin-block-start: var(--s-16);
+  max-inline-size: 62ch;
+}
+
+.case__h {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: var(--t-lg);
+  color: var(--ink);
+  margin-block-start: var(--s-8);
+}
+.case__h:first-child {
+  margin-block-start: 0;
+}
+
+.case__p {
+  margin-block-start: var(--s-4);
+  font-family: var(--font-sans);
+  font-size: var(--t-base);
+  line-height: var(--lh-body);
+  color: var(--ink-mute);
+}
+
+/* ---- The rest of the sequence -------------------------------------------- */
+.case__gallery {
+  margin-block-start: var(--s-24);
+  display: grid;
+  gap: var(--s-16);
+}
+@media (min-width: 720px) {
+  .case__gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-16) var(--s-12);
+  }
+}
+
+.case__plate {
+  margin: 0;
+}
+
+.case__caption {
+  margin-block-start: var(--s-3);
+  font-family: var(--font-sans);
+  font-size: var(--t-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-mute);
+  text-align: center;
+  max-inline-size: 44ch;
+  margin-inline: auto;
+}
+
+.case__foot {
+  margin-block-start: var(--s-24);
+  padding-block-start: var(--s-8);
+  border-block-start: 1px solid var(--wall-line);
+}

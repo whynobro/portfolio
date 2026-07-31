@@ -63,9 +63,24 @@ const MANIFEST = [
   // --- Wave energy converter ---
   { name: "wave-inside", src: "assets-src/wave/wave-inside.jpg", width: 1200, quality: 72 },
   { name: "wave-base", src: "assets-src/wave/wave-base.jpg", width: 1000, quality: 72 },
+  // Deliberately NOT here: assets-src/wave/wave-diagram.jpg. The source is a
+  // 2.6 KB clip-art sketch and upscales to a blurry mess — the wave room shows
+  // two real photographs instead. Worth asking Michael for the CAD.
 
   // --- Nicaragua water distribution ---
   { name: "water-site", src: "assets-src/nicaragua/system-on-site.png", width: 1400, quality: 70 },
+  // The presentation slide showing the sequence: source, catchment, tank, tap.
+  // `contain` because it is a slide, not a photograph — an attention crop cut
+  // the heading off mid-word and dropped the last step out of the frame.
+  {
+    name: "water-1",
+    src: "assets-src/nicaragua/layout-slide.png",
+    width: 1400,
+    height: 1050,
+    fit: "contain",
+    background: "#ffffff",
+    quality: 72,
+  },
 
   // --- Campus Native ---
   // The live marketplace at campusnative.com, captured by scripts/shoot-campus.mjs

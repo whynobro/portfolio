@@ -47,4 +47,14 @@ export const SHOTS: Shot[] = [
   { name: "awards", route: "#/awards" },
   { name: "about", route: "#/about" },
   { name: "contact", route: "#/contact" },
+
+  // A room per work. These run long — the putter's is five plates below the
+  // text — so they are captured at the fold rather than full-page; a 7000px
+  // PNG is not something a human or an agent reads usefully.
+  { name: "work-cnc", route: "#/work/cnc", fullPage: false },
+  { name: "work-ramps", route: "#/work/ramps", fullPage: false },
+  { name: "work-wave", route: "#/work/wave", fullPage: false },
+  { name: "work-bot", route: "#/work/bot", fullPage: false },
+  { name: "work-campus", route: "#/work/campus", fullPage: false },
+  { name: "work-water", route: "#/work/water", fullPage: false },
 ];

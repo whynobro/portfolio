@@ -117,17 +117,30 @@ text — **read those before writing copy**.
 
 ## Structure
 
-Single page, hash-routed views (`#/awards`, `#/about`, `#/contact`); hash rather
-than History API because it must work from `file://`.
+Single page, hash-routed views (`#/awards`, `#/about`, `#/contact`, and
+`#/work/<slug>` for each work's room); hash rather than History API because it
+must work from `file://`.
+
+**A room is one container filled from data**, not six blocks of markup:
+`#view-project` is re-rendered per slug by `src/projects.ts`. `initProjects()`
+must run BEFORE `initRouter()` — the router asks it to resolve `/work/<slug>` on
+the very first render. An unknown slug falls through to the collection rather
+than showing an empty room, and returning from a room scrolls the work that was
+clicked back into view.
+
+Like the awards room, the project rooms need JavaScript where the wall does not.
+That is the accepted trade: the wall carries every work's title, description and
+figures inline, so the no-JS document is still a complete portfolio.
 
 ```text
 index.html                     the only page; one [data-view] per room
-src/main.ts                    boot: i18n -> awards -> router -> scenes
+src/main.ts                    boot: i18n -> awards -> projects -> router -> scenes
 src/router.ts                  view switching, focus management, titles
 src/awards.ts                  awards room, rendered from data
+src/projects.ts                the six project rooms, rendered from data
 src/i18n/{en,de}.ts            en.ts is the source of truth
 src/scenes/{tictactoe,ringtoss}/   SceneModule: mount/resize/dispose/renderStatic
-src/styles/                    tokens, base, layout, frame, chrome, games
+src/styles/                    tokens, base, layout, frame, chrome, games, case
 scripts/prep-frame.mjs         frame PNG -> border-image + measured slice
 scripts/prep-images.mjs        manifest-driven raster -> AVIF + JPEG fallback
 scripts/shoot-jarvis.mjs       live bot dashboard -> a work (composed, see above)
