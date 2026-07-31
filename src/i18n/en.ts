@@ -202,6 +202,8 @@ export const en = {
   "alt.putter.inuse": "The putter in use at Westlake Golf Course",
   "alt.putter.drawing": "The dimensioned engineering drawing",
   "cap.putter.cad": "The model, before any of it existed in metal.",
+  "alt.putter.poster": "The CNC Milled Putter capstone poster: abstract, process, challenges and conclusion",
+  "cap.putter.poster": "The capstone poster, presented at Oaks Christian, 2025.",
   "putter.aria": "The putter head in three dimensions. Drag, or use the arrow keys, to turn it.",
   "cap.putter.stl": "The part itself, from the capstone's own model. Drag to turn it.",
   "cap.putter.cam": "The CAM simulation: every toolpath the single fixture had to reach.",

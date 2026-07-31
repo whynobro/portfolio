@@ -161,7 +161,7 @@ Six works. Sources in `assets-src/<folder>/`.
 
 | Work | Folder | Notes |
 | --- | --- | --- |
-| CNC-milled putter | `putter/` | 11 converted photos: CAD → in the vise → in hand → on the green. The strongest sequence on the site. Capstone drawing has a mint-green slide background baked in that still needs masking. |
+| CNC-milled putter | `putter/` | 11 converted photos, the Fusion CAM export, the STL behind the turning piece, and the capstone poster exported from `CapstonePoster_MichaelFischbach.pptx` (PowerPoint COM, 4x slide size, see the wave row for why posters are prepped at 2600px/q88). Capstone drawing still has a mint-green slide background baked in. **The poster says 3-axis HAAS; every label on the site says 4-axis. Unresolved, ask Michael.** |
 | Chameleon Ramps | `ramps/` | 11 product photos. `p4` (Beachside Bank on wet rock) and `p9` (quarter pipe against foliage) are the strongest. |
 | Wave energy converter | `wave/` | inside / base views, the cutaway, and the capstone poster rendered from `wec-report.pdf` at 200dpi. The poster hangs full width at the foot of the room and must stay readable, so it is the one image prepped at 2600px / q88. |
 | SMC execution system | `smc-bot/` | Jarvis operator display, captured from the live dashboard over Tailscale by `scripts/shoot-jarvis.mjs`. **Account figures are never published** — see the rule below. |

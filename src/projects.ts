@@ -86,6 +86,14 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.putter.outcome"] },
     ],
     scene: { id: "putter", capKey: "cap.putter.stl" },
+    poster: {
+      img: "putter-poster",
+      w: 2600,
+      h: 1950,
+      aspect: "frame--slide",
+      altKey: "alt.putter.poster",
+      capKey: "cap.putter.poster",
+    },
     gallery: [
       {
         img: "putter-cad",

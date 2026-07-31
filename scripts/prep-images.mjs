@@ -80,6 +80,17 @@ const MANIFEST = [
   },
   // In use at Westlake Golf Course.
   { name: "putter-inuse", src: "assets-src/putter/converted/IMG_4440.jpg", width: 1200, quality: 62 },
+  // The capstone poster, exported from the PPTX at 4x slide size via
+  // PowerPoint. Like the wave one it hangs full width at the foot of the room
+  // and has to stay READABLE, so it keeps far more resolution and a much higher
+  // quality than a photograph: dense text on white is where AVIF's usual
+  // settings smear the letterforms.
+  {
+    name: "putter-poster",
+    src: "assets-src/putter/capstone-poster.png",
+    width: 2600,
+    quality: 88,
+  },
   // A drawing, so `contain`: cropping the title block off a drawing is worse
   // than a little padding. LOW RESOLUTION at source (660x432), wants re-export.
   {

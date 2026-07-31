@@ -208,6 +208,8 @@ export const de = {
   "alt.putter.inuse": "Der Putter im Einsatz auf dem Westlake Golf Course",
   "alt.putter.drawing": "Die bemaßte technische Zeichnung",
   "cap.putter.cad": "Das Modell, bevor es das Bauteil in Metall gab.",
+  "alt.putter.poster": "Das Capstone-Poster zum CNC-gefrästen Putter: Kurzfassung, Vorgehen, Probleme, Fazit",
+  "cap.putter.poster": "Das Capstone-Poster, vorgestellt an der Oaks Christian School, 2025.",
   "putter.aria": "Der Putterkopf in drei Dimensionen. Zum Drehen ziehen oder die Pfeiltasten verwenden.",
   "cap.putter.stl": "Das Bauteil selbst, aus dem Modell des Abschlussprojekts. Zum Drehen ziehen.",
   "cap.putter.cam": "Die CAM-Simulation: jede Bahn, die die eine Aufspannung erreichen musste.",

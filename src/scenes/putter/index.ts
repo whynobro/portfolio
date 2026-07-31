@@ -37,16 +37,17 @@ export default function createPutterScene(): SceneModule {
   let image: ImageData | null = null;
 
   /**
- * The starting angle presents the scooping face to the viewer. At 0.6 the part
- * showed its plain back edge, which is the one view that says nothing about the
- * design.
- */
-let angle = 3.9;
-  /** Dragging takes over from the idle turn, and keeps its momentum after. */
-  let velocity = 0;
+   * The starting angle presents the scooping face to the viewer. At 0.6 the
+   * part showed its plain back edge, which is the one view that says nothing
+   * about the design.
+   */
+  let angle = 3.9;
+  /** The resting turn rate, in radians per frame. Velocity always eases here. */
+  const IDLE_SPIN = 0.0035;
+  /** Dragging takes over; on release this eases back to IDLE_SPIN. */
+  let velocity = IDLE_SPIN;
   let dragging = false;
   let lastX = 0;
-  let idle = true;
 
   // A fixed lamp, upper left and slightly in front, normalised.
   const LX = -0.42, LY = -0.66, LZ = 0.62;
@@ -273,7 +274,6 @@ let angle = 3.9;
       // claiming the gesture for a scroll.
       const down = (e: PointerEvent) => {
         dragging = true;
-        idle = false;
         lastX = e.clientX;
         canvas.setPointerCapture(e.pointerId);
       };
@@ -300,8 +300,8 @@ let angle = 3.9;
       // Keyboard: the piece has to be inspectable without a pointer.
       canvas.tabIndex = 0;
       canvas.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") { angle += 0.12; idle = false; render(); }
-        if (e.key === "ArrowRight") { angle -= 0.12; idle = false; render(); }
+        if (e.key === "ArrowLeft") { angle += 0.12; render(); }
+        if (e.key === "ArrowRight") { angle -= 0.12; render(); }
       });
 
       if (c.reducedMotion) {
@@ -309,17 +309,20 @@ let angle = 3.9;
         return;
       }
 
+      /*
+       * The part always turns. Letting go hands the throw back to the idle
+       * spin rather than stopping at it.
+       *
+       * The previous version treated "spinning" and "thrown" as separate
+       * states, so a release decayed to a dead stop and only then resumed, and
+       * a slow drag ended below the threshold and parked the part entirely.
+       * Easing the velocity toward the idle rate instead means there is never a
+       * frame where nothing moves, and a hard throw still coasts.
+       */
       tick = () => {
         if (dragging) return;
-        if (idle) {
-          angle += 0.0035;
-        } else if (Math.abs(velocity) > 0.0002) {
-          // Momentum from the throw, then a slow return to the idle turn.
-          angle += velocity;
-          velocity *= 0.95;
-        } else {
-          idle = true;
-        }
+        velocity += (IDLE_SPIN - velocity) * 0.04;
+        angle += velocity;
         render();
       };
       subscribe(tick);
