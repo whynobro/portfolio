@@ -48,6 +48,11 @@ type Project = {
   slug: string;
   titleKey: TranslationKey;
   ledeKey: TranslationKey;
+  /**
+   * The company's mark, shown beside the room's title. Only the two works that
+   * ARE companies carry one; the rest are projects and have no mark to show.
+   */
+  mark?: string;
   hero: Shot;
   /** The plate beside the hero: role, tools, materials, result. */
   specs: Spec[];
@@ -158,6 +163,7 @@ const PROJECTS: Project[] = [
     slug: "ramps",
     titleKey: "proj.ramps.title",
     ledeKey: "case.ramps.lede",
+    mark: "ramps-mark",
     hero: { img: "ramps-bank", w: 1400, h: 1400, aspect: "frame--square", altKey: "alt.ramps.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.ramps.role" },
@@ -260,6 +266,7 @@ const PROJECTS: Project[] = [
     slug: "campus",
     titleKey: "proj.campus.title",
     ledeKey: "case.campus.lede",
+    mark: "campus-mark",
     hero: { img: "campus-logo", w: 1500, h: 1000, aspect: "frame--landscape", altKey: "alt.campus.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.campus.role" },
@@ -370,11 +377,24 @@ function render(slug: string): void {
   back.textContent = t("case.back");
 
   const head = el("div", "case__head");
-  head.append(
-    el("span", "eyebrow", t("case.eyebrow")),
-    el("h1", "case__title display", t(project.titleKey)),
-    el("p", "case__lede", t(project.ledeKey)),
-  );
+  const title = el("h1", "case__title display", t(project.titleKey));
+
+  // A work that IS a company shows its mark beside the room's title. The mark
+  // is decorative here: the heading names the company immediately after it, so
+  // announcing the logo as well would only repeat that to a screen reader.
+  let heading: HTMLElement = title;
+  if (project.mark) {
+    const wrap = el("div", "case__name");
+    const logo = document.createElement("img");
+    logo.className = "case__mark";
+    logo.src = src(project.mark);
+    logo.alt = "";
+    logo.decoding = "async";
+    wrap.append(logo, title);
+    heading = wrap;
+  }
+
+  head.append(el("span", "eyebrow", t("case.eyebrow")), heading, el("p", "case__lede", t(project.ledeKey)));
 
   // The picture holds one column; the plate and the whole article share the
   // other. Keeping the text in the same grid as the work is what stops the

@@ -385,6 +385,23 @@
   border-color: var(--gilt-lo);
   color: #fff;
 }
+/*
+ * The resume button, in the accent's complement so it reads as the warm
+ * counterpart to the gilt CTA rather than competing with it. Solid rather than
+ * outlined because it sits beside the outlined Contact button and the pair has
+ * to be told apart at a glance.
+ */
+.btn--resume {
+  border-color: var(--accent-comp);
+  background: var(--accent-comp);
+  color: var(--plate);
+}
+.btn--resume:hover {
+  background: var(--accent-comp-lo);
+  border-color: var(--accent-comp-lo);
+  color: #fff;
+}
+
 .btn-row {
   display: flex;
   flex-wrap: wrap;

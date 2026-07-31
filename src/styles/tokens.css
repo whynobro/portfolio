@@ -91,6 +91,18 @@
   --gilt: #2596be;
   --gilt-lo: #17698a;
 
+  /*
+   * The accent's COMPLEMENT, used by exactly one control: the resume button.
+   *
+   * --gilt sits at hue 196; this is the same saturation and lightness rotated
+   * 180 to hue 16, so the two read as a deliberate pair rather than as a second
+   * accent picked at random. It stays scarce for the same reason --measured
+   * does: one warm control against a cool accent is a signpost, and a second
+   * one would make it decoration.
+   */
+  --accent-comp: #be5d25;
+  --accent-comp-lo: #8a4017;
+
   /* ---- Caption plate --------------------------------------------------- */
   --plate: #171310;
   --plate-ink: #ede6d8;

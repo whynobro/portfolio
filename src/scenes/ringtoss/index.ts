@@ -73,6 +73,16 @@ const PEG_CAPACITY = 3;
 /** Point values, one per ring, so some are worth chasing more than others. */
 const RING_POINTS = [10, 25, 50, 15, 30];
 
+/**
+ * How far off edge-on a ring settles once it is threaded on a peg, in radians.
+ *
+ * The ellipse's minor axis is r * |sin(tilt)|, so this is what keeps a seated
+ * ring a visible disc: at 0 it collapses to a line. 0.42 foreshortens it to
+ * about 41% of its radius, steep enough to read as threaded on the peg rather
+ * than floating in front of it.
+ */
+const SEAT_LEAN = 0.42;
+
 type Peg = { x: number; y: number; r: number; h: number };
 
 function createScene(): SceneModule {
@@ -148,8 +158,14 @@ function createScene(): SceneModule {
 
   function seed(): void {
     const ringR = box.w * 0.1;
+    // Spread across the floor by more than a ring DIAMETER (2 * 0.1 = 0.2 of
+    // the tank width). At the old 0.14 spacing five rings of radius 0.1w
+    // overlapped each other by a third, so on the still frame they merged into
+    // a single band of colour rather than reading as five separate rings.
+    const gap = 0.21;
+    const span = gap * (RING_COLOURS.length - 1);
     rings = RING_COLOURS.map((colour, i) => {
-      const x = box.x + box.w * (0.22 + 0.14 * i);
+      const x = box.x + box.w * (0.5 - span / 2 + gap * i);
       const y = box.y + box.h - ringR - 4;
       return {
         x,
@@ -159,12 +175,15 @@ function createScene(): SceneModule {
         r: ringR,
         colour,
         onPeg: -1,
-        // Edge-on to the viewer at rest (tilt 0 is the disc seen edge-on), each
-        // ring off by a little so they do not read as one stamped shape. They
-        // turn over about this axis once the water starts moving them.
+        // FACE-ON at rest. The ellipse's minor axis is r * |sin(tilt)|, so
+        // tilt = pi/2 is the full circle and tilt = 0 collapses to a line: a
+        // ring seeded near 0 was drawn as the clamped 6%-of-radius sliver and
+        // the whole toy read as one horizontal streak. Each ring is off by a
+        // little so they do not read as one stamped shape; they turn over about
+        // this axis once the water starts moving them.
         spin: 0,
         spinV: 0,
-        tilt: i * 0.05,
+        tilt: Math.PI / 2 + i * 0.05,
         tiltV: 0,
         seatDepth: 0,
         points: RING_POINTS[i] ?? 10,
@@ -196,12 +215,21 @@ function createScene(): SceneModule {
         // a landed ring holding its place is what lets a round build towards a
         // full board, and the board is cleared only once every ring is on.
         //
-        // Threaded on the peg, so the ring is seen edge-on: the peg passes
-        // through it and the disc stands in the screen plane. Settle to the
-        // nearest edge-on angle rather than an absolute one, since tilt runs
+        // Threaded on the peg, so the ring is seen at a STEEP angle: the peg
+        // passes through it and the disc lies close to the screen plane. Not
+        // fully edge-on, though — the ellipse's minor axis is r * |sin(tilt)|,
+        // so an exactly edge-on ring (tilt = k*pi) collapses to the clamped
+        // 6%-of-radius sliver and a seated ring became an invisible line. It
+        // settles to a shallow offset off edge-on instead, which still reads as
+        // threaded on the peg but stays a visible disc. Measured from the
+        // NEAREST edge-on angle rather than an absolute one, since tilt runs
         // continuously and driving it to a fixed value would turn a ring
         // backwards to get there.
-        const edge = Math.round(ring.tilt / Math.PI) * Math.PI;
+        const k = Math.round(ring.tilt / Math.PI);
+        // Lean towards the side tilt already favours, so the ring settles the
+        // short way round rather than swinging through edge-on to get there.
+        const lean = ring.tilt >= k * Math.PI ? SEAT_LEAN : -SEAT_LEAN;
+        const edge = k * Math.PI + lean;
         ring.tilt += (edge - ring.tilt) * Math.min(1, dt * 9);
         ring.tiltV *= 0.86;
         ring.spin += (0 - ring.spin) * Math.min(1, dt * 6);

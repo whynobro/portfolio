@@ -34,6 +34,7 @@ export const en = {
 
   "cta.work": "View the collection",
   "cta.contact": "Contact",
+  "cta.resume": "Resume",
 
   // Interactive works. The two boards are shown unframed and uncaptioned, so
   // the titles survive only as accessible names for the regions.

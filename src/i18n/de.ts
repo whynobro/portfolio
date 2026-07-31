@@ -43,6 +43,7 @@ export const de = {
 
   "cta.work": "Sammlung ansehen",
   "cta.contact": "Kontakt",
+  "cta.resume": "Lebenslauf",
 
   // Interaktive Arbeiten
   "game.ttt.title": "Unschlagbares Tic-Tac-Toe",

@@ -175,6 +175,34 @@ const MANIFEST = [
     quality: 74,
   },
 
+  // --- Brand marks, shown beside the company names ---
+  //
+  // These are the only entries that keep their ALPHA: they sit inline against
+  // the wall next to a heading, so a flattened mark would paint a white (or
+  // off-white) tile beside the type. `contain` because a mark has to be shown
+  // whole, and no `background`, which is what keeps the transparency: the
+  // manifest's `flatten` step is what a padded background would otherwise
+  // trigger, and flattening is exactly what a logo here must not do.
+  //
+  // PNG rather than AVIF/JPEG for the fallback, since the JPEG in the pair has
+  // no alpha at all and would be the halo this avoids.
+  {
+    name: "ramps-mark",
+    src: "assets-src/ramps/logo-mark.png",
+    width: 320,
+    fit: "contain",
+    alpha: true,
+    quality: 82,
+  },
+  {
+    name: "campus-mark",
+    src: "assets-src/campus-native/logo-transparent.png",
+    width: 320,
+    fit: "contain",
+    alpha: true,
+    quality: 82,
+  },
+
   // --- SMC execution system ---
   // The two poster languages, drawn by scripts/make-bot-poster.mjs. Vector art
   // rather than photography, so these compress far below the photo-dense
@@ -249,10 +277,17 @@ for (const item of MANIFEST) {
   if (item.grayscale) pipe = pipe.grayscale().linear(1.06, -6);
 
   const avifPath = path.join(OUT, `${item.name}.avif`);
-  const jpgPath = path.join(OUT, `${item.name}.jpg`);
+  // A mark that has to keep its alpha falls back to PNG, not JPEG: JPEG has no
+  // alpha channel, so the fallback would ship the very white box the
+  // transparent source exists to avoid.
+  const fallbackPath = path.join(OUT, `${item.name}.${item.alpha ? "png" : "jpg"}`);
 
   await pipe.clone().avif({ quality: item.quality ?? 58, effort: 6 }).toFile(avifPath);
-  await pipe.clone().jpeg({ quality: 76, mozjpeg: true }).toFile(jpgPath);
+  if (item.alpha) {
+    await pipe.clone().png({ compressionLevel: 9, palette: true }).toFile(fallbackPath);
+  } else {
+    await pipe.clone().jpeg({ quality: 76, mozjpeg: true }).toFile(fallbackPath);
+  }
 
   const a = (await stat(avifPath)).size;
   total += a;

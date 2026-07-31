@@ -13,10 +13,14 @@ import { initRouter } from "./router";
 import { initScenes } from "./scenes/runtime";
 import { initAwards } from "./awards";
 import { initProjects } from "./projects";
+import { initResume } from "./resume";
 
 function boot(): void {
   initI18n();
   initAwards();
+  // Both resume buttons are in the static markup, so this only has to run once
+  // and does not care about the router.
+  initResume();
   // Before the router: it asks the projects module to resolve `/work/<slug>`
   // on the very first render, which happens inside initRouter.
   initProjects();

@@ -131,6 +131,37 @@
   min-block-size: 2.2em;
 }
 
+/*
+ * A company's mark beside its name. The row carries the title's reserved
+ * height instead of the title itself, so a two-line German title still leaves
+ * every row below on the same line — moving the reservation up to the row is
+ * what keeps that promise once the heading is no longer the outermost box.
+ */
+.label__name {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--s-3);
+  min-block-size: 2.2em;
+}
+.label__name .label__title {
+  min-block-size: 0;
+}
+/*
+ * Sized in `em` so the mark tracks the title's own size at every breakpoint,
+ * and pushed back onto the text baseline: an inline image sits on the baseline
+ * by default, which leaves a round mark looking as though it floats above the
+ * italic it labels.
+ */
+.label__mark {
+  inline-size: auto;
+  block-size: 1.15em;
+  flex: none;
+  position: relative;
+  inset-block-start: 0.14em;
+  object-fit: contain;
+}
+
 .label__body {
   margin-block-start: var(--s-2);
   margin-inline: auto;
@@ -201,6 +232,15 @@
  * way pieces on a real wall share a hanging height. */
 .work > .frame {
   align-self: end;
+  /*
+   * Hung at 85% of the column so the wall carries more space around each piece.
+   * Applied to the FRAME rather than to the grid column: shrinking the column
+   * would drag every caption in with it, and the labels are already measured
+   * against a 44ch line. Centred, so the works stay on the column's axis and
+   * the row's shared hanging line is unaffected.
+   */
+  inline-size: 85%;
+  margin-inline: auto;
 }
 /* The work lifts very slightly off the wall on hover, a hung piece, not a
  * card. Transform only, so nothing reflows. */

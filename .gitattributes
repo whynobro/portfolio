@@ -1,0 +1,13 @@
+# Binary assets must never go through line-ending conversion. Git's own binary
+# detection already catches these, but this repo is worked on from Windows with
+# core.autocrlf on, which warns on every one of them and would corrupt any file
+# the heuristic ever got wrong. Declaring them is cheaper than finding out.
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.avif binary
+*.webp binary
+*.stl binary
+*.woff binary
+*.woff2 binary

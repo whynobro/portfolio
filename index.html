@@ -180,6 +180,16 @@
                 <a class="btn" href="#/contact" data-i18n="cta.contact"
                   >Contact</a
                 >
+                <!-- The href is set by src/resume.ts: the PDF is imported so the
+                     bundler inlines it as a data: URI and the build stays one
+                     file that works from file://. -->
+                <a
+                  class="btn btn--resume"
+                  data-resume
+                  download="Michael-Fischbach-CV.pdf"
+                  data-i18n="cta.resume"
+                  >Resume</a
+                >
               </div>
             </div>
 
@@ -273,9 +283,30 @@
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.ramps.title">
-                  Chameleon Ramps
-                </h3>
+                <!-- The mark is a SIBLING of the title, not inside it: the
+                     title's text is replaced wholesale by the i18n pass, which
+                     would drop any markup nested in it. `alt=""` because the
+                     company is already named in the heading beside it. -->
+                <div class="label__name">
+                  <picture>
+                    <source
+                      srcset="./src/assets/img/ramps-mark.avif"
+                      type="image/avif"
+                    />
+                    <img
+                      class="label__mark"
+                      src="./src/assets/img/ramps-mark.png"
+                      alt=""
+                      width="320"
+                      height="313"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                  <h3 class="label__title" data-i18n="proj.ramps.title">
+                    Chameleon Ramps
+                  </h3>
+                </div>
                 <p class="label__body" data-i18n="proj.ramps.body">
                   A cast-concrete product company founded in 2019: forty designs
                   taken from CAD through mould-making to a shipped product, with
@@ -371,9 +402,26 @@
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.campus.title">
-                  Campus Native
-                </h3>
+                <div class="label__name">
+                  <picture>
+                    <source
+                      srcset="./src/assets/img/campus-mark.avif"
+                      type="image/avif"
+                    />
+                    <img
+                      class="label__mark"
+                      src="./src/assets/img/campus-mark.png"
+                      alt=""
+                      width="320"
+                      height="329"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                  <h3 class="label__title" data-i18n="proj.campus.title">
+                    Campus Native
+                  </h3>
+                </div>
                 <p class="label__body" data-i18n="proj.campus.body">
                   A production marketplace for student-led campus tours: sixteen
                   data models and payment handling, with double-booking
@@ -491,6 +539,13 @@
             target="_blank"
             rel="noopener"
             >LinkedIn</a
+          >
+          <a
+            class="btn btn--resume"
+            data-resume
+            download="Michael-Fischbach-CV.pdf"
+            data-i18n="cta.resume"
+            >Resume</a
           >
         </div>
       </article>
