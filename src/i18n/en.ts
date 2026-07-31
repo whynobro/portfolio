@@ -111,7 +111,7 @@ export const en = {
   "case.putter.approach2":
     "The scooping face came out of the same thinking. It is the feature that makes the putter its own object rather than a copy, and it had to be cuttable with the tools available rather than only renderable.",
   "case.putter.outcome":
-    "The modelled unit cost in warehouse-style manufacturing is $15.78, against a $50–150 retail range for the brands the design was compared with. The work was one of eight capstone presentations chosen from more than forty, shown to an audience of over 300.",
+    "The modelled unit cost in warehouse-style manufacturing is $15.78, against a $50–150 retail range for the brands the design was compared with. The work was one of eight capstone presentations chosen from more than forty, shown to over 200 alumni and hundreds of students.",
 
   // Chameleon Ramps
   "case.ramps.lede":
@@ -203,7 +203,7 @@ export const en = {
   "alt.putter.drawing": "The dimensioned engineering drawing",
   "cap.putter.cad": "The model, before any of it existed in metal.",
   "alt.putter.poster": "The CNC Milled Putter capstone poster: abstract, process, challenges and conclusion",
-  "cap.putter.poster": "The capstone poster, presented at Oaks Christian, 2025.",
+  "cap.putter.poster": "Presented at Capstone Night, Oaks Christian School: one of eight presentations chosen from more than forty, to over 200 alumni and hundreds of students.",
   "putter.aria": "The putter head in three dimensions. Drag, or use the arrow keys, to turn it.",
   "cap.putter.stl": "The part itself, from the capstone's own model. Drag to turn it.",
   "cap.putter.cam": "The CAM simulation: every toolpath the single fixture had to reach.",
@@ -227,7 +227,7 @@ export const en = {
   "alt.wave.section": "A cutaway of the housing: the rack running between two pinion stages",
   "cap.wave.section": "The cutaway: one rack, two pinion stages, which is the whole idea.",
   "alt.wave.poster": "The Based-Sea WEC capstone poster: task, strategy, problems and conclusions",
-  "cap.wave.poster": "The capstone poster, presented at Oaks Christian, May 2023.",
+  "cap.wave.poster": "Presented at Capstone Night, Oaks Christian School, May 2023.",
 
   "alt.bot.hero": "The operator display: broker link status and filled orders",
 
@@ -260,7 +260,7 @@ export const en = {
   "award.capstone.title": "Capstone Finalist: CNC Milled Putter",
   "award.capstone.issuer": "Oaks Christian School, Institute of Engineering",
   "award.capstone.body":
-    "One of eight presentations chosen from more than forty capstone students, presented to an audience of 300+ alumni, industry professionals and students.",
+    "One of eight presentations chosen from more than forty capstone students, presented to over 200 alumni and industry professionals and hundreds of students.",
   "award.wave.title": "1st Place: Wave Energy Converter",
   "award.wave.issuer": "Oaks Christian School, Institute of Engineering",
   "award.wave.body":

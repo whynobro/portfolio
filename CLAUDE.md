@@ -195,7 +195,9 @@ Sources disagree; these are current. The resume is stale on several points.
 
 - Cal Poly SLO, Mechanical Engineering, Honors. GPA 3.78, Dean's List ×3.
 - CNC putter: 4-axis HAAS, 6061, $15.78 modelled unit cost vs $50–150 retail,
-  1 of 8 finalists from 40+, presented to 300+.
+  1 of 8 finalists from 40+, presented at Capstone Night to 200+ alumni and
+  hundreds of students (Michael's figure, 2026-07-31; supersedes the earlier
+  "300+").
 - Wave energy converter: 1st place, highest measured output of three teams.
   **15 V per motor at 1:12 scale, 360 V scaled** (from the capstone poster,
   `assets-src/wave/wec-report.pdf`). A five-person team, so the room says so.

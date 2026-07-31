@@ -117,7 +117,7 @@ export const de = {
   "case.putter.approach2":
     "Die Schöpfgeometrie folgt derselben Überlegung. Sie macht den Putter zu einem eigenen Objekt statt zu einer Kopie, und sie musste mit den vorhandenen Werkzeugen zerspanbar sein, nicht nur darstellbar.",
   "case.putter.outcome":
-    "Die kalkulierten Stückkosten in lagerorientierter Fertigung liegen bei 15,78 $, gegenüber 50–150 $ im Handel bei den Vergleichsmarken. Die Arbeit war eine von acht Präsentationen aus über vierzig und wurde vor mehr als 300 Zuhörern gezeigt.",
+    "Die kalkulierten Stückkosten in lagerorientierter Fertigung liegen bei 15,78 $, gegenüber 50–150 $ im Handel bei den Vergleichsmarken. Die Arbeit war eine von acht Präsentationen aus über vierzig und wurde vor über 200 Alumni und mehreren Hundert Studierenden gezeigt.",
 
   // Chameleon Ramps
   "case.ramps.lede":
@@ -209,7 +209,7 @@ export const de = {
   "alt.putter.drawing": "Die bemaßte technische Zeichnung",
   "cap.putter.cad": "Das Modell, bevor es das Bauteil in Metall gab.",
   "alt.putter.poster": "Das Capstone-Poster zum CNC-gefrästen Putter: Kurzfassung, Vorgehen, Probleme, Fazit",
-  "cap.putter.poster": "Das Capstone-Poster, vorgestellt an der Oaks Christian School, 2025.",
+  "cap.putter.poster": "Vorgestellt bei der Capstone Night der Oaks Christian School: eine von acht Präsentationen aus über vierzig, vor über 200 Alumni und mehreren Hundert Studierenden.",
   "putter.aria": "Der Putterkopf in drei Dimensionen. Zum Drehen ziehen oder die Pfeiltasten verwenden.",
   "cap.putter.stl": "Das Bauteil selbst, aus dem Modell des Abschlussprojekts. Zum Drehen ziehen.",
   "cap.putter.cam": "Die CAM-Simulation: jede Bahn, die die eine Aufspannung erreichen musste.",
@@ -233,7 +233,7 @@ export const de = {
   "alt.wave.section": "Schnittdarstellung des Gehäuses: die Zahnstange zwischen zwei Ritzelstufen",
   "cap.wave.section": "Der Schnitt: eine Zahnstange, zwei Ritzelstufen, darauf beruht alles.",
   "alt.wave.poster": "Das Capstone-Poster des Based-Sea WEC: Aufgabe, Vorgehen, Probleme, Fazit",
-  "cap.wave.poster": "Das Capstone-Poster, vorgestellt an der Oaks Christian School, Mai 2023.",
+  "cap.wave.poster": "Vorgestellt bei der Capstone Night der Oaks Christian School, Mai 2023.",
 
   "alt.bot.hero": "Die Betriebsanzeige: Broker-Verbindung und ausgeführte Orders",
 
@@ -266,7 +266,7 @@ export const de = {
   "award.capstone.title": "Capstone-Finalist: CNC-gefräster Putter",
   "award.capstone.issuer": "Oaks Christian School, Institute of Engineering",
   "award.capstone.body":
-    "Eine von acht Präsentationen, ausgewählt aus über vierzig Capstone-Projekten, vorgestellt vor mehr als 300 Alumni, Fachleuten und Studierenden.",
+    "Eine von acht Präsentationen, ausgewählt aus über vierzig Capstone-Projekten, vorgestellt vor über 200 Alumni und Fachleuten sowie mehreren Hundert Studierenden.",
   "award.wave.title": "1. Platz: Wellenenergie-Wandler",
   "award.wave.issuer": "Oaks Christian School, Institute of Engineering",
   "award.wave.body":
