@@ -54,8 +54,12 @@
 .frame__mat {
   position: relative;
   /* The white space the brief asks for: artwork floats inside a wide mat
-   * rather than running to the moulding. */
-  padding: clamp(14px, 3vw, 40px);
+   * rather than running to the moulding. Cut back from 14/3vw/40 so the work
+   * itself reads about a tenth larger in the window — the earlier mat was wide
+   * enough that the products were small inside their own frames. Changed here
+   * rather than by re-cropping, so every frame moves together and the works'
+   * shared hanging and caption lines are untouched. */
+  padding: clamp(12px, 2.6vw, 34px);
   background: #fff;
 }
 

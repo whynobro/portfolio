@@ -189,7 +189,14 @@
 }
 
 .entrance__portrait {
-  max-inline-size: 380px;
+  /*
+   * The moulding is a fixed 56px band per side, so it takes a much larger share
+   * of a narrow frame than a wide one: at 380px the photograph was 53% of the
+   * frame's width where the works on the wall are 67%, which is why the portrait
+   * read as a small picture floating in a lot of white. Widening the box shrinks
+   * the moulding's share rather than the mat's.
+   */
+  max-inline-size: 440px;
   inline-size: 100%;
   margin-inline: auto;
 }

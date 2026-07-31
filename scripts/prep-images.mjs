@@ -21,14 +21,21 @@ const kb = (n) => `${(n / 1024).toFixed(1)} KB`;
 
 /**
  * width: the rendered pixel width (already 2x the intended display size).
- * fit "cover" + position bias the crop toward the subject.
+ * fit "cover" + position bias the crop toward the subject; `position` pins that
+ * crop explicitly (e.g. "centre") where the heuristic gets it wrong.
  */
 const MANIFEST = [
+  // The source is LANDSCAPE (1370x1148) and the frame's window is 4:5, so a
+  // third of the width is cropped away. `attention` picked that third by
+  // entropy and slid it right, which left Michael off-centre with a shoulder
+  // cut at the edge and bare wall on the other side. The photograph is already
+  // composed centrally, so the crop is pinned to the centre instead.
   {
     name: "headshot",
     src: "assets-src/headshot-original.png",
     width: 900,
     height: 1125,
+    position: "centre",
     grayscale: true,
     quality: 76,
   },
@@ -115,7 +122,11 @@ for (const item of MANIFEST) {
   // shown whole, so an entry can ask for `contain` and supply the colour to pad
   // with — cropping a mark to a 3:2 window cuts the mark itself.
   const resize = { width: item.width, fit: item.fit ?? "cover" };
-  if (resize.fit === "cover") resize.position = sharp.strategy.attention;
+  // `attention` finds the subject in a photograph that is off-centre, which is
+  // right for the product shots. An entry that is already composed can pin the
+  // crop instead — the heuristic has no idea where a face is and will happily
+  // trade a shoulder for a patch of textured wall.
+  if (resize.fit === "cover") resize.position = item.position ?? sharp.strategy.attention;
   if (item.background) resize.background = item.background;
   if (item.height) resize.height = item.height;
 
