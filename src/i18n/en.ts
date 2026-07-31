@@ -193,12 +193,14 @@ export const en = {
 
   // Alt text and captions for the rooms
   "alt.putter.hero": "The finished aluminium putter head on the green",
-  "alt.putter.cam": "The Fusion 360 CAM setup, toolpaths over the model",
+  "alt.putter.cad": "The finished putter head modelled in CAD, shaded",
+  "alt.putter.cam": "The CAM simulation: toolpaths, cutter and stock",
   "alt.putter.machining": "The head in the vise mid-cut, chips on the fixture",
   "alt.putter.inhand": "The finished head held, showing the scooping geometry",
   "alt.putter.inuse": "The putter in use at Westlake Golf Course",
   "alt.putter.drawing": "The dimensioned engineering drawing",
-  "cap.putter.cam": "Toolpaths in Fusion 360: the setup the single fixture had to satisfy.",
+  "cap.putter.cad": "The model, before any of it existed in metal.",
+  "cap.putter.cam": "The CAM simulation: every toolpath the single fixture had to reach.",
   "cap.putter.machining": "Mid-cut on the 4-axis HAAS.",
   "cap.putter.inhand": "The scooping face, the feature the geometry was built around.",
   "cap.putter.inuse": "In use at Westlake Golf Course.",

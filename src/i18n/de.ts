@@ -199,12 +199,14 @@ export const de = {
 
   // Alternativtexte und Bildunterschriften
   "alt.putter.hero": "Der fertige Putterkopf aus Aluminium auf dem Grün",
-  "alt.putter.cam": "Der CAM-Aufbau in Fusion 360, Werkzeugbahnen über dem Modell",
+  "alt.putter.cad": "Der fertige Putterkopf als CAD-Modell, schattiert",
+  "alt.putter.cam": "Die CAM-Simulation: Werkzeugbahnen, Fräser und Rohteil",
   "alt.putter.machining": "Der Kopf im Schraubstock während der Bearbeitung, Späne auf der Vorrichtung",
   "alt.putter.inhand": "Der fertige Kopf in der Hand, mit Blick auf die Schöpfgeometrie",
   "alt.putter.inuse": "Der Putter im Einsatz auf dem Westlake Golf Course",
   "alt.putter.drawing": "Die bemaßte technische Zeichnung",
-  "cap.putter.cam": "Werkzeugbahnen in Fusion 360: der Aufbau, den die eine Aufspannung erfüllen musste.",
+  "cap.putter.cad": "Das Modell, bevor es das Bauteil in Metall gab.",
+  "cap.putter.cam": "Die CAM-Simulation: jede Bahn, die die eine Aufspannung erreichen musste.",
   "cap.putter.machining": "Während der Bearbeitung auf der 4-Achs-HAAS.",
   "cap.putter.inhand": "Die Schöpffläche, das Merkmal, um das die Geometrie gebaut ist.",
   "cap.putter.inuse": "Im Einsatz auf dem Westlake Golf Course.",

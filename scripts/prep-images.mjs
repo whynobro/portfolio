@@ -52,8 +52,29 @@ const MANIFEST = [
   { name: "putter-machining", src: "assets-src/putter/converted/IMG_9580.jpg", width: 1200, quality: 64 },
   // The scooping geometry, held.
   { name: "putter-inhand", src: "assets-src/putter/converted/IMG_9582.jpg", width: 1400, quality: 70 },
-  // Fusion 360 tool setup, evidence of the CAM work behind the part.
-  { name: "putter-cam", src: "assets-src/putter/converted/IMG_9035.jpg", width: 1200, quality: 62 },
+  // The CAM simulation itself, exported from Fusion rather than photographed
+  // off a monitor: the toolpaths, the stock and the cutter in one frame. The
+  // photograph this replaced carried screen moiré and showed a tool dialogue
+  // rather than the strategy.
+  {
+    name: "putter-cam",
+    src: "assets-src/putter/cad-drawing-v2.png",
+    width: 1400,
+    height: 1218,
+    fit: "contain",
+    background: "#ffffff",
+    quality: 76,
+  },
+  // The finished model, shaded, before any of it existed in metal.
+  {
+    name: "putter-cad",
+    src: "assets-src/putter/cad-model.png",
+    width: 1200,
+    height: 874,
+    fit: "contain",
+    background: "#ffffff",
+    quality: 76,
+  },
   // In use at Westlake Golf Course.
   { name: "putter-inuse", src: "assets-src/putter/converted/IMG_4440.jpg", width: 1200, quality: 62 },
   // A drawing, so `contain`: cropping the title block off a drawing is worse

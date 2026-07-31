@@ -73,7 +73,22 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.putter.outcome"] },
     ],
     gallery: [
-      { img: "putter-cam", w: 1400, h: 1867, aspect: "frame--photo", altKey: "alt.putter.cam", capKey: "cap.putter.cam" },
+      {
+        img: "putter-cad",
+        w: 1200,
+        h: 874,
+        aspect: "frame--slide",
+        altKey: "alt.putter.cad",
+        capKey: "cap.putter.cad",
+      },
+      {
+        img: "putter-cam",
+        w: 1400,
+        h: 1218,
+        aspect: "frame--slide",
+        altKey: "alt.putter.cam",
+        capKey: "cap.putter.cam",
+      },
       {
         img: "putter-machining",
         w: 1400,
@@ -293,9 +308,13 @@ function render(slug: string): void {
     el("p", "case__lede", t(project.ledeKey)),
   );
 
-  // Hero and plate: the picture large, the specification beside it.
+  // The picture holds one column; the plate and the whole article share the
+  // other. Keeping the text in the same grid as the work is what stops the
+  // right-hand side of the room being empty wall for its entire height.
   const top = el("div", "case__top");
   top.append(framed(project.hero));
+
+  const column = el("div", "case__column");
 
   const plate = el("dl", "plate");
   for (const spec of project.specs) {
@@ -306,22 +325,38 @@ function render(slug: string): void {
     if (spec.measured) value.setAttribute("data-measured", "");
     plate.append(value);
   }
-  top.append(plate);
+  column.append(plate);
 
   const body = el("div", "case__body");
   for (const section of project.sections) {
     body.append(el("h2", "case__h", t(section.hKey)));
     for (const key of section.bodyKeys) body.append(el("p", "case__p", t(key)));
   }
+  column.append(body);
+  top.append(column);
 
-  host.replaceChildren(back, head, top, body);
+  host.replaceChildren(back, head, top);
 
   if (project.gallery.length) {
+    // The rest of the sequence hangs UNFRAMED, with a plain white border and
+    // its caption. Only the hero gets the carved moulding: a gilt frame around
+    // every supporting photograph spends the gesture until it means nothing,
+    // and the room reads as a wall of frames rather than as one work.
     const gallery = el("div", "case__gallery");
     for (const shot of project.gallery) {
       const figure = document.createElement("figure");
       figure.className = "case__plate";
-      figure.append(framed(shot));
+
+      const img = document.createElement("img");
+      img.className = "case__img";
+      img.src = src(shot.img);
+      img.width = shot.w;
+      img.height = shot.h;
+      img.alt = t(shot.altKey);
+      img.loading = "lazy";
+      img.decoding = "async";
+      figure.append(img);
+
       if (shot.capKey) {
         const caption = document.createElement("figcaption");
         caption.className = "case__caption";

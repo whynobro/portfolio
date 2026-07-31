@@ -37,7 +37,7 @@
 
 /* ---- Title block --------------------------------------------------------- */
 .case__head {
-  margin-block-start: var(--s-8);
+  margin-block-start: var(--s-6);
   max-inline-size: 46ch;
 }
 
@@ -54,26 +54,39 @@
   color: var(--ink-mute);
 }
 
-/* ---- The piece and its plate --------------------------------------------- */
+/* ---- The piece, its plate and the text ----------------------------------- */
+/*
+ * One grid, not three stacked blocks.
+ *
+ * The room used to run picture-beside-plate, then text, then plates, each
+ * across the full width. Measured, that left 400px of empty column beside the
+ * specification plate and ran the article at 595px inside an 1100px page: the
+ * room was mostly wall. Now the picture holds the left column and the plate AND
+ * the text share the right one, so the reading column sits beside the work the
+ * way a catalogue entry faces its plate.
+ */
 .case__top {
-  margin-block-start: var(--s-12);
+  margin-block-start: var(--s-8);
   display: grid;
   gap: var(--s-8);
 }
 @media (min-width: 860px) {
   .case__top {
-    /* The picture takes the room; the plate is a column beside it, the way a
-     * wall label sits next to the work rather than under it. */
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    /* The reading column takes the larger share: at an even split it fell to
+     * about 440px, which is a cramped measure for body text, and the point of
+     * moving the article up here was to fill the room rather than to squeeze
+     * it. The picture still holds a column wide enough to read as the work. */
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
     gap: var(--s-12);
     align-items: start;
   }
-  /* A portrait hero at the full column width runs to something like 900px tall
-   * and pushes the whole specification plate off the first screen, so the tall
-   * shapes take a narrower column than the wide ones. */
-  .case__top:has(.frame--portrait),
-  .case__top:has(.frame--photo) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  /* The hero is sticky so it stays with the reader while the text beside it
+   * scrolls: in a room about one object, the object should not leave the
+   * screen. `align-self: start` is what gives the sticky element room to move
+   * inside its own grid area. */
+  .case__top > .frame {
+    position: sticky;
+    top: calc(var(--masthead-h, 64px) + var(--s-6));
   }
 }
 
@@ -111,8 +124,9 @@
 
 /* ---- The text ------------------------------------------------------------ */
 .case__body {
-  margin-block-start: var(--s-16);
-  max-inline-size: 62ch;
+  margin-block-start: var(--s-8);
+  /* No max-width here any more: the column it sits in already sets the measure,
+   * and a second limit inside it only reintroduces the empty band. */
 }
 
 .case__h {
@@ -136,42 +150,54 @@
 }
 
 /* ---- The rest of the sequence -------------------------------------------- */
+/*
+ * UNFRAMED. Only the hero wears the carved moulding; these are the supporting
+ * photographs, shown as prints with a plain white border under the text. A gilt
+ * frame around every one of them spends the gesture until it means nothing, and
+ * turns a room about one object into a wall of frames.
+ */
 .case__gallery {
-  margin-block-start: var(--s-24);
+  margin-block-start: var(--s-16);
   display: grid;
-  gap: var(--s-16);
-}
-@media (min-width: 720px) {
-  .case__gallery {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--s-16) var(--s-12);
-    /* Plates now come in different shapes, since each picture is framed to its
-     * own proportions. Aligning them to the top of their row keeps the sequence
-     * hanging from a common line instead of floating at mixed heights. */
-    align-items: start;
-  }
+  gap: var(--s-8);
 }
 
 .case__plate {
   margin: 0;
 }
+@media (min-width: 720px) {
+  .case__gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s-8) var(--s-6);
+    /* Each print is a row of its own inside the grid: image, then caption, both
+     * subgridded, so every image in a row bottoms out on the same line and
+     * every caption starts on the same line even though the prints are three
+     * different shapes. Without it the row reads as a ragged collage. */
+    grid-auto-rows: auto auto;
+  }
+  .case__plate {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+  }
+  /* Images sit at the BOTTOM of their row, so the prints share a hanging line
+   * the way the works on the wall do. */
+  .case__plate > .case__img {
+    align-self: end;
+  }
+}
 
 /*
- * A portrait plate is half again as tall as a square one at the same width, so
- * unchecked it dwarfs everything beside it. Narrowing the portraits brings the
- * two shapes to a similar HEIGHT, which is what the eye actually compares on a
- * wall, and centres them in their column.
+ * The white border is the print's own margin, not a mat: a few pixels of paper
+ * around the image, with the hairline the frames use to catch a mat's bevel.
  */
-.case__plate:has(.frame--portrait),
-.case__plate:has(.frame--photo) {
-  inline-size: min(100%, 88%);
-  margin-inline: auto;
-}
-/* The mat is a percentage of the frame's width, so a narrowed portrait plate
- * was paying it twice over and the picture sat in a field of white. */
-.case__plate:has(.frame--photo) .frame__mat,
-.case__plate:has(.frame--portrait) .frame__mat {
-  padding: clamp(10px, 1.8vw, 22px);
+.case__img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  background: #fff;
+  padding: clamp(6px, 0.8vw, 10px);
+  box-shadow: 0 0 0 1px rgba(20, 17, 14, 0.12), 0 1px 2px rgba(20, 17, 14, 0.07);
 }
 
 .case__caption {
@@ -180,13 +206,11 @@
   font-size: var(--t-sm);
   line-height: var(--lh-body);
   color: var(--ink-mute);
-  text-align: center;
-  max-inline-size: 44ch;
-  margin-inline: auto;
+  max-inline-size: 40ch;
 }
 
 .case__foot {
-  margin-block-start: var(--s-24);
+  margin-block-start: var(--s-16);
   padding-block-start: var(--s-8);
   border-block-start: 1px solid var(--wall-line);
 }
