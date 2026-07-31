@@ -52,13 +52,9 @@ export default function createPutterScene(): SceneModule {
     const cyp = height / 2;
     const cos = Math.cos(angle);
     const sin = Math.sin(angle);
-    /*
-     * A gentle tilt so the scooping face reads rather than being edge-on.
-     *
-     * NEGATIVE, because the model comes out of Fusion Z-up while the screen is
-     * Y-down: tilting the other way looked at the part from underneath, which
-     * showed the pocket floors and hid the face the whole design is about.
-     */
+    // A gentle tilt so the scooping face reads rather than being edge-on. The
+    // Z-up-to-Y-down correction is the negated Y in the projection below, not
+    // this angle.
     const TILT = 0.55;
     const ct = Math.cos(TILT);
     const st = Math.sin(TILT);
@@ -83,7 +79,11 @@ export default function createPutterScene(): SceneModule {
         const fz = y * st + rz * ct;
 
         proj[t * 9 + k * 3] = cxp + rx * s;
-        proj[t * 9 + k * 3 + 1] = cyp + ry * s;
+        // NEGATED: the model is Z-up out of Fusion and the screen's Y runs
+        // down, so mapping the rotated height straight to screen Y stood the
+        // part on its head. Tilting the other way is not the same fix; that
+        // just looks at the underside.
+        proj[t * 9 + k * 3 + 1] = cyp - ry * s;
         proj[t * 9 + k * 3 + 2] = fz;
         zsum += fz;
         if (k === 0 || fz < zmin) zmin = fz;
@@ -144,7 +144,9 @@ export default function createPutterScene(): SceneModule {
       const wind =
         (proj[o + 3]! - proj[o]!) * (proj[o + 7]! - proj[o + 1]!) -
         (proj[o + 4]! - proj[o + 1]!) * (proj[o + 6]! - proj[o]!);
-      visible[t] = wind < 0 ? 1 : 0;
+      // Flipping the projected Y above reverses screen-space winding, so the
+      // sign of this test follows it.
+      visible[t] = wind > 0 ? 1 : 0;
     }
 
   }
@@ -269,7 +271,10 @@ export default function createPutterScene(): SceneModule {
         if (!dragging) return;
         const dx = e.clientX - lastX;
         lastX = e.clientX;
-        velocity = dx * 0.01;
+        // NEGATIVE: dragging right should carry the face nearest the viewer to
+        // the right, the way turning a real object in the hand does. Adding the
+        // delta spun it against the drag.
+        velocity = -dx * 0.01;
         angle += velocity;
         render();
       };
@@ -285,8 +290,8 @@ export default function createPutterScene(): SceneModule {
       // Keyboard: the piece has to be inspectable without a pointer.
       canvas.tabIndex = 0;
       canvas.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") { angle -= 0.12; idle = false; render(); }
-        if (e.key === "ArrowRight") { angle += 0.12; idle = false; render(); }
+        if (e.key === "ArrowLeft") { angle += 0.12; idle = false; render(); }
+        if (e.key === "ArrowRight") { angle -= 0.12; idle = false; render(); }
       });
 
       if (c.reducedMotion) {
