@@ -215,3 +215,74 @@
 /* The toy had a fullscreen control below it. It is gone: the piece is played on
  * the wall at the size it hangs, and the canvas now runs to the bottom of its
  * box rather than stopping short to leave room for a control. */
+
+/* ---- "Press the buttons" ------------------------------------------------- */
+/*
+ * The nudge beside the ring toss. Both of the toy's controls are DRAWN ON IT
+ * and hit-tested on the canvas, so there is no button chrome to invite a click
+ * and the piece reads as a picture until someone tries it.
+ *
+ * The arrow is flipped horizontally: the source curves down to the RIGHT, and
+ * it has to point back left at the toy it follows in the row.
+ */
+/*
+ * Sits to the RIGHT of the ring toss, pointing back at it.
+ *
+ * Taken OUT OF FLOW rather than added as a third item in the row: the two 190px
+ * boards already fill the entrance's first column, so a third flex item wrapped
+ * onto a line of its own and the arrow ended up aimed at bare wall. Absolute
+ * against `.entrance__play` keeps it beside the toy without widening the row.
+ */
+/* The containing block for the hint, so it is placed against the TOY and not
+ * against the row. No size of its own: it is exactly the board it wraps. */
+.playable-wrap {
+  position: relative;
+  display: flex;
+}
+.play-hint {
+  position: absolute;
+  inset-inline-start: calc(100% + var(--s-4));
+  inset-block-end: var(--s-6);
+  inline-size: 7.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-1);
+  margin: 0;
+}
+.play-hint__arrow {
+  inline-size: 2.9rem;
+  block-size: auto;
+  align-self: flex-start;
+  /* Points back LEFT and down at the toy. The source curves down to the right,
+   * so it is mirrored horizontally and leaned to meet the tank. */
+  transform: scaleX(-1) rotate(-24deg);
+}
+.play-hint__text {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  line-height: var(--lh-snug);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  text-align: center;
+  text-wrap: balance;
+}
+/*
+ * There is no room beside the toy on a phone: the entrance is one column and an
+ * out-of-flow hint at `100% + gap` would sit off the side of the screen. It
+ * comes back INTO the flow under the toy, and the arrow turns up to meet it.
+ */
+@media (max-width: 899px) {
+  .play-hint {
+    position: static;
+    inline-size: auto;
+    max-inline-size: 11rem;
+    margin-block-start: var(--s-3);
+    margin-inline: auto;
+  }
+  .play-hint__arrow {
+    align-self: center;
+    transform: scale(-1, -1) rotate(20deg);
+  }
+}

@@ -175,6 +175,22 @@ const MANIFEST = [
     quality: 74,
   },
 
+  // --- The arrow pointing at the ring toss ---
+  //
+  // Michael's source is a stock PNG whose transparency is FAKE: the checkerboard
+  // is painted into the pixels (alphaMin 236, so nothing is actually clear), and
+  // shipping it would have put a grey tiled box beside the toy. It is keyed in
+  // `scripts/key-arrow.mjs` — flat red on uniform grey keys cleanly — and that
+  // output is what this entry reads. Keeps its alpha, like the brand marks.
+  {
+    name: "arrow-red",
+    src: "assets-src/misc/arrow-red.png",
+    width: 300,
+    fit: "contain",
+    alpha: true,
+    quality: 80,
+  },
+
   // --- Brand marks, shown beside the company names ---
   //
   // These are the only entries that keep their ALPHA: they sit inline against

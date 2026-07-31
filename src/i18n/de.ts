@@ -55,6 +55,9 @@ export const de = {
   "game.ttt.reset": "Neues Spiel",
   "game.ring.title": "Wasser-Ringspiel",
   "game.ring.button": "Zum Pumpen drücken",
+  // Impersonal infinitive, like "Zum Pumpen drücken" above: the site never has
+  // to choose between du and Sie, and this keeps it that way.
+  "game.ring.hint": "Knöpfe drücken, es funktioniert wirklich",
   "game.ring.score": "Punkte",
   "game.ring.side": "Seitendüsen",
   "game.ring.scored": "aufgesetzt",

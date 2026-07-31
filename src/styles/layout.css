@@ -89,3 +89,26 @@
 .btn-row--centred {
   justify-content: center;
 }
+
+/*
+ * The contact room's lede is CENTRED in the space between the heading and the
+ * buttons, rather than sitting tight under the heading with the whole gap
+ * below it. It measured 24px above and 96px below, which read as the sentence
+ * having been left behind by the title.
+ *
+ * Scoped to this room: `.intro__lede` is shared with every other view, where
+ * the lede is followed by content rather than by a single button row and the
+ * tighter spacing above is correct.
+ */
+/*
+ * The gap BELOW is the intro's own bottom margin (--s-24), which does not
+ * collapse with the button row's top margin, so matching the two here is what
+ * actually centres the sentence. Setting the row's margin instead had no
+ * effect on the larger of the two gaps.
+ */
+#view-contact .intro__lede {
+  margin-block-start: var(--s-24);
+}
+#view-contact .btn-row--centred {
+  margin-block-start: 0;
+}

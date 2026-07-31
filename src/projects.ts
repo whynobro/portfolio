@@ -271,6 +271,7 @@ const PROJECTS: Project[] = [
         capKey: "cap.bot.live",
       },
     ],
+    galleryInPictures: true,
     posterPair: {
       en: { img: "bot-poster-en", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },
       de: { img: "bot-poster-de", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },

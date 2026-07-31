@@ -210,13 +210,38 @@
                 data-i18n-attr="aria-label:game.ttt.title"
                 aria-label="Unbeatable Tic-Tac-Toe"
               ></div>
-              <div
-                class="playable"
-                data-scene="ringtoss"
-                role="group"
-                data-i18n-attr="aria-label:game.ring.title"
-                aria-label="Water Ring Toss"
-              ></div>
+              <!-- The ring toss and its nudge share a wrapper so the hint can be
+                   positioned against the TOY rather than against the whole row,
+                   and so it never widens the row and pushes the boards apart. -->
+              <div class="playable-wrap">
+                <div
+                  class="playable"
+                  data-scene="ringtoss"
+                  role="group"
+                  data-i18n-attr="aria-label:game.ring.title"
+                  aria-label="Water Ring Toss"
+                ></div>
+                <!-- Points back at the ring toss: the pump and the side jets are
+                     drawn ON the toy, so nothing about it says "press me" until
+                     you already know. The arrow is decorative (`alt=""`) because
+                     the instruction beside it carries the meaning. -->
+                <p class="play-hint">
+                  <picture>
+                    <source srcset="./src/assets/img/arrow-red.avif" type="image/avif" />
+                    <img
+                      class="play-hint__arrow"
+                      src="./src/assets/img/arrow-red.png"
+                      alt=""
+                      width="691"
+                      height="854"
+                      decoding="async"
+                    />
+                  </picture>
+                  <span class="play-hint__text" data-i18n="game.ring.hint"
+                    >Press the buttons, it really works</span
+                  >
+                </p>
+              </div>
             </div>
           </div>
         </section>

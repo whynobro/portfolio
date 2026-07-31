@@ -109,11 +109,17 @@
    * scrolls: in a room about one object, the object should not leave the
    * screen.
    *
-   * NOT sticky in a room that also has a turning part below the hero: a sticky
-   * frame lifts out of the flow and sits ON TOP of whatever follows it in the
-   * same column, which hid the model completely.
+   * NOT sticky in a room that has anything ELSE in the picture column below
+   * the hero — the putter's turning part (`.case__scene`) or a gallery hung
+   * beside the description (`.case__gallery--aside`). A sticky frame lifts out
+   * of the flow and sits ON TOP of whatever follows it in the same column: it
+   * hid the turning model completely, and in the water room it rode down over
+   * the network plate as the page scrolled, which is the frame "moving with
+   * scroll" and overlapping its own column.
    */
-  .case__top:not(:has(.case__scene)) > .case__pictures > .frame {
+  .case__top:not(:has(.case__scene)):not(:has(.case__gallery--aside))
+    > .case__pictures
+    > .frame {
     position: sticky;
     top: calc(var(--masthead-h, 64px) + var(--s-6));
   }

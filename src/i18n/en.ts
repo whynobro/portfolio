@@ -47,6 +47,7 @@ export const en = {
   "game.ttt.reset": "New game",
   "game.ring.title": "Water Ring Toss",
   "game.ring.button": "Press to pump",
+  "game.ring.hint": "Press the buttons, it really works",
   "game.ring.score": "Score",
   "game.ring.side": "Side jets",
   "game.ring.scored": "ringed",
