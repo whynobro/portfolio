@@ -16,11 +16,19 @@
  *
  * ONE page each. A two-page Anschreiben reads as not knowing the form.
  *
- * The English is NOT a looser rewrite: it is the same argument, sentence for
- * sentence, so a reader comparing the two finds the same claims in the same
- * order. What changes is only what must: "Mit freundlichen Grüßen" becomes
- * "Yours sincerely" (British form, for a European reader), and the numbers
- * switch convention, 15,78 $ to $15.78 and "rund 30 %" to "about 30%".
+ * NEITHER IS A TRANSLATION OF THE OTHER, and that is the point. The first
+ * draft wrote the German and translated it, on the reasoning that
+ * docs/german.md says to author German first. That rule is about LAYOUT:
+ * German runs ~30% longer, so sizing to it prevents overflow. Applied to
+ * prose it does the opposite of help, and the English came out carrying German
+ * structure: a fronted "for six years I have taken parts...", a literal
+ * "abstract quantities" for "keine abstrakten Größen", and a lowercase opening
+ * after the salutation, which is a German convention and simply an error in
+ * English.
+ *
+ * So each is now written natively: same argument, same order, same evidence,
+ * but each sounds like someone who thinks in that language. They are parallel
+ * in substance, not in syntax.
  *
  * German register per docs/german.md: short declarative sentences. Long
  * subordinate clauses are exactly where non-native German gives itself away.
@@ -66,42 +74,45 @@ const DE = `
 <p>Sehr geehrte Damen und Herren,</p>
 
 <p>
-  seit sechs Jahren nehme ich Bauteile von der Skizze bis zum fertigen Objekt: konstruieren, fertigen,
-  messen und herausfinden, wo das Modell falsch lag. Genau diesen Zyklus führt die HWA AG in der
-  Gesamtfahrzeugentwicklung, vom Entwurf über den Prototypenbau bis zur Erprobung auf der Strecke.
-  Deshalb bewerbe ich mich um das Praktikum ab Februar/März 2027.
+  Ich baue gern Dinge. Skizze, CAD-Modell, Prototyp, und wieder von vorn. Mit fünfzehn habe ich daraus
+  ein Unternehmen gemacht und seitdem nicht damit aufgehört. An der HWA AG reizt mich, dass der ganze
+  Kreis an einem Ort stattfindet: vom Entwurf über den Prototypenbau bis zur Erprobung auf der Strecke,
+  und die Strecke sagt einem, ob man richtig lag. Genau dort möchte ich mein Praktikum machen, ab
+  Februar oder März 2027.
 </p>
 
 <p>
-  Am deutlichsten zeigt das mein Abschlussprojekt: ein Putterkopf aus dem Vollen, konstruiert für die
-  Fertigung in <b>einer einzigen Aufspannung</b>. Diese Randbedingung hat die Geometrie bestimmt, denn jedes
-  Merkmal musste ohne Umspannen erreichbar bleiben. Jedes Umspannen kostet einen Arbeitsgang und
-  gefährdet den Bezugspunkt. Vor dem Aluminiumteil habe ich die Geometrie an PLA-Prototypen abgesichert
-  und die Stückkosten auf 15,78 $ modelliert. Die Arbeit war eine von acht aus über vierzig, die zur
-  Abschlusspräsentation ausgewählt wurden.
+  In meinem Abschlussprojekt habe ich einen Putterkopf aus einem einzigen Block Aluminium gefräst,
+  konstruiert für die Fertigung in <b>einer einzigen Aufspannung</b>. Diese eine Randbedingung hat das
+  ganze Bauteil geprägt: Jedes Merkmal musste ohne Umspannen erreichbar sein, denn jedes Umspannen
+  kostet einen Arbeitsgang und gefährdet den Bezugspunkt. Ich habe so lange PLA-Prototypen gefräst, bis
+  die Geometrie stimmte, und erst dann das Aluminium. Die Stückkosten liegen bei <b>15,78 $</b> gegenüber
+  50 bis 150 $ im Handel. Die Arbeit war eine von acht aus über vierzig, die vorgestellt wurden.
 </p>
 
 <p>
-  Konstruieren heißt für mich, die Entscheidung an der Messung zu prüfen. Beim Wellenenergie-Wandler
-  belegte unser Fünferteam den <b>1. Platz</b> mit der höchsten gemessenen Leistung von drei Teams; alle
-  Bauteile haben wir maßhaltig auf der Bridgeport-Fräsmaschine selbst gefertigt. Dieselbe Haltung prägt
-  meine Software: Mein autonomes Ausführungssystem läuft mit 1553 Tests im Produktivbetrieb, und die
-  Parameter habe ich nach ihrem <b>ungünstigsten</b> Ergebnis über zwei getrennte Zeiträume gewählt, nicht
-  nach ihrem besten.
+  Ich messe lieber, als zu vermuten. Unser Fünferteam hat einen Wellenenergie-Wandler gebaut und jedes
+  Bauteil maßhaltig auf der Bridgeport-Fräsmaschine selbst gefertigt; er belegte den <b>1. Platz</b> mit
+  der höchsten gemessenen Leistung von drei Teams. In der Software halte ich es genauso. Mein
+  Handelssystem läuft im Produktivbetrieb hinter 1553 Tests, und die Parameter habe ich nach ihrem
+  <b>ungünstigsten</b> Ergebnis über zwei getrennte Zeiträume gewählt, nicht nach ihrem besten. Eine Zahl,
+  die nur an einem guten Tag hält, ist keine Zahl, der ich traue.
 </p>
 
 <p>
-  Verantwortung für ein Produkt kenne ich aus der Praxis. Mein 2019 gegründetes Unternehmen Chameleon
-  Ramps hat über 40 Produkte in Serie gebracht; das dafür entwickelte Gießverfahren senkt den
-  Materialausschuss um rund 30 %. Termine, Kosten und Ausschuss sind für mich keine abstrakten Größen.
+  Chameleon Ramps führe ich seit 2019, und das lehrt einen, was die Hochschule nicht lehrt: über 40
+  Produkte ausgeliefert, ein selbst entwickeltes Gießverfahren, das den Ausschuss um rund 30 % senkt,
+  und Kunden, die es merken, wenn ein Termin rutscht. Kosten und Termine gehen dabei auf meine eigene
+  Rechnung.
 </p>
 
 <p>
-  Nach Deutschland zu gehen ist für mich kein Umbruch: Ich bin in einer Familie der US-Luftwaffe
-  aufgewachsen und neunmal umgezogen. Ich lerne Deutsch und werde bis zum Praktikumsbeginn deutlich
-  weiter sein; als US-Staatsbürger ist ein studienbezogener Aufenthaltstitel möglich. Meine Arbeiten
-  sind unter <b>michaelfischbach.dev</b> einsehbar, zwei davon im Browser bedienbar. Über ein Gespräch
-  würde ich mich sehr freuen.
+  Vor einem Umzug ist mir nicht bange. Ich bin in einer Familie der US-Luftwaffe aufgewachsen und neunmal
+  über sieben Bundesstaaten umgezogen; ein neues Land und ein neues Team sind für mich vertrautes
+  Gelände. Deutsch lerne ich derzeit und werde bis Februar deutlich weiter sein. Als US-Staatsbürger
+  kann ich einen studienbezogenen Aufenthaltstitel erhalten. Meine Arbeiten sind unter
+  <b>michaelfischbach.dev</b> zu sehen, zwei davon lassen sich im Browser bedienen. Über ein Gespräch
+  würde ich mich freuen.
 </p>
 
 <p class="close">Mit freundlichen Grüßen</p>
@@ -140,40 +151,42 @@ const EN = `
 <p>Dear Sir or Madam,</p>
 
 <p>
-  for six years I have taken parts from a sketch to a finished object: design, manufacture, measure, and
-  find out where the model was wrong. That is the same cycle HWA AG runs in complete vehicle
-  development, from the first design through prototype build to testing on track. This is why I am
-  applying for the internship starting February/March 2027.
+  What I love is making things. Sketches, 3D models, prototypes, repeat. I started a company doing it at
+  fifteen and I have not stopped since. What draws me to HWA is that you do the whole loop in one place,
+  from the first design through prototype build to testing on track, and the track tells you whether you
+  were right. I would like to spend my internship there, starting February or March 2027.
 </p>
 
 <p>
-  My capstone shows it most clearly: a putter head milled from solid, designed to be manufactured in
-  <b>a single setup</b>. That constraint determined the geometry, because every feature had to stay
-  reachable without unclamping the part. Each re-fixture costs an operation and risks the datum. Before
-  the aluminium part I validated the geometry on PLA prototypes and modelled the unit cost at
-  <b>$15.78</b>. The work was one of eight chosen from over forty for the capstone presentation.
+  My capstone was a putter head milled from a single block of aluminium. I designed it to come off the
+  machine in <b>one setup</b>. That one constraint shaped the whole part: every feature had to be
+  reachable without unclamping it, because each re-fixture costs an operation and risks the datum. I cut
+  PLA prototypes until the geometry worked, then ran the aluminium. It costs <b>$15.78</b> a unit at
+  volume against $50 to $150 at retail. It was one of eight projects chosen from more than forty to
+  present.
 </p>
 
 <p>
-  To me, designing means testing the decision against the measurement. On the wave energy converter our
-  five-person team took <b>first place</b> with the highest measured output of three teams; we
-  manufactured every component to tolerance ourselves on a Bridgeport mill. The same attitude runs
-  through my software: my autonomous execution system runs with 1553 tests in production, and I selected
-  its parameters on their <b>worst</b> result across two disjoint validation windows, not their best.
+  I would rather measure than assume. Our five-person team built a wave energy converter and machined
+  every part to tolerance ourselves on a Bridgeport mill; it took <b>first place</b> with the highest
+  measured output of three teams. I work the same way in software. My trading system runs in production
+  behind 1553 tests, and I chose its parameters on their <b>worst</b> result across two separate
+  validation windows rather than their best, because a number that only holds up on a good day is not a
+  number I trust.
 </p>
 
 <p>
-  I know what it means to be responsible for a product. Chameleon Ramps, which I founded in 2019, has
-  brought over 40 products to market; the casting process I developed for it cuts material scrap by
-  about 30%. Deadlines, cost and scrap are not abstract quantities to me.
+  Running Chameleon Ramps since 2019 taught me the part school does not. Over 40 products shipped, a
+  casting process I developed myself that cuts scrap by about 30%, and customers who notice when a
+  deadline slips. I have had to care about cost and schedule with my own money on the line.
 </p>
 
 <p>
-  Moving to Germany would be no upheaval: I grew up in a US Air Force family and have relocated nine
-  times. I am learning German and will be considerably further along by the time the internship begins;
-  as a US citizen, a study-related residence permit is possible. My work can be seen at
-  <b>michaelfischbach.dev</b>, two pieces of it playable in the browser. I would welcome the chance to
-  speak with you.
+  Moving does not worry me. I grew up in an Air Force family and have moved nine times across seven
+  states, so a new country and a new team is familiar ground rather than a leap. I am learning German
+  now and will be a good deal further along by February. As a US citizen I can hold a study-related
+  residence permit. My work is at <b>michaelfischbach.dev</b>, and two pieces of it you can actually
+  play in the browser. I would be glad to talk.
 </p>
 
 <p class="close">Yours sincerely</p>
