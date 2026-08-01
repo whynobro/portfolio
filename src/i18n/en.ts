@@ -23,9 +23,9 @@ export const en = {
   "home.eyebrow": "Permanent collection",
   "home.role": "Mechanical engineering · Cal Poly San Luis Obispo",
   "home.bio1":
-    "I design parts and build the systems that test them. Six years of taking products from a sketch to a finished object: CAD, tolerance analysis, machining, and the measurement that says whether the model was right.",
+    "In 2019 I ordered a concrete fingerboard ramp from Germany for $30. My mom looked at it and said I could make it myself, so I did, with old molding material from the garage. Since then I have designed parts and built the systems that test them: CAD, tolerance stack-up, machining, and the measurement that says whether the model was right.",
   "home.bio2":
-    "I started a cast-concrete product company in 2019 and still run it. I grew up in an Air Force family and moved nine times across seven states, so relocating for an internship is normal rather than daunting.",
+    "The work I like best is where a drawing becomes a part and the measurement gets the last word. That is why I am applying for the complete-vehicle development internship at HWA AG: the whole car is the part. I grew up in an Air Force family and moved nine times across seven states, so moving to Affalterbach is normal rather than daunting.",
 
   "fact.gpa": "GPA · Honors Program",
   "fact.products": "products to market",
@@ -55,7 +55,7 @@ export const en = {
   "work.eyebrow": "The collection",
   "work.title": "Works in Mechanical Engineering",
   "work.lede":
-    "Design, analysis and fabrication: each piece shown with what it was built to do and what it measured.",
+    "Six pieces I designed, built and measured. Each one says what it was for and what came out of it.",
   // {n} and {total} are substituted in src/progress.ts.
   "work.progress": "{n} of {total} viewed",
   "work.progressDone": "Completed · all {total} viewed",
@@ -296,7 +296,7 @@ export const en = {
   "about.p1":
     "I am a mechanical engineering student at Cal Poly San Luis Obispo, in the Honors Program, with a 3.78 GPA and Dean's List in all three quarters of my first year.",
   "about.p2":
-    "What interests me is the loop between a drawing and a measurement: design it, make it, test it, find out where the model was wrong, change it. That applies to a part on a mill and to a system in production, which is why both appear here.",
+    "The work I like best is where a drawing becomes a part: design it, make it, test it, find out where the model was wrong, change it. I learn the most when something fails the first time. On the wave energy converter the first gear ratio was wrong, the motor could not turn against it, and only the second one ran. That applies to a part on a mill and to a system in production, which is why both appear here.",
   "about.p3":
     "I grew up in an Air Force family and moved nine times across seven states. I am a US citizen and eligible for a German study-related internship residence permit.",
 

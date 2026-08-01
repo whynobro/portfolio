@@ -32,9 +32,9 @@ export const de = {
   "home.eyebrow": "Ständige Sammlung",
   "home.role": "Maschinenbau · Cal Poly San Luis Obispo",
   "home.bio1":
-    "Ich konstruiere Bauteile und baue die Systeme, die sie prüfen. Seit sechs Jahren bringe ich Produkte von der Skizze zum fertigen Objekt: CAD, Toleranzanalyse, Fertigung und die Messung, die zeigt, ob das Modell gestimmt hat.",
+    "2019 habe ich eine Betonrampe für Fingerboards aus Deutschland bestellt, für 30 $. Meine Mutter sah sie an und meinte, die könne ich auch selbst bauen. Also habe ich es getan, mit altem Formmaterial aus der Garage. Seitdem konstruiere ich Bauteile und baue die Systeme, die sie prüfen: CAD, Toleranzkettenanalyse, Zerspanung und die Messung, die zeigt, ob das Modell gestimmt hat.",
   "home.bio2":
-    "2019 habe ich ein Unternehmen für Betongussprodukte gegründet und führe es bis heute. Ich bin in einer Air-Force-Familie aufgewachsen und neunmal über sieben Bundesstaaten umgezogen. Ein Umzug für ein Praktikum ist für mich normal.",
+    "Am liebsten arbeite ich an der Stelle, an der eine Zeichnung zum Bauteil wird und die Messung das letzte Wort hat. Genau deshalb bewerbe ich mich um das Praktikum in der Gesamtfahrzeugentwicklung bei der HWA AG: dort entsteht das ganze Fahrzeug, nicht nur ein Bauteil davon. Ich bin in einer Air-Force-Familie aufgewachsen und neunmal über sieben Bundesstaaten umgezogen. Ein Umzug nach Affalterbach ist für mich normal.",
 
   "fact.gpa": "GPA · Honors-Programm",
   "fact.products": "Produkte in Serie",
@@ -65,7 +65,7 @@ export const de = {
   "work.eyebrow": "Die Sammlung",
   "work.title": "Arbeiten im Maschinenbau",
   "work.lede":
-    "Konstruktion, Berechnung und Fertigung: jede Arbeit mit ihrer Aufgabe und ihrem Messergebnis.",
+    "Sechs Arbeiten, die ich konstruiert, gefertigt und vermessen habe. Jede nennt ihre Aufgabe und ihr Ergebnis.",
   "work.progress": "{n} von {total} angesehen",
   "work.progressDone": "Abgeschlossen · alle {total} angesehen",
 
@@ -304,7 +304,7 @@ export const de = {
   "about.p1":
     "Ich studiere Maschinenbau an der Cal Poly San Luis Obispo, im Honors-Programm, mit einem GPA von 3,78 und Dean's List in allen drei Quartalen meines ersten Studienjahres.",
   "about.p2":
-    "Mich interessiert der Kreis zwischen Zeichnung und Messung: konstruieren, fertigen, prüfen, herausfinden, wo das Modell falsch lag, und ändern. Das gilt für ein Bauteil auf der Fräse wie für ein System im Produktivbetrieb. Deshalb steht hier beides.",
+    "Am liebsten arbeite ich dort, wo eine Zeichnung zum Bauteil wird: konstruieren, fertigen, prüfen, herausfinden, wo das Modell falsch lag, und ändern. Am meisten lerne ich, wenn etwas beim ersten Mal nicht funktioniert. Beim Wellenenergie-Wandler war die erste Übersetzung falsch, der Motor kam nicht dagegen an, und erst die zweite lief. Das gilt für ein Bauteil auf der Fräse wie für ein System im Produktivbetrieb. Deshalb steht hier beides.",
   "about.p3":
     "Ich bin in einer Air-Force-Familie aufgewachsen und neunmal über sieben Bundesstaaten umgezogen. Ich bin US-Staatsbürger; ein studienbezogener Aufenthaltstitel für ein Praktikum in Deutschland ist möglich.",
 
