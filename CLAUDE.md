@@ -17,6 +17,12 @@ Live: <https://whynobro.github.io/portfolio/> · repo `whynobro/portfolio`
   in `public/` is copied verbatim and skips that. Assets under 4 KB still inline
   (a request costs more than the base64 tax at that size).
 
+  `public/` holds exactly one file, `CNAME`, and that is its only sanctioned
+  use. GitHub Pages needs the custom domain as a literal file at the root of
+  the artifact, so it cannot be hashed or inlined. **Without it Pages drops the
+  custom domain on the next deploy** and the site reverts to the github.io URL.
+  No newline at end of file, and no asset may ever join it there.
+
   SUPERSEDED (2026-07-31): the build was ONE inlined file, openable from
   `file://`. That cost **7.1 MB gzip of blocking payload before first paint**:
   base64 defeats `loading="lazy"` (bytes already in the document), defeats
