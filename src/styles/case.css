@@ -213,8 +213,10 @@
    * longer than the English ones and would otherwise wrap every row. */
   grid-template-columns: minmax(7.5em, auto) minmax(0, 1fr);
   gap: var(--s-3) var(--s-4);
-  padding-block: var(--s-4);
-  border-block-start: 2px solid var(--gilt);
+  /* No rule above the plate. It was a 2px accent line, which read as a divider
+   * cutting the specs off from the title now that the column starts level with
+   * the heading rather than below a full-width block. */
+  padding-block-end: var(--s-4);
 }
 
 .plate__k {
