@@ -319,7 +319,14 @@
 }
 @media (min-width: 640px) {
   .facts {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* One track per figure, however many there are: `grid-auto-flow: column`
+     * with no explicit template creates exactly as many columns as there are
+     * children. A hardcoded `repeat(4)` left a dead fourth track when the
+     * tolerance figure was removed, and `auto-fit` over an `1fr` minimum
+     * generated 24 tracks, 21 of them empty. */
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
   }
 }
 .facts__value {

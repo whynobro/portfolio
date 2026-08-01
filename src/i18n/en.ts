@@ -28,7 +28,6 @@ export const en = {
     "I started a cast-concrete product company in 2019 and still run it. I grew up in an Air Force family and moved nine times across seven states, so relocating for an internship is normal rather than daunting.",
 
   "fact.gpa": "GPA · Honors Program",
-  "fact.tol": "mm tolerance held",
   "fact.products": "products to market",
   "fact.tests": "tests in production",
 
@@ -220,6 +219,11 @@ export const en = {
   "cap.ramps.quarter": "The quarter pipe: the hardest mould in the range to release.",
   "cap.ramps.alt1": "From the current range.",
   "cap.ramps.alt2": "From the current range.",
+  "alt.ramps.range":
+    "The full range of cast-concrete obstacles laid out together: ledges, banks, quarter pipes and blocks",
+  "cap.ramps.range": "The range in one frame: forty designs, all cast in-house.",
+  "alt.ramps.chameleon": "A chameleon resting on one of the concrete ramps, with a fingerboard for scale",
+  "cap.ramps.chameleon": "The company's namesake, and a fingerboard for scale.",
 
   "alt.wave.hero": "The wave energy converter's internal mechanism",
   "cap.wave.inside": "The built prototype: the rack and its housing.",
@@ -291,6 +295,12 @@ export const en = {
     "What interests me is the loop between a drawing and a measurement: design it, make it, test it, find out where the model was wrong, change it. That applies to a part on a mill and to a system in production, which is why both appear here.",
   "about.p3":
     "I grew up in an Air Force family and moved nine times across seven states. I am a US citizen and eligible for a German study-related internship residence permit.",
+
+  // The three photographs under the profile text. Described plainly: they are
+  // decoration on the page but still have to say what they show.
+  "about.photo1": "On a boat in Alaska, looking out at the mountains",
+  "about.photo2": "On the beach in California",
+  "about.photo3": "Sitting out past the break, waiting on a wave",
 
   // Contact
   "contact.title": "Get in touch",

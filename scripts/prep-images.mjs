@@ -109,6 +109,26 @@ const MANIFEST = [
   { name: "ramps-alt1", src: "assets-src/ramps/p5.jpg", width: 1200, height: 1200, quality: 70 },
   { name: "ramps-alt2", src: "assets-src/ramps/p8.jpg", width: 1200, height: 1200, quality: 70 },
 
+  // The whole range in one frame, which no single product shot can show: forty
+  // designs is the claim on the label, and this is the evidence for it.
+  // Quality runs LOW for a photograph: the frame is half gravel and half
+  // foliage, both fine high-frequency texture that AVIF spends enormously on
+  // (405 KB at 72, against ~110 KB for the other plates). None of that detail
+  // is the subject, and at 56 the ramps themselves are indistinguishable.
+  { name: "ramps-range", src: "assets-src/ramps/full-range.jpg", width: 1400, height: 1050, quality: 56 },
+  // The brand's namesake on one of the ramps, with a fingerboard for scale.
+  // Square at source (750x797), so it keeps the gallery's square window.
+  { name: "ramps-chameleon", src: "assets-src/ramps/chameleon-on-ramp.jpg", width: 1100, height: 1100, quality: 74 },
+
+  // --- Profile room: three photographs in a row, all cropped to 3:2 ---
+  //
+  // Sizes are identical on purpose. The row is one grid with three equal
+  // tracks, so any difference in aspect ratio would show as a ragged bottom
+  // edge; cropping them all to 3:2 here is what makes the row read as a set.
+  { name: "about-1", src: "assets-src/about/alaska.jpg", width: 1200, height: 800, quality: 72 },
+  { name: "about-2", src: "assets-src/about/beach.jpg", width: 1200, height: 800, quality: 72 },
+  { name: "about-3", src: "assets-src/about/surf.jpg", width: 1200, height: 800, quality: 72 },
+
   // --- Wave energy converter: both 3:4 portrait, both LOW RESOLUTION ---
   // 600x800 and 360x480 at source. Held at their own size rather than upscaled,
   // since enlarging them only makes the softness bigger. Both want re-shooting.

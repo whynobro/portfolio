@@ -95,6 +95,45 @@
   --flow: var(--s-4);
 }
 
+/*
+ * The three photographs under the profile text.
+ *
+ * Equal tracks and a shared 3:2 crop (done in prep-images.mjs, not here), so
+ * the row bottoms out on one line however the images were shot. `object-fit`
+ * is still set as a backstop: if a source is ever swapped for one of another
+ * shape, it fills its track rather than stretching.
+ *
+ * Wider than the prose above it, which is held to a reading measure: the text
+ * wants ~60ch, and three photographs at that width would be postage stamps.
+ */
+.about-row {
+  margin-block-start: var(--s-12);
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-4);
+  max-inline-size: 78ch;
+}
+@media (min-width: 720px) {
+  .about-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+/* The GRID ITEM is the <picture>, not the <img>: sizing only the image left
+ * each picture at its intrinsic width and the row rendered as three tall
+ * columns instead of three 3:2 photographs. */
+.about-row picture {
+  display: block;
+  inline-size: 100%;
+}
+.about-row img {
+  inline-size: 100%;
+  block-size: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+}
+
 .btn-row--centred {
   justify-content: center;
 }

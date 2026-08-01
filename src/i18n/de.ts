@@ -37,7 +37,6 @@ export const de = {
     "2019 habe ich ein Unternehmen für Betongussprodukte gegründet und führe es bis heute. Ich bin in einer Air-Force-Familie aufgewachsen und neunmal über sieben Bundesstaaten umgezogen. Ein Umzug für ein Praktikum ist für mich normal.",
 
   "fact.gpa": "GPA · Honors-Programm",
-  "fact.tol": "mm Toleranz eingehalten",
   "fact.products": "Produkte in Serie",
   "fact.tests": "Tests im Produktivbetrieb",
 
@@ -228,6 +227,11 @@ export const de = {
   "cap.ramps.quarter": "Die Quarter Pipe: die Form, die sich am schwersten entformen lässt.",
   "cap.ramps.alt1": "Aus der aktuellen Produktreihe.",
   "cap.ramps.alt2": "Aus der aktuellen Produktreihe.",
+  "alt.ramps.range":
+    "Die gesamte Produktreihe aus Gussbeton nebeneinander: Ledges, Banks, Quarterpipes und Blöcke",
+  "cap.ramps.range": "Die Produktreihe in einem Bild: vierzig Konstruktionen, alle im eigenen Haus gegossen.",
+  "alt.ramps.chameleon": "Ein Chamäleon auf einer der Betonrampen, daneben ein Fingerboard als Größenvergleich",
+  "cap.ramps.chameleon": "Der Namensgeber des Unternehmens, mit einem Fingerboard als Größenvergleich.",
 
   "alt.wave.hero": "Der innere Mechanismus des Wellenenergie-Wandlers",
   "cap.wave.inside": "Der gebaute Prototyp: die Zahnstange und ihr Gehäuse.",
@@ -299,6 +303,10 @@ export const de = {
     "Mich interessiert der Kreis zwischen Zeichnung und Messung: konstruieren, fertigen, prüfen, herausfinden, wo das Modell falsch lag, und ändern. Das gilt für ein Bauteil auf der Fräse wie für ein System im Produktivbetrieb. Deshalb steht hier beides.",
   "about.p3":
     "Ich bin in einer Air-Force-Familie aufgewachsen und neunmal über sieben Bundesstaaten umgezogen. Ich bin US-Staatsbürger; ein studienbezogener Aufenthaltstitel für ein Praktikum in Deutschland ist möglich.",
+
+  "about.photo1": "Auf einem Boot in Alaska, mit Blick auf die Berge",
+  "about.photo2": "Am Strand in Kalifornien",
+  "about.photo3": "Hinter der Brandung, im Warten auf eine Welle",
 
   // Kontakt
   "contact.title": "Kontakt",

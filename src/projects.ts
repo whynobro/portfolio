@@ -216,6 +216,22 @@ const PROJECTS: Project[] = [
       },
       { img: "ramps-alt1", w: 1200, h: 1200, aspect: "frame--square", altKey: "alt.ramps.alt1", capKey: "cap.ramps.alt1" },
       { img: "ramps-alt2", w: 1200, h: 1200, aspect: "frame--square", altKey: "alt.ramps.alt2", capKey: "cap.ramps.alt2" },
+      {
+        img: "ramps-range",
+        w: 1400,
+        h: 1050,
+        aspect: "frame--landscape",
+        altKey: "alt.ramps.range",
+        capKey: "cap.ramps.range",
+      },
+      {
+        img: "ramps-chameleon",
+        w: 1100,
+        h: 1100,
+        aspect: "frame--square",
+        altKey: "alt.ramps.chameleon",
+        capKey: "cap.ramps.chameleon",
+      },
     ],
   },
 
