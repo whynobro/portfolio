@@ -258,6 +258,7 @@ node scripts/prep-frame.mjs           # rebuild the frame border-image
 node scripts/make-icons.mjs           # rebuild favicons + og.png
 node scripts/make-portfolio-pdf.mjs [--lang=de]  # portfolio as an uploadable PDF
 node scripts/make-cv-de.mjs           # the German CV
+node scripts/make-anschreiben.mjs [--lang=en]   # the cover letter, DE or EN
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
 node scripts/shoot-campus.mjs         # re-shoot campusnative.com
 ```
