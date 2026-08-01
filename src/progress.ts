@@ -26,6 +26,25 @@ let total = 0;
 /** Whether the completion burst has already run this visit. */
 let celebrated = false;
 
+/**
+ * `?reset` clears the stored progress, so the counter and the completion burst
+ * can be walked through again without opening a console. Reading the flag also
+ * strips it from the URL, so a refresh does not silently wipe progress a second
+ * time and the address bar goes back to normal.
+ */
+function consumeResetFlag(): boolean {
+  try {
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has("reset")) return false;
+    url.searchParams.delete("reset");
+    window.history.replaceState(null, "", url.toString());
+    localStorage.removeItem(KEY);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function load(): Set<string> {
   try {
     const raw = localStorage.getItem(KEY);
@@ -184,6 +203,8 @@ export function markSeen(slug: string): void {
 
 export function initProgress(slugs: string[]): void {
   total = slugs.length;
+  // Before the load, so a reset starts from an empty store.
+  consumeResetFlag();
   const known = new Set(slugs);
   // Drop anything that is no longer a work, so a renamed or removed slug does
   // not sit in storage inflating the count forever.
