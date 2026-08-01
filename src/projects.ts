@@ -72,6 +72,20 @@ type Project = {
    * of the same work.
    */
   galleryInPictures?: boolean;
+  /**
+   * How many of the gallery's plates hang in the PICTURE column, under the
+   * hero, with the rest staying full width at the foot of the room. Fills the
+   * wall left under a short hero without moving a whole sequence off the foot
+   * of the page. Ignored when `galleryInPictures` already moves all of them.
+   */
+  galleryLeadInPictures?: number;
+  /**
+   * Render the heading INSIDE the two-column grid, so the reading column starts
+   * level with the title rather than below a full-width heading block. Only for
+   * a room whose text would otherwise leave the right-hand side empty beside
+   * the title; the CSS half of this is keyed on the slug.
+   */
+  headInGrid?: boolean;
   /** A live site the work IS, rather than a description of one. */
   link?: { href: string; labelKey: TranslationKey };
   /**
@@ -178,6 +192,7 @@ const PROJECTS: Project[] = [
     titleKey: "proj.ramps.title",
     ledeKey: "case.ramps.lede",
     mark: "ramps-mark",
+    headInGrid: true,
     hero: { img: "ramps-bank", w: 1400, h: 1400, aspect: "frame--square", altKey: "alt.ramps.hero" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.ramps.role" },
@@ -241,6 +256,11 @@ const PROJECTS: Project[] = [
       },
       { img: "wave-base", w: 360, h: 480, aspect: "frame--photo", altKey: "alt.wave.base", capKey: "cap.wave.base" },
     ],
+    // The cutaway hero is a wide landscape and the text beside it runs long, so
+    // it left a tall band of empty wall under the picture. The first
+    // photograph, the mechanism inside the housing, moves up to fill it; the
+    // base shot stays at the foot with the poster.
+    galleryLeadInPictures: 1,
     poster: {
       img: "wave-poster",
       w: 2600,
@@ -539,19 +559,30 @@ function render(slug: string): void {
   column.append(body);
   top.append(column);
 
-  // The head goes INSIDE the grid, ahead of the pictures. It stays the first
-  // thing after the back link in DOM order, so the reading order and the focus
-  // order are unchanged; being a cell is what lets the reading column rise to
-  // meet it instead of starting below a full-width block.
-  top.prepend(head);
-  host.replaceChildren(back, top);
+  // The ramps room puts its head INSIDE the grid, ahead of the pictures, so the
+  // reading column can rise to meet the title instead of starting below a
+  // full-width block (see `[data-slug="ramps"]` in case.css). It stays the first
+  // thing after the back link either way, so reading and focus order do not
+  // change. Every other room keeps the head above the grid, which is the layout
+  // those rooms were composed for.
+  if (project.headInGrid) {
+    top.prepend(head);
+    host.replaceChildren(back, top);
+  } else {
+    host.replaceChildren(back, head, top);
+  }
 
   // Built before it is placed: a room can ask for the gallery in the picture
   // column beside the description rather than full width under it.
   if (project.gallery.length && project.galleryInPictures) {
     pictures.append(buildGallery(project.gallery, "case__gallery--aside"));
   } else if (project.gallery.length) {
-    host.append(buildGallery(project.gallery));
+    // A room can lift the first plate (or first few) into the picture column to
+    // fill the wall under a short hero, and leave the rest at the foot.
+    const lead = project.galleryLeadInPictures ?? 0;
+    if (lead > 0) pictures.append(buildGallery(project.gallery.slice(0, lead), "case__gallery--aside"));
+    const rest = project.gallery.slice(lead);
+    if (rest.length) host.append(buildGallery(rest));
   }
 
   // The poster hangs full width at the foot: it is a document to be READ, and

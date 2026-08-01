@@ -155,34 +155,37 @@
      * moving the article up here was to fill the room rather than to squeeze
      * it. The picture still holds a column wide enough to read as the work. */
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-    /* Row gap is the space between the title and the work below it; the column
-     * gap stays the wide gutter between picture and text. */
-    gap: var(--s-6) var(--s-12);
-    /* The heading row takes only the height it needs, so the picture starts
-     * directly under the title rather than being pushed down by a stretched
-     * row. */
-    grid-template-rows: auto 1fr;
+    gap: var(--s-12);
     align-items: start;
   }
+  /* Only the room that puts its heading INSIDE the grid needs a row structure:
+   * the heading row takes the height it needs, and the row gap becomes the
+   * space between the title and the work under it. */
+  [data-slug="ramps"] .case__top {
+    grid-template-rows: auto 1fr;
+    gap: var(--s-6) var(--s-12);
+  }
   /*
-   * The heading is a CELL of this grid, not a block above it, and the reading
-   * column spans both rows so it starts level with the title.
+   * RAMPS ONLY. The heading becomes a CELL of this grid rather than a block
+   * above it, and the reading column spans both rows so it starts level with
+   * the title.
    *
-   * `.case__head` is capped at 46ch, so as a full-width block it left the whole
-   * right-hand side blank from the masthead down to the plate: about 280px of
-   * empty wall beside the title. In the grid it takes column one, the work
-   * hangs beneath it, and the text fills the height of both.
+   * `.case__head` is capped at 46ch, so as a full-width block it left that
+   * room's right-hand side blank from the masthead down to the plate. Scoped to
+   * the one room by `[data-slug]`: applied to `.case__top` it changed all six,
+   * and the other five read correctly with the heading full width above the
+   * work, which is the layout the rooms were composed for.
    */
-  .case__head {
+  [data-slug="ramps"] .case__head {
     grid-column: 1;
     grid-row: 1;
     margin-block-start: 0;
   }
-  .case__top > .case__pictures {
+  [data-slug="ramps"] .case__top > .case__pictures {
     grid-column: 1;
     grid-row: 2;
   }
-  .case__top > .case__column {
+  [data-slug="ramps"] .case__top > .case__column {
     grid-column: 2;
     grid-row: 1 / span 2;
   }
