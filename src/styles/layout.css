@@ -55,6 +55,15 @@
   margin-inline: auto;
   margin-block-end: var(--s-24);
 }
+/*
+ * An intro that is ONLY a heading sits closer to what follows it. The --s-24
+ * below is measured for an intro that ends in a lede, where the eye has a
+ * sentence to leave; with just the title above it (the profile room) it left
+ * 96px of blank wall and the body read as belonging to something else.
+ */
+.intro:not(:has(.intro__lede)) {
+  margin-block-end: var(--s-12);
+}
 .intro .eyebrow {
   display: block;
   margin-block-end: var(--s-4);
