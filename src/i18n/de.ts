@@ -38,7 +38,7 @@ export const de = {
 
   "fact.gpa": "GPA · Honors-Programm",
   "fact.products": "Produkte in Serie",
-  "fact.tests": "Tests im Produktivbetrieb",
+  "fact.tests": "automatisierte Tests, System live",
 
   "cta.work": "Sammlung ansehen",
   "cta.contact": "Kontakt",
@@ -110,7 +110,7 @@ export const de = {
   // CNC-Putter
   "case.putter.lede":
     "Ein Putterkopf aus einem einzigen Block 6061, konstruiert für die Fertigung in einer einzigen Aufspannung.",
-  "case.putter.role": "Konstruktion, CAM und Zerspanung",
+  "case.putter.role": "Konstruktion, CAD und Zerspanung",
   "case.putter.tools": "Fusion 360 · 3-Achs-HAAS",
   "case.putter.material": "Aluminium 6061",
   "case.putter.result": "15,78 $ pro Einheit",

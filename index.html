@@ -198,7 +198,7 @@
                 <div>
                   <div class="facts__value mono">1553</div>
                   <div class="facts__label" data-i18n="fact.tests">
-                    tests in production
+                    automated tests, system live
                   </div>
                 </div>
               </div>
@@ -210,9 +210,10 @@
                 <a class="btn" href="#/contact" data-i18n="cta.contact"
                   >Contact</a
                 >
-                <!-- The href is set by src/resume.ts: the PDF is imported so the
-                     bundler inlines it as a data: URI and the build stays one
-                     file that works from file://. -->
+                <!-- The href and the download filename are both set by
+                     src/resume.ts, which follows the site's language: English
+                     serves the resume, German the Lebenslauf. The attribute
+                     here is only the pre-JavaScript fallback. -->
                 <a
                   class="btn btn--resume"
                   data-resume

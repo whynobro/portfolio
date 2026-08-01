@@ -60,6 +60,14 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   went over by 21px because of the wordmark plus "Auszeichnungen". Both
   `.masthead__inner` AND `.masthead__nav` wrap, so German takes a second line
   instead of losing its navigation. Never fix an overflow by removing a route.
+- **The resume button follows the site's language.** English serves
+  `src/assets/docs/resume.pdf` (the American resume); German serves
+  `resume-de.pdf`, the Lebenslauf built by `scripts/make-cv-de.mjs`. These are
+  two documents in different genres, not one translated, so a German reader must
+  never be handed the English one. `src/resume.ts` sets both the `href` and the
+  `download` filename, and re-points them on `i18n:change`. **`resume-de.pdf` is
+  a committed copy**: regenerating the Lebenslauf does NOT update the site until
+  the new PDF is copied over it.
 
 ## The frame
 
@@ -172,6 +180,7 @@ src/router.ts                  view switching, focus management, titles
 src/awards.ts                  awards room, rendered from data
 src/projects.ts                the six project rooms, rendered from data
 src/i18n/{en,de}.ts            en.ts is the source of truth
+src/resume.ts                  points the resume button at EN or DE by language
 src/scenes/{tictactoe,ringtoss}/   SceneModule: mount/resize/dispose/renderStatic
 src/styles/                    tokens, base, layout, frame, chrome, games, case
 scripts/prep-frame.mjs         frame PNG -> border-image + measured slice

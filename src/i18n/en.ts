@@ -29,7 +29,7 @@ export const en = {
 
   "fact.gpa": "GPA · Honors Program",
   "fact.products": "products to market",
-  "fact.tests": "tests in production",
+  "fact.tests": "automated tests, system live",
 
   "cta.work": "View the collection",
   "cta.contact": "Contact",
@@ -103,7 +103,7 @@ export const en = {
   // CNC putter
   "case.putter.lede":
     "A putter head cut from a single block of 6061, designed so the whole part comes off the machine in one setup.",
-  "case.putter.role": "Design, CAM and machining",
+  "case.putter.role": "Design, CAD and machining",
   "case.putter.tools": "Fusion 360 · 3-axis HAAS",
   "case.putter.material": "Aluminium 6061",
   "case.putter.result": "$15.78 per unit",

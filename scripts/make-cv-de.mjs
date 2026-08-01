@@ -6,6 +6,12 @@
  * Writes `Michael-Fischbach-Lebenslauf.pdf` to the repo root (gitignored: a
  * build output, not a source).
  *
+ * The site also SERVES this document: the resume button hands a German reader
+ * the Lebenslauf instead of the American resume. That copy is committed at
+ * `src/assets/docs/resume-de.pdf` so the bundler can content-hash it. Nothing
+ * copies it automatically, so after changing anything here, re-run this script
+ * and copy the result over that file, or the site keeps serving the old one.
+ *
  * Terminology follows `docs/german.md` exactly, which is the project's only
  * defence against there being NO NATIVE-SPEAKER REVIEW IN THE LOOP:
  * Konstruktion (never "Design"), Fertigung, Zerspanung, Toleranzkettenanalyse,

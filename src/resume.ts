@@ -1,18 +1,42 @@
 /**
  * The resume button's href.
  *
- * The PDF is IMPORTED rather than written into the markup as a path so the
- * bundler content-hashes it: the filename then changes whenever the document
+ * The PDFs are IMPORTED rather than written into the markup as paths so the
+ * bundler content-hashes them: the filename then changes whenever the document
  * does, which is what lets it be cached hard without serving a stale resume.
  *
  * `?url` gives the resolved asset URL (a hashed path in the build, a
  * dev-server path under `npm run dev`) instead of trying to parse the PDF as a
- * module. At 6.6 KB it sits above the 4 KB inline threshold, so it emits as
- * its own file and downloads as a real PDF rather than a data: URI.
+ * module. Both sit above the 4 KB inline threshold, so they emit as their own
+ * files and download as real PDFs rather than data: URIs.
+ *
+ * There are two documents, not one document translated. `resume.pdf` is the
+ * American resume; `resume-de.pdf` is the Lebenslauf built by
+ * `scripts/make-cv-de.mjs`, which is its own genre (reverse-chronological, a
+ * Kurzprofil instead of an objective, nationality and work-permit status
+ * stated plainly). A German reader gets the German one, so the button follows
+ * the site's language rather than offering both and making them choose.
  */
-import resumeUrl from "./assets/docs/resume.pdf?url";
+import { getLang } from "./i18n";
+import resumeEnUrl from "./assets/docs/resume.pdf?url";
+import resumeDeUrl from "./assets/docs/resume-de.pdf?url";
+
+/** The filename the reader ends up with in their downloads folder. */
+const DOCS = {
+  en: { url: resumeEnUrl, file: "Michael-Fischbach-CV.pdf" },
+  de: { url: resumeDeUrl, file: "Michael-Fischbach-Lebenslauf.pdf" },
+} as const;
+
+function apply(): void {
+  const doc = DOCS[getLang()];
+  for (const link of document.querySelectorAll<HTMLAnchorElement>("a[data-resume]")) {
+    link.href = doc.url;
+    link.download = doc.file;
+  }
+}
 
 export function initResume(): void {
-  const links = document.querySelectorAll<HTMLAnchorElement>("a[data-resume]");
-  for (const link of links) link.href = resumeUrl;
+  apply();
+  // Re-point on a language switch; the label itself is swapped by `data-i18n`.
+  document.addEventListener("i18n:change", apply);
 }

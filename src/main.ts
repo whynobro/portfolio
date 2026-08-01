@@ -18,8 +18,9 @@ import { initResume } from "./resume";
 function boot(): void {
   initI18n();
   initAwards();
-  // Both resume buttons are in the static markup, so this only has to run once
-  // and does not care about the router.
+  // Both resume buttons are in the static markup, so this does not care about
+  // the router. It must follow initI18n: it reads the resolved language to
+  // decide whether to serve the resume or the Lebenslauf.
   initResume();
   // Before the router: it asks the projects module to resolve `/work/<slug>`
   // on the very first render, which happens inside initRouter.
