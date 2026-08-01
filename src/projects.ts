@@ -539,7 +539,12 @@ function render(slug: string): void {
   column.append(body);
   top.append(column);
 
-  host.replaceChildren(back, head, top);
+  // The head goes INSIDE the grid, ahead of the pictures. It stays the first
+  // thing after the back link in DOM order, so the reading order and the focus
+  // order are unchanged; being a cell is what lets the reading column rise to
+  // meet it instead of starting below a full-width block.
+  top.prepend(head);
+  host.replaceChildren(back, top);
 
   // Built before it is placed: a room can ask for the gallery in the picture
   // column beside the description rather than full width under it.

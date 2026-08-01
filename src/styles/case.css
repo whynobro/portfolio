@@ -155,8 +155,36 @@
      * moving the article up here was to fill the room rather than to squeeze
      * it. The picture still holds a column wide enough to read as the work. */
     grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
-    gap: var(--s-12);
+    /* Row gap is the space between the title and the work below it; the column
+     * gap stays the wide gutter between picture and text. */
+    gap: var(--s-6) var(--s-12);
+    /* The heading row takes only the height it needs, so the picture starts
+     * directly under the title rather than being pushed down by a stretched
+     * row. */
+    grid-template-rows: auto 1fr;
     align-items: start;
+  }
+  /*
+   * The heading is a CELL of this grid, not a block above it, and the reading
+   * column spans both rows so it starts level with the title.
+   *
+   * `.case__head` is capped at 46ch, so as a full-width block it left the whole
+   * right-hand side blank from the masthead down to the plate: about 280px of
+   * empty wall beside the title. In the grid it takes column one, the work
+   * hangs beneath it, and the text fills the height of both.
+   */
+  .case__head {
+    grid-column: 1;
+    grid-row: 1;
+    margin-block-start: 0;
+  }
+  .case__top > .case__pictures {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .case__top > .case__column {
+    grid-column: 2;
+    grid-row: 1 / span 2;
   }
   /*
    * The hero is sticky so it stays with the reader while the text beside it
