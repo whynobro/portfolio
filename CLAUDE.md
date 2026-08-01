@@ -9,11 +9,22 @@ Live: <https://whynobro.github.io/portfolio/> · repo `whynobro/portfolio`
 
 ## Invariants
 
-- **The build must stay ONE file.** `dist/index.html`, everything inlined,
-  openable from `file://` with no server. Anything in `public/` is copied
-  verbatim and silently breaks this — put assets in `src/assets/` and reference
-  them **relatively** (`./src/assets/img/x.avif`) so the bundler inlines them.
-  CI fails if `dist` holds more than one file.
+- **The shell must stay small; photographs stay OUT of it.** The build is
+  `dist/index.html` (~25 KB, 6 KB gzip) plus a content-hashed `dist/assets/`.
+  CI fails if `index.html` grows past 100 KB, which is what a stray re-inline
+  looks like. Put assets in `src/assets/` and reference them **relatively**
+  (`./src/assets/img/x.avif`) so the bundler hashes and rewrites them; anything
+  in `public/` is copied verbatim and skips that. Assets under 4 KB still inline
+  (a request costs more than the base64 tax at that size).
+
+  SUPERSEDED (2026-07-31): the build was ONE inlined file, openable from
+  `file://`. That cost **7.1 MB gzip of blocking payload before first paint**:
+  base64 defeats `loading="lazy"` (bytes already in the document), defeats
+  per-asset caching, and adds 33% over binary. Splitting cut first paint to
+  ~90 KB gzip (79x) and total bytes 9.5 MB to 5.9 MB, with **no image
+  re-encoded**. The portfolio ships as a LINK, so `file://` bought nothing.
+  Cost: a lone `index.html` on a USB stick or as a mail attachment no longer
+  renders its photographs (zip the folder instead).
 - **Every German string is compile-checked.** `de.ts` ends `satisfies Dict`, so
   a missing or misspelled key fails `tsc --noEmit`. Never weaken this — there is
   **no native-speaker review in the loop**, so the type system is the only net.
@@ -118,8 +129,8 @@ text — **read those before writing copy**.
 ## Structure
 
 Single page, hash-routed views (`#/awards`, `#/about`, `#/contact`, and
-`#/work/<slug>` for each work's room); hash rather than History API because it
-must work from `file://`.
+`#/work/<slug>` for each work's room). Hash rather than History API: it needs
+no server-side rewrite rule, so the site stays portable across any static host.
 
 **A room is one container filled from data**, not six blocks of markup:
 `#view-project` is re-rendered per slug by `src/projects.ts`. `initProjects()`
@@ -226,7 +237,11 @@ node scripts/shoot-campus.mjs         # re-shoot campusnative.com
 ## Deploy
 
 GitHub Pages via `.github/workflows/deploy.yml` on push to `main`. CI runs
-`tsc --noEmit` (catches a missing German key), builds, and asserts `dist`
-contains exactly one file. Custom domain deferred; `base: "./"`
-in `vite.config.ts` is relative, so it works on a project page, a user page, or
-from disk unchanged.
+`tsc --noEmit` (catches a missing German key), builds, and asserts the shell
+stayed under 100 KB with a `dist/assets/` beside it. `base: "./"` in
+`vite.config.ts` is relative, so it works on a project page, a user page, or any
+static host unchanged.
+
+Custom domain: **michaelfischbach.dev**. `.dev` is on the HSTS preload list, so
+HTTPS is mandatory at browser level and there is no plain-HTTP fallback: the
+certificate must be provisioned before the site loads at all.

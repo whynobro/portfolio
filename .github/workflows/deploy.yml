@@ -37,11 +37,23 @@ jobs:
       - name: Build
         run: npx vite build
 
-      - name: Verify single-file output
+      # The build used to assert dist held exactly one file. That guarded the
+      # file:// promise, which cost 7.1 MB gzip of BLOCKING payload on first
+      # paint and is no longer wanted (the portfolio ships as a link).
+      #
+      # What matters now is the opposite: that the shell stays small and the
+      # photographs stay OUT of it. A stray re-inline would silently undo the
+      # whole reason for splitting, so the shell is capped rather than counted.
+      - name: Verify shell stays small
         run: |
-          count=$(find dist -type f | wc -l)
-          echo "dist contains $count file(s)"
-          test "$count" -eq 1 || { echo "Expected exactly one file"; find dist -type f; exit 1; }
+          bytes=$(wc -c < dist/index.html)
+          echo "dist/index.html is $bytes bytes"
+          test "$bytes" -lt 102400 || {
+            echo "Shell exceeded 100 KB — an asset is probably being inlined again."
+            exit 1
+          }
+          test -d dist/assets || { echo "Expected dist/assets/"; exit 1; }
+          echo "dist contains $(find dist -type f | wc -l) file(s)"
 
       - uses: actions/upload-pages-artifact@v3
         with:
