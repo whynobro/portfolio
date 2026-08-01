@@ -36,6 +36,17 @@
  * Every claim is carried by the CV and the portfolio: the single setup, the
  * unit cost, the 1st place, the 1553 tests, the 40+ products. The letter argues
  * from them rather than restating the CV.
+ *
+ * The portfolio URL appears TWICE on purpose, once in the opening paragraph
+ * and once at the close, and both are real <a href> links rather than bold
+ * text. A URL a reader has to retype is a URL that does not get visited, and
+ * the closing paragraph alone is the one a busy reader skims.
+ *
+ * The enclosures line names the portfolio PDF and the transcript, so it must
+ * match what is actually uploaded: `node scripts/make-portfolio-pdf.mjs
+ * --lang=de` for the German packet, plus the Cal Poly transcript. An
+ * enclosures line that promises a document the reader cannot find is worse
+ * than no line at all.
  */
 import { chromium } from "playwright";
 
@@ -53,7 +64,7 @@ const DE = `
   <b>Michael Fischbach</b><br>
   Malibu, Kalifornien, USA<br>
   +1 805 703 8250 · mef126906@icloud.com<br>
-  michaelfischbach.dev
+  <a href="https://michaelfischbach.dev">michaelfischbach.dev</a>
 </p>
 
 <p class="to">
@@ -75,10 +86,11 @@ const DE = `
 
 <p>
   Ich baue gern Dinge. Skizze, CAD-Modell, Prototyp, und wieder von vorn. Mit fünfzehn habe ich daraus
-  ein Unternehmen gemacht und seitdem nicht damit aufgehört. An der HWA AG reizt mich, dass der ganze
-  Kreis an einem Ort stattfindet: vom Entwurf über den Prototypenbau bis zur Erprobung auf der Strecke,
-  und die Strecke sagt einem, ob man richtig lag. Genau dort möchte ich mein Praktikum machen, ab
-  Februar oder März 2027.
+  ein Unternehmen gemacht und seitdem nicht damit aufgehört; sechs dieser Arbeiten sind unter
+  <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a> zu sehen. An der HWA AG reizt
+  mich, dass der ganze Kreis an einem Ort stattfindet: vom Entwurf über den Prototypenbau bis zur
+  Erprobung auf der Strecke, und die Strecke sagt einem, ob man richtig lag. Genau dort möchte ich mein
+  Praktikum machen, ab Februar oder März 2027.
 </p>
 
 <p>
@@ -110,15 +122,15 @@ const DE = `
   Vor einem Umzug ist mir nicht bange. Ich bin in einer Familie der US-Luftwaffe aufgewachsen und neunmal
   über sieben Bundesstaaten umgezogen; ein neues Land und ein neues Team sind für mich vertrautes
   Gelände. Deutsch lerne ich derzeit und werde bis Februar deutlich weiter sein. Als US-Staatsbürger
-  kann ich einen studienbezogenen Aufenthaltstitel erhalten. Meine Arbeiten sind unter
-  <b>michaelfischbach.dev</b> zu sehen, zwei davon lassen sich im Browser bedienen. Über ein Gespräch
-  würde ich mich freuen.
+  kann ich einen studienbezogenen Aufenthaltstitel erhalten. Das Portfolio liegt diesem Schreiben als
+  PDF bei; unter <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a> lassen sich
+  zwei der Arbeiten direkt im Browser bedienen. Über ein Gespräch würde ich mich freuen.
 </p>
 
 <p class="close">Mit freundlichen Grüßen</p>
 <p class="sig">Michael Fischbach</p>
 
-<p class="enc">Anlagen: Lebenslauf, Portfolio</p>`;
+<p class="enc">Anlagen: Lebenslauf, Portfolio, Notenübersicht (Cal Poly)</p>`;
 
 /* The same letter, sentence for sentence, so the pair reads as one document in
  * two languages rather than as two different applications. Only what must
@@ -130,7 +142,7 @@ const EN = `
   <b>Michael Fischbach</b><br>
   Malibu, California, USA<br>
   +1 805 703 8250 · mef126906@icloud.com<br>
-  michaelfischbach.dev
+  <a href="https://michaelfischbach.dev">michaelfischbach.dev</a>
 </p>
 
 <p class="to">
@@ -152,9 +164,11 @@ const EN = `
 
 <p>
   What I love is making things. Sketches, 3D models, prototypes, repeat. I started a company doing it at
-  fifteen and I have not stopped since. What draws me to HWA is that you do the whole loop in one place,
-  from the first design through prototype build to testing on track, and the track tells you whether you
-  were right. I would like to spend my internship there, starting February or March 2027.
+  fifteen and I have not stopped since; six of those projects are at
+  <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a>. What draws me to HWA is that
+  you do the whole loop in one place, from the first design through prototype build to testing on track,
+  and the track tells you whether you were right. I would like to spend my internship there, starting
+  February or March 2027.
 </p>
 
 <p>
@@ -185,14 +199,15 @@ const EN = `
   Moving does not worry me. I grew up in an Air Force family and have moved nine times across seven
   states, so a new country and a new team is familiar ground rather than a leap. I am learning German
   now and will be a good deal further along by February. As a US citizen I can hold a study-related
-  residence permit. My work is at <b>michaelfischbach.dev</b>, and two pieces of it you can actually
-  play in the browser. I would be glad to talk.
+  residence permit. The portfolio is enclosed as a PDF, and at
+  <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a> two of the pieces you can
+  actually play in the browser. I would be glad to talk.
 </p>
 
 <p class="close">Yours sincerely</p>
 <p class="sig">Michael Fischbach</p>
 
-<p class="enc">Enclosures: CV, portfolio</p>`;
+<p class="enc">Enclosures: CV, portfolio, Cal Poly transcript</p>`;
 
 const BODY = LANG === "en" ? EN : DE;
 
