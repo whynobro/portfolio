@@ -18,11 +18,19 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   in `public/` is copied verbatim and skips that. Assets under 4 KB still inline
   (a request costs more than the base64 tax at that size).
 
-  `public/` holds exactly one file, `CNAME`, and that is its only sanctioned
-  use. GitHub Pages needs the custom domain as a literal file at the root of
-  the artifact, so it cannot be hashed or inlined. **Without it Pages drops the
-  custom domain on the next deploy** and the site reverts to the github.io URL.
-  No newline at end of file, and no asset may ever join it there.
+  `public/` holds exactly two files, and both are there because something
+  outside the build needs them at a FIXED name a content hash would break:
+
+  - `CNAME` — GitHub Pages reads the custom domain from a literal file at the
+    root of the artifact. **Without it Pages drops the custom domain on the
+    next deploy** and the site reverts to the github.io URL. No trailing
+    newline.
+  - `og.png` — the link-preview card. A crawler fetches it before running any
+    JavaScript and does not resolve relative paths, so `index.html` names it
+    as an absolute `https://michaelfischbach.dev/og.png`.
+
+  Nothing else may join them: every other asset belongs in `src/assets/` where
+  it gets hashed.
 
   SUPERSEDED (2026-07-31): the build was ONE inlined file, openable from
   `file://`. That cost **7.1 MB gzip of blocking payload before first paint**:
@@ -45,6 +53,13 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
 - **Claims on labels must be true and, where testable, tested.** The
   "unbeatable" tic-tac-toe label is backed by `npm run verify:ttt`, which plays
   every possible game from both sides and asserts the machine never loses.
+- **Every room must stay reachable on a phone.** The masthead once hid Work,
+  About and Contact below 560px to stop the German bar overflowing, which left
+  `#/about` with no route in at all on the device most recruiters open the link
+  on. The overflow was never the nav's fault: English fits at 390px, and German
+  went over by 21px because of the wordmark plus "Auszeichnungen". Both
+  `.masthead__inner` AND `.masthead__nav` wrap, so German takes a second line
+  instead of losing its navigation. Never fix an overflow by removing a route.
 
 ## The frame
 
@@ -167,6 +182,7 @@ scripts/heic-to-jpg.ps1        iPhone HEIC -> JPEG (see note below)
 scripts/prep-mesh.mjs          putter STL -> quantised inline mesh
 scripts/make-bot-poster.mjs    draws the bot poster, EN + DE, from real source
 scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
+scripts/make-icons.mjs         favicon set + the link-preview card
 docs/german.md                 German terminology, numbers, layout rules
 ```
 
@@ -237,6 +253,7 @@ npm run shots        # screenshot loop (dev server must be running)
 npm run verify:ttt   # prove the tic-tac-toe engine never loses
 node scripts/prep-images.mjs [name]   # whole manifest, or one entry
 node scripts/prep-frame.mjs           # rebuild the frame border-image
+node scripts/make-icons.mjs           # rebuild favicons + og.png
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
 node scripts/shoot-campus.mjs         # re-shoot campusnative.com
 ```

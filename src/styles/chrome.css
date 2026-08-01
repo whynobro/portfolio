@@ -45,6 +45,13 @@
   display: flex;
   align-items: center;
   gap: var(--s-4);
+  /* The nav must wrap for the same reason `.masthead__inner` does: it holds the
+   * language toggle as well as the links, and in German that group is wider
+   * than a phone. Left at `nowrap` the bar wrapped but the nav inside it could
+   * not, so it overflowed the viewport by a few pixels anyway. */
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  row-gap: var(--s-2);
 }
 /* 1000px, not 900: at exactly 900 the German nav plus the wordmark still came
  * to 903px against the viewport. */
@@ -79,11 +86,27 @@
   border-block-end-color: var(--gilt);
 }
 
-/* Nav labels are hidden on the smallest screens; the awards badge and language
- * toggle stay, since those are the two controls with no other route in. */
+/*
+ * SUPERSEDED: this hid Work, About and Contact below 560px, which left a phone
+ * with no route into those rooms at all. The footer carries only Email,
+ * LinkedIn and Awards, so `#/about` was unreachable on the device most
+ * recruiters actually open the link on.
+ *
+ * The overflow that motivated hiding them was real but was never the nav's
+ * fault: at 390px the English bar fits with room to spare, and German exceeds
+ * it by 21px because the 164px wordmark plus "Auszeichnungen" is what does not
+ * fit. `.masthead__inner` already wraps, so the links stay and German takes a
+ * second line instead of losing its navigation. The wordmark also drops to the
+ * initials at this size, which buys back more than the 21px on its own.
+ */
 @media (max-width: 560px) {
-  .masthead__nav a:not(.badge) {
-    display: none;
+  /* Tighter gaps and a smaller wordmark buy back more than the 21px German
+   * was over by, without touching the markup or the accessible name. */
+  .masthead__nav {
+    gap: var(--s-3);
+  }
+  .masthead__name {
+    font-size: var(--t-base);
   }
 }
 

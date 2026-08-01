@@ -280,6 +280,14 @@
  * comes back INTO the flow under the toy, and the arrow turns up to meet it.
  */
 @media (max-width: 899px) {
+  /* Taking the hint out of `position: absolute` is not enough on its own: the
+   * wrapper is a flex ROW, so a static hint became a sibling column beside the
+   * toy and the arrow ended up aimed at the wall to its right. The wrapper has
+   * to stack for the hint to actually land underneath. */
+  .playable-wrap {
+    flex-direction: column;
+    align-items: center;
+  }
   .play-hint {
     position: static;
     inline-size: auto;
@@ -287,6 +295,10 @@
     margin-block-start: var(--s-3);
     margin-inline: auto;
   }
+  /* Under the toy now, so the arrow points UP at the tank rather than left.
+   * `scale(-1,-1)` is a 180-degree turn, which aims the tip up-and-right; the
+   * mirror reverses the sense of the rotation, so a positive angle leans the
+   * tip back toward the toy's centre above it. */
   .play-hint__arrow {
     align-self: center;
     transform: scale(-1, -1) rotate(20deg);
