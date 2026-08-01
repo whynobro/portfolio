@@ -184,6 +184,7 @@ scripts/make-bot-poster.mjs    draws the bot poster, EN + DE, from real source
 scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
 scripts/make-icons.mjs         favicon set + the link-preview card
 scripts/make-portfolio-pdf.mjs the wall exported as a PDF, for application forms
+scripts/make-cv-de.mjs         the German Lebenslauf (NOT a translation, see the file)
 docs/german.md                 German terminology, numbers, layout rules
 ```
 
@@ -256,6 +257,7 @@ node scripts/prep-images.mjs [name]   # whole manifest, or one entry
 node scripts/prep-frame.mjs           # rebuild the frame border-image
 node scripts/make-icons.mjs           # rebuild favicons + og.png
 node scripts/make-portfolio-pdf.mjs [--lang=de]  # portfolio as an uploadable PDF
+node scripts/make-cv-de.mjs           # the German CV
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
 node scripts/shoot-campus.mjs         # re-shoot campusnative.com
 ```
