@@ -71,7 +71,7 @@ export const de = {
 
   "proj.putter.title": "CNC-gefräster Putter aus Aluminium",
   "proj.putter.body":
-    "Ein Putterkopf aus 6061, gefräst auf einer 4-Achs-HAAS in einer einzigen Aufspannung, mit hinterlegtem Kostenmodell. Einer von acht Finalisten aus über vierzig.",
+    "Ein Putterkopf aus 6061, gefräst auf einer 3-Achs-HAAS in einer einzigen Aufspannung, mit hinterlegtem Kostenmodell. Einer von acht Finalisten aus über vierzig.",
   "proj.ramps.title": "Chameleon Ramps",
   "proj.ramps.body":
     "Ein 2019 gegründetes Unternehmen für Betongussprodukte: vierzig Konstruktionen von CAD über den Formenbau bis zum versandfertigen Produkt. Das Gießverfahren wurde selbst entwickelt.",
@@ -111,13 +111,13 @@ export const de = {
   "case.putter.lede":
     "Ein Putterkopf aus einem einzigen Block 6061, konstruiert für die Fertigung in einer einzigen Aufspannung.",
   "case.putter.role": "Konstruktion, CAM und Zerspanung",
-  "case.putter.tools": "Fusion 360 · 4-Achs-HAAS",
+  "case.putter.tools": "Fusion 360 · 3-Achs-HAAS",
   "case.putter.material": "Aluminium 6061",
   "case.putter.result": "15,78 $ pro Einheit",
   "case.putter.brief":
     "Ein einjähriges Abschlussprojekt: ein Produkt von der ersten Skizze bis zum fertigen Objekt, einschließlich der Kosten einer Serienfertigung.",
   "case.putter.approach1":
-    "Der Kopf wird auf einer 4-Achs-HAAS aus dem Vollen gefräst. Die einzige Aufspannung war die prägende Randbedingung: Jedes Merkmal muss ohne Umspannen erreichbar sein. Jedes Umspannen kostet einen Arbeitsgang und gefährdet den Bezugspunkt.",
+    "Der Kopf wird auf einer 3-Achs-HAAS aus dem Vollen gefräst. Die einzige Aufspannung war die prägende Randbedingung: Jedes Merkmal muss ohne Umspannen erreichbar sein. Jedes Umspannen kostet einen Arbeitsgang und gefährdet den Bezugspunkt.",
   "case.putter.approach2":
     "Die Schöpfgeometrie folgt derselben Überlegung. Sie macht den Putter zu einem eigenen Objekt statt zu einer Kopie, und sie musste mit den vorhandenen Werkzeugen zerspanbar sein, nicht nur darstellbar.",
   "case.putter.outcome":
@@ -217,7 +217,7 @@ export const de = {
   "putter.aria": "Der Putterkopf in drei Dimensionen. Zum Drehen ziehen oder die Pfeiltasten verwenden.",
   "cap.putter.stl": "Das Bauteil selbst, aus dem Modell des Abschlussprojekts. Zum Drehen ziehen.",
   "cap.putter.cam": "Die CAM-Simulation: jede Bahn, die die eine Aufspannung erreichen musste.",
-  "cap.putter.machining": "Während der Bearbeitung auf der 4-Achs-HAAS.",
+  "cap.putter.machining": "Während der Bearbeitung auf der 3-Achs-HAAS.",
   "cap.putter.loft": "Der Steigungswinkel von 3 Grad: Das Bauteil liegt auf einer 3D-gedruckten Unterlage statt in einer geneigten Vorrichtung.",
   "cap.putter.inuse": "Im Einsatz auf dem Westlake Golf Course.",
   "cap.putter.drawing": "Die Zeichnung, nach der gefertigt wurde.",

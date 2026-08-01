@@ -5,7 +5,8 @@ frame, serif captions. Targets the HWA AG opening **Praktikant im Bereich
 Gesamtfahrzeugentwicklung** (Affalterbach, start Feb/March 2027). Other versions
 fork from this one later; every content decision optimises for that reader.
 
-Live: <https://whynobro.github.io/portfolio/> · repo `whynobro/portfolio`
+Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
+(the github.io URL still redirects, but the custom domain is the one to quote)
 
 ## Invariants
 
@@ -179,7 +180,7 @@ Six works. Sources in `assets-src/<folder>/`.
 
 | Work | Folder | Notes |
 | --- | --- | --- |
-| CNC-milled putter | `putter/` | 11 converted photos, the Fusion CAM export, the STL behind the turning piece, and the capstone poster exported from `CapstonePoster_MichaelFischbach.pptx` (PowerPoint COM, 4x slide size, see the wave row for why posters are prepped at 2600px/q88). Capstone drawing still has a mint-green slide background baked in. **The poster says 3-axis HAAS; every label on the site says 4-axis. Unresolved, ask Michael.** |
+| CNC-milled putter | `putter/` | 11 converted photos, the Fusion CAM export, the STL behind the turning piece, and the capstone poster exported from `CapstonePoster_MichaelFischbach.pptx` (PowerPoint COM, 4x slide size, see the wave row for why posters are prepped at 2600px/q88). Capstone drawing still has a mint-green slide background baked in. The poster's 3-axis HAAS is correct (confirmed 2026-08-01); the site, the resume PDF and both dictionaries were corrected from 4-axis to match. |
 | Chameleon Ramps | `ramps/` | 11 product photos. `p4` (Beachside Bank on wet rock) and `p9` (quarter pipe against foliage) are the strongest. |
 | Wave energy converter | `wave/` | inside / base views, the cutaway, and the capstone poster rendered from `wec-report.pdf` at 200dpi. The poster hangs full width at the foot of the room and must stay readable, so it is the one image prepped at 2600px / q88. |
 | SMC execution system | `smc-bot/` | Poster DRAWN by `scripts/make-bot-poster.mjs` (SVG -> PNG, both languages, ~270 KB each as AVIF): the only poster on the site that is not a scan, so it is the only one that exists in German too, switched by a tab in the room. |
@@ -213,7 +214,7 @@ interleave in depth, so only a per-pixel test resolves them.
 Sources disagree; these are current. The resume is stale on several points.
 
 - Cal Poly SLO, Mechanical Engineering, Honors. GPA 3.78, Dean's List ×3.
-- CNC putter: 4-axis HAAS, 6061, $15.78 modelled unit cost vs $50–150 retail,
+- CNC putter: 3-axis HAAS, 6061, $15.78 modelled unit cost vs $50–150 retail,
   1 of 8 finalists from 40+, presented at Capstone Night to 200+ alumni and
   hundreds of students (Michael's figure, 2026-07-31; supersedes the earlier
   "300+").

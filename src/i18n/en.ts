@@ -62,7 +62,7 @@ export const en = {
 
   "proj.putter.title": "CNC-Milled Aluminium Putter",
   "proj.putter.body":
-    "A putter head machined from 6061 on a 4-axis HAAS in a single setup, with a cost model behind it. One of eight finalists from over forty.",
+    "A putter head machined from 6061 on a 3-axis HAAS in a single setup, with a cost model behind it. One of eight finalists from over forty.",
   "proj.ramps.title": "Chameleon Ramps",
   "proj.ramps.body":
     "A cast-concrete product company founded in 2019: forty designs taken from CAD through mould-making to a shipped product, with the casting process developed in-house.",
@@ -104,13 +104,13 @@ export const en = {
   "case.putter.lede":
     "A putter head cut from a single block of 6061, designed so the whole part comes off the machine in one setup.",
   "case.putter.role": "Design, CAM and machining",
-  "case.putter.tools": "Fusion 360 · 4-axis HAAS",
+  "case.putter.tools": "Fusion 360 · 3-axis HAAS",
   "case.putter.material": "Aluminium 6061",
   "case.putter.result": "$15.78 per unit",
   "case.putter.brief":
     "A year-long capstone: take a product from a first sketch to a finished object, and account for what it would cost to make more than one.",
   "case.putter.approach1":
-    "The head is milled from solid 6061 on a 4-axis HAAS. Designing for a single setup was the constraint that shaped the geometry: every feature has to be reachable without unclamping the part, because each re-fixture is another chance to lose the datum and another operation to pay for.",
+    "The head is milled from solid 6061 on a 3-axis HAAS. Designing for a single setup was the constraint that shaped the geometry: every feature has to be reachable without unclamping the part, because each re-fixture is another chance to lose the datum and another operation to pay for.",
   "case.putter.approach2":
     "The scooping face came out of the same thinking. It is the feature that makes the putter its own object rather than a copy, and it had to be cuttable with the tools available rather than only renderable.",
   "case.putter.outcome":
@@ -210,7 +210,7 @@ export const en = {
   "putter.aria": "The putter head in three dimensions. Drag, or use the arrow keys, to turn it.",
   "cap.putter.stl": "The part itself, from the capstone's own model. Drag to turn it.",
   "cap.putter.cam": "The CAM simulation: every toolpath the single fixture had to reach.",
-  "cap.putter.machining": "Mid-cut on the 4-axis HAAS.",
+  "cap.putter.machining": "Mid-cut on the 3-axis HAAS.",
   "cap.putter.loft": "Cutting the 3-degree loft angle: the part sits on a 3D-printed shim rather than in a tilted fixture.",
   "cap.putter.inuse": "In use at Westlake Golf Course.",
   "cap.putter.drawing": "The drawing the part was cut from.",
