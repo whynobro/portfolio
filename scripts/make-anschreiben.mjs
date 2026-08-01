@@ -42,11 +42,13 @@
  * text. A URL a reader has to retype is a URL that does not get visited, and
  * the closing paragraph alone is the one a busy reader skims.
  *
- * The enclosures line names the portfolio PDF and the transcript, so it must
- * match what is actually uploaded: `node scripts/make-portfolio-pdf.mjs
- * --lang=de` for the German packet, plus the Cal Poly transcript. An
- * enclosures line that promises a document the reader cannot find is worse
- * than no line at all.
+ * The portfolio is deliberately NOT an enclosure. It is the live site, and
+ * the point is that the reader visits it: the wall carries photographs, a
+ * rotating 3D part and two playable pieces, none of which survive being
+ * flattened into a PDF. So the enclosures line names only the documents that
+ * genuinely travel with the application (CV, transcript), and the portfolio is
+ * named twice in the body as a link instead. An enclosures line that promises
+ * a document the reader cannot find is worse than no line at all.
  */
 import { chromium } from "playwright";
 
@@ -122,15 +124,15 @@ const DE = `
   Vor einem Umzug ist mir nicht bange. Ich bin in einer Familie der US-Luftwaffe aufgewachsen und neunmal
   über sieben Bundesstaaten umgezogen; ein neues Land und ein neues Team sind für mich vertrautes
   Gelände. Deutsch lerne ich derzeit und werde bis Februar deutlich weiter sein. Als US-Staatsbürger
-  kann ich einen studienbezogenen Aufenthaltstitel erhalten. Das Portfolio liegt diesem Schreiben als
-  PDF bei; unter <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a> lassen sich
-  zwei der Arbeiten direkt im Browser bedienen. Über ein Gespräch würde ich mich freuen.
+  kann ich einen studienbezogenen Aufenthaltstitel erhalten. Meine Arbeiten sind unter
+  <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a> zu sehen, zwei davon lassen
+  sich direkt im Browser bedienen. Über ein Gespräch würde ich mich freuen.
 </p>
 
 <p class="close">Mit freundlichen Grüßen</p>
 <p class="sig">Michael Fischbach</p>
 
-<p class="enc">Anlagen: Lebenslauf, Portfolio, Notenübersicht (Cal Poly)</p>`;
+<p class="enc">Anlagen: Lebenslauf, Notenübersicht (Cal Poly)</p>`;
 
 /* The same letter, sentence for sentence, so the pair reads as one document in
  * two languages rather than as two different applications. Only what must
@@ -199,15 +201,15 @@ const EN = `
   Moving does not worry me. I grew up in an Air Force family and have moved nine times across seven
   states, so a new country and a new team is familiar ground rather than a leap. I am learning German
   now and will be a good deal further along by February. As a US citizen I can hold a study-related
-  residence permit. The portfolio is enclosed as a PDF, and at
-  <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a> two of the pieces you can
+  residence permit. My work is at
+  <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a>, and two pieces of it you can
   actually play in the browser. I would be glad to talk.
 </p>
 
 <p class="close">Yours sincerely</p>
 <p class="sig">Michael Fischbach</p>
 
-<p class="enc">Enclosures: CV, portfolio, Cal Poly transcript</p>`;
+<p class="enc">Enclosures: CV, Cal Poly transcript</p>`;
 
 const BODY = LANG === "en" ? EN : DE;
 
