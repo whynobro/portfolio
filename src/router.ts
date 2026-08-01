@@ -8,6 +8,8 @@
  * attachment.
  */
 
+import { celebrateIfComplete } from "./progress";
+
 export type Route = { id: string; title: string };
 
 const ROUTES: Record<string, Route> = {
@@ -97,6 +99,11 @@ function show(route: Route, opts: { focus: boolean }): void {
    * it sits rather than by scrolling past the heading to reach it.
    */
   if (route.id === "view-home" && path.startsWith("/work")) {
+    // Landing on the wall is where a completed collection is celebrated: the
+    // last room is opened inside that room, so the burst belongs here, on the
+    // page the visitor comes back to.
+    celebrateIfComplete();
+
     const section = document.getElementById("work");
     const clicked = lastSlug
       ? document.querySelector<HTMLElement>(`a[href="#/work/${lastSlug}"]`)

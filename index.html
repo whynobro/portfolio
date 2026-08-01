@@ -251,6 +251,17 @@
               Design, analysis and fabrication: each piece shown with what it
               was built to do and what it measured.
             </p>
+            <!-- How much of the wall has been walked. Filled by src/progress.ts
+                 as each room is opened, and hidden from assistive tech: the bar
+                 is a picture of the count beside it, so announcing it as a
+                 progressbar on every navigation would be noise. The label is
+                 written by JS, so the no-JS document simply omits it. -->
+            <div class="progress" id="work-progress" aria-hidden="true">
+              <span class="progress__label"></span>
+              <span class="progress__track">
+                <span class="progress__fill"></span>
+              </span>
+            </div>
           </div>
 
           <div class="works">

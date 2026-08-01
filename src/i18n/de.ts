@@ -66,6 +66,8 @@ export const de = {
   "work.title": "Arbeiten im Maschinenbau",
   "work.lede":
     "Konstruktion, Berechnung und Fertigung: jede Arbeit mit ihrer Aufgabe und ihrem Messergebnis.",
+  "work.progress": "{n} von {total} angesehen",
+  "work.progressDone": "Abgeschlossen · alle {total} angesehen",
 
   "proj.putter.title": "CNC-gefräster Putter aus Aluminium",
   "proj.putter.body":

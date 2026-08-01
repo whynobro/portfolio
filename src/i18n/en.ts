@@ -56,6 +56,9 @@ export const en = {
   "work.title": "Works in Mechanical Engineering",
   "work.lede":
     "Design, analysis and fabrication: each piece shown with what it was built to do and what it measured.",
+  // {n} and {total} are substituted in src/progress.ts.
+  "work.progress": "{n} of {total} viewed",
+  "work.progressDone": "Completed · all {total} viewed",
 
   "proj.putter.title": "CNC-Milled Aluminium Putter",
   "proj.putter.body":

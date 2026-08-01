@@ -95,6 +95,76 @@
   --flow: var(--s-4);
 }
 
+/* ---- Collection progress ------------------------------------------------- */
+/*
+ * How much of the wall has been walked, under the collection's lede.
+ *
+ * Deliberately quiet: a hairline track in the wall's own rule colour, filling
+ * in the accent, with the count set in the mono face the other measured figures
+ * use. It is a note in the margin, not a game mechanic, so it carries no
+ * percentage and no animation beyond the fill itself.
+ */
+.progress {
+  margin-block-start: var(--s-8);
+  margin-inline: auto;
+  inline-size: min(22rem, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s-2);
+}
+.progress__label {
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.progress__track {
+  inline-size: 100%;
+  block-size: 2px;
+  background: var(--wall-line);
+  overflow: hidden;
+}
+.progress__fill {
+  display: block;
+  block-size: 100%;
+  inline-size: 0;
+  background: var(--gilt);
+  transition: inline-size var(--dur) var(--ease);
+}
+/*
+ * A finished wall reads as finished by going FULL STRENGTH rather than by
+ * changing hue. `--measured` was tried here and reverted: the oxblood marks a
+ * measured result and nothing else, and spending it on a browsing counter is
+ * exactly the dilution the invariant exists to prevent.
+ */
+.progress[data-complete="1"] .progress__track {
+  background: var(--gilt-hi);
+}
+
+/*
+ * The completion burst. Absolutely positioned over the collection's heading and
+ * `pointer-events: none`, so it cannot take a click or shift a single pixel of
+ * layout; the canvas removes itself when the run ends.
+ */
+.intro {
+  position: relative;
+}
+.progress__confetti {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress__fill {
+    transition: none;
+  }
+}
+
 /*
  * The three photographs under the profile text.
  *

@@ -1,6 +1,7 @@
 import { getLang, t } from "./i18n";
 import type { TranslationKey } from "./i18n/en";
 import { registerProjectRenderer, registerProjectRoutes } from "./router";
+import { initProgress, markSeen } from "./progress";
 
 /**
  * The project rooms, reached by clicking a work on the wall.
@@ -478,6 +479,11 @@ function render(slug: string): void {
   const project = bySlug.get(slug);
   if (!host || !project) return;
 
+  // Counted once the slug has RESOLVED to a real work: the renderer also runs
+  // for an unknown slug, which falls through to the collection and must not
+  // count as a room visited.
+  markSeen(slug);
+
   // A room that IS a brand is tinted to that brand's palette; every other room
   // clears the attribute so a stale tint cannot survive navigation.
   if (project.brand) host.dataset["brand"] = project.brand;
@@ -697,6 +703,7 @@ export function initProjects(): void {
     return project ? t(project.titleKey) : undefined;
   });
   registerProjectRenderer(render);
+  initProgress(PROJECTS.map((p) => p.slug));
 
   // Re-render on a language change, the way the awards room does: the room is
   // built from strings, so applyLang's DOM sweep would not otherwise reach it.
