@@ -223,7 +223,8 @@ export const en = {
     "The full range of cast-concrete obstacles laid out together: ledges, banks, quarter pipes and blocks",
   "cap.ramps.range": "The range in one frame: forty designs, all cast in-house.",
   "alt.ramps.chameleon": "A chameleon resting on one of the concrete ramps, with a fingerboard for scale",
-  "cap.ramps.chameleon": "The company's namesake, and a fingerboard for scale.",
+  // Straight quotes, matching the apostrophes used throughout this dictionary.
+  "cap.ramps.chameleon": 'The company\'s namesake, "Lucky", and a fingerboard for scale.',
 
   "alt.wave.hero": "The wave energy converter's internal mechanism",
   "cap.wave.inside": "The built prototype: the rack and its housing.",

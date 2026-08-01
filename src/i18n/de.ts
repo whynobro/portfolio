@@ -231,7 +231,9 @@ export const de = {
     "Die gesamte Produktreihe aus Gussbeton nebeneinander: Ledges, Banks, Quarterpipes und Blöcke",
   "cap.ramps.range": "Die Produktreihe in einem Bild: vierzig Konstruktionen, alle im eigenen Haus gegossen.",
   "alt.ramps.chameleon": "Ein Chamäleon auf einer der Betonrampen, daneben ein Fingerboard als Größenvergleich",
-  "cap.ramps.chameleon": "Der Namensgeber des Unternehmens, mit einem Fingerboard als Größenvergleich.",
+  // German quotation marks are low-high („…“), not the English pair.
+  "cap.ramps.chameleon":
+    "Der Namensgeber des Unternehmens, „Lucky“, mit einem Fingerboard als Größenvergleich.",
 
   "alt.wave.hero": "Der innere Mechanismus des Wellenenergie-Wandlers",
   "cap.wave.inside": "Der gebaute Prototyp: die Zahnstange und ihr Gehäuse.",
