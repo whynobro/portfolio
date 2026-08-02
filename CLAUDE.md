@@ -61,13 +61,23 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   `.masthead__inner` AND `.masthead__nav` wrap, so German takes a second line
   instead of losing its navigation. Never fix an overflow by removing a route.
 - **The resume button follows the site's language.** English serves
-  `src/assets/docs/resume.pdf` (the American resume); German serves
-  `resume-de.pdf`, the Lebenslauf built by `scripts/make-cv-de.mjs`. These are
-  two documents in different genres, not one translated, so a German reader must
-  never be handed the English one. `src/resume.ts` sets both the `href` and the
-  `download` filename, and re-points them on `i18n:change`. **`resume-de.pdf` is
-  a committed copy**: regenerating the Lebenslauf does NOT update the site until
+  `src/assets/docs/resume.pdf`; German serves `resume-de.pdf`, the Lebenslauf
+  built by `scripts/make-cv-de.mjs`. These are two documents in different
+  genres, not one translated, so a German reader must never be handed the
+  English one. `src/resume.ts` sets both the `href` and the `download`
+  filename, and re-points them on `i18n:change`. **`resume-de.pdf` is a
+  committed copy**: regenerating the Lebenslauf does NOT update the site until
   the new PDF is copied over it.
+- **`resume.pdf` is the HWA application resume, not a general one.** It names
+  the Praktikum im Bereich Gesamtfahrzeugentwicklung, Affalterbach and
+  Feb/March 2027, and states eligibility to intern in Germany. That is correct
+  for this site, which exists for that application. There is a THIRD document,
+  `scripts/make-cv-en.mjs`, which renders the same corrected facts with no
+  employer named and no visa line, for applications that are not HWA. It is
+  deliberately **not** wired into the site and its output is gitignored;
+  handing this portfolio's reader a generic resume would be a downgrade. Do not
+  "unify" the two: dropping the HWA framing from `resume.pdf` would silently
+  weaken the application the whole site is built around.
 
 ## The frame
 
@@ -194,6 +204,7 @@ scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
 scripts/make-icons.mjs         favicon set + the link-preview card
 scripts/make-portfolio-pdf.mjs the wall exported as a PDF, for application forms
 scripts/make-cv-de.mjs         the German Lebenslauf (NOT a translation, see the file)
+scripts/make-cv-en.mjs         the general US resume (NOT served by the site, see below)
 docs/german.md                 German terminology, numbers, layout rules
 ```
 
@@ -267,6 +278,7 @@ node scripts/prep-frame.mjs           # rebuild the frame border-image
 node scripts/make-icons.mjs           # rebuild favicons + og.png
 node scripts/make-portfolio-pdf.mjs [--lang=de]  # portfolio as an uploadable PDF
 node scripts/make-cv-de.mjs           # the German CV
+node scripts/make-cv-en.mjs           # the general US resume (not served by the site)
 node scripts/make-anschreiben.mjs [--lang=en]   # the cover letter, DE or EN
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
 node scripts/shoot-campus.mjs         # re-shoot campusnative.com
