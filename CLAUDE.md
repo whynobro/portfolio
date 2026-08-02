@@ -82,6 +82,13 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   template so the figures cannot drift apart. Both are gitignored build outputs
   and neither is wired into the site; handing this portfolio's reader a generic
   resume would be a downgrade.
+- **A resume targeted at one posting is SELECTED, not assembled.**
+  `docs/resume-inventory.md` is the superset of everything that could go on a
+  resume: every project with more bullets than any one document should use,
+  every award, every framing of the identity line. Read it before drafting a
+  targeted resume, pick against the posting, and leave the rest out. Pasting
+  the whole inventory in produces a resume that argues nothing. It is also the
+  authority on figures: it carries the table of what older PDFs got wrong.
 - **A resume is never made to fit by shrinking the type.** An earlier pass here
   invented its own layout and drove the body to 8.1pt to force one page, which
   produced something nobody would read. All three English documents run at 10pt
@@ -216,6 +223,7 @@ scripts/make-portfolio-pdf.mjs the wall exported as a PDF, for application forms
 scripts/make-cv-de.mjs         the German Lebenslauf (NOT a translation, see the file)
 scripts/make-cv-en.mjs         the two general resumes, US + abroad (NOT served by the site)
 docs/german.md                 German terminology, numbers, layout rules
+docs/resume-inventory.md       every resume-able fact; SELECT from it, never paste it all
 ```
 
 **HEIC:** sharp's libheif rejects Michael's photos (Live Photos carry 45 refs,
