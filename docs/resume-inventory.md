@@ -288,10 +288,25 @@ Situational additions, only when true for the target and evidenced:
 - 3+ year engagement with an aerospace engineering firm: website management,
   SEO strategy, and digital communications
 
+> **Keep this for anything aerospace or defence.** The function is marketing,
+> but "three years working with an aerospace engineering firm" is a door-opener
+> for that industry and gives an interviewer something to ask about. It is the
+> first cut for a pure mechanical-design posting, and only then.
+
 **Business Partner, Ashersells LLC** · Malibu, CA · May 2023 – Jul 2024
 
 - Helped scale operations to **$500,000+ annual revenue**; built Python
   automation for logistics and order processing `[M]`
+
+> **The Python automation is the reason to keep this**, not the revenue. The
+> $500,000 is the company's, not something Michael engineered, and a sharp
+> reader will ask which part was his. Lead the bullet with the automation for
+> software or operations postings. Cut for pure mechanical design.
+>
+> **Both ADI and Ashersells are cut from the current one-pager.** That was a
+> call made for a mechanical-design target, where they lose to a $15.78 unit
+> cost and 1553 tests. It is NOT a permanent judgement: for an aerospace,
+> software or operations posting, put them back.
 
 **Founder, Chameleon Ramps** · 2019 – Present
 
@@ -302,22 +317,38 @@ Situational additions, only when true for the target and evidenced:
 
 ## 7. Awards & honours
 
-| Award | Issuer | Date | Figure |
-| --- | --- | --- | --- |
-| Cal Poly Honors Program | Cal Poly SLO | 2026 | selective, research-focused |
-| President's Honors List | Cal Poly SLO | 2026 | Dean's List ×3 in one year |
-| Dean's List | Cal Poly SLO | 2025–26 | 3 × 3.50+ GPA `[M]` |
-| 1st Place, Noodle Bridge Design | Cal Poly SLO | Nov 2025 | won by **38.5%** `[M]` |
-| Capstone Finalist (putter) | Oaks Christian | 2025 | **1 of 8** from 40+ `[M]` |
-| 1st Place, Wave Energy Converter | Oaks Christian | 2023 | highest output of 3 teams `[M]` |
-| Eagle Scout | Boy Scouts of America | 2025 | Senior Patrol Leader 2 yrs |
-| Institute of Engineering | Oaks Christian | 2025 | project-based eng. curriculum |
-| Dean's List | Oaks Christian | 2022 | both semesters, 4 years running |
-| Malibu Optimist Club Winner | Our Lady of Malibu | 2020 | (no figure) |
+**Ranked by how hard they are to dismiss**, which is not the order they appear
+on LinkedIn. Take from the top; stop when the space runs out.
 
-Noodle bridge long form, when the space is worth it: built the longest
-structurally sound bridge from 20 noodles and 3' of tape, using load-dispersion
-that traded a noodle's compressive strength against its shear resistance.
+| # | Award | Issuer | Date | Why it ranks there |
+| --- | --- | --- | --- | --- |
+| 1 | Capstone Finalist (putter) | Oaks Christian | 2025 | **1 of 8 from 40+** `[M]`. Judged, competitive, and the work is engineering. The strongest thing here. |
+| 2 | 1st Place, Wave Energy Converter | Oaks Christian | 2023 | **1st of 3 teams, highest measured output** `[M]`. A win with a number behind it. |
+| 3 | President's Honors List | Cal Poly SLO | 2026 | Requires **Dean's List three consecutive quarters** `[M]`. Rarer than Dean's List and it supersedes it: never list both. |
+| 4 | Cal Poly Honors Program | Cal Poly SLO | 2026 | Selective admission to a research-track program. |
+| 5 | 1st Place, Noodle Bridge Design | Cal Poly SLO | Nov 2025 | Won by **38.5%** `[M]`, and the reasoning is real. But see the caveat below. |
+| 6 | Eagle Scout | Boy Scouts of America | 2025 | ~6% of scouts. Character rather than engineering, universally recognised, cheap in space. |
+| 7 | Dean's List | Cal Poly SLO | 2025–26 | 3 × 3.50+ GPA `[M]`. Use ONLY if President's List is not stated. |
+| — | Institute of Engineering | Oaks Christian | 2025 | A curriculum, not an award. Belongs under education if anywhere. |
+| — | Dean's List | Oaks Christian | 2022 | High school. Drop. |
+| — | Malibu Optimist Club Winner | Our Lady of Malibu | 2020 | Middle school. Drop. |
+
+**The noodle bridge caveat.** It is the most *quotable* award (a 38.5% margin
+is concrete) but not the most *impressive* one, and the two get confused. It is
+a first-year class competition using pool noodles, and an experienced reader
+sees coursework. The putter capstone makes the same kind of claim, competitive
+selection judged by outsiders, with far more weight. **Lead with the capstone
+finalist; the bridge is a good fifth item, not a good first.**
+
+Where it earns its place: an interview hook, or a posting that explicitly wants
+structural or load analysis. Long form, when the space is worth it: built the
+longest structurally sound bridge from 20 noodles and 3' of tape, using
+load-dispersion that traded a noodle's compressive strength against its shear
+resistance.
+
+**Never list Dean's List and President's Honors List together.** The second is
+awarded *for* earning the first three times, so listing both reads as padding
+one achievement into two lines.
 
 ---
 

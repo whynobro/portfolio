@@ -111,8 +111,11 @@ const html = `<!doctype html><meta charset="utf-8">
     <span class="role">California Polytechnic State University, San Luis Obispo</span>
     <span class="when">Sep 2025 – Jun 2029</span>
   </div>
-  <p class="org">B.S. Mechanical Engineering, Honors Program | GPA: 3.78 | Dean's List: Fall, Winter, Spring<br>
-  Coursework built multi-component mechanisms (piston, Geneva wheel, CNC-machined screwdriver) with full tolerance stack-up analysis and GD&amp;T</p>
+  <!-- The coursework line (piston, Geneva wheel, CNC-machined screwdriver with
+       tolerance stack-up and GD&T) is deliberately absent: the projects below
+       evidence machining and GD&T far more strongly than a course list, and it
+       was costing the line the awards block needed. -->
+  <p class="org">B.S. Mechanical Engineering, Honors Program | GPA: 3.78</p>
 </div>
 
 <h2>EXPERIENCE</h2>
@@ -127,7 +130,7 @@ const html = `<!doctype html><meta charset="utf-8">
 <div class="entry">
   <div class="row"><span class="role">CEO &amp; Founder</span><span class="when">Jun 2026 – Present</span></div>
   <p class="org">Campus Native<span class="right">San Luis Obispo, CA</span></p>
-  <ul><li>Founded and operate a digital marketplace; lead a 4-person team across engineering, marketing, and content</li></ul>
+  <ul><li>Founded and operate a digital marketplace; lead a 4-person team across engineering and marketing</li></ul>
 </div>
 <!-- ADI and Ashersells are deliberately absent here; see the header comment.
      Campus Native survives on one line because "founded a company and leads a
@@ -154,7 +157,7 @@ const html = `<!doctype html><meta charset="utf-8">
   <p class="org">Bridgeport Mill, Fusion 360, Fluid Dynamics</p>
   <ul>
     <li>Designed and machined a wave-oscillation-to-power generator with a five-person team; all components manufactured to tolerance in-house</li>
-    <li><b>1st place</b>, highest measured output of three teams: 15 V per motor at 1:12 scale, 360 V scaled</li>
+    <li><b>1st of three teams</b> on measured output: 15 V per motor at 1:12 scale, 360 V scaled</li>
   </ul>
 </div>
 <div class="entry">
@@ -177,8 +180,9 @@ const html = `<!doctype html><meta charset="utf-8">
 
 <h2>AWARDS</h2>
 <ul class="awards">
-  <li><b>1st Place, Noodle Bridge Design</b> – Cal Poly, 2025; won by a <b>38.5% margin</b></li>
-  <li><b>Cal Poly Honors Program</b>; <b>Dean's List all three quarters</b> &nbsp;·&nbsp; <b>Eagle Scout</b>, 2025</li>
+  <li><b>Capstone Finalist</b> – 1 of 8 from 40+ students, 2025 &nbsp;·&nbsp; <b>1st Place, Wave Energy Converter</b>, 2023</li>
+  <li><b>President's Honors List</b> – Cal Poly, 2026; Dean's List three consecutive quarters &nbsp;·&nbsp; <b>Cal Poly Honors Program</b></li>
+  <li><b>1st Place, Noodle Bridge Design</b> – won by a <b>38.5% margin</b>, 2025 &nbsp;·&nbsp; <b>Eagle Scout</b>, 2025</li>
 </ul>`;
 
 const browser = await chromium.launch();
