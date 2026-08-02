@@ -71,13 +71,23 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
 - **`resume.pdf` is the HWA application resume, not a general one.** It names
   the Praktikum im Bereich Gesamtfahrzeugentwicklung, Affalterbach and
   Feb/March 2027, and states eligibility to intern in Germany. That is correct
-  for this site, which exists for that application. There is a THIRD document,
-  `scripts/make-cv-en.mjs`, which renders the same corrected facts with no
-  employer named and no visa line, for applications that are not HWA. It is
-  deliberately **not** wired into the site and its output is gitignored;
-  handing this portfolio's reader a generic resume would be a downgrade. Do not
-  "unify" the two: dropping the HWA framing from `resume.pdf` would silently
-  weaken the application the whole site is built around.
+  for this site, which exists for that application. Do not strip the HWA
+  framing from it: that would silently weaken the application the whole site is
+  built around.
+- **`scripts/make-cv-en.mjs` renders the two GENERAL resumes**, neither of
+  which names an employer: `Michael-Fischbach-Resume.pdf` (US) and
+  `-Abroad.pdf` (international, adding a citizenship and visa-eligibility line
+  and an "international" objective). They differ in **exactly two strings**,
+  the objective and the eligibility line, and share everything else from one
+  template so the figures cannot drift apart. Both are gitignored build outputs
+  and neither is wired into the site; handing this portfolio's reader a generic
+  resume would be a downgrade.
+- **A resume is never made to fit by shrinking the type.** An earlier pass here
+  invented its own layout and drove the body to 8.1pt to force one page, which
+  produced something nobody would read. All three English documents run at 10pt
+  in the same layout (centred name, ruled section headings, entries indented
+  from the rule with the date flush right) and take two pages. Two readable
+  pages beat one dense one; cut content if it must be shorter.
 
 ## The frame
 
@@ -204,7 +214,7 @@ scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
 scripts/make-icons.mjs         favicon set + the link-preview card
 scripts/make-portfolio-pdf.mjs the wall exported as a PDF, for application forms
 scripts/make-cv-de.mjs         the German Lebenslauf (NOT a translation, see the file)
-scripts/make-cv-en.mjs         the general US resume (NOT served by the site, see below)
+scripts/make-cv-en.mjs         the two general resumes, US + abroad (NOT served by the site)
 docs/german.md                 German terminology, numbers, layout rules
 ```
 
@@ -278,7 +288,7 @@ node scripts/prep-frame.mjs           # rebuild the frame border-image
 node scripts/make-icons.mjs           # rebuild favicons + og.png
 node scripts/make-portfolio-pdf.mjs [--lang=de]  # portfolio as an uploadable PDF
 node scripts/make-cv-de.mjs           # the German CV
-node scripts/make-cv-en.mjs           # the general US resume (not served by the site)
+node scripts/make-cv-en.mjs [--only=us|intl]  # the general resumes, US + abroad
 node scripts/make-anschreiben.mjs [--lang=en]   # the cover letter, DE or EN
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
 node scripts/shoot-campus.mjs         # re-shoot campusnative.com
