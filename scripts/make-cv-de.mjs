@@ -45,7 +45,9 @@ const html = `<!doctype html><meta charset="utf-8">
   }
   h1 { font-size: 21pt; margin: 0 0 1mm; font-weight: 700; letter-spacing: .01em }
   .contact { font-size: 8.6pt; color: #333; margin: 0 0 5mm; line-height: 1.5 }
-  .contact a { color: #1a1a1a; text-decoration: none }
+  /* Blau und unterstrichen: ein PDF hat keinen Hover-Hinweis, ein ungestylter
+   * Link ist als Link unsichtbar. #0563c1 ist die Hyperlink-Farbe von Word. */
+  .contact a { color: #0563c1; text-decoration: underline }
   h2 {
     font-size: 9pt; text-transform: uppercase; letter-spacing: .1em;
     border-bottom: 1.1px solid #1a1a1a; padding-bottom: 1.1mm;

@@ -89,12 +89,17 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   a checkable number. Both it and the two-page versions fit their page with
   under 5px to spare, so **any content added to either will overflow**: measure
   after editing, and cut something rather than shrinking the type.
-- **Contact links are real PDF anchors.** Email, LinkedIn and the portfolio URL
-  are `<a>` elements, so Chromium writes `/Annots` link objects a reader can
-  click. LinkedIn shows as the word "LinkedIn" rather than the raw URL; the
-  portfolio keeps its URL visible because it is short and is the thing being
-  advertised. They are styled `color: inherit` because blue underlines on a
-  resume read as a web page.
+- **Contact links are real PDF anchors, and LinkedIn + the portfolio are
+  visibly blue.** They are `<a>` elements, so Chromium writes `/Annots` link
+  objects a reader can click, and both carry `class="link"` for `#0563c1`
+  underlined (Word's hyperlink colour). This is deliberate and was asked for
+  twice: a PDF gives no hover cue and no cursor change, so an unstyled link is
+  invisible as a link, and "LinkedIn" in body colour reads as just a word. The
+  portfolio link only pays off if a recruiter clicks it. **The email stays in
+  body colour** — it is already recognisable as an address, and a third blue
+  run turns the centred header into a link bar. LinkedIn shows as the word
+  "LinkedIn"; the portfolio keeps its URL visible because it is short and is
+  the thing being advertised.
 - **A resume targeted at one posting is SELECTED, not assembled.**
   `docs/resume-inventory.md` is the superset of everything that could go on a
   resume: every project with more bullets than any one document should use,

@@ -67,7 +67,11 @@ const html = `<!doctype html><meta charset="utf-8">
   }
   h1 { font-size: 19pt; margin: 0 0 1.6mm; font-weight: 700; text-align: center }
   .contact { font-size: 8.8pt; text-align: center; margin: 0 0 3mm; line-height: 1.45 }
+  /* Blue and underlined on purpose: a PDF has no hover cue, so an unstyled
+   * link is invisible as a link. #0563c1 is Word's hyperlink colour. The email
+   * stays in body colour; see the note in make-cv-en.mjs. */
   .contact a { color: inherit; text-decoration: none }
+  .contact a.link { color: #0563c1; text-decoration: underline }
   h2 {
     font-size: 10.2pt; font-weight: 700; margin: 3mm 0 1.3mm;
     border-bottom: 1.2px solid #000; padding-bottom: .8mm;
@@ -89,8 +93,8 @@ const html = `<!doctype html><meta charset="utf-8">
 <h1>Michael Fischbach</h1>
 <p class="contact">
   805-703-8250 | <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
-  <a href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
-  <a href="https://michaelfischbach.dev">michaelfischbach.dev</a><br>${eligibility}
+  <a class="link" href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
+  <a class="link" href="https://michaelfischbach.dev">michaelfischbach.dev</a><br>${eligibility}
 </p>
 
 <h2>OBJECTIVE</h2>

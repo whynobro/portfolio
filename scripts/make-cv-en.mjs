@@ -106,10 +106,22 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
   }
   .contact { font-size: 9pt; text-align: center; margin: 0 0 4mm; line-height: 1.45 }
   /* Real anchors, so Chromium writes /Annots link objects into the PDF and the
-   * reader can click them. Left in the body colour rather than browser blue:
-   * a resume that renders blue underlines looks like a web page. The URL text
-   * itself is the affordance for anyone reading it on paper. */
+   * reader can click them.
+   *
+   * LinkedIn and the portfolio are blue and underlined ON PURPOSE. A PDF gives
+   * no hover cue and no cursor change, so an unstyled link is invisible as a
+   * link: "LinkedIn" in body colour just reads as the word LinkedIn. The whole
+   * value of the portfolio link is that a recruiter clicks it, and being
+   * obviously clickable is worth more than looking print-native.
+   *
+   * #0563c1 rather than pure blue: it is Word's hyperlink colour, so the
+   * document reads as an ordinary resume rather than a web page, and it still
+   * has enough contrast on white to survive a greyscale print.
+   *
+   * The email stays in body colour. It is already recognisable as an address,
+   * and a third blue run in one centred line turns the header into a link bar. */
   .contact a { color: inherit; text-decoration: none }
+  .contact a.link { color: #0563c1; text-decoration: underline }
   h2 {
     font-size: 11pt; font-weight: 700; margin: 4mm 0 1.6mm;
     border-bottom: 1.2px solid #000; padding-bottom: 1mm;
@@ -133,8 +145,8 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <h1>Michael Fischbach</h1>
 <p class="contact">
   805-703-8250 | <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
-  <a href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
-  <a href="https://michaelfischbach.dev">michaelfischbach.dev</a><br>${v.eligibility}
+  <a class="link" href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
+  <a class="link" href="https://michaelfischbach.dev">michaelfischbach.dev</a><br>${v.eligibility}
 </p>
 
 <h2>OBJECTIVE</h2>
