@@ -72,7 +72,7 @@ const html = `<!doctype html><meta charset="utf-8">
 <p class="contact">
   Malibu, Kalifornien, USA · +1 805 703 8250 · mef126906@icloud.com<br>
   <a href="https://michaelfischbach.dev">michaelfischbach.dev</a> ·
-  <a href="https://www.linkedin.com/in/michael-fischbach/">linkedin.com/in/michael-fischbach</a><br>
+  <a href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a><br>
   US-Staatsbürger · Aufenthaltstitel für ein studienbezogenes Praktikum in Deutschland möglich
 </p>
 

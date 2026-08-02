@@ -23,8 +23,15 @@ the two current variants. This file holds the *content pool*.
    lists more bullets than any one resume should use.
 5. **Cut skills** in §5 to what the posting names plus what the chosen projects
    evidence. An unevidenced skill line is noise.
-6. **Two pages at 10pt is the floor for readability.** Never shrink type to
-   fit; cut content instead. (This mistake has been made once already.)
+6. **Never shrink type to fit; cut content instead.** 10pt on the two-page
+   documents, 9.6pt on the one-pager, and that is the floor. (This mistake has
+   been made once already.)
+
+**The one-pager already exists** (`scripts/make-cv-onepage.mjs`) and is the
+default send. It keeps only work carrying a checkable number: the putter,
+the wave converter, Chameleon Ramps and the execution system, with Ramps moved
+up into EXPERIENCE. If a posting wants a different four, start from that script
+rather than the two-page one.
 
 ### Selection cheatsheet
 
@@ -133,12 +140,11 @@ machining, production or hardware.
 - Machined in **a single fixture**, which is what forced the geometry decisions
 - Performed DFM and cost analysis: modelled warehouse-scale unit cost at
   **$15.78** vs. $50–150 retail `[M]`
-- Average **533% cost reduction** against leading putter brands `[M]`
-  > Use with care. A "533% reduction" is not a reduction, $15.78 against $100
-  > is an **84% reduction**, or ~6.3× cheaper. The 533% is the *markup* running
-  > the other way. It appears on the HWA resume as-is; an engineer reading
-  > carefully will notice. Prefer "$15.78 vs $50–150 retail", which is the same
-  > claim and is unimpeachable, or say "roughly 6× cheaper".
+  > State the two numbers, never a percentage. The retired "533% cost
+  > reduction" was arithmetically wrong: $15.78 against $100 is an 84%
+  > reduction, and 533% is the markup running the other way. A reduction cannot
+  > exceed 100%, which is exactly the kind of thing an engineer reading a
+  > resume notices. "Roughly 6× cheaper" is the safe multiplier phrasing.
 - Selected **1 of 8 finalists from 40+ students**; presented the build and
   process at Capstone Night to 200+ alumni and industry professionals and
   several hundred students `[M]`
@@ -307,7 +313,7 @@ Situational additions, only when true for the target and evidenced:
 | Eagle Scout | Boy Scouts of America | 2025 | Senior Patrol Leader 2 yrs |
 | Institute of Engineering | Oaks Christian | 2025 | project-based eng. curriculum |
 | Dean's List | Oaks Christian | 2022 | both semesters, 4 years running |
-| Malibu Optimist Club Winner | Our Lady of Malibu | 2020 |, |
+| Malibu Optimist Club Winner | Our Lady of Malibu | 2020 | (no figure) |
 
 Noodle bridge long form, when the space is worth it: built the longest
 structurally sound bridge from 20 noodles and 3' of tape, using load-dispersion
@@ -343,7 +349,7 @@ column.** If a draft disagrees with this table, the draft is wrong.
 | Execution system tests | 190 tests | **1553 tests passing** |
 | Execution system status | paper trading | **options live, futures in demo** |
 | Capstone Night audience | 300+ / 250 | **200+ alumni and industry professionals, several hundred students** |
-| Cost reduction | *(sometimes absent)* | **533%**, $15.78 vs $50–150 |
+| Putter cost saving | "533% cost reduction" | **$15.78 vs $50–150 retail** (a reduction cannot exceed 100%; retired 2026-08-02) |
 
 **Do not publish**: any account state from the execution system (P&L, balances,
 win rates, account ID), and never present its backtest figure as realised

@@ -1,25 +1,27 @@
 /**
- * Renders the two English resumes.
+ * Renders the three English resumes.
  *
- *   node scripts/make-cv-en.mjs              both
+ *   node scripts/make-cv-en.mjs              all three
  *   node scripts/make-cv-en.mjs --only=us    just the domestic one
  *   node scripts/make-cv-en.mjs --only=intl  just the abroad one
+ *   node scripts/make-cv-en.mjs --only=hwa   just the HWA one
  *
  * Writes to the repo root (gitignored: build outputs, not sources):
  *
  *   Michael-Fischbach-Resume.pdf           US applications
  *   Michael-Fischbach-Resume-Abroad.pdf    internships outside the US
+ *   Michael-Fischbach-Resume-HWA.pdf       the HWA AG application
  *
- * The two differ in exactly two places, the objective and the work-eligibility
- * line, and are otherwise the same document. Everything else is shared so the
- * figures cannot drift apart between them.
+ * All three differ in exactly two places, the objective and the
+ * work-eligibility line, and are otherwise the same document. Everything else
+ * is shared so the figures cannot drift apart between them, which is the whole
+ * point of generating rather than hand-editing three PDFs.
  *
- * NEITHER names an employer. The abroad version used to be an HWA-specific
- * document (it named the Praktikum im Bereich Gesamtfahrzeugentwicklung,
- * Affalterbach and Feb/March 2027); it is now general to any international
- * internship, at Michael's request. The site still serves the HWA-specific
- * `src/assets/docs/resume.pdf`, which is a separate committed file and is NOT
- * generated here. Do not point the site at these.
+ * The US and abroad versions name NO employer. Only the HWA one does, and only
+ * it is served by the site: copy `Michael-Fischbach-Resume-HWA.pdf` over
+ * `src/assets/docs/resume.pdf` after regenerating, exactly as the Lebenslauf
+ * requires. Nothing does that automatically. Do not point the site at the
+ * other two.
  *
  * LAYOUT follows the existing `resume.pdf` deliberately: centred name, a rule
  * under each section heading, entries indented from that rule with the date
@@ -35,6 +37,11 @@
  *   $50,000+ ramps revenue    (an older resume said $25k, LinkedIn $30k)
  *   1553 tests passing        (an older resume said 190, and "paper trading")
  *   200+ alumni, several hundred students (was "300+")
+ *
+ * The putter's cost saving is stated as "$15.78 vs. $50-150 retail" and NEVER
+ * as a percentage. The old "(533% reduction)" was arithmetically impossible: a
+ * reduction cannot exceed 100%, and 533% was the markup running the other way.
+ * Retired 2026-08-02. Do not reintroduce it in any form.
  *
  * The Net-Zero shipping container is deliberately absent: removed 2026-07-29.
  */
@@ -62,6 +69,26 @@ const VARIANTS = {
       in a U.S. Air Force family across nine relocations, and settles into new teams and
       countries quickly.`,
   },
+  /**
+   * The HWA application resume. This one IS served by the site, so its output
+   * must be copied over `src/assets/docs/resume.pdf` after regenerating (the
+   * same manual step the Lebenslauf has).
+   *
+   * It was a hand-made ReportLab PDF with no generator until 2026-08-02, which
+   * is why retiring one wrong figure from it meant rebuilding it here. Keeping
+   * it in this file means the three English resumes now share one template and
+   * one set of figures.
+   */
+  hwa: {
+    out: "Michael-Fischbach-Resume-HWA.pdf",
+    eligibility: "Malibu, CA | U.S. Citizen (eligible for EU internship visa)",
+    objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking the
+      <b>Praktikum im Bereich Gesamtfahrzeugentwicklung</b> at HWA AG (Affalterbach, from
+      Feb/March 2027). Hands-on CAD-to-part experience across 3-axis CNC machining,
+      prototyping, tolerance analysis, and iterative real-world testing, the same
+      design-workshop-testing loop HWA runs on the EVO and its customer racing programs.
+      Eligible to intern in Germany.`,
+  },
 };
 
 const page = (v) => `<!doctype html><meta charset="utf-8">
@@ -78,6 +105,11 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
     text-align: center; letter-spacing: .01em;
   }
   .contact { font-size: 9pt; text-align: center; margin: 0 0 4mm; line-height: 1.45 }
+  /* Real anchors, so Chromium writes /Annots link objects into the PDF and the
+   * reader can click them. Left in the body colour rather than browser blue:
+   * a resume that renders blue underlines looks like a web page. The URL text
+   * itself is the affordance for anyone reading it on paper. */
+  .contact a { color: inherit; text-decoration: none }
   h2 {
     font-size: 11pt; font-weight: 700; margin: 4mm 0 1.6mm;
     border-bottom: 1.2px solid #000; padding-bottom: 1mm;
@@ -100,8 +132,9 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 
 <h1>Michael Fischbach</h1>
 <p class="contact">
-  805-703-8250 | mef126906@icloud.com | linkedin.com/in/michael-fischbach |
-  michaelfischbach.dev<br>${v.eligibility}
+  805-703-8250 | <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
+  <a href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
+  <a href="https://michaelfischbach.dev">michaelfischbach.dev</a><br>${v.eligibility}
 </p>
 
 <h2>OBJECTIVE</h2>

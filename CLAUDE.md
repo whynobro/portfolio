@@ -73,15 +73,28 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   Feb/March 2027, and states eligibility to intern in Germany. That is correct
   for this site, which exists for that application. Do not strip the HWA
   framing from it: that would silently weaken the application the whole site is
-  built around.
-- **`scripts/make-cv-en.mjs` renders the two GENERAL resumes**, neither of
-  which names an employer: `Michael-Fischbach-Resume.pdf` (US) and
-  `-Abroad.pdf` (international, adding a citizenship and visa-eligibility line
-  and an "international" objective). They differ in **exactly two strings**,
-  the objective and the eligibility line, and share everything else from one
-  template so the figures cannot drift apart. Both are gitignored build outputs
-  and neither is wired into the site; handing this portfolio's reader a generic
-  resume would be a downgrade.
+  built around. It is now generated (`--only=hwa`) rather than hand-made, but
+  it is still a **committed copy**: regenerating does NOT update the site until
+  the new PDF is copied over `src/assets/docs/resume.pdf`.
+- **`scripts/make-cv-en.mjs` renders three resumes from ONE template**, so the
+  figures cannot drift apart: `-Resume.pdf` (US), `-Resume-Abroad.pdf`
+  (international), `-Resume-HWA.pdf` (the site's). They differ in **exactly two
+  strings**, the objective and the eligibility line. Only the HWA one names an
+  employer, and only it belongs on the site; handing this portfolio's reader a
+  generic resume would be a downgrade.
+- **`scripts/make-cv-onepage.mjs` is the one-page resume**, a different
+  *selection* rather than a different objective, which is why it is its own
+  script. It drops whole entries (the high school, the two non-engineering
+  jobs, the Nicaragua system, the Doorknob-Inator) and keeps only work carrying
+  a checkable number. Both it and the two-page versions fit their page with
+  under 5px to spare, so **any content added to either will overflow**: measure
+  after editing, and cut something rather than shrinking the type.
+- **Contact links are real PDF anchors.** Email, LinkedIn and the portfolio URL
+  are `<a>` elements, so Chromium writes `/Annots` link objects a reader can
+  click. LinkedIn shows as the word "LinkedIn" rather than the raw URL; the
+  portfolio keeps its URL visible because it is short and is the thing being
+  advertised. They are styled `color: inherit` because blue underlines on a
+  resume read as a web page.
 - **A resume targeted at one posting is SELECTED, not assembled.**
   `docs/resume-inventory.md` is the superset of everything that could go on a
   resume: every project with more bullets than any one document should use,
@@ -91,10 +104,11 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   authority on figures: it carries the table of what older PDFs got wrong.
 - **A resume is never made to fit by shrinking the type.** An earlier pass here
   invented its own layout and drove the body to 8.1pt to force one page, which
-  produced something nobody would read. All three English documents run at 10pt
-  in the same layout (centred name, ruled section headings, entries indented
-  from the rule with the date flush right) and take two pages. Two readable
-  pages beat one dense one; cut content if it must be shorter.
+  produced something nobody would read. Every English document uses the same
+  layout (centred name, ruled section headings, entries indented from the rule
+  with the date flush right) at 10pt for the two-page versions and 9.6pt for
+  the one-pager, which is the floor. The one-pager reaches one page by dropping
+  whole entries, never by compressing type. Cut content if it must be shorter.
 
 ## The frame
 
@@ -221,7 +235,8 @@ scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
 scripts/make-icons.mjs         favicon set + the link-preview card
 scripts/make-portfolio-pdf.mjs the wall exported as a PDF, for application forms
 scripts/make-cv-de.mjs         the German Lebenslauf (NOT a translation, see the file)
-scripts/make-cv-en.mjs         the two general resumes, US + abroad (NOT served by the site)
+scripts/make-cv-en.mjs         the three English resumes (US, abroad, HWA) from one template
+scripts/make-cv-onepage.mjs    the one-page resume: strongest material only
 docs/german.md                 German terminology, numbers, layout rules
 docs/resume-inventory.md       every resume-able fact; SELECT from it, never paste it all
 ```
@@ -296,7 +311,8 @@ node scripts/prep-frame.mjs           # rebuild the frame border-image
 node scripts/make-icons.mjs           # rebuild favicons + og.png
 node scripts/make-portfolio-pdf.mjs [--lang=de]  # portfolio as an uploadable PDF
 node scripts/make-cv-de.mjs           # the German CV
-node scripts/make-cv-en.mjs [--only=us|intl]  # the general resumes, US + abroad
+node scripts/make-cv-en.mjs [--only=us|intl|hwa]  # the three English resumes
+node scripts/make-cv-onepage.mjs [--lang=intl]   # the one-page resume
 node scripts/make-anschreiben.mjs [--lang=en]   # the cover letter, DE or EN
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
 node scripts/shoot-campus.mjs         # re-shoot campusnative.com
