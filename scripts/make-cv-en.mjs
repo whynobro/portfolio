@@ -12,16 +12,25 @@
  *   Michael-Fischbach-Resume-Abroad.pdf    internships outside the US
  *   Michael-Fischbach-Resume-HWA.pdf       the HWA AG application
  *
- * All three differ in exactly two places, the objective and the
- * work-eligibility line, and are otherwise the same document. Everything else
- * is shared so the figures cannot drift apart between them, which is the whole
- * point of generating rather than hand-editing three PDFs.
+ * All three differ in exactly three places, the objective, the work-eligibility
+ * line and where the portfolio link points, and are otherwise the same
+ * document. Everything else is shared so the figures cannot drift apart between
+ * them, which is the whole point of generating rather than hand-editing three
+ * PDFs.
  *
- * The US and abroad versions name NO employer. Only the HWA one does, and only
- * it is served by the site: copy `Michael-Fischbach-Resume-HWA.pdf` over
- * `src/assets/docs/resume.pdf` after regenerating, exactly as the Lebenslauf
- * requires. Nothing does that automatically. Do not point the site at the
- * other two.
+ * The US and abroad versions name NO employer, and their portfolio link goes to
+ * `/general/` for that reason: the site root is the HWA application's landing
+ * page, so sending a non-HWA reader there hands them a page addressed to
+ * somebody else. Only the HWA resume links to the root. See
+ * `scripts/portfolio-link.mjs`.
+ *
+ * TWO of these are served by the site, and both are manual copies:
+ *
+ *   Michael-Fischbach-Resume-HWA.pdf -> src/assets/docs/resume.pdf
+ *   Michael-Fischbach-Resume.pdf     -> src/assets/docs/resume-general.pdf
+ *
+ * Nothing does that automatically. Do not point the site root at anything but
+ * the HWA one.
  *
  * LAYOUT follows the existing `resume.pdf` deliberately: centred name, a rule
  * under each section heading, entries indented from that rule with the date
@@ -46,12 +55,14 @@
  * The Net-Zero shipping container is deliberately absent: removed 2026-07-29.
  */
 import { chromium } from "playwright";
+import { PORTFOLIO_GENERAL, PORTFOLIO_HWA, PORTFOLIO_TEXT } from "./portfolio-link.mjs";
 
-/** The objective and eligibility line are the ONLY per-variant copy. */
+/** The objective, eligibility line and portfolio target are the ONLY per-variant copy. */
 const VARIANTS = {
   us: {
     out: "Michael-Fischbach-Resume.pdf",
     eligibility: "Malibu, CA",
+    portfolio: PORTFOLIO_GENERAL,
     objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking a
       mechanical design or manufacturing internship. Hands-on CAD-to-part experience across
       3-axis CNC machining, prototyping, tolerance analysis, and iterative real-world testing.
@@ -61,6 +72,7 @@ const VARIANTS = {
   intl: {
     out: "Michael-Fischbach-Resume-Abroad.pdf",
     eligibility: "Malibu, CA | U.S. Citizen | eligible for study-related internship visas",
+    portfolio: PORTFOLIO_GENERAL,
     objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking an
       international mechanical design or manufacturing internship. Hands-on CAD-to-part
       experience across 3-axis CNC machining, prototyping, tolerance analysis, and iterative
@@ -82,6 +94,9 @@ const VARIANTS = {
   hwa: {
     out: "Michael-Fischbach-Resume-HWA.pdf",
     eligibility: "Malibu, CA | U.S. Citizen (eligible for EU internship visa)",
+    // The only document that targets the root: this is the one HWA receives,
+    // and the root is the page that application links to.
+    portfolio: PORTFOLIO_HWA,
     objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking the
       <b>Praktikum im Bereich Gesamtfahrzeugentwicklung</b> at HWA AG (Affalterbach, from
       Feb/March 2027). Hands-on CAD-to-part experience across 3-axis CNC machining,
@@ -152,7 +167,7 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <p class="contact">
   805-703-8250 | <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
   <a class="link" href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
-  <a class="link" href="https://michaelfischbach.dev">michaelfischbach.dev</a><br>${v.eligibility}
+  <a class="link" href="${v.portfolio}">${PORTFOLIO_TEXT}</a><br>${v.eligibility}
 </p>
 
 <h2>OBJECTIVE</h2>
@@ -182,7 +197,7 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <div class="skills">
   <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 40+ designs), SolidWorks, AutoCAD, Autodesk CFD</p>
   <p><b>Manufacturing:</b> 3-axis HAAS CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, carbon-analog composite &amp; concrete casting</p>
-  <p><b>Methods:</b> GD&amp;T, tolerance stack-up analysis, DFM/DFA, rapid iterative prototyping, design-test-refine, cost modeling</p>
+  <p><b>Methods:</b> GD&amp;T, tolerance stack-up analysis, DFM, rapid iterative prototyping, design-test-refine, cost modeling</p>
   <p><b>Software:</b> Python, HTML/CSS, Git</p>
   <p><b>Languages:</b> English (native); German (beginner, actively learning)</p>
 </div>
