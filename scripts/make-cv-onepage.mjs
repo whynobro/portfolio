@@ -43,6 +43,7 @@
  * percentage: the retired "533% reduction" was arithmetically impossible.
  */
 import { chromium } from "playwright";
+import { PORTFOLIO_GENERAL, PORTFOLIO_TEXT } from "./portfolio-link.mjs";
 
 const OUT = "Michael-Fischbach-Resume-1Page.pdf";
 const intl = process.argv.includes("--lang=intl");
@@ -97,7 +98,7 @@ const html = `<!doctype html><meta charset="utf-8">
 <p class="contact">
   805-703-8250 | <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
   <a class="link" href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
-  <a class="link" href="https://michaelfischbach.dev">michaelfischbach.dev</a><br>${eligibility}
+  <a class="link" href="${PORTFOLIO_GENERAL}">${PORTFOLIO_TEXT}</a><br>${eligibility}
 </p>
 
 <h2>OBJECTIVE</h2>
@@ -178,7 +179,7 @@ const html = `<!doctype html><meta charset="utf-8">
 <div class="skills">
   <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 40+ designs), SolidWorks, AutoCAD, Autodesk CFD</p>
   <p><b>Manufacturing:</b> 3-axis HAAS CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, composite &amp; concrete casting</p>
-  <p><b>Methods:</b> GD&amp;T, tolerance stack-up analysis, DFM/DFA, iterative prototyping, cost modeling &nbsp;·&nbsp; <b>Software:</b> Python, Git</p>
+  <p><b>Methods:</b> GD&amp;T, tolerance stack-up analysis, DFM, iterative prototyping, cost modeling &nbsp;·&nbsp; <b>Software:</b> Python, Git</p>
 </div>
 
 <h2>AWARDS</h2>

@@ -118,14 +118,16 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
   went over by 21px because of the wordmark plus "Auszeichnungen". Both
   `.masthead__inner` AND `.masthead__nav` wrap, so German takes a second line
   instead of losing its navigation. Never fix an overflow by removing a route.
-- **The resume button follows the site's language.** English serves
-  `src/assets/docs/resume.pdf`; German serves `resume-de.pdf`, the Lebenslauf
-  built by `scripts/make-cv-de.mjs`. These are two documents in different
-  genres, not one translated, so a German reader must never be handed the
-  English one. `src/resume.ts` sets both the `href` and the `download`
-  filename, and re-points them on `i18n:change`. **`resume-de.pdf` is a
-  committed copy**: regenerating the Lebenslauf does NOT update the site until
-  the new PDF is copied over it.
+- **The resume button follows the site's language AND the build.** German
+  serves `resume-de.pdf` in both variants, the Lebenslauf built by
+  `scripts/make-cv-de.mjs`: a different genre, not a translation, so a German
+  reader must never be handed the English one. English serves
+  `src/assets/docs/resume.pdf` (the HWA application resume) at the root and
+  `resume-general.pdf` (the US resume) under `/general/`, chosen by the
+  `@resume-en` alias. `src/resume.ts` sets both the `href` and the `download`
+  filename, and re-points them on `i18n:change`. **All three are committed
+  copies**: regenerating a resume does NOT update the site until the new PDF is
+  copied over the right one.
 - **`resume.pdf` is the HWA application resume, not a general one.** It names
   the Praktikum im Bereich Gesamtfahrzeugentwicklung, Affalterbach and
   Feb/March 2027, and states eligibility to intern in Germany. That is correct
@@ -162,6 +164,36 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
   inspectable, which only pays off if a reader clicks through. Verify both
   still return 200 before shipping a resume — a dead link on a resume is worse
   than no link.
+- **The portfolio link shows `michaelfischbach.dev` on every document, but
+  only HWA's documents point at the root.** The visible text is always the
+  bare domain: that is the address worth advertising, and a subpath in print
+  reads as clutter. The href is what varies, and it comes from
+  `scripts/portfolio-link.mjs`, which every generator imports:
+
+  | Document | Target |
+  | --- | --- |
+  | `-Resume-HWA.pdf` (and the site's `resume.pdf`), Lebenslauf, Anschreiben | `PORTFOLIO_HWA` = the root |
+  | `-Resume.pdf`, `-Resume-Abroad.pdf`, `-Resume-1Page.pdf`, and any future per-employer document that is not HWA's | `PORTFOLIO_GENERAL` = `/general/` |
+
+  The rule is the document, not the language: a document that NAMES HWA sends
+  its reader to the entrance that also names HWA. Everything else goes to
+  `/general/`, because dropping a non-HWA reader on a page addressed to HWA
+  reads like a resume sent to the wrong employer. The Lebenslauf and both
+  Anschreiben are HWA documents (their Kurzprofil and body name the Praktikum),
+  which is why German is on the root side of that table.
+
+  `portfolio-link.mjs` is its own module because `make-cv-en.mjs` builds three
+  PDFs at import time; importing a constant from it would generate resumes as a
+  side effect. Verify a change with the `/URI` annotations rather than by
+  reading the markup:
+
+  ```sh
+  python3 -c "import re,sys; d=open(sys.argv[1],'rb').read(); print(sorted(set(re.findall(rb'/URI\s*\((.*?)\)', d))))" Michael-Fischbach-Resume.pdf
+  ```
+
+  Remember both committed copies: `src/assets/docs/resume.pdf` (HWA) and
+  `src/assets/docs/resume-general.pdf` (general) are what the SITE serves, so
+  regenerating a resume does nothing until it is copied over the right one.
 - **A resume targeted at one posting is SELECTED, not assembled.**
   `docs/resume-inventory.md` is the superset of everything that could go on a
   resume: every project with more bullets than any one document should use,
