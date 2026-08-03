@@ -82,7 +82,14 @@ Pick one. These are mutually exclusive framings, not stackable.
 | Email | `mef126906@icloud.com` |
 | Portfolio | michaelfischbach.dev |
 | LinkedIn | linkedin.com/in/michael-fischbach |
+| Chameleon Ramps | <https://www.chameleonramps.com> |
+| Campus Native | <https://www.campusnative.com> |
 | Location | Malibu, CA |
+
+Every resume hyperlinks LinkedIn, the portfolio, and both company names, in
+`#0563c1` underlined. The company links are the cheapest credibility on the
+page: a reader who doubts "1358 orders fulfilled" can go look. Check both
+return 200 before shipping.
 
 **Eligibility lines** · include only when relevant:
 

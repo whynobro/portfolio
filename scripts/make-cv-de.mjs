@@ -48,6 +48,8 @@ const html = `<!doctype html><meta charset="utf-8">
   /* Blau und unterstrichen: ein PDF hat keinen Hover-Hinweis, ein ungestylter
    * Link ist als Link unsichtbar. #0563c1 ist die Hyperlink-Farbe von Word. */
   .contact a { color: #0563c1; text-decoration: underline }
+  /* Die beiden Unternehmen verlinken auf ihre Websites, gleiches Blau. */
+  a.site { color: #0563c1; text-decoration: underline }
   h2 {
     font-size: 9pt; text-transform: uppercase; letter-spacing: .1em;
     border-bottom: 1.1px solid #1a1a1a; padding-bottom: 1.1mm;
@@ -134,7 +136,7 @@ const html = `<!doctype html><meta charset="utf-8">
 </div>
 <div class="block">
   <div class="row">
-    <span class="role">Chameleon Ramps – Produktentwicklung und Fertigung</span>
+    <span class="role"><a class="site" href="https://www.chameleonramps.com">Chameleon Ramps</a> – Produktentwicklung und Fertigung</span>
     <span class="when">2019 – heute</span>
   </div>
   <p class="org">Fusion 360 · Gießverfahren · iterativer Prototypenbau</p>
@@ -158,7 +160,7 @@ const html = `<!doctype html><meta charset="utf-8">
 <h2>Berufserfahrung</h2>
 <div class="block">
   <div class="row"><span class="role">Gründer und Geschäftsführer</span><span class="when">06/2026 – heute</span></div>
-  <p class="org">Campus Native · San Luis Obispo, Kalifornien</p>
+  <p class="org"><a class="site" href="https://www.campusnative.com">Campus Native</a> · San Luis Obispo, Kalifornien</p>
   <ul><li>Digitalen Marktplatz aufgebaut und betrieben; Leitung eines vierköpfigen Teams aus Entwicklung, Marketing und Redaktion</li></ul>
 </div>
 <div class="block">

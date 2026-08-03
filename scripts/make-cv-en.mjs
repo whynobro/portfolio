@@ -122,6 +122,12 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
    * and a third blue run in one centred line turns the header into a link bar. */
   .contact a { color: inherit; text-decoration: none }
   .contact a.link { color: #0563c1; text-decoration: underline }
+  /* The two companies Michael runs link to their live sites. Same blue as the
+   * header, for the same reason: a reader who cannot tell it is a link will
+   * not click it, and the whole point is that these businesses are real and
+   * inspectable. The company NAME is the anchor rather than a bare URL, so the
+   * line stays readable on paper. */
+  a.site { color: #0563c1; text-decoration: underline }
   h2 {
     font-size: 11pt; font-weight: 700; margin: 4mm 0 1.6mm;
     border-bottom: 1.2px solid #000; padding-bottom: 1mm;
@@ -211,7 +217,7 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
     <span class="role">Chameleon Ramps – Product Design &amp; Manufacturing</span>
     <span class="when">2019 – Present</span>
   </div>
-  <p class="org">Fusion 360, Casting, Iterative Prototyping</p>
+  <p class="org">Fusion 360, Casting, Iterative Prototyping<span class="right"><a class="site" href="https://www.chameleonramps.com">chameleonramps.com</a></span></p>
   <ul>
     <li>6-year iterative development program: designed 40+ unique products and developed proprietary casting techniques, reducing material waste ~30%</li>
     <li>Ran a systematic design-test-refine loop across 4–6 prototype generations per product; 1358 orders fulfilled and $50,000+ in revenue</li>
@@ -232,7 +238,7 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <h2>EXPERIENCE</h2>
 <div class="entry">
   <div class="row"><span class="role">CEO &amp; Founder</span><span class="when">Jun 2026 – Present</span></div>
-  <p class="org">Campus Native<span class="right">San Luis Obispo, CA</span></p>
+  <p class="org"><a class="site" href="https://www.campusnative.com">Campus Native</a><span class="right">San Luis Obispo, CA</span></p>
   <ul><li>Founded and operate a digital marketplace; lead a 4-person intern team across engineering, marketing, and content</li></ul>
 </div>
 <div class="entry">

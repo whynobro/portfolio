@@ -72,6 +72,9 @@ const html = `<!doctype html><meta charset="utf-8">
    * stays in body colour; see the note in make-cv-en.mjs. */
   .contact a { color: inherit; text-decoration: none }
   .contact a.link { color: #0563c1; text-decoration: underline }
+  /* The two companies link to their live sites, same blue as the header: these
+   * businesses are real and inspectable, and that only pays off if clicked. */
+  a.site { color: #0563c1; text-decoration: underline }
   h2 {
     font-size: 10.2pt; font-weight: 700; margin: 3mm 0 1.3mm;
     border-bottom: 1.2px solid #000; padding-bottom: .8mm;
@@ -121,7 +124,7 @@ const html = `<!doctype html><meta charset="utf-8">
 <h2>EXPERIENCE</h2>
 <div class="entry">
   <div class="row"><span class="role">Founder</span><span class="when">2019 – Present</span></div>
-  <p class="org">Chameleon Ramps<span class="right">Malibu, CA</span></p>
+  <p class="org"><a class="site" href="https://www.chameleonramps.com">Chameleon Ramps</a><span class="right">Malibu, CA</span></p>
   <ul>
     <li>Designed 40+ products over six years and developed a proprietary casting process that cut material waste ~30%</li>
     <li>Ran a design-test-refine loop across 4–6 prototype generations per product; <b>1358 orders fulfilled</b>, <b>$50,000+ revenue</b></li>
@@ -129,7 +132,7 @@ const html = `<!doctype html><meta charset="utf-8">
 </div>
 <div class="entry">
   <div class="row"><span class="role">CEO &amp; Founder</span><span class="when">Jun 2026 – Present</span></div>
-  <p class="org">Campus Native<span class="right">San Luis Obispo, CA</span></p>
+  <p class="org"><a class="site" href="https://www.campusnative.com">Campus Native</a><span class="right">San Luis Obispo, CA</span></p>
   <ul><li>Founded and operate a digital marketplace; lead a 4-person team across engineering and marketing</li></ul>
 </div>
 <!-- ADI and Ashersells are deliberately absent here; see the header comment.

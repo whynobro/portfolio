@@ -99,7 +99,11 @@ Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
   body colour** — it is already recognisable as an address, and a third blue
   run turns the centred header into a link bar. LinkedIn shows as the word
   "LinkedIn"; the portfolio keeps its URL visible because it is short and is
-  the thing being advertised.
+  the thing being advertised. **Chameleon Ramps and Campus Native link to their
+  live sites** in the same blue (`a.site`): both businesses are real and
+  inspectable, which only pays off if a reader clicks through. Verify both
+  still return 200 before shipping a resume — a dead link on a resume is worse
+  than no link.
 - **A resume targeted at one posting is SELECTED, not assembled.**
   `docs/resume-inventory.md` is the superset of everything that could go on a
   resume: every project with more bullets than any one document should use,
