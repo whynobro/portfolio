@@ -203,7 +203,7 @@ const EN = `
   now and will be a good deal further along by February. As a US citizen I can hold a study-related
   residence permit. My work is at
   <a href="https://michaelfischbach.dev"><b>michaelfischbach.dev</b></a>, and two pieces of it you can
-  actually play in the browser. I would be glad to talk.
+  actually play in the browser. Looking forward to speaking with you.
 </p>
 
 <p class="close">Yours sincerely</p>

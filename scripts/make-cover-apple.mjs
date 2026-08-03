@@ -43,6 +43,7 @@
  * cost is two dollar figures, never a percentage.
  */
 import { chromium } from "playwright";
+import { PORTFOLIO_GENERAL, PORTFOLIO_TEXT } from "./portfolio-link.mjs";
 
 const OUT = "Michael-Fischbach-CoverLetter-Apple.pdf";
 
@@ -72,7 +73,7 @@ const html = `<!doctype html><meta charset="utf-8">
   <b>Michael Fischbach</b><br>
   Malibu, California<br>
   805-703-8250 · mef126906@icloud.com<br>
-  <a href="https://michaelfischbach.dev">michaelfischbach.dev</a>
+  <a href="${PORTFOLIO_GENERAL}">${PORTFOLIO_TEXT}</a>
 </p>
 
 <p class="date">2 August 2026</p>
@@ -118,8 +119,8 @@ const html = `<!doctype html><meta charset="utf-8">
 </p>
 
 <p>
-  My work is at <a href="https://michaelfischbach.dev">michaelfischbach.dev</a>, including the
-  putter and its CAM setup. I would be glad to talk.
+  My work is at <a href="${PORTFOLIO_GENERAL}">${PORTFOLIO_TEXT}</a>, including the
+  putter and its CAM setup. Looking forward to speaking with you.
 </p>
 
 <p class="close">Sincerely,</p>
