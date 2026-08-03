@@ -34,8 +34,17 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
-      - name: Build
+      # Two builds, one artifact. The root is the site submitted to HWA AG and
+      # must not drift: the bare michaelfischbach.dev is the URL on that
+      # application, and a recruiter may open it long after submitting. The
+      # employer-neutral version nests at /general/ rather than replacing it.
+      #
+      # Order matters: the root build empties dist/, so it has to run first.
+      - name: Build (HWA, site root)
         run: npx vite build
+
+      - name: Build (general, /general/)
+        run: npx vite build --mode general
 
       # The build used to assert dist held exactly one file. That guarded the
       # file:// promise, which cost 7.1 MB gzip of BLOCKING payload on first
@@ -46,14 +55,58 @@ jobs:
       # whole reason for splitting, so the shell is capped rather than counted.
       - name: Verify shell stays small
         run: |
-          bytes=$(wc -c < dist/index.html)
-          echo "dist/index.html is $bytes bytes"
-          test "$bytes" -lt 102400 || {
-            echo "Shell exceeded 100 KB — an asset is probably being inlined again."
+          for shell in dist/index.html dist/general/index.html; do
+            bytes=$(wc -c < "$shell")
+            echo "$shell is $bytes bytes"
+            test "$bytes" -lt 102400 || {
+              echo "Shell exceeded 100 KB — an asset is probably being inlined again."
+              exit 1
+            }
+          done
+          test -d dist/assets || { echo "Expected dist/assets/"; exit 1; }
+          test -d dist/general/assets || { echo "Expected dist/general/assets/"; exit 1; }
+          echo "dist contains $(find dist -type f | wc -l) file(s)"
+
+      # The general build exists to be addressed to nobody in particular. If any
+      # of these fail, it is advertising an application it is not part of, which
+      # is the whole failure this split was built to prevent, so it fails the
+      # deploy rather than shipping.
+      - name: Verify the general build names no employer
+        run: |
+          # Text output only: a case-insensitive search over the photographs
+          # matches "hwa" inside AVIF payload bytes and would fail on nothing.
+          # "HWA" is matched case-SENSITIVELY for the same reason.
+          hits=$(find dist/general -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' \) \
+                 -exec grep -l "HWA\|Affalterbach\|complete-vehicle" {} +) || true
+          if [ -n "$hits" ]; then
+            echo "The general build still carries HWA-addressed copy:"
+            echo "$hits"
+            exit 1
+          fi
+          # The HWA resume must not be a fetchable URL on the general site.
+          if ls dist/general/assets/resume.*.pdf >/dev/null 2>&1; then
+            echo "The HWA application resume leaked into the general build."
+            exit 1
+          fi
+          # A wrong canonical would let a search engine fold the general site
+          # into the HWA one and preview shared links as the root.
+          grep -q 'rel="canonical" href="https://michaelfischbach.dev/general/"' dist/general/index.html || {
+            echo "The general build does not declare its own canonical URL."
             exit 1
           }
-          test -d dist/assets || { echo "Expected dist/assets/"; exit 1; }
-          echo "dist contains $(find dist -type f | wc -l) file(s)"
+          echo "General build is employer-neutral."
+
+      # CNAME is why the custom domain survives a deploy; without it Pages
+      # reverts to the github.io URL. It must be at the artifact ROOT and only
+      # there.
+      - name: Verify the custom domain survives
+        run: |
+          test -f dist/CNAME || { echo "dist/CNAME is missing: Pages would drop the custom domain."; exit 1; }
+          diff <(cat dist/CNAME) <(printf 'michaelfischbach.dev') >/dev/null || {
+            echo "dist/CNAME does not read michaelfischbach.dev:"; cat dist/CNAME; exit 1
+          }
+          test ! -f dist/general/CNAME || { echo "Stray CNAME inside dist/general/."; exit 1; }
+          echo "CNAME present at the root and nowhere else."
 
       - uses: actions/upload-pages-artifact@v3
         with:

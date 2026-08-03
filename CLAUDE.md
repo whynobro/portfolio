@@ -2,14 +2,72 @@
 
 An **art-gallery** portfolio: warm off-white walls, works hung in a carved gilt
 frame, serif captions. Targets the HWA AG opening **Praktikant im Bereich
-Gesamtfahrzeugentwicklung** (Affalterbach, start Feb/March 2027). Other versions
-fork from this one later; every content decision optimises for that reader.
+Gesamtfahrzeugentwicklung** (Affalterbach, start Feb/March 2027); every content
+decision optimises for that reader.
 
-Live: <https://michaelfischbach.dev> · repo `whynobro/portfolio`
+It ships in **two variants from one codebase** (see the variant invariant
+below): the HWA site at the domain root, and an employer-neutral **general**
+version at `/general/`.
+
+Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
+<https://michaelfischbach.dev/general/> (general) · repo `whynobro/portfolio`
 (the github.io URL still redirects, but the custom domain is the one to quote)
 
 ## Invariants
 
+- **The site root belongs to the HWA application and must not drift.**
+  `https://michaelfischbach.dev` is the URL written on the submitted HWA
+  application, and a recruiter may open it weeks or months after submitting.
+  Whatever the general version becomes, it goes at `/general/`; the root keeps
+  serving what was submitted. **Never make the general version the root.**
+
+  Both builds come from ONE codebase, selected by Vite mode:
+
+  ```sh
+  npm run build           # HWA -> dist/          (the default; no flag needed)
+  npm run build:general   # general -> dist/general/
+  npm run build:both      # both, in that order
+  npm run dev:general     # dev server, general variant
+  ```
+
+  `hwa` is the DEFAULT: an unflagged build, a fresh clone or a CI change
+  produces the HWA site, so forgetting the flag can only mis-serve `/general/`
+  (cosmetic), never the submitted link (not cosmetic).
+
+  The entire divergence is **one table**, `src/i18n/general.ts`: the strings
+  the general build replaces, EN and DE. Add a divergence there, nowhere else.
+  It currently holds one key, `home.bio2` (the entrance paragraph naming the
+  posting and Affalterbach), plus the resume swap below.
+
+  Substitution happens at **build time in three places**, because a runtime
+  override is not enough: every translated string also appears inline in
+  `index.html` as the no-JS default, so a runtime-only patch leaves the
+  HWA-addressed paragraph in the shipped HTML for crawlers, no-JS readers and
+  View Source. The `general-variant` plugin in `vite.config.ts`:
+
+  1. rewrites the matching `[data-i18n]` elements in the HTML shell;
+  2. rewrites the superseded value inside `en.ts`/`de.ts`, so the HWA copy is
+     **absent** from the bundle rather than merely unused;
+  3. rewrites `canonical` and `og:url` to `/general/`. Left alone, the general
+     build declares itself a duplicate of the HWA page, and a search engine
+     folds the two together.
+
+  Both rewrites **throw** if their target is not found, so a renamed key or a
+  reformatted dictionary fails the build instead of silently shipping HWA copy.
+  The plugin deliberately does **not** set `apply: "build"`: the dev server
+  must run the same substitutions or `dev:general` previews the wrong site.
+
+  The English resume is chosen by the `@resume-en` **alias**, not a ternary:
+  `?url` emits an asset for every import it sees, so a branch would still copy
+  the HWA resume into the general build as a live URL. HWA gets `resume.pdf`,
+  general gets `resume-general.pdf` (the US resume). German is unaffected: the
+  Lebenslauf names no employer.
+
+  CI enforces all of it: the general build must contain no `HWA`,
+  `Affalterbach` or `complete-vehicle` in any html/js/css, must not carry the
+  HWA resume, and must declare its own canonical. (Match `HWA`
+  case-sensitively and skip binaries: a case-insensitive sweep hits `hwa`
+  inside AVIF bytes.)
 - **The shell must stay small; photographs stay OUT of it.** The build is
   `dist/index.html` (~25 KB, 6 KB gzip) plus a content-hashed `dist/assets/`.
   CI fails if `index.html` grows past 100 KB, which is what a stray re-inline
@@ -230,6 +288,8 @@ src/router.ts                  view switching, focus management, titles
 src/awards.ts                  awards room, rendered from data
 src/projects.ts                the six project rooms, rendered from data
 src/i18n/{en,de}.ts            en.ts is the source of truth
+src/i18n/general.ts            the ONLY divergence between the two variants
+src/variant.ts                 which variant this build is (defaults to hwa)
 src/resume.ts                  points the resume button at EN or DE by language
 src/scenes/{tictactoe,ringtoss}/   SceneModule: mount/resize/dispose/renderStatic
 src/styles/                    tokens, base, layout, frame, chrome, games, case
@@ -311,8 +371,11 @@ Sources disagree; these are current. The resume is stale on several points.
 ## Commands
 
 ```sh
-npm run dev          # vite dev server on :5173
-npm run build        # tsc --noEmit && vite build -> dist/index.html
+npm run dev          # vite dev server on :5173 (HWA variant)
+npm run dev:general  # dev server, general variant
+npm run build        # tsc --noEmit && vite build -> dist/index.html (HWA)
+npm run build:general # general variant -> dist/general/
+npm run build:both   # both, HWA first (it empties dist/)
 npm run shots        # screenshot loop (dev server must be running)
 npm run verify:ttt   # prove the tic-tac-toe engine never loses
 node scripts/prep-images.mjs [name]   # whole manifest, or one entry
@@ -330,10 +393,15 @@ node scripts/shoot-campus.mjs         # re-shoot campusnative.com
 ## Deploy
 
 GitHub Pages via `.github/workflows/deploy.yml` on push to `main`. CI runs
-`tsc --noEmit` (catches a missing German key), builds, and asserts the shell
-stayed under 100 KB with a `dist/assets/` beside it. `base: "./"` in
-`vite.config.ts` is relative, so it works on a project page, a user page, or any
-static host unchanged.
+`tsc --noEmit` (catches a missing German key), then builds **twice** into one
+artifact: the HWA site into `dist/` and the general one into `dist/general/`.
+The HWA build must run first, since it empties `dist/`.
+
+It then asserts both shells stayed under 100 KB with their `assets/` beside
+them, that the general build names no employer and carries no HWA resume, and
+that `CNAME` is at the artifact root and nowhere else. `base: "./"` in
+`vite.config.ts` is relative, which is why the nested build works from a
+subpath with no extra configuration.
 
 Custom domain: **michaelfischbach.dev**. `.dev` is on the HSTS preload list, so
 HTTPS is mandatory at browser level and there is no plain-HTTP fallback: the

@@ -16,9 +16,21 @@
  * Kurzprofil instead of an objective, nationality and work-permit status
  * stated plainly). A German reader gets the German one, so the button follows
  * the site's language rather than offering both and making them choose.
+ *
+ * English also follows the BUILD. `resume.pdf` is the HWA application resume:
+ * it names the Praktikum, Affalterbach and Feb/March 2027, which is right for
+ * the site that application links to and wrong for a general one. The general
+ * build serves the US resume instead. German is unaffected: the Lebenslauf
+ * names no employer.
+ *
+ * The English PDF is imported through the `@resume-en` alias, which
+ * `vite.config.ts` points at `resume.pdf` or `resume-general.pdf` by mode. A
+ * ternary over two imports would not do: `?url` emits an asset for every import
+ * it sees, so the dead branch would still copy the HWA resume into the general
+ * build, where it would be a live URL nobody intended to publish.
  */
 import { getLang } from "./i18n";
-import resumeEnUrl from "./assets/docs/resume.pdf?url";
+import resumeEnUrl from "@resume-en?url";
 import resumeDeUrl from "./assets/docs/resume-de.pdf?url";
 
 /** The filename the reader ends up with in their downloads folder. */

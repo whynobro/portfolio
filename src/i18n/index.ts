@@ -1,16 +1,39 @@
 import { en, type Dict, type TranslationKey } from "./en";
 import { de } from "./de";
+import { isHwa } from "../variant";
+import { generalOverrides } from "./general";
 
 export type Lang = "en" | "de";
 
-const DICTS: Record<Lang, Dict> = { en, de };
+/**
+ * The dictionaries as this build serves them.
+ *
+ * `en.ts` and `de.ts` are the HWA site's copy and stay the source of truth; the
+ * `general` build patches the handful of strings that name the employer over
+ * the top, from the same table that rewrites the HTML shell at build time.
+ *
+ * `isHwa` folds to a literal at build time, so the general bundle keeps only
+ * the branch it uses. The HWA strings it replaces are dropped from the shipped
+ * dictionary by the `stripHwaCopy` transform in vite.config.ts, which is what
+ * keeps the employer's name out of a bundle that is not addressed to them.
+ */
+const DICTS: Record<Lang, Dict> = isHwa
+  ? { en, de }
+  : { en: { ...en, ...generalOverrides.en }, de: { ...de, ...generalOverrides.de } };
+
 const STORAGE_KEY = "lang";
 
 let current: Lang = "en";
 
-/** Translate a key. Falls back to the English string, never to a raw key. */
+/**
+ * Translate a key. Falls back to the English string, never to a raw key.
+ *
+ * The fallback reads DICTS.en rather than the imported `en`: in the general
+ * build those differ, and falling through to the raw dictionary would put the
+ * HWA-addressed sentence on a page that is not addressed to HWA.
+ */
 export function t(key: TranslationKey): string {
-  return DICTS[current][key] ?? en[key];
+  return DICTS[current][key] ?? DICTS.en[key];
 }
 
 export function getLang(): Lang {

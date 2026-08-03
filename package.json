@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:general": "vite build --mode general",
+    "build:both": "npm run build && npm run build:general",
+    "dev:general": "vite --mode general",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "shots": "tsx scripts/screenshot.ts",
