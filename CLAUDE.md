@@ -173,7 +173,7 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
   | Document | Target |
   | --- | --- |
   | `-Resume-HWA.pdf` (and the site's `resume.pdf`), Lebenslauf, Anschreiben | `PORTFOLIO_HWA` = the root |
-  | `-Resume.pdf`, `-Resume-Abroad.pdf`, `-Resume-1Page.pdf`, the Apple documents | `PORTFOLIO_GENERAL` = `/general/` |
+  | `-Resume.pdf`, `-Resume-Abroad.pdf`, `-Resume-1Page.pdf`, the Apple documents, and any future per-employer document that is not HWA's | `PORTFOLIO_GENERAL` = `/general/` |
 
   The rule is the document, not the language: a document that NAMES HWA sends
   its reader to the entrance that also names HWA. Everything else goes to

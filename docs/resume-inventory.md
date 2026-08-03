@@ -269,9 +269,16 @@ Cut to what the posting names plus what the chosen projects evidence.
 | --- | --- |
 | CAD / CAE | Fusion 360 (6+ years, 40+ designs), SolidWorks, AutoCAD, Autodesk CFD |
 | Manufacturing | 3-axis HAAS CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, carbon-analog composite & concrete casting |
-| Methods | GD&T, tolerance stack-up analysis, DFM/DFA, rapid iterative prototyping, design-test-refine, cost modelling |
+| Methods | GD&T, tolerance stack-up analysis, DFM, rapid iterative prototyping, design-test-refine, cost modelling |
 | Software | Python, HTML/CSS, Git |
 | Languages | English (native); German (beginner, actively learning) |
+
+**DFA (Design for Assembly) was removed on 2026-08-02 and should not come
+back.** It sat next to DFM as "DFM/DFA" and read as padding one method into
+two: nothing in §4 is an assembly-heavy project, so there is no entry a reader
+could check it against. DFM is evidenced by the putter several times over. Add
+DFA only when a multi-part assembly with a real assembly-cost argument exists
+to carry it.
 
 Situational additions, only when true for the target and evidenced:
 
