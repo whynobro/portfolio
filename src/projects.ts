@@ -1,4 +1,4 @@
-import { getLang, t } from "./i18n";
+import { t } from "./i18n";
 import type { TranslationKey } from "./i18n/en";
 import { registerProjectRenderer, registerProjectRoutes } from "./router";
 import { initProgress, markSeen } from "./progress";
@@ -61,6 +61,18 @@ type Project = {
    */
   brand?: string;
   hero: Shot;
+  /**
+   * A live scene shown WIDE, across the room under the description, rather
+   * than in the hero frame: the WERC docking sequence is a landscape with
+   * small detail (field lines, a readout) that a 250px frame window loses.
+   */
+  wideScene?: { id: string; capKey: TranslationKey };
+  /**
+   * Gallery plates hang two-up at a larger size and open full size on click.
+   * For a room whose plates are DRAWINGS: report figures with fine linework and
+   * small type, which are unreadable at the three-up print size.
+   */
+  galleryLarge?: boolean;
   /** The plate beside the hero: role, tools, materials, result. */
   specs: Spec[];
   sections: { hKey: TranslationKey; bodyKeys: TranslationKey[] }[];
@@ -95,18 +107,6 @@ type Project = {
    */
   poster?: Shot;
   /**
-   * A poster that exists in BOTH languages as two separate images, with a tab
-   * to switch between them. The bot's poster is drawn rather than scanned, so
-   * unlike the capstone posters it could be set in German as well; the tab
-   * changes only the poster, not the site.
-   */
-  posterPair?: {
-    en: Shot;
-    de: Shot;
-    capKey: TranslationKey;
-    hintKey: TranslationKey;
-  };
-  /**
    * A scene id from the scene registry, mounted under the hero. The putter has
    * one: its own STL, turning, which is the only place on the site where a part
    * can be inspected rather than looked at.
@@ -115,6 +115,35 @@ type Project = {
 };
 
 const PROJECTS: Project[] = [
+  {
+    slug: "werc",
+    titleKey: "proj.werc.title",
+    ledeKey: "case.werc.lede",
+    hero: { img: "werc-bench", w: 1491, h: 1007, aspect: "frame--landscape", altKey: "alt.werc.bench" },
+    wideScene: { id: "werc", capKey: "cap.werc.scene" },
+    specs: [
+      { labelKey: "case.spec.role", valueKey: "case.werc.role" },
+      { labelKey: "case.spec.tools", valueKey: "case.werc.tools" },
+      { labelKey: "case.spec.scope", valueKey: "case.werc.scope" },
+      // NOT measured: nothing has been built yet, so no oxblood.
+      { labelKey: "case.spec.status", valueKey: "case.werc.status" },
+    ],
+    sections: [
+      { hKey: "case.h.brief", bodyKeys: ["case.werc.brief"] },
+      { hKey: "case.h.approach", bodyKeys: ["case.werc.approach1", "case.werc.approach2"] },
+      { hKey: "case.h.status", bodyKeys: ["case.werc.outcome"] },
+    ],
+    galleryLarge: true,
+    gallery: [
+      { img: "werc-full-scale", w: 1466, h: 1520, aspect: "frame--square", altKey: "alt.werc.full", capKey: "cap.werc.full" },
+      { img: "werc-coupler", w: 1525, h: 1667, aspect: "frame--square", altKey: "alt.werc.coupler", capKey: "cap.werc.coupler" },
+      { img: "werc-system", w: 1500, h: 1710, aspect: "frame--square", altKey: "alt.werc.system", capKey: "cap.werc.system" },
+      { img: "werc-states", w: 1500, h: 1350, aspect: "frame--square", altKey: "alt.werc.states", capKey: "cap.werc.states" },
+      { img: "werc-bench", w: 1491, h: 1007, aspect: "frame--landscape", altKey: "alt.werc.bench", capKey: "cap.werc.bench" },
+      { img: "werc-retune", w: 1344, h: 586, aspect: "frame--wide", altKey: "alt.werc.retune", capKey: "cap.werc.retune" },
+    ],
+  },
+
   {
     slug: "cnc",
     titleKey: "proj.putter.title",
@@ -315,11 +344,13 @@ const PROJECTS: Project[] = [
       },
     ],
     galleryInPictures: true,
-    posterPair: {
-      en: { img: "bot-poster-en", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },
-      de: { img: "bot-poster-de", w: 2600, h: 1950, aspect: "frame--slide", altKey: "alt.bot.poster" },
+    poster: {
+      img: "bot-poster-en",
+      w: 2600,
+      h: 1950,
+      aspect: "frame--slide",
+      altKey: "alt.bot.poster",
       capKey: "cap.bot.poster",
-      hintKey: "cap.bot.posterHint",
     },
   },
 
@@ -375,6 +406,30 @@ const PROJECTS: Project[] = [
       { img: "water-1", w: 1400, h: 933, aspect: "frame--slide", altKey: "alt.water.map", capKey: "cap.water.map" },
     ],
     galleryInPictures: true,
+  },
+
+  {
+    slug: "door",
+    titleKey: "proj.door.title",
+    ledeKey: "case.door.lede",
+    hero: { img: "door-final-cad", w: 740, h: 642, aspect: "frame--slide", altKey: "alt.door.hero" },
+    specs: [
+      { labelKey: "case.spec.role", valueKey: "case.door.role" },
+      { labelKey: "case.spec.tools", valueKey: "case.door.tools" },
+      { labelKey: "case.spec.material", valueKey: "case.door.material" },
+      { labelKey: "case.spec.status", valueKey: "case.door.status" },
+    ],
+    sections: [
+      { hKey: "case.h.brief", bodyKeys: ["case.door.brief"] },
+      { hKey: "case.h.approach", bodyKeys: ["case.door.approach1", "case.door.approach2"] },
+      { hKey: "case.h.status", bodyKeys: ["case.door.outcome"] },
+    ],
+    gallery: [
+      { img: "door-mockup", w: 1050, h: 1400, aspect: "frame--photo", altKey: "alt.door.mockup", capKey: "cap.door.mockup" },
+      { img: "door-first-cad", w: 952, h: 612, aspect: "frame--landscape", altKey: "alt.door.first", capKey: "cap.door.first" },
+      { img: "door-print", w: 1050, h: 1400, aspect: "frame--photo", altKey: "alt.door.print", capKey: "cap.door.print" },
+      { img: "door-installed", w: 720, h: 1280, aspect: "frame--photo", altKey: "alt.door.installed", capKey: "cap.door.installed" },
+    ],
   },
 ];
 
@@ -447,7 +502,7 @@ function el(tag: string, cls: string, text?: string): HTMLElement {
  * spends the gesture until it means nothing, and the room would read as a wall
  * of frames rather than as one work.
  */
-function buildGallery(shots: Shot[], extraClass = ""): HTMLElement {
+function buildGallery(shots: Shot[], extraClass = "", zoom = false): HTMLElement {
   const gallery = el("div", `case__gallery${extraClass ? ` ${extraClass}` : ""}`);
   for (const shot of shots) {
     const figure = document.createElement("figure");
@@ -461,7 +516,18 @@ function buildGallery(shots: Shot[], extraClass = ""): HTMLElement {
     img.alt = t(shot.altKey);
     img.loading = "lazy";
     img.decoding = "async";
-    figure.append(img);
+    if (zoom) {
+      // A drawing opens full size in a new tab: the plate is a preview of it.
+      const a = document.createElement("a");
+      a.className = "case__zoom";
+      a.href = img.src;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.append(img);
+      figure.append(a);
+    } else {
+      figure.append(img);
+    }
 
     if (shot.capKey) {
       const caption = document.createElement("figcaption");
@@ -594,6 +660,19 @@ function render(slug: string): void {
     host.replaceChildren(back, head, top);
   }
 
+  if (project.wideScene) {
+    const figure = document.createElement("figure");
+    figure.className = "case__poster case__wide";
+    const stage = document.createElement("div");
+    stage.className = "case__stage";
+    stage.dataset["scene"] = project.wideScene.id;
+    const caption = document.createElement("figcaption");
+    caption.className = "case__caption case__caption--poster";
+    caption.textContent = t(project.wideScene.capKey);
+    figure.append(stage, caption);
+    host.append(figure);
+  }
+
   // Built before it is placed: a room can ask for the gallery in the picture
   // column beside the description rather than full width under it.
   if (project.gallery.length && project.galleryInPictures) {
@@ -604,7 +683,9 @@ function render(slug: string): void {
     const lead = project.galleryLeadInPictures ?? 0;
     if (lead > 0) pictures.append(buildGallery(project.gallery.slice(0, lead), "case__gallery--aside"));
     const rest = project.gallery.slice(lead);
-    if (rest.length) host.append(buildGallery(rest));
+    if (rest.length) {
+      host.append(buildGallery(rest, project.galleryLarge ? "case__gallery--large" : "", project.galleryLarge));
+    }
   }
 
   // The poster hangs full width at the foot: it is a document to be READ, and
@@ -633,59 +714,6 @@ function render(slug: string): void {
     host.append(figure);
   }
 
-  /*
-   * A poster that exists in both languages, with a tab to switch between them.
-   *
-   * The tab is deliberately INDEPENDENT of the site's own language switch: a
-   * German-speaking reader may still want the English poster beside an English
-   * CV, and an English reader may want to see that the German exists. It opens
-   * on whichever language the site is in, then follows the reader's choice.
-   */
-  if (project.posterPair) {
-    const pair = project.posterPair;
-    const figure = document.createElement("figure");
-    figure.className = "case__poster";
-
-    const tabs = el("div", "poster-tabs");
-    const hint = el("p", "poster-tabs__hint", t(pair.hintKey));
-
-    const img = document.createElement("img");
-    img.className = "case__img";
-    img.loading = "lazy";
-    img.decoding = "async";
-
-    const show = (lang: "en" | "de"): void => {
-      const shot = lang === "de" ? pair.de : pair.en;
-      img.src = src(shot.img);
-      img.width = shot.w;
-      img.height = shot.h;
-      img.alt = t(shot.altKey);
-      for (const b of tabs.querySelectorAll("button")) {
-        b.setAttribute("aria-pressed", String(b.dataset["posterLang"] === lang));
-      }
-    };
-
-    for (const lang of ["en", "de"] as const) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "poster-tabs__btn";
-      btn.dataset["posterLang"] = lang;
-      btn.textContent = lang.toUpperCase();
-      btn.addEventListener("click", () => show(lang));
-      tabs.append(btn);
-    }
-
-    figure.append(tabs, hint, img);
-
-    const caption = document.createElement("figcaption");
-    caption.className = "case__caption case__caption--poster";
-    caption.textContent = t(pair.capKey);
-    figure.append(caption);
-
-    show(getLang());
-    host.append(figure);
-  }
-
   const foot = el("div", "case__foot");
   const backFoot = document.createElement("a");
   backFoot.className = "case__back";
@@ -704,12 +732,4 @@ export function initProjects(): void {
   });
   registerProjectRenderer(render);
   initProgress(PROJECTS.map((p) => p.slug));
-
-  // Re-render on a language change, the way the awards room does: the room is
-  // built from strings, so applyLang's DOM sweep would not otherwise reach it.
-  document.addEventListener("i18n:change", () => {
-    const host = document.getElementById("view-project");
-    const slug = host?.dataset["slug"];
-    if (host && !host.hidden && slug) render(slug);
-  });
 }

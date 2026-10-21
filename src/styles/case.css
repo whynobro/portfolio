@@ -346,51 +346,6 @@
   text-align: center;
 }
 
-/* ---- The poster's own language tab --------------------------------------- */
-/*
- * Sits above the poster it controls, with a line saying what it does. It is
- * deliberately separate from the masthead's language switch: this one changes
- * the poster only, and a control that looks like the site's would imply
- * otherwise.
- */
-.poster-tabs {
-  display: flex;
-  gap: 0;
-  margin-block-end: var(--s-2);
-}
-
-.poster-tabs__btn {
-  padding: var(--s-2) var(--s-4);
-  min-inline-size: 5ch;
-  font-family: var(--font-mono);
-  font-size: var(--t-xs);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--ink-mute);
-  background: transparent;
-  border: 1px solid var(--wall-line);
-  cursor: pointer;
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
-}
-.poster-tabs__btn + .poster-tabs__btn {
-  border-inline-start: none;
-}
-.poster-tabs__btn:hover {
-  color: var(--ink);
-}
-.poster-tabs__btn[aria-pressed="true"] {
-  background: var(--gilt);
-  border-color: var(--gilt);
-  color: #fff;
-}
-
-.poster-tabs__hint {
-  margin: 0 0 var(--s-4);
-  font-family: var(--font-sans);
-  font-size: var(--t-xs);
-  color: var(--ink-mute);
-}
-
 /* ---- The rest of the sequence -------------------------------------------- */
 /*
  * UNFRAMED. Only the hero wears the carved moulding; these are the supporting
@@ -509,4 +464,40 @@
   margin-block-start: var(--s-16);
   padding-block-start: var(--s-8);
   border-block-start: 1px solid var(--wall-line);
+}
+
+/*
+ * Report figures hang two-up and larger than the photographs' prints: they are
+ * drawings with fine linework and small type, unreadable at 300px. Each opens
+ * full size on click.
+ */
+@media (min-width: 720px) {
+  .case__gallery--large {
+    grid-template-columns: repeat(2, minmax(0, 520px));
+  }
+}
+.case__zoom {
+  display: block;
+  cursor: zoom-in;
+}
+.case__zoom:focus-visible {
+  outline: 2px solid var(--gilt);
+  outline-offset: 3px;
+}
+
+/*
+ * A scene shown wide across the room (the WERC docking sequence). Fixed aspect
+ * so the canvas has a real box at mount; taller on a phone, where 21:9 would
+ * leave a strip too thin to read.
+ */
+.case__stage {
+  aspect-ratio: 16 / 9;
+  inline-size: 100%;
+  background: #04060b;
+  box-shadow: var(--hang-shadow);
+}
+@media (min-width: 720px) {
+  .case__stage {
+    aspect-ratio: 21 / 9;
+  }
 }

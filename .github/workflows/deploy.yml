@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 # Never run two deploys at once, but let a newer push finish rather than
-# cancelling it — a half-deployed portfolio is worse than a slightly stale one.
+# cancelling it: a half-deployed portfolio is worse than a slightly stale one.
 concurrency:
   group: pages
   cancel-in-progress: false
@@ -29,83 +29,68 @@ jobs:
 
       - run: npm ci
 
-      # tsc runs first and independently: it is what catches a German string
-      # missing from de.ts, which is the failure this project is most exposed to.
       - name: Typecheck
         run: npx tsc --noEmit
 
-      # Two builds, one artifact. The root is the site submitted to HWA AG and
-      # must not drift: the bare michaelfischbach.dev is the URL on that
-      # application, and a recruiter may open it long after submitting. The
-      # employer-neutral version nests at /general/ rather than replacing it.
-      #
-      # Order matters: the root build empties dist/, so it has to run first.
-      - name: Build (HWA, site root)
+      - name: Build (site root)
         run: npx vite build
 
-      - name: Build (general, /general/)
-        run: npx vite build --mode general
+      # The site exactly as submitted with the HWA AG application (Aug 2026),
+      # rebuilt from its tag rather than committed as build output. It lives at
+      # /hwa/ for reference only and is kept out of search.
+      - name: Check out the HWA snapshot
+        uses: actions/checkout@v4
+        with:
+          ref: hwa-submitted
+          path: hwa-src
 
-      # The build used to assert dist held exactly one file. That guarded the
-      # file:// promise, which cost 7.1 MB gzip of BLOCKING payload on first
-      # paint and is no longer wanted (the portfolio ships as a link).
-      #
-      # What matters now is the opposite: that the shell stays small and the
-      # photographs stay OUT of it. A stray re-inline would silently undo the
-      # whole reason for splitting, so the shell is capped rather than counted.
-      - name: Verify shell stays small
+      - name: Build the HWA snapshot (/hwa/)
+        working-directory: hwa-src
         run: |
-          for shell in dist/index.html dist/general/index.html; do
+          npm ci
+          npx vite build --outDir ../dist/hwa --emptyOutDir
+          rm -f ../dist/hwa/CNAME
+          sed -i 's|<head>|<head><meta name="robots" content="noindex" />|' ../dist/hwa/index.html
+          sed -i 's|rel="canonical" href="https://michaelfischbach.dev/"|rel="canonical" href="https://michaelfischbach.dev/hwa/"|' ../dist/hwa/index.html
+
+      # The shell stays small and the photographs stay OUT of it: a stray
+      # re-inline would silently undo the reason assets are split out.
+      - name: Verify shells stay small
+        run: |
+          for shell in dist/index.html dist/hwa/index.html; do
             bytes=$(wc -c < "$shell")
             echo "$shell is $bytes bytes"
             test "$bytes" -lt 102400 || {
-              echo "Shell exceeded 100 KB — an asset is probably being inlined again."
+              echo "Shell exceeded 100 KB: an asset is probably being inlined again."
               exit 1
             }
           done
           test -d dist/assets || { echo "Expected dist/assets/"; exit 1; }
-          test -d dist/general/assets || { echo "Expected dist/general/assets/"; exit 1; }
+          test -d dist/hwa/assets || { echo "Expected dist/hwa/assets/"; exit 1; }
           echo "dist contains $(find dist -type f | wc -l) file(s)"
 
-      # The general build exists to be addressed to nobody in particular. If any
-      # of these fail, it is advertising an application it is not part of, which
-      # is the whole failure this split was built to prevent, so it fails the
-      # deploy rather than shipping.
-      - name: Verify the general build names no employer
+      # The root is addressed to no particular employer, and /general/ must keep
+      # forwarding: every non-HWA resume sent before the makeover links there.
+      - name: Verify the root names no employer and /general/ forwards
         run: |
-          # Text output only: a case-insensitive search over the photographs
-          # matches "hwa" inside AVIF payload bytes and would fail on nothing.
-          # "HWA" is matched case-SENSITIVELY for the same reason.
-          hits=$(find dist/general -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' \) \
-                 -exec grep -l "HWA\|Affalterbach\|complete-vehicle" {} +) || true
+          hits=$(find dist -path dist/hwa -prune -o -type f \( -name '*.html' -o -name '*.js' -o -name '*.css' \) \
+                 -exec grep -l "HWA\|Affalterbach\|complete-vehicle\|Lebenslauf" {} + ) || true
           if [ -n "$hits" ]; then
-            echo "The general build still carries HWA-addressed copy:"
-            echo "$hits"
-            exit 1
+            echo "The root build carries HWA or German copy:"; echo "$hits"; exit 1
           fi
-          # The HWA resume must not be a fetchable URL on the general site.
-          if ls dist/general/assets/resume.*.pdf >/dev/null 2>&1; then
-            echo "The HWA application resume leaked into the general build."
-            exit 1
-          fi
-          # A wrong canonical would let a search engine fold the general site
-          # into the HWA one and preview shared links as the root.
-          grep -q 'rel="canonical" href="https://michaelfischbach.dev/general/"' dist/general/index.html || {
-            echo "The general build does not declare its own canonical URL."
-            exit 1
-          }
-          echo "General build is employer-neutral."
+          grep -q 'location.replace' dist/general/index.html || { echo "/general/ no longer forwards."; exit 1; }
+          grep -q 'name="robots" content="noindex"' dist/hwa/index.html || { echo "/hwa/ is indexable."; exit 1; }
+          echo "Root is employer-neutral; /general/ forwards; /hwa/ is noindex."
 
       # CNAME is why the custom domain survives a deploy; without it Pages
-      # reverts to the github.io URL. It must be at the artifact ROOT and only
-      # there.
+      # reverts to the github.io URL. It must be at the artifact ROOT only.
       - name: Verify the custom domain survives
         run: |
           test -f dist/CNAME || { echo "dist/CNAME is missing: Pages would drop the custom domain."; exit 1; }
           diff <(cat dist/CNAME) <(printf 'michaelfischbach.dev') >/dev/null || {
             echo "dist/CNAME does not read michaelfischbach.dev:"; cat dist/CNAME; exit 1
           }
-          test ! -f dist/general/CNAME || { echo "Stray CNAME inside dist/general/."; exit 1; }
+          test "$(find dist -name CNAME | wc -l)" -eq 1 || { echo "Stray CNAME below the root."; exit 1; }
           echo "CNAME present at the root and nowhere else."
 
       - uses: actions/upload-pages-artifact@v3

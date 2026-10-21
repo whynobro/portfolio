@@ -6,7 +6,7 @@
     <title>Michael Fischbach, Mechanical Engineering</title>
     <meta
       name="description"
-      content="Mechanical engineering student at Cal Poly San Luis Obispo. CAD-to-part manufacturing, 3-axis CNC machining, tolerance analysis and production software."
+      content="Mechanical engineering student at Cal Poly San Luis Obispo, Honors Program. Team lead on a NASA Artemis lunar rover charger, CAD-to-part CNC machining, and products taken to market."
     />
 
     <!-- The tab icon: the Chameleon Ramps silhouette in ink. Referenced
@@ -34,7 +34,7 @@
     />
     <meta
       property="og:description"
-      content="An engineering portfolio: CAD-to-part manufacturing, 3-axis CNC machining, tolerance analysis and production software."
+      content="An engineering portfolio: a NASA Artemis lunar rover charger, CAD-to-part CNC machining, products taken to market and production software."
     />
     <meta property="og:image" content="https://michaelfischbach.dev/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -45,52 +45,30 @@
     />
     <meta name="twitter:card" content="summary_large_image" />
     <script>
-      // Runs before first paint so a returning German visitor never sees an
-      // EN->DE flash, and [data-lang="de"] rules apply to the very first frame.
-      (function () {
-        try {
-          var p = new URLSearchParams(location.search);
-          var q = p.get("lang");
-          var stored = localStorage.getItem("lang");
-          var nav = (navigator.languages || [navigator.language || "en"]).join(
-            ",",
-          );
-          var lang =
-            q === "de" || q === "en"
-              ? q
-              : stored === "de" || stored === "en"
-                ? stored
-                : /\bde\b|de-/i.test(nav)
-                  ? "de"
-                  : "en";
-          var el = document.documentElement;
-          el.lang = lang;
-          el.dataset.lang = lang;
-          if (p.get("shots") === "1") el.dataset.shots = "1";
-        } catch (e) {
-          /* private mode: the English text in the markup stands */
-        }
-      })();
+      // Screenshot mode, set before first paint so the capture never sees a
+      // frame of the live animation.
+      if (new URLSearchParams(location.search).get("shots") === "1")
+        document.documentElement.dataset.shots = "1";
     </script>
   </head>
   <body>
-    <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+    <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="masthead">
       <div class="page masthead__inner">
         <a class="masthead__name" href="#/">Michael Fischbach</a>
 
         <nav class="masthead__nav" aria-label="Primary">
-          <a href="#/work" data-i18n="nav.work">Work</a>
-          <a href="#/about" data-i18n="nav.about">About</a>
-          <a href="#/contact" data-i18n="nav.contact">Contact</a>
+          <a href="#/work">Work</a>
+          <a href="#/about">About</a>
+          <a href="#/contact">Contact</a>
 
           <!-- The awards room is reached only from this badge: a quiet way in,
                not a claim repeated on every page. -->
           <a
             class="badge"
             href="#/awards"
-            data-i18n-attr="aria-label:a11y.awards"
+           
             aria-label="Awards and honours"
           >
             <svg
@@ -106,32 +84,9 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <span data-i18n="nav.awards">Awards</span>
+            <span>Awards</span>
           </a>
 
-          <div
-            class="lang"
-            role="group"
-            data-i18n-attr="aria-label:a11y.langGroup"
-            aria-label="Language"
-          >
-            <button
-              class="lang__btn"
-              type="button"
-              data-lang-btn="en"
-              aria-pressed="true"
-            >
-              EN
-            </button>
-            <button
-              class="lang__btn"
-              type="button"
-              data-lang-btn="de"
-              aria-pressed="false"
-            >
-              DE
-            </button>
-          </div>
         </nav>
       </div>
     </header>
@@ -159,16 +114,16 @@
             </div>
 
             <div class="entrance__intro">
-              <span class="eyebrow" data-i18n="home.eyebrow"
+              <span class="eyebrow"
                 >Permanent collection</span
               >
               <h1 class="entrance__name">Michael Fischbach</h1>
-              <p class="entrance__role" data-i18n="home.role">
+              <p class="entrance__role">
                 Mechanical engineering · Cal Poly San Luis Obispo
               </p>
 
               <div class="entrance__bio">
-                <p data-i18n="home.bio1">
+                <p>
                   In 2019 I ordered a concrete fingerboard ramp from Germany for
                   $30. My mom looked at it and said I could make it myself, so I
                   did, with old molding material from the garage. Since then I
@@ -176,55 +131,48 @@
                   tolerance stack-up, machining, and the measurement that says
                   whether the model was right.
                 </p>
-                <p data-i18n="home.bio2">
-                  The work I like best is where a drawing becomes a part and the
-                  measurement gets the last word. That is why I am applying for
-                  the complete-vehicle development internship at HWA AG: the
-                  whole car is the part. I grew up in an Air Force family and
-                  moved nine times across seven states, so moving to
-                  Affalterbach is normal rather than daunting.
+                <p>
+                  Right now I lead Cal Poly's twelve-person WERC team designing a
+                  1 kW wireless charger for a NASA Artemis lunar rover, and I
+                  intern with All Domain Integration supporting Space Force and
+                  Air Force mission systems engineers. The work I like best is
+                  where a drawing becomes a part and the measurement gets the
+                  last word.
                 </p>
               </div>
 
               <div class="facts">
                 <div>
-                  <div class="facts__value mono">3.78</div>
-                  <div class="facts__label" data-i18n="fact.gpa">
+                  <div class="facts__value mono">3.79</div>
+                  <div class="facts__label">
                     GPA · Honors Program
                   </div>
                 </div>
                 <div>
-                  <div class="facts__value mono">40+</div>
-                  <div class="facts__label" data-i18n="fact.products">
-                    products to market
+                  <div class="facts__value mono">1 kW</div>
+                  <div class="facts__label">
+                    lunar rover charger, team lead
                   </div>
                 </div>
                 <div>
-                  <div class="facts__value mono">2,015</div>
-                  <div class="facts__label" data-i18n="fact.tests">
-                    tests guarding a live trading account
+                  <div class="facts__value mono">40+</div>
+                  <div class="facts__label">
+                    products taken to market
                   </div>
                 </div>
               </div>
 
               <div class="btn-row">
-                <a class="btn btn--gilt" href="#/work" data-i18n="cta.work"
+                <a class="btn btn--gilt" href="#/work"
                   >View the collection</a
                 >
-                <a class="btn" href="#/contact" data-i18n="cta.contact"
+                <a class="btn" href="#/contact"
                   >Contact</a
                 >
-                <!-- The href and the download filename are both set by
-                     src/resume.ts, which follows the site's language: English
-                     serves the resume, German the Lebenslauf. The attribute
-                     here is only the pre-JavaScript fallback. -->
-                <a
-                  class="btn btn--resume"
-                  data-resume
-                  download="Michael-Fischbach-CV.pdf"
-                  data-i18n="cta.resume"
-                  >Resume</a
-                >
+                <!-- href and filename are set by src/resume.ts, which imports the
+                     PDFs so the bundler hashes them. -->
+                <a class="btn btn--resume" data-doc="resume">Resume</a>
+                <a class="btn" data-doc="cv">CV</a>
               </div>
             </div>
 
@@ -242,7 +190,7 @@
                 class="playable"
                 data-scene="tictactoe"
                 role="group"
-                data-i18n-attr="aria-label:game.ttt.title"
+               
                 aria-label="Unbeatable Tic-Tac-Toe"
               ></div>
               <!-- The ring toss and its nudge share a wrapper so the hint can be
@@ -253,7 +201,7 @@
                   class="playable"
                   data-scene="ringtoss"
                   role="group"
-                  data-i18n-attr="aria-label:game.ring.title"
+                 
                   aria-label="Water Ring Toss"
                 ></div>
                 <!-- Points back at the ring toss: the pump and the side jets are
@@ -272,7 +220,7 @@
                       decoding="async"
                     />
                   </picture>
-                  <span class="play-hint__text" data-i18n="game.ring.hint"
+                  <span class="play-hint__text"
                     >Press the buttons, it really works</span
                   >
                 </p>
@@ -284,13 +232,13 @@
         <!-- ================= THE COLLECTION ================= -->
         <section class="page section section--after-entrance" id="work">
           <div class="intro">
-            <span class="eyebrow" data-i18n="work.eyebrow">The collection</span>
-            <h2 class="display" data-i18n="work.title">
+            <span class="eyebrow">The collection</span>
+            <h2 class="display">
               Works in Mechanical Engineering
             </h2>
-            <p class="intro__lede" data-i18n="work.lede">
-              Six pieces I designed, built and measured. Each one says what it
-              was for and what came out of it.
+            <p class="intro__lede">
+              Eight pieces I designed, built and measured. Each one says what
+              it was for and what came out of it.
             </p>
             <!-- How much of the wall has been walked. Filled by src/progress.ts
                  as each room is opened, and hidden from assistive tech: the bar
@@ -306,6 +254,42 @@
           </div>
 
           <div class="works">
+            <a class="work" href="#/work/werc">
+              <div class="frame frame--landscape">
+                <div class="frame__mat">
+                  <div class="frame__win">
+                    <img
+                      src="./src/assets/img/werc-bench.avif"
+                      width="1491"
+                      height="1007"
+                      alt="The bench prototype of the lunar rover charger: a small rover parked at a charging wall"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <!-- The docking sequence, animated over the drawing once the
+                         scene mounts. -->
+                    <div
+                      class="frame__scene"
+                      data-scene="werc"
+                      aria-hidden="true"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <div class="label">
+                <div class="label__rule"></div>
+                <h3 class="label__title">Lunar Rover Wireless Charger</h3>
+                <p class="label__body">
+                  A 1 kW capacitive charger for a NASA Artemis rover at the lunar
+                  South Pole: the rover parks itself at a charging wall and power
+                  crosses a 100 mm gap with no contact. I lead the twelve-person
+                  team.
+                </p>
+                <p class="label__meta">
+                  NASA Artemis · WERC 2027 · in design
+                </p>
+              </div>
+            </a>
             <a class="work" href="#/work/cnc">
               <div class="frame frame--landscape">
                 <div class="frame__mat">
@@ -318,21 +302,30 @@
                       loading="lazy"
                       decoding="async"
                     />
+                    <!-- The capstone's own STL, turning, drawn over the
+                         photograph once the scene mounts. The photograph stays
+                         as the no-JS picture. Decorative here: the whole tile
+                         is the link, so the room is where it can be dragged. -->
+                    <div
+                      class="frame__scene"
+                      data-scene="putter"
+                      aria-hidden="true"
+                    ></div>
                   </div>
                 </div>
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.putter.title">
+                <h3 class="label__title">
                   CNC-Milled Aluminium Putter
                 </h3>
-                <p class="label__body" data-i18n="proj.putter.body">
-                  A putter head machined from 6061 on a 3-axis HAAS in a single
-                  setup, with a cost model behind it. One of eight finalists
-                  from over forty.
+                <p class="label__body">
+                  A putter head machined from 6061 on a 3-axis Haas in two
+                  operations, proved out on twelve printed prototypes first.
+                  One of eight capstone finalists from over forty.
                 </p>
                 <p class="label__meta">
-                  3-Axis HAAS · Al 6061 · <span data-measured>$15.78/unit</span>
+                  3-axis Haas · Al 6061 · <span data-measured>$18.56/unit</span>
                 </p>
               </div>
             </a>
@@ -355,8 +348,8 @@
               <div class="label">
                 <div class="label__rule"></div>
                 <!-- The mark is a SIBLING of the title, not inside it: the
-                     title's text is replaced wholesale by the i18n pass, which
-                     would drop any markup nested in it. `alt=""` because the
+                     title stays plain text, which keeps the heading clean for a
+                     screen reader. `alt=""` because the
                      company is already named in the heading beside it. -->
                 <div class="label__name">
                   <picture>
@@ -374,18 +367,18 @@
                       decoding="async"
                     />
                   </picture>
-                  <h3 class="label__title" data-i18n="proj.ramps.title">
+                  <h3 class="label__title">
                     Chameleon Ramps
                   </h3>
                 </div>
-                <p class="label__body" data-i18n="proj.ramps.body">
-                  A cast-concrete product company founded in 2019: forty designs
-                  taken from CAD through mould-making to a shipped product, with
-                  the casting process developed in-house.
+                <p class="label__body">
+                  A cast-concrete product company I ran from 2019 to 2026:
+                  forty designs taken from CAD through printed prototypes and
+                  mould-making to a shipped product, sold in 15 countries.
                 </p>
                 <p class="label__meta">
-                  Since 2019 · 40+ products ·
-                  <span data-measured>$50k revenue</span>
+                  2019–2026 · 40+ products ·
+                  <span data-measured>$39.6k revenue</span>
                 </p>
               </div>
             </a>
@@ -407,19 +400,17 @@
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.wave.title">
+                <h3 class="label__title">
                   Wave Energy Converter
                 </h3>
-                <p class="label__body" data-i18n="proj.wave.body">
+                <p class="label__body">
                   A rack-and-pinion generator turning wave oscillation into
                   electrical power, every component machined in-house on a
-                  Bridgeport mill.
+                  Bridgeport mill. I led the team of five.
                 </p>
                 <p class="label__meta">
                   Rack &amp; pinion · Bridgeport ·
-                  <span data-measured data-i18n="proj.wave.meta"
-                    >1st place</span
-                  >
+                  <span data-measured>1st of 5 teams</span>
                 </p>
               </div>
             </a>
@@ -441,10 +432,10 @@
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.bot.title">
+                <h3 class="label__title">
                   SMC Trading Bot
                 </h3>
-                <p class="label__body" data-i18n="proj.bot.body">
+                <p class="label__body">
                   A Python system that reads options alerts written in prose and
                   places the orders itself, against a funded brokerage account,
                   with no human in the loop. Parameters were chosen on their
@@ -453,7 +444,7 @@
                 </p>
                 <p class="label__meta">
                   Python · <span data-measured>2,015 tests</span> ·
-                  <span data-i18n="proj.bot.meta">options live, real money</span>
+                  <span>options live, real money</span>
                 </p>
               </div>
             </a>
@@ -491,11 +482,11 @@
                       decoding="async"
                     />
                   </picture>
-                  <h3 class="label__title" data-i18n="proj.campus.title">
+                  <h3 class="label__title">
                     Campus Native
                   </h3>
                 </div>
-                <p class="label__body" data-i18n="proj.campus.body">
+                <p class="label__body">
                   A production marketplace for student-led campus tours: sixteen
                   data models and payment handling, with double-booking
                   prevented by a database constraint rather than application
@@ -503,7 +494,7 @@
                 </p>
                 <p class="label__meta">
                   Next.js ·
-                  <span data-i18n="proj.campus.meta">live in production</span>
+                  <span>live in production</span>
                 </p>
               </div>
             </a>
@@ -525,18 +516,44 @@
               </div>
               <div class="label">
                 <div class="label__rule"></div>
-                <h3 class="label__title" data-i18n="proj.water.title">
+                <h3 class="label__title">
                   Water Distribution System
                 </h3>
-                <p class="label__body" data-i18n="proj.water.body">
+                <p class="label__body">
                   A gravity-fed distribution network for a rural community in
                   Nicaragua: source survey, tank siting and pipe routing worked
                   out from the terrain rather than from a standard layout.
                 </p>
                 <p class="label__meta">
-                  <span data-i18n="proj.water.meta">Nicaragua</span> ·
-                  <span data-i18n="proj.water.meta2">gravity-fed</span>
+                  <span>Nicaragua</span> ·
+                  <span>gravity-fed</span>
                 </p>
+              </div>
+            </a>
+            <a class="work" href="#/work/door">
+              <div class="frame frame--landscape">
+                <div class="frame__mat">
+                  <div class="frame__win">
+                    <img
+                      src="./src/assets/img/door-final-cad.avif"
+                      width="740"
+                      height="642"
+                      alt="The Doorknob-Inator in CAD: a lever clamped around a round door knob"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="label">
+                <div class="label__rule"></div>
+                <h3 class="label__title">Doorknob-Inator</h3>
+                <p class="label__body">
+                  A printed lever adapter so residents with one hand, or none,
+                  can open the round knobs in Cal Poly's Red Brick dorms. Three
+                  generations, from a cup mock-up to a PLA base with a TPU head.
+                </p>
+                <p class="label__meta">Fusion 360 · PLA and TPU · ME 128</p>
               </div>
             </a>
           </div>
@@ -558,8 +575,8 @@
       <!-- ================= AWARDS ================= -->
       <article data-view id="view-awards" class="page section" hidden>
         <div class="intro">
-          <span class="eyebrow" data-i18n="awards.eyebrow">Honours</span>
-          <h1 class="display" data-i18n="awards.title">
+          <span class="eyebrow">Honours</span>
+          <h1 class="display">
             Awards &amp; Recognition
           </h1>
         </div>
@@ -569,16 +586,17 @@
       <!-- ================= ABOUT ================= -->
       <article data-view id="view-about" class="page section" hidden>
         <div class="intro">
-          <span class="eyebrow" data-i18n="nav.about">About</span>
-          <h1 class="display" data-i18n="about.title">Profile</h1>
+          <span class="eyebrow">About</span>
+          <h1 class="display">Profile</h1>
         </div>
         <div class="prose prose--centred stack">
-          <p data-i18n="about.p1">
+          <p>
             I am a mechanical engineering student at Cal Poly San Luis Obispo,
-            in the Honors Program, with a 3.78 GPA and Dean's List in all three
-            quarters of my first year.
+            in the Honors Program, with a 3.79 GPA and the President's Honors
+            List for reaching the Dean's List in all three quarters of my first
+            year.
           </p>
-          <p data-i18n="about.p2">
+          <p>
             The work I like best is where a drawing becomes a part: design it,
             make it, test it, find out where the model was wrong, change it. I
             learn the most when something fails the first time. On the wave
@@ -587,12 +605,131 @@
             on a mill and to a system in production, which is why both appear
             here.
           </p>
-          <p data-i18n="about.p3">
+          <p>
             I grew up in an Air Force family and moved nine times across seven
-            states. I am a US citizen and eligible for a German study-related
-            internship residence permit.
+            states and territories, so a new team or a new city is normal. Away
+            from engineering: Eagle Scout, 500 miles of backpacking, rowing with
+            the Channel Islands club, and watercolour.
           </p>
         </div>
+
+        <!-- The resume in long form, as a page. Kept in step with the master
+             resume (docs/resume-inventory.md); the PDFs are the authority. -->
+        <div class="cv">
+          <section class="cv__block" aria-labelledby="cv-exp">
+            <h2 class="cv__h" id="cv-exp">Experience</h2>
+            <div class="cv__entry">
+              <p class="cv__when mono">2026 – now</p>
+              <div>
+                <h3 class="cv__role">WERC Design Contest Team Lead</h3>
+                <p class="cv__org">Cal Poly · NASA Artemis wireless capacitive charger</p>
+                <p class="cv__body">
+                  Lead a twelve-person undergraduate and graduate team designing
+                  a 1 kW capacitive charger for a lunar rover. Set the schedule,
+                  integrate power, coupler, controls and structures, and develop
+                  plate-based alignment sensing for docking.
+                </p>
+              </div>
+            </div>
+            <div class="cv__entry">
+              <p class="cv__when mono">2025 – now</p>
+              <div>
+                <h3 class="cv__role">Mechanical Engineering Intern</h3>
+                <p class="cv__org">All Domain Integration · aerospace engineering, remote</p>
+                <p class="cv__body">
+                  Support mission systems engineers on Space Force and Air Force
+                  efforts as part of a SETA contractor team. Use locally hosted
+                  language models to analyse satellite sensor data.
+                </p>
+              </div>
+            </div>
+            <div class="cv__entry">
+              <p class="cv__when mono">2026 – now</p>
+              <div>
+                <h3 class="cv__role">Founder and CEO</h3>
+                <p class="cv__org">Campus Native · campusnative.com</p>
+                <p class="cv__body">
+                  A live marketplace connecting prospective students with
+                  student tour guides. Recruited and direct a four-person intern
+                  team across engineering, marketing and content.
+                </p>
+              </div>
+            </div>
+            <div class="cv__entry">
+              <p class="cv__when mono">2019 – 2026</p>
+              <div>
+                <h3 class="cv__role">Founder and CEO</h3>
+                <p class="cv__org">Chameleon Ramps · chameleonramps.com</p>
+                <p class="cv__body">
+                  Designed 40+ cast-concrete products through four to six
+                  prototype generations each; $39,600 in revenue across 627
+                  orders, shipped to 15 countries.
+                </p>
+              </div>
+            </div>
+            <div class="cv__entry">
+              <p class="cv__when mono">2023 – 2024</p>
+              <div>
+                <h3 class="cv__role">Business Partner</h3>
+                <p class="cv__org">Ashersells LLC</p>
+                <p class="cv__body">
+                  Built Python automation for logistics and order processing.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="cv__block" aria-labelledby="cv-edu">
+            <h2 class="cv__h" id="cv-edu">Education</h2>
+            <div class="cv__entry">
+              <p class="cv__when mono">2025 – 2028</p>
+              <div>
+                <h3 class="cv__role">B.S. Mechanical Engineering, Honors Program</h3>
+                <p class="cv__org">Cal Poly San Luis Obispo · GPA 3.79 · expected May 2028</p>
+                <p class="cv__body">
+                  Completed: subtractive manufacturing I and II, materials
+                  joining, materials engineering with lab, calculus I to III,
+                  physics I to III. In progress: statics, design using solid
+                  modelling (SolidWorks), applied programming. Next: dynamics,
+                  circuits and electronics, linear analysis.
+                </p>
+                <p class="cv__body">
+                  Built mechanisms with tolerance stack-up and GD&amp;T: a piston, a
+                  Geneva wheel and a CNC-machined screwdriver.
+                </p>
+              </div>
+            </div>
+            <div class="cv__entry">
+              <p class="cv__when mono">2022 – 2025</p>
+              <div>
+                <h3 class="cv__role">Institute of Engineering</h3>
+                <p class="cv__org">Oaks Christian School</p>
+                <p class="cv__body">
+                  Engineering pathway: six multi-month applied design projects,
+                  among them the putter, the wave energy converter and the
+                  Nicaragua water system.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="cv__block" aria-labelledby="cv-skills">
+            <h2 class="cv__h" id="cv-skills">Skills</h2>
+            <dl class="cv__skills">
+              <dt>CAD / CAE</dt>
+              <dd>Fusion 360 (6+ years, 55+ designs), SolidWorks, AutoCAD, Autodesk CFD</dd>
+              <dt>Manufacturing</dt>
+              <dd>3-axis Haas CNC, Bridgeport mill, lathe, FDM and SLA printing, composite and concrete casting</dd>
+              <dt>Methods</dt>
+              <dd>GD&amp;T (ASME Y14.5), DFM, tolerance stack-up, cost modelling, iterative prototyping</dd>
+              <dt>Software</dt>
+              <dd>Python, Git, MATLAB, Linux, HTML/CSS; agentic coding with Claude Code and Codex</dd>
+              <dt>Certification</dt>
+              <dd>Haas CNC Certification Program, Basic Mill Operator: online coursework completed, 2026</dd>
+            </dl>
+          </section>
+        </div>
+
         <!-- Three photographs in a row under the text. All are prepped to the
              same 3:2 crop, so the row bottoms out on one line: an odd ratio in
              the set would show immediately as a ragged edge. Uncaptioned and
@@ -605,7 +742,6 @@
             height="800"
             loading="lazy"
             decoding="async"
-            data-i18n-attr="alt:about.photo1"
             alt="On a boat in Alaska, looking out at the mountains"
           />
           <img
@@ -614,7 +750,6 @@
             height="800"
             loading="lazy"
             decoding="async"
-            data-i18n-attr="alt:about.photo2"
             alt="On the beach in California"
           />
           <img
@@ -623,7 +758,6 @@
             height="800"
             loading="lazy"
             decoding="async"
-            data-i18n-attr="alt:about.photo3"
             alt="Sitting out past the break, waiting on a wave"
           />
         </div>
@@ -632,11 +766,11 @@
       <!-- ================= CONTACT ================= -->
       <article data-view id="view-contact" class="page section" hidden>
         <div class="intro">
-          <span class="eyebrow" data-i18n="nav.contact">Contact</span>
-          <h1 class="display" data-i18n="contact.title">Get in touch</h1>
-          <p class="intro__lede" data-i18n="contact.lede">
-            Available for a mechanical engineering internship. Open to
-            relocation.
+          <span class="eyebrow">Contact</span>
+          <h1 class="display">Get in touch</h1>
+          <p class="intro__lede">
+            Looking for a mechanical engineering internship for summer 2027.
+            Open to relocation.
           </p>
         </div>
         <div class="btn-row btn-row--centred">
@@ -650,13 +784,8 @@
             rel="noopener"
             >LinkedIn</a
           >
-          <a
-            class="btn btn--resume"
-            data-resume
-            download="Michael-Fischbach-CV.pdf"
-            data-i18n="cta.resume"
-            >Resume</a
-          >
+          <a class="btn btn--resume" data-doc="resume">Resume</a>
+          <a class="btn" data-doc="cv">Full CV</a>
         </div>
       </article>
     </main>
@@ -665,10 +794,10 @@
       <div class="page colophon__inner">
         <span class="colophon__name"
           >Michael Fischbach,
-          <span data-i18n="footer.role">Mechanical Engineer</span></span
+          <span>Mechanical Engineer</span></span
         >
         <div class="colophon__links">
-          <a href="mailto:mef126906@icloud.com" data-i18n="footer.email"
+          <a href="mailto:mef126906@icloud.com"
             >Email</a
           >
           <a
@@ -677,7 +806,7 @@
             rel="noopener"
             >LinkedIn</a
           >
-          <a href="#/awards" data-i18n="nav.awards">Awards</a>
+          <a href="#/awards">Awards</a>
         </div>
       </div>
     </footer>

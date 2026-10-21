@@ -12,6 +12,7 @@ export const REGISTRY: Record<string, () => Promise<{ default: SceneFactory }>> 
   tictactoe: () => import("./tictactoe/index"),
   ringtoss: () => import("./ringtoss/index"),
   putter: () => import("./putter/index"),
+  werc: () => import("./werc/index"),
 };
 
 export function hasScene(id: string): boolean {

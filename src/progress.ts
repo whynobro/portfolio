@@ -211,8 +211,4 @@ export function initProgress(slugs: string[]): void {
   seen = new Set([...load()].filter((s) => known.has(s)));
   save();
   paint();
-  // The label is built from a translated string, so it has to be rebuilt when
-  // the language changes: applyLang's DOM sweep replaces text nodes it owns,
-  // and this one is composed here.
-  document.addEventListener("i18n:change", paint);
 }

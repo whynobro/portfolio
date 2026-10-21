@@ -13,8 +13,12 @@ const subscribers = new Set<Tick>();
 let frame = 0;
 let last = 0;
 
-/** Hard cap on simultaneously animating scenes. */
-const MAX_ACTIVE = 2;
+/**
+ * Hard cap on simultaneously animating scenes. Four: the two toys at the
+ * entrance and the two live frames on the wall (the turning putter and the
+ * charger) can all be on screen together.
+ */
+const MAX_ACTIVE = 4;
 
 function loop(now: number): void {
   // Clamp dt: after a tab switch the real delta can be minutes, which would

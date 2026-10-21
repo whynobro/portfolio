@@ -230,3 +230,63 @@
 #view-contact .btn-row--centred {
   margin-block-start: 0;
 }
+
+/* ---- The resume as a page (About) ---------------------------------------- */
+.cv {
+  max-inline-size: 760px;
+  margin: var(--s-16) auto 0;
+  display: grid;
+  gap: var(--s-12);
+}
+.cv__h {
+  margin: 0 0 var(--s-6);
+  padding-block-end: var(--s-2);
+  border-block-end: 1px solid var(--gilt);
+  font-family: var(--font-display);
+  font-size: var(--t-2xl);
+  font-weight: 400;
+}
+.cv__entry {
+  display: grid;
+  gap: var(--s-1) var(--s-6);
+  margin-block-end: var(--s-6);
+}
+.cv__when {
+  margin: 0;
+  padding-block-start: 0.2em;
+  font-size: var(--t-xs);
+  color: var(--ink-mute);
+}
+.cv__role {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--t-base);
+  font-weight: 600;
+}
+.cv__org {
+  margin: 0.15em 0 var(--s-2);
+  font-size: var(--t-sm);
+  color: var(--ink-mute);
+}
+.cv__body {
+  margin: 0 0 var(--s-2);
+  max-inline-size: 62ch;
+}
+.cv__skills {
+  display: grid;
+  gap: var(--s-1) var(--s-6);
+  margin: 0;
+}
+.cv__skills dt {
+  font-weight: 600;
+  font-size: var(--t-sm);
+}
+.cv__skills dd {
+  margin: 0 0 var(--s-3);
+}
+@media (min-width: 640px) {
+  .cv__entry,
+  .cv__skills {
+    grid-template-columns: 8.5rem 1fr;
+  }
+}

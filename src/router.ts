@@ -41,8 +41,8 @@ export function registerProjectRoutes(fn: SlugResolver): void {
 let lastSlug: string | null = null;
 
 function currentPath(): string {
-  // "#/work/cnc" -> "/work/cnc"; query strings are stripped so ?shots=1 and
-  // ?lang=de can sit alongside a route without breaking the lookup.
+  // "#/work/cnc" -> "/work/cnc"; query strings are stripped so ?shots=1 can
+  // sit alongside a route without breaking the lookup.
   const raw = location.hash.replace(/^#/, "");
   return raw.split("?")[0] ?? "";
 }

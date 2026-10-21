@@ -263,12 +263,6 @@ const MANIFEST = [
     width: 2600,
     quality: 82,
   },
-  {
-    name: "bot-poster-de",
-    src: "assets-src/smc-bot/bot-poster.de.png",
-    width: 2600,
-    quality: 82,
-  },
   // The operator dashboard, captured by scripts/shoot-jarvis.mjs, which composes
   // the frame to exclude account state. Monospace tabular data on a near-black
   // ground, so quality runs higher than the photographs: AVIF at 70 puts visible
@@ -305,6 +299,22 @@ const MANIFEST = [
     background: "#05080d",
     quality: 82,
   },
+  // --- WERC lunar charger: the team's report figures, drawn to scale ---
+  // Diagrams, not photographs: fine linework and small type, so they keep
+  // their native width and a higher quality than the photographs get.
+  { name: "werc-full-scale", src: "assets-src/werc/full-scale.png", width: 1466, quality: 70 },
+  { name: "werc-bench", src: "assets-src/werc/bench-iso.png", width: 1491, quality: 70 },
+  { name: "werc-system", src: "assets-src/werc/system.png", width: 1500, quality: 70 },
+  { name: "werc-retune", src: "assets-src/werc/retune.png", width: 1344, quality: 70 },
+  { name: "werc-states", src: "assets-src/werc/states.png", width: 1500, quality: 70 },
+  { name: "werc-coupler", src: "assets-src/werc/coupler.png", width: 1525, quality: 70 },
+
+  // --- Doorknob-Inator: ME 128 slides, CAD and the printed part ---
+  { name: "door-final-cad", src: "assets-src/doorknob/final-cad.png", width: 740, quality: 66 },
+  { name: "door-installed", src: "assets-src/doorknob/installed.png", width: 720, quality: 66 },
+  { name: "door-print", src: "assets-src/doorknob/final-print.jpg", width: 1400, height: 1050, quality: 64 },
+  { name: "door-first-cad", src: "assets-src/doorknob/first-cad.png", width: 952, quality: 66 },
+  { name: "door-mockup", src: "assets-src/doorknob/cup-mockup.jpg", width: 1400, height: 1050, quality: 64 },
 ];
 
 const only = process.argv[2];

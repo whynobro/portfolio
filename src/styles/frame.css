@@ -268,3 +268,22 @@
     transform: none;
   }
 }
+
+/*
+ * A live scene hung in a frame in place of a photograph: the turning putter on
+ * the wall, the lunar charger's docking sequence. It fills the window exactly,
+ * so the window's aspect-ratio is what gives the canvas a real size at mount.
+ */
+.frame__scene {
+  position: absolute;
+  inset: 0;
+}
+/* Opaque only once mounted: until then the photograph under it is the picture,
+ * and it stays the picture for a reader without JavaScript. */
+.frame__scene[data-ready] {
+  background: var(--wall-deep);
+}
+/* On the wall the tile is the link; the scene must not catch the click. */
+.work .frame__scene {
+  pointer-events: none;
+}

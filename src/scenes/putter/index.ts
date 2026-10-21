@@ -5,7 +5,7 @@ import { subscribe, unsubscribe } from "../../lib/raf";
 /**
  * The putter head, turning slowly, drawn from the capstone's own STL.
  *
- * Rendered with a painter's-algorithm rasteriser on a 2D canvas rather than
+ * Rendered with a z-buffered software rasteriser on a 2D canvas rather than
  * WebGL. The model is 8538 triangles at a few hundred pixels: sorting them by
  * depth and filling them is well inside frame budget, and it avoids shipping a
  * shader pipeline, a context-loss path and a fallback for the machines that
@@ -30,6 +30,8 @@ export default function createPutterScene(): SceneModule {
   // Per-triangle scratch, allocated once: the draw loop must not allocate.
   const depth = new Float32Array(triCount);
   const shade = new Float32Array(triCount);
+  /** Specular highlight per face, added on top of the diffuse tone. */
+  const spec = new Float32Array(triCount);
   const visible = new Uint8Array(triCount);
   const proj = new Float32Array(triCount * 9); // x,y,z per vertex, screen space
   /** Depth buffer and pixel buffer, both reallocated only on resize. */
@@ -43,7 +45,7 @@ export default function createPutterScene(): SceneModule {
    */
   let angle = 3.9;
   /** The resting turn rate, in radians per frame. Velocity always eases here. */
-  const IDLE_SPIN = 0.0035;
+  const IDLE_SPIN = 0.006;
   /** Dragging takes over; on release this eases back to IDLE_SPIN. */
   let velocity = IDLE_SPIN;
   let dragging = false;
@@ -53,7 +55,7 @@ export default function createPutterScene(): SceneModule {
   const LX = -0.42, LY = -0.66, LZ = 0.62;
 
   function project(): void {
-    const s = Math.min(width, height) * 0.82;
+    const s = Math.min(width, height) * 0.92;
     const cxp = width / 2;
     const cyp = height / 2;
     const cos = Math.cos(angle);
@@ -140,6 +142,16 @@ export default function createPutterScene(): SceneModule {
        */
       const lambert = Math.abs(rnx * LX + rny * LY + rnz * LZ);
       shade[t] = 0.18 + lambert * 0.82;
+      /*
+       * Blinn-Phong highlight against a viewer straight down the Z axis. A
+       * machined 6061 face reads as METAL only once it catches a hot, tight
+       * highlight; diffuse shading alone made the part look like grey plastic.
+       * Same absolute-value treatment as the lamp, for the same winding reason.
+       */
+      const hx = LX, hy = LY, hz = LZ + 1;
+      const hl = Math.hypot(hx, hy, hz);
+      const nh = Math.abs(rnx * hx + rny * hy + rnz * hz) / hl;
+      spec[t] = nh ** 48;
 
       /*
        * Back-face culling, from the screen-space winding of the projected
@@ -201,10 +213,11 @@ export default function createPutterScene(): SceneModule {
       const inv = 1 / areaFull;
 
       const lum = shade[t]!;
-      const base = 58 + lum * 176;
-      const cr = Math.min(255, Math.round(base * 0.99));
-      const cg = Math.min(255, Math.round(base));
-      const cb = Math.min(255, Math.round(base * 1.04));
+      const hi = spec[t]! * 120;
+      const base = 52 + lum * 168;
+      const cr = Math.min(255, Math.round(base * 0.98 + hi));
+      const cg = Math.min(255, Math.round(base + hi));
+      const cb = Math.min(255, Math.round(base * 1.05 + hi));
 
       for (let y = minY; y <= maxY; y++) {
         for (let x = minX; x <= maxX; x++) {
@@ -262,12 +275,22 @@ export default function createPutterScene(): SceneModule {
 
       canvas = document.createElement("canvas");
       canvas.className = "putter__canvas";
-      canvas.setAttribute("role", "img");
-      canvas.setAttribute("aria-label", c.t("putter.aria"));
       root.append(canvas);
 
       const box = root.getBoundingClientRect();
       size(box.width, box.height || box.width * 0.75);
+
+      /*
+       * On the wall the part hangs inside a link: the whole tile opens the
+       * room. There it only turns, with no drag, no focus stop and no name of
+       * its own (the tile's label names it), so it cannot steal the click or
+       * add a second tab stop inside the link.
+       */
+      const decorative = root.closest("a") !== null;
+      if (!decorative) {
+        canvas.setAttribute("role", "img");
+        canvas.setAttribute("aria-label", c.t("putter.aria"));
+      }
 
       // Dragging spins the part. Pointer events cover mouse, pen and touch in
       // one path; `touch-action: none` in the stylesheet stops the browser
@@ -292,17 +315,19 @@ export default function createPutterScene(): SceneModule {
         dragging = false;
         canvas.releasePointerCapture?.(e.pointerId);
       };
-      canvas.addEventListener("pointerdown", down);
-      canvas.addEventListener("pointermove", move);
-      canvas.addEventListener("pointerup", up);
-      canvas.addEventListener("pointercancel", up);
+      if (!decorative) {
+        canvas.addEventListener("pointerdown", down);
+        canvas.addEventListener("pointermove", move);
+        canvas.addEventListener("pointerup", up);
+        canvas.addEventListener("pointercancel", up);
 
-      // Keyboard: the piece has to be inspectable without a pointer.
-      canvas.tabIndex = 0;
-      canvas.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") { angle += 0.12; render(); }
-        if (e.key === "ArrowRight") { angle -= 0.12; render(); }
-      });
+        // Keyboard: the piece has to be inspectable without a pointer.
+        canvas.tabIndex = 0;
+        canvas.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") { angle += 0.12; render(); }
+          if (e.key === "ArrowRight") { angle -= 0.12; render(); }
+        });
+      }
 
       if (c.reducedMotion) {
         render();
@@ -325,7 +350,7 @@ export default function createPutterScene(): SceneModule {
         angle += velocity;
         render();
       };
-      subscribe(tick);
+      if (!subscribe(tick)) tick = null;
     },
 
     resize(w: number, h: number) {

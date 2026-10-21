@@ -1,0 +1,482 @@
+# Engineering portfolio — Michael Fischbach
+
+An **art-gallery** portfolio: warm off-white walls, works hung in a carved gilt
+frame, serif captions. Targets the HWA AG opening **Praktikant im Bereich
+Gesamtfahrzeugentwicklung** (Affalterbach, start Feb/March 2027); every content
+decision optimises for that reader.
+
+It ships in **two variants from one codebase** (see the variant invariant
+below): the HWA site at the domain root, and an employer-neutral **general**
+version at `/general/`.
+
+Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
+<https://michaelfischbach.dev/general/> (general) · repo `whynobro/portfolio`
+(the github.io URL still redirects, but the custom domain is the one to quote)
+
+## Invariants
+
+- **The site root belongs to the HWA application and must not drift.**
+  `https://michaelfischbach.dev` is the URL written on the submitted HWA
+  application, and a recruiter may open it weeks or months after submitting.
+  Whatever the general version becomes, it goes at `/general/`; the root keeps
+  serving what was submitted. **Never make the general version the root.**
+
+  Both builds come from ONE codebase, selected by Vite mode:
+
+  ```sh
+  npm run build           # HWA -> dist/          (the default; no flag needed)
+  npm run build:general   # general -> dist/general/
+  npm run build:both      # both, in that order
+  npm run dev:general     # dev server, general variant
+  ```
+
+  `hwa` is the DEFAULT: an unflagged build, a fresh clone or a CI change
+  produces the HWA site, so forgetting the flag can only mis-serve `/general/`
+  (cosmetic), never the submitted link (not cosmetic).
+
+  The entire divergence is **one table**, `src/i18n/general.ts`: the strings
+  the general build replaces, EN and DE. Add a divergence there, nowhere else.
+  It currently holds one key, `home.bio2` (the entrance paragraph naming the
+  posting and Affalterbach), plus the resume swap below.
+
+  Substitution happens at **build time in three places**, because a runtime
+  override is not enough: every translated string also appears inline in
+  `index.html` as the no-JS default, so a runtime-only patch leaves the
+  HWA-addressed paragraph in the shipped HTML for crawlers, no-JS readers and
+  View Source. The `general-variant` plugin in `vite.config.ts`:
+
+  1. rewrites the matching `[data-i18n]` elements in the HTML shell;
+  2. rewrites the superseded value inside `en.ts`/`de.ts`, so the HWA copy is
+     **absent** from the bundle rather than merely unused;
+  3. rewrites `canonical` and `og:url` to `/general/`. Left alone, the general
+     build declares itself a duplicate of the HWA page, and a search engine
+     folds the two together.
+
+  Both rewrites **throw** if their target is not found, so a renamed key or a
+  reformatted dictionary fails the build instead of silently shipping HWA copy.
+  The plugin deliberately does **not** set `apply: "build"`: the dev server
+  must run the same substitutions or `dev:general` previews the wrong site.
+
+  The English resume is chosen by the `@resume-en` **alias**, not a ternary:
+  `?url` emits an asset for every import it sees, so a branch would still copy
+  the HWA resume into the general build as a live URL. HWA gets `resume.pdf`,
+  general gets `resume-general.pdf` (the US resume). German is unaffected: the
+  Lebenslauf names no employer.
+
+  CI enforces all of it: the general build must contain no `HWA`,
+  `Affalterbach` or `complete-vehicle` in any html/js/css, must not carry the
+  HWA resume, and must declare its own canonical. (Match `HWA`
+  case-sensitively and skip binaries: a case-insensitive sweep hits `hwa`
+  inside AVIF bytes.)
+- **The shell must stay small; photographs stay OUT of it.** The build is
+  `dist/index.html` (~25 KB, 6 KB gzip) plus a content-hashed `dist/assets/`.
+  CI fails if `index.html` grows past 100 KB, which is what a stray re-inline
+  looks like. Put assets in `src/assets/` and reference them **relatively**
+  (`./src/assets/img/x.avif`) so the bundler hashes and rewrites them; anything
+  in `public/` is copied verbatim and skips that. Assets under 4 KB still inline
+  (a request costs more than the base64 tax at that size).
+
+  `public/` holds exactly two files, and both are there because something
+  outside the build needs them at a FIXED name a content hash would break:
+
+  - `CNAME` — GitHub Pages reads the custom domain from a literal file at the
+    root of the artifact. **Without it Pages drops the custom domain on the
+    next deploy** and the site reverts to the github.io URL. No trailing
+    newline.
+  - `og.png` — the link-preview card. A crawler fetches it before running any
+    JavaScript and does not resolve relative paths, so `index.html` names it
+    as an absolute `https://michaelfischbach.dev/og.png`.
+
+  Nothing else may join them: every other asset belongs in `src/assets/` where
+  it gets hashed.
+
+  SUPERSEDED (2026-07-31): the build was ONE inlined file, openable from
+  `file://`. That cost **7.1 MB gzip of blocking payload before first paint**:
+  base64 defeats `loading="lazy"` (bytes already in the document), defeats
+  per-asset caching, and adds 33% over binary. Splitting cut first paint to
+  ~90 KB gzip (79x) and total bytes 9.5 MB to 5.9 MB, with **no image
+  re-encoded**. The portfolio ships as a LINK, so `file://` bought nothing.
+  Cost: a lone `index.html` on a USB stick or as a mail attachment no longer
+  renders its photographs (zip the folder instead).
+- **Every German string is compile-checked.** `de.ts` ends `satisfies Dict`, so
+  a missing or misspelled key fails `tsc --noEmit`. Never weaken this — there is
+  **no native-speaker review in the loop**, so the type system is the only net.
+  Terminology, number format and the layout rules German forces: `docs/german.md`.
+- **Gilt (`--gilt`) is the accent; `--measured` (oxblood) marks measured results
+  and nothing else.** That scarcity is what makes the numbers land. The one
+  sanctioned exception is the tic-tac-toe board: its marks are red and green, to
+  Michael's reference image, because the toy should read as a real game.
+- **Reduced motion suppresses autonomous motion only.** Every scene must still
+  paint a full static frame via `renderStatic()` and stay interactive on input.
+- **Claims on labels must be true and, where testable, tested.** The
+  "unbeatable" tic-tac-toe label is backed by `npm run verify:ttt`, which plays
+  every possible game from both sides and asserts the machine never loses.
+- **Every room must stay reachable on a phone.** The masthead once hid Work,
+  About and Contact below 560px to stop the German bar overflowing, which left
+  `#/about` with no route in at all on the device most recruiters open the link
+  on. The overflow was never the nav's fault: English fits at 390px, and German
+  went over by 21px because of the wordmark plus "Auszeichnungen". Both
+  `.masthead__inner` AND `.masthead__nav` wrap, so German takes a second line
+  instead of losing its navigation. Never fix an overflow by removing a route.
+- **The resume button follows the site's language AND the build.** German
+  serves `resume-de.pdf` in both variants, the Lebenslauf built by
+  `scripts/make-cv-de.mjs`: a different genre, not a translation, so a German
+  reader must never be handed the English one. English serves
+  `src/assets/docs/resume.pdf` (the HWA application resume) at the root and
+  `resume-general.pdf` (the US resume) under `/general/`, chosen by the
+  `@resume-en` alias. `src/resume.ts` sets both the `href` and the `download`
+  filename, and re-points them on `i18n:change`. **All three are committed
+  copies**: regenerating a resume does NOT update the site until the new PDF is
+  copied over the right one.
+- **`resume.pdf` is the HWA application resume, not a general one.** It names
+  the Praktikum im Bereich Gesamtfahrzeugentwicklung, Affalterbach and
+  Feb/March 2027, and states eligibility to intern in Germany. That is correct
+  for this site, which exists for that application. Do not strip the HWA
+  framing from it: that would silently weaken the application the whole site is
+  built around. It is now generated (`--only=hwa`) rather than hand-made, but
+  it is still a **committed copy**: regenerating does NOT update the site until
+  the new PDF is copied over `src/assets/docs/resume.pdf`.
+- **`scripts/make-cv-en.mjs` renders three CVs from ONE template**, so the
+  figures cannot drift apart: `-CV.pdf` (US), `-CV-Abroad.pdf`
+  (international), `-CV-HWA.pdf` (the site's). **They are named CV, not Resume,
+  since 2026-09-14**: these are the two-page long-form documents, and the
+  one-pager from `make-cv-onepage.mjs` is the RESUME. The filename is the only
+  thing telling them apart in a recruiter's downloads folder. They differ in **exactly two
+  strings**, the objective and the eligibility line. Only the HWA one names an
+  employer, and only it belongs on the site; handing this portfolio's reader a
+  generic resume would be a downgrade.
+- **`scripts/make-cv-onepage.mjs` is the one-page resume**, a different
+  *selection* rather than a different objective, which is why it is its own
+  script. It drops whole entries (the high school, the two non-engineering
+  jobs, the Nicaragua system, the Doorknob-Inator) and keeps only work carrying
+  a checkable number. After the 2026-09-14 pass (clearance + Haas
+  certification added) the one-pager fills ~97.5% of its page with ~24px of
+  headroom, so **it is effectively full**: anything added now needs something
+  else cut. Measure with `node tmp/measure-fit.mjs` after editing, and cut
+  content rather than shrinking the type.
+- **Contact links are real PDF anchors, and every link is BLACK with an
+  underline.** They are `<a>` elements, so Chromium writes `/Annots` link
+  objects a reader can click. **Black, not blue, asked for 2026-09-11**, which
+  supersedes the earlier `#0563c1` rule: the resume prints as one colour and
+  reads as a print-native document rather than a web page. The underline now
+  carries the job of marking a link alone, so **never drop
+  `text-decoration: underline`** while the colour matches body text. **LinkedIn
+  shows its FULL URL** (`www.linkedin.com/in/mefisch`), changed
+  2026-09-14 from the word "LinkedIn": Michael hands out printed copies, where
+  a hyperlinked word is a dead end because the reader can neither see where it
+  goes nor type it in. The portfolio likewise keeps its URL visible. Both are
+  centred, so a printed page reads as deliberate rather than truncated.
+  **The location/eligibility line is its own centred `.location` block**, not
+  text after a `<br>` inside `.contact`: only a block can take a real margin,
+  and that margin is set to the h1's (1mm one-pager / 1.2mm CV) so the gap
+  above the location matches the gap under the name. **Chameleon Ramps and Campus
+  Native link to their live sites** (`a.site`, also black): both businesses are
+  real and inspectable, which only pays off if a reader clicks through. Verify
+  both still return 200 before shipping a resume, a dead link on a resume is
+  worse than no link. **The phone number is underlined but is NOT a link**
+  (2026-09-14): the underline makes the four header items read as one
+  consistent row, while a `tel:` URL does nothing in the desktop PDF readers a
+  recruiter uses, so linking it would promise a click that silently fails.
+  Style it with `.contact .tel`, never by wrapping it in an anchor.
+- **The portfolio link shows `michaelfischbach.dev` on every document, but
+  only HWA's documents point at the root.** The visible text is always the
+  bare domain: that is the address worth advertising, and a subpath in print
+  reads as clutter. The href is what varies, and it comes from
+  `scripts/portfolio-link.mjs`, which every generator imports:
+
+  | Document | Target |
+  | --- | --- |
+  | `-CV-HWA.pdf` (and the site's `resume.pdf`), Lebenslauf, Anschreiben | `PORTFOLIO_HWA` = the root |
+  | `-CV.pdf`, `-CV-Abroad.pdf`, `-Resume-1Page.pdf`, the Apple documents, and any future per-employer document that is not HWA's | `PORTFOLIO_GENERAL` = `/general/` |
+
+  The rule is the document, not the language: a document that NAMES HWA sends
+  its reader to the entrance that also names HWA. Everything else goes to
+  `/general/`, because dropping a non-HWA reader on a page addressed to HWA
+  reads like a resume sent to the wrong employer. The Lebenslauf and both
+  Anschreiben are HWA documents (their Kurzprofil and body name the Praktikum),
+  which is why German is on the root side of that table.
+
+  `portfolio-link.mjs` is its own module because `make-cv-en.mjs` builds three
+  PDFs at import time; importing a constant from it would generate resumes as a
+  side effect. Verify a change with the `/URI` annotations rather than by
+  reading the markup:
+
+  ```sh
+  python3 -c "import re,sys; d=open(sys.argv[1],'rb').read(); print(sorted(set(re.findall(rb'/URI\s*\((.*?)\)', d))))" Michael-Fischbach-CV.pdf
+  ```
+
+  Remember both committed copies: `src/assets/docs/resume.pdf` (HWA) and
+  `src/assets/docs/resume-general.pdf` (general) are what the SITE serves, so
+  regenerating a resume does nothing until it is copied over the right one.
+- **A resume targeted at one posting is SELECTED, not assembled.**
+  `docs/resume-inventory.md` is the superset of everything that could go on a
+  resume: every project with more bullets than any one document should use,
+  every award, every framing of the identity line. Read it before drafting a
+  targeted resume, pick against the posting, and leave the rest out. Pasting
+  the whole inventory in produces a resume that argues nothing. It is also the
+  authority on figures: it carries the table of what older PDFs got wrong.
+- **Bold is STRUCTURE, not emphasis** (asked 2026-09-14). It marks entry titles
+  (`.role`), the skills-block labels (`CAD / CAE:`, `Manufacturing:`, …), the
+  award/leadership labels that open those bullets, and the HWA posting name in
+  that variant's objective. **The one content exception is the Secret
+  clearance**, which leads its bullet in bold on both documents. Inside running
+  body text, bold NOTHING: no figures, no counts, no superlatives. Bolding
+  every number made the page restless and, because everything was emphasised,
+  emphasised nothing. The figures carry themselves.
+
+- **A resume is never made to fit by shrinking the type.** An earlier pass here
+  invented its own layout and drove the body to 8.1pt to force one page, which
+  produced something nobody would read. Every English document uses the same
+  layout (centred name, ruled section headings, entries indented from the rule
+  with the date flush right) in **Times New Roman at 10.5pt**, which is the
+  floor. Times was asked for on 2026-09-11, replacing Helvetica/Arial: it sets
+  narrower, which is what paid for tighter spacing at a LARGER point size than
+  the 10pt/9.6pt it replaced. The one-pager reaches one page by dropping whole
+  entries, never by compressing type. Cut content if it must be shorter.
+
+## The frame
+
+The moulding is a photographed carved frame used as a CSS `border-image`.
+`scripts/prep-frame.mjs` measures the moulding band from the source's **alpha
+channel** and prints the slice value — never guess it, or the carved corners
+stretch and the ornament clips.
+
+Two failures already fixed here; do not reintroduce them:
+
+- **`background` must be `padding-box`.** A plain background fills the whole
+  border box, and the carved silhouette has transparent gaps around the
+  ornament, so white bleeds through beside every carving and reads as a pale
+  band against the wall.
+- **Shadow must be `filter: drop-shadow`, not `box-shadow`.** `box-shadow`
+  traces the rectangular border box and draws a hard rectangle past the carved
+  edge. Hover animates `transform` only — animating `filter` re-rasterises the
+  shadow every frame across six frames.
+
+## The two playable pieces
+
+They hang **unframed and uncaptioned**, under the portrait in the entrance's
+left column. They are toys, not works: a gilt frame around a playable board
+claims what the seven pieces on the wall have earned. Their titles stay in the
+dictionaries as the `aria-label` for each board, which is the only name a
+screen reader now has.
+
+- **The box is fixed** (`.playable`), never a fraction of the column. Each
+  scene sizes its canvas from its own box, so a percentage box re-measured on
+  every layout pass made the boards visibly jump as they mounted.
+- **Ring toss sizes from the CANVAS, not the root.** The score line above and
+  the fullscreen control below take part of the root's height; sizing to the
+  root drew the toy's base — and the pump button with it — past the bottom of
+  the visible canvas, where it could not be clicked.
+- **Its forces scale with tank height**, not in absolute pixels, so the physics
+  plays the same at 190px on the wall and in fullscreen.
+- The pump and the side jets are **drawn on the toy** and hit-tested on the
+  canvas; the two `.ring__pump-a11y` buttons exist only for keyboard and
+  screen-reader access.
+- `__ring.state()` on the scene root exposes the live simulation (seating,
+  score, both jets, button geometry) so the physics is verified against real
+  state rather than by reading pixels.
+
+## The screenshot loop
+
+Design changes are verified by reading rendered PNGs back, never by assuming.
+
+```sh
+npm run dev                              # must already be running
+npm run shots                            # every route, EN + DE
+npm run shots -- --only=landing --lang=de
+npm run shots -- --motion=reduce         # prove reduced-motion
+```
+
+Output: `screenshots/local/<name>.<lang>.<viewport>.png` (gitignored).
+
+**Rule: no visible change is done until both `.en.` and `.de.` variants have
+been read back at desktop and mobile.** German at 390px is the worst case and is
+where bugs actually surface — a hero collapsing to one grid column was found
+exactly that way.
+
+`?shots=1` force-mounts every scene, paints a static frame, and sets
+`data-ready="1"` **only after the scene has been sized**; the capture waits on
+that attribute rather than a fixed delay.
+
+**Caveat worth knowing:** `fullPage` capture resizes the viewport, so
+`loading="lazy"` images below the fold photograph as empty frames *even though
+they load fine in a browser*. The capture scrolls to trigger them first. If a
+full-page shot shows blanks, verify in the DOM before "fixing" CSS — that
+screenshot has lied once already.
+
+## Asking Michael for assets
+
+**Michael sources stock PNGs, photographs and references on request — ask
+whenever one would improve the result instead of working around a poor source.**
+The gold frame arrived this way after a first attempt (a JPEG with a baked white
+halo) proved unusable.
+
+State: exact filename and folder, minimum resolution, format, and **how he can
+verify it before sending**. For transparency: zoom in — if the checkerboard
+squares scale with the zoom it is real alpha; if they stay fixed it is a
+*picture* of a checkerboard and will ship a halo.
+
+`assets-src/` is gitignored, sorted per project: `putter/ ramps/ wave/
+nicaragua/ smc-bot/ campus-native/ brand/ misc/ docs/`, with `inbox/` for
+anything unsorted. `docs/` holds Michael's own bio, project list and awards
+text — **read those before writing copy**.
+
+## Structure
+
+Single page, hash-routed views (`#/awards`, `#/about`, `#/contact`, and
+`#/work/<slug>` for each work's room). Hash rather than History API: it needs
+no server-side rewrite rule, so the site stays portable across any static host.
+
+**A room is one container filled from data**, not six blocks of markup:
+`#view-project` is re-rendered per slug by `src/projects.ts`. `initProjects()`
+must run BEFORE `initRouter()` — the router asks it to resolve `/work/<slug>` on
+the very first render. An unknown slug falls through to the collection rather
+than showing an empty room, and returning from a room scrolls the work that was
+clicked back into view.
+
+Like the awards room, the project rooms need JavaScript where the wall does not.
+That is the accepted trade: the wall carries every work's title, description and
+figures inline, so the no-JS document is still a complete portfolio.
+
+```text
+index.html                     the only page; one [data-view] per room
+src/main.ts                    boot: i18n -> awards -> projects -> router -> scenes
+src/router.ts                  view switching, focus management, titles
+src/awards.ts                  awards room, rendered from data
+src/projects.ts                the six project rooms, rendered from data
+src/i18n/{en,de}.ts            en.ts is the source of truth
+src/i18n/general.ts            the ONLY divergence between the two variants
+src/variant.ts                 which variant this build is (defaults to hwa)
+src/resume.ts                  points the resume button at EN or DE by language
+src/scenes/{tictactoe,ringtoss}/   SceneModule: mount/resize/dispose/renderStatic
+src/styles/                    tokens, base, layout, frame, chrome, games, case
+scripts/prep-frame.mjs         frame PNG -> border-image + measured slice
+scripts/prep-images.mjs        manifest-driven raster -> AVIF + JPEG fallback
+scripts/shoot-jarvis.mjs       live bot dashboard -> a work (composed, see above)
+scripts/shoot-campus.mjs       campusnative.com -> a work
+scripts/heic-to-jpg.ps1        iPhone HEIC -> JPEG (see note below)
+scripts/prep-mesh.mjs          putter STL -> quantised inline mesh
+scripts/make-bot-poster.mjs    draws the bot poster, EN + DE, from real source
+scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
+scripts/make-icons.mjs         favicon set + the link-preview card
+scripts/make-portfolio-pdf.mjs the wall exported as a PDF, for application forms
+scripts/make-cv-de.mjs         the German Lebenslauf (NOT a translation, see the file)
+scripts/make-cv-en.mjs         the three English resumes (US, abroad, HWA) from one template
+scripts/make-cv-onepage.mjs    the one-page resume: strongest material only
+docs/german.md                 German terminology, numbers, layout rules
+docs/resume-inventory.md       every resume-able fact; SELECT from it, never paste it all
+```
+
+**HEIC:** sharp's libheif rejects Michael's photos (Live Photos carry 45 refs,
+over its limit of 16) and `System.Drawing` reports its missing decoder as "Out
+of memory". Only the WIC path in `heic-to-jpg.ps1` works.
+
+## Projects on the wall
+
+Six works. Sources in `assets-src/<folder>/`.
+
+| Work | Folder | Notes |
+| --- | --- | --- |
+| CNC-milled putter | `putter/` | 11 converted photos, the Fusion CAM export, the STL behind the turning piece, and the capstone poster exported from `CapstonePoster_MichaelFischbach.pptx` (PowerPoint COM, 4x slide size, see the wave row for why posters are prepped at 2600px/q88). Capstone drawing still has a mint-green slide background baked in. The poster's 3-axis HAAS is correct (confirmed 2026-08-01); the site, the resume PDF and both dictionaries were corrected from 4-axis to match. |
+| Chameleon Ramps | `ramps/` | 11 product photos. `p4` (Beachside Bank on wet rock) and `p9` (quarter pipe against foliage) are the strongest. |
+| Wave energy converter | `wave/` | inside / base views, the cutaway, and the capstone poster rendered from `wec-report.pdf` at 200dpi. The poster hangs full width at the foot of the room and must stay readable, so it is the one image prepped at 2600px / q88. |
+| SMC Trading Bot | `smc-bot/` | Poster DRAWN by `scripts/make-bot-poster.mjs` (SVG -> PNG, both languages, ~270 KB each as AVIF): the only poster on the site that is not a scan, so it is the only one that exists in German too, switched by a tab in the room. |
+| SMC Trading Bot (capture) | `smc-bot/` | Jarvis operator display, captured from the live dashboard over Tailscale by `scripts/shoot-jarvis.mjs`. **Account figures are never published** — see the rule below. |
+| Campus Native | `campus-native/` | The live site at <https://www.campusnative.com>, captured by `scripts/shoot-campus.mjs`. The logo it replaced showed the brand, not the software the label calls live. |
+| Water distribution system | `nicaragua/` | Gravity-fed network, tank siting on the site survey. |
+
+Deliberately **not** on the wall: the Net-Zero shipping container (removed at
+Michael's request, 2026-07-29), Doorknob-Inator and the noodle bridge (the last
+two too slight as works). The noodle bridge lives in the awards room instead.
+
+**The bot is named "SMC Trading Bot" and its documents must say what it trades**
+(2026-08-06). It was "Autonomous Execution System" everywhere until then, a name
+that hid the whole point: it trades OPTIONS against a funded Webull brokerage
+account, with a second lane on Tradovate for futures. Naming the brokers is
+deliberate; naming the account or its value is not (see the next rule). The
+English resumes carry `SMC Trading Bot – Autonomous Options Execution`, because
+the bare name means nothing to a recruiter.
+
+**The test count never appears bare.** "2,015 tests" reads as busywork on its
+own. It only lands attached to its consequence: every fill spends real money, so
+the parse and order path is pinned by tests before it reaches the live account.
+That is the phrasing on the resumes, the wall label's `data-measured` span and
+the room's Result row; keep them saying the same thing.
+
+**The bot's dashboard is a live real-money display, so no capture
+of it may publish account state** — realized/unrealized P&L, cash balance,
+per-analyst win rates, the account ID. Shoot the architecture instead (masthead,
+link status, position table, analyst grid), and never retouch a figure into a
+better one: an edited P&L on a portfolio is a fabricated financial record, which
+is a firing-and-rescinded-offer problem rather than a design choice. The
+verifiable claims (2,015 tests, options live, worst-case parameter selection over
+two disjoint windows) are what the label carries.
+
+The putter room carries a **rotating 3D piece** built from the capstone's own
+STL. `scripts/prep-mesh.mjs` turns the 427 KB binary STL into a quantised
+uint16 mesh (200 KB base64) that the bundler inlines as code; the scene is a
+z-buffered software rasteriser on a 2D canvas, NOT WebGL, so there is no shader
+pipeline, no context-loss path and nothing to load. A painter's-algorithm sort
+was tried first and cannot work here: the scooping cavity's triangles genuinely
+interleave in depth, so only a per-pixel test resolves them.
+
+## Facts
+
+Sources disagree; these are current. The resume is stale on several points.
+
+- Cal Poly SLO, Mechanical Engineering, Honors. GPA 3.78, Dean's List ×3.
+- CNC putter: 3-axis HAAS, 6061, $15.78 modelled unit cost vs $50–150 retail,
+  1 of 8 finalists from 40+, presented at Capstone Night to 200+ alumni and
+  hundreds of students (Michael's figure, 2026-07-31; supersedes the earlier
+  "300+").
+- Wave energy converter: 1st place, highest measured output of three teams.
+  **15 V per motor at 1:12 scale, 360 V scaled** (from the capstone poster,
+  `assets-src/wave/wec-report.pdf`). A five-person team, so the room says so.
+- Chameleon Ramps: since 2019, 40+ products, **1358 orders fulfilled**, **$50k revenue** (resume says $25k,
+  LinkedIn $30k; $50k is Michael's current figure).
+- SMC Trading Bot: **2,015 tests passing** (measured 2026-08-06 by running
+  `python -m pytest tests/ -q` in `C:\Users\micha\smc-trade-bot`; the site said
+  1553 and the bot's own notes said 1599, both stale). **Options live on a
+  funded Webull account, futures autonomous on a Tradovate demo account.**
+  Re-measure before quoting it; do not copy the figure forward on trust.
+- Noodle bridge: 1st place, won by a 38.5% margin.
+- US citizen, eligible for a German study-related internship residence permit.
+
+## Commands
+
+```sh
+npm run dev          # vite dev server on :5173 (HWA variant)
+npm run dev:general  # dev server, general variant
+npm run build        # tsc --noEmit && vite build -> dist/index.html (HWA)
+npm run build:general # general variant -> dist/general/
+npm run build:both   # both, HWA first (it empties dist/)
+npm run shots        # screenshot loop (dev server must be running)
+npm run verify:ttt   # prove the tic-tac-toe engine never loses
+node scripts/prep-images.mjs [name]   # whole manifest, or one entry
+node scripts/prep-frame.mjs           # rebuild the frame border-image
+node scripts/make-icons.mjs           # rebuild favicons + og.png
+node scripts/make-portfolio-pdf.mjs [--lang=de]  # portfolio as an uploadable PDF
+node scripts/make-cv-de.mjs           # the German CV
+node scripts/make-cv-en.mjs [--only=us|intl|hwa]  # the three English resumes
+node scripts/make-cv-onepage.mjs [--lang=intl]   # the one-page resume
+node scripts/make-anschreiben.mjs [--lang=en]   # the cover letter, DE or EN
+node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
+node scripts/shoot-campus.mjs         # re-shoot campusnative.com
+```
+
+## Deploy
+
+GitHub Pages via `.github/workflows/deploy.yml` on push to `main`. CI runs
+`tsc --noEmit` (catches a missing German key), then builds **twice** into one
+artifact: the HWA site into `dist/` and the general one into `dist/general/`.
+The HWA build must run first, since it empties `dist/`.
+
+It then asserts both shells stayed under 100 KB with their `assets/` beside
+them, that the general build names no employer and carries no HWA resume, and
+that `CNAME` is at the artifact root and nowhere else. `base: "./"` in
+`vite.config.ts` is relative, which is why the nested build works from a
+subpath with no extra configuration.
+
+Custom domain: **michaelfischbach.dev**. `.dev` is on the HSTS preload list, so
+HTTPS is mandatory at browser level and there is no plain-HTTP fallback: the
+certificate must be provisioned before the site loads at all.

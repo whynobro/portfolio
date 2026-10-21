@@ -42,7 +42,7 @@ const langArg = arg("lang") as Lang | undefined;
 const viewportArg = arg("viewport") as ViewportKey | undefined;
 const reduceMotion = arg("motion") === "reduce";
 
-const ALL_LANGS: Lang[] = ["en", "de"];
+const ALL_LANGS: Lang[] = ["en"];
 
 /**
  * Waits for every declared scene to report a painted static frame. Replaces
@@ -183,7 +183,7 @@ async function run(): Promise<void> {
           deviceScaleFactor: 1,
           // Set the OS-level language too, so auto-detection is exercised and
           // not just the explicit ?lang= override.
-          locale: lang === "de" ? "de-DE" : "en-US",
+          locale: "en-US",
           ...(reduceMotion ? { reducedMotion: "reduce" as const } : {}),
         });
 

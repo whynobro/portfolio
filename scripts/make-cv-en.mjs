@@ -1,5 +1,5 @@
 /**
- * Renders the three English CVs (the LONG documents, two pages).
+ * Renders the three English CVs (the LONG documents, at most two pages).
  *
  *   node scripts/make-cv-en.mjs              all three
  *   node scripts/make-cv-en.mjs --only=us    just the domestic one
@@ -12,99 +12,81 @@
  *   Michael-Fischbach-CV-Abroad.pdf    internships outside the US
  *   Michael-Fischbach-CV-HWA.pdf       the HWA AG application
  *
- * NAMED "CV", NOT "RESUME", since 2026-09-14. These are the two-page long-form
- * documents; `make-cv-onepage.mjs` builds the one-page RESUME, which is the
- * default send. The filename is the only thing that distinguishes them in a
- * recruiter's downloads folder, so the split is deliberate: attaching the
- * wrong one is the failure mode this naming prevents. The documents' own
- * headings are unchanged, only the filenames differ.
+ * NAMED "CV", NOT "RESUME": these are the two-page long-form documents;
+ * `make-cv-onepage.mjs` builds the one-page RESUME, the default send. The
+ * filename is the only thing telling them apart in a downloads folder.
  *
- * All three differ in exactly three places, the objective, the work-eligibility
- * line and where the portfolio link points, and are otherwise the same
- * document. Everything else is shared so the figures cannot drift apart between
- * them, which is the whole point of generating rather than hand-editing three
- * PDFs.
+ * The three differ only in the objective, the header's second line and the
+ * portfolio target (now the site root for all three, see
+ * `scripts/portfolio-link.mjs`). Everything else is shared so the figures
+ * cannot drift apart.
  *
- * The US and abroad versions name NO employer, and their portfolio link goes to
- * `/general/` for that reason: the site root is the HWA application's landing
- * page, so sending a non-HWA reader there hands them a page addressed to
- * somebody else. Only the HWA resume links to the root. See
- * `scripts/portfolio-link.mjs`.
+ * The site serves a MANUAL copy of the US one:
  *
- * TWO of these are served by the site, and both are manual copies:
+ *   Michael-Fischbach-CV.pdf -> src/assets/docs/cv.pdf
  *
- *   Michael-Fischbach-CV-HWA.pdf -> src/assets/docs/resume.pdf
- *   Michael-Fischbach-CV.pdf     -> src/assets/docs/resume-general.pdf
+ * CONTENT AUTHORITY. Entries and figures follow the master content pool
+ * (Career/Resumes, Master Resume, 2026-10-16) and the current one-page resume
+ * (2026-10-17), with the corrections of 2026-10-21 applied on top: GPA 3.79
+ * (transcript 3.786), Expected May 2028, coursework split into completed and
+ * in progress (Dynamics is not taken yet, so it is absent), and the wave
+ * converter's 120 V stated as the 1:12 prototype with 360 V as the full-scale
+ * projection.
  *
- * Nothing does that automatically. Do not point the site root at anything but
- * the HWA one.
+ * The master's rules bind this file:
+ *   - Clearance is "in process" / "submitted" and "SCI eligible". Never
+ *     "Active Secret", never granted, never past tense.
+ *   - Haas is "online coursework completed", never "Haas Certified Machinist".
+ *   - WERC efficiency and gap figures are TARGETS, never results.
+ *   - Dean's List and President's Honors List never appear together; this
+ *     file uses President's alone.
+ *   - The Chameleon Ramps sponsorship program is never "managed a team of 7".
+ *   - The putter cost is two dollar figures, never a percentage.
+ *   - The bot's test count never appears bare, and no account state is shown.
  *
- * LAYOUT follows the existing `resume.pdf` deliberately: centred name, a rule
- * under each section heading, entries indented from that rule with the date
- * flush right. An earlier pass here invented a different layout and then shrank
- * the type to 8.1pt to force one page, which is how you get a resume nobody
- * wants to read. Type size is fixed at a readable 10pt and the document runs to
- * two pages if it needs to. Two readable pages beat one dense one.
+ * CUT for length (two pages max), per the master's guidance for a mechanical
+ * design/manufacturing document: the SMC Trading Bot (weakest entry for
+ * mechanical roles), Ashersells (cut for pure mechanical), and Rowing (needs
+ * dates and level before it goes on a sent document). Restore from the master
+ * for a software or operations posting.
  *
- * FACTS ARE LOAD-BEARING. Figures are the corrected ones from CLAUDE.md, which
- * supersede older resume PDFs still floating around:
- *
- *   3-axis HAAS, not 4-axis   (confirmed against the capstone poster 2026-08-01)
- *   $50,000+ ramps revenue    (an older resume said $25k, LinkedIn $30k)
- *   2,015 tests passing        (an older resume said 190, and "paper trading")
- *   200+ alumni, several hundred students (was "300+")
- *
- * The putter's cost saving is stated as "$15.78 vs. $50-150 retail" and NEVER
- * as a percentage. The old "(533% reduction)" was arithmetically impossible: a
- * reduction cannot exceed 100%, and 533% was the markup running the other way.
- * Retired 2026-08-02. Do not reintroduce it in any form.
- *
- * The Net-Zero shipping container is deliberately absent: removed 2026-07-29.
+ * LAYOUT: centred name, a rule under each section heading, entries indented
+ * from the rule with the date flush right, Times New Roman at 10.5pt (the
+ * floor). If it runs long, cut content; never shrink the type.
  */
 import { chromium } from "playwright";
 import { PORTFOLIO_GENERAL, PORTFOLIO_HWA, PORTFOLIO_TEXT } from "./portfolio-link.mjs";
 
-/** The objective, eligibility line and portfolio target are the ONLY per-variant copy. */
+/** The objective, header line and portfolio target are the ONLY per-variant copy. */
 const VARIANTS = {
   us: {
     out: "Michael-Fischbach-CV.pdf",
-    eligibility: "Malibu, CA",
+    eligibility: "Top Secret Clearance (In Process) | SCI Eligible | Malibu, CA",
     portfolio: PORTFOLIO_GENERAL,
-    objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking a
+    objective: `Mechanical Engineering student (Cal Poly Honors, 3.79 GPA) seeking a
       mechanical design or manufacturing internship. Hands-on CAD-to-part experience across
       3-axis CNC machining, prototyping, tolerance analysis, and iterative real-world testing.
-      Has run an independent manufacturing business since 2019, so the design-workshop-testing
-      loop is something owned end to end rather than observed.`,
+      Ran an independent manufacturing business from 2019 to 2026, so the
+      design-workshop-testing loop is something owned end to end rather than observed.`,
   },
   intl: {
     out: "Michael-Fischbach-CV-Abroad.pdf",
     eligibility: "Malibu, CA | U.S. Citizen | eligible for study-related internship visas",
     portfolio: PORTFOLIO_GENERAL,
-    objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking an
+    objective: `Mechanical Engineering student (Cal Poly Honors, 3.79 GPA) seeking an
       international mechanical design or manufacturing internship. Hands-on CAD-to-part
       experience across 3-axis CNC machining, prototyping, tolerance analysis, and iterative
-      real-world testing. Has run an independent manufacturing business since 2019, so the
+      real-world testing. Ran an independent manufacturing business from 2019 to 2026, so the
       design-workshop-testing loop is something owned end to end rather than observed. Grew up
       in a U.S. Air Force family across nine relocations, and settles into new teams and
       countries quickly.`,
   },
-  /**
-   * The HWA application resume. This one IS served by the site, so its output
-   * must be copied over `src/assets/docs/resume.pdf` after regenerating (the
-   * same manual step the Lebenslauf has).
-   *
-   * It was a hand-made ReportLab PDF with no generator until 2026-08-02, which
-   * is why retiring one wrong figure from it meant rebuilding it here. Keeping
-   * it in this file means the three English resumes now share one template and
-   * one set of figures.
-   */
+  /** The HWA AG application CV. Names the posting, so it is the only one that does. */
   hwa: {
     out: "Michael-Fischbach-CV-HWA.pdf",
     eligibility: "Malibu, CA | U.S. Citizen (eligible for EU internship visa)",
-    // The only document that targets the root: this is the one HWA receives,
-    // and the root is the page that application links to.
     portfolio: PORTFOLIO_HWA,
-    objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking the
+    objective: `Mechanical Engineering student (Cal Poly Honors, 3.79 GPA) seeking the
       <b>Praktikum im Bereich Gesamtfahrzeugentwicklung</b> at HWA AG (Affalterbach, from
       Feb/March 2027). Hands-on CAD-to-part experience across 3-axis CNC machining,
       prototyping, tolerance analysis, and iterative real-world testing, the same
@@ -114,7 +96,7 @@ const VARIANTS = {
 };
 
 const page = (v) => `<!doctype html><meta charset="utf-8">
-<title>Michael Fischbach — Resume</title>
+<title>Michael Fischbach, CV</title>
 <style>
   @page { size: Letter; margin: 11mm 13mm }
   * { box-sizing: border-box }
@@ -130,33 +112,21 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
   /* Own centred block rather than a <br> inside .contact, so it can take a
      real margin: set to the h1's 1.2mm so the two header gaps match. */
   .location { font-size: 9.5pt; text-align: center; margin: 0 0 2.6mm; line-height: 1.3 }
-  /* Real anchors, so Chromium writes /Annots link objects into the PDF and the
-   * reader can click them.
-   *
-   * Links are BLACK, not blue (asked for 2026-09-11, superseding the earlier
-   * blue). They keep the underline, so they still read as links on the page
-   * and stay clickable in the PDF, but the document prints as one colour and
-   * reads as a print-native resume rather than a web page. The phone number
-   * stays plain text: a tel: link does nothing in the desktop PDF readers a
-   * recruiter actually uses. */
+  /* Real anchors (clickable /Annots in the PDF), BLACK with an underline so
+   * the document prints as one colour while the underline marks the links. */
   .contact a { color: #000; text-decoration: underline }
-  .contact a.link { color: #000; text-decoration: underline }
-  /* The phone is underlined to match the three links beside it, but is NOT an
-   * anchor: a tel: URL does nothing in the desktop PDF readers a recruiter
-   * uses, so linking it would promise a click that silently fails. Styling
-   * only, for a consistent header row (asked for 2026-09-14).
+  /* The phone is underlined to match the links beside it but is NOT an
+   * anchor: tel: does nothing in the desktop PDF readers a recruiter uses.
    * NOTE: no backticks in this block, the whole page is a template literal. */
   .contact .tel { text-decoration: underline }
-  /* The two companies Michael runs link to their live sites. The company NAME
-   * is the anchor rather than a bare URL, so the line stays readable on paper. */
+  /* The two companies link to their live sites, shown by domain. */
   a.site { color: #000; text-decoration: underline }
   h2 {
     font-size: 11.5pt; font-weight: 700; margin: 2.6mm 0 1.1mm;
     border-bottom: 1px solid #000; padding-bottom: .6mm;
   }
-  /* Entries sit indented from the section rule, which is what gives this
-   * layout its structure. The date rides flush right on the title line. */
   .entry { margin: 0 0 1.7mm 4mm; break-inside: avoid; page-break-inside: avoid }
+  h2 { break-after: avoid; page-break-after: avoid }
   .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8mm }
   .role { font-weight: 700; font-size: 11pt }
   .when { font-size: 10pt; white-space: nowrap }
@@ -168,14 +138,16 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
   .objective { margin: 0 0 1mm }
   .skills p { margin: 0 0 .5mm }
   .profile { margin-left: 4mm }
+  .interests { margin: 0 0 0 4mm }
+  .interests .i { white-space: nowrap }
 </style>
 
 <h1>Michael Fischbach</h1>
 <p class="contact">
   <span class="tel">805-703-8250</span> |
-  <a class="link" href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
-  <a class="link" href="https://www.linkedin.com/in/mefisch/">www.linkedin.com/in/mefisch</a> |
-  <a class="link" href="${v.portfolio}">${PORTFOLIO_TEXT}</a>
+  <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
+  <a href="https://www.linkedin.com/in/mefisch/">www.linkedin.com/in/mefisch</a> |
+  <a href="${v.portfolio}">${PORTFOLIO_TEXT}</a>
 </p>
 <p class="location">${v.eligibility}</p>
 
@@ -186,12 +158,14 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <div class="entry">
   <div class="row">
     <span class="role">California Polytechnic State University, San Luis Obispo</span>
-    <span class="when">Sep 2025 – May 2029</span>
+    <span class="when">Sep 2025 – Expected May 2028</span>
   </div>
-  <p class="org">B.S. Mechanical Engineering, Honors Program | GPA: 3.78 | Dean's List: Fall, Winter, Spring</p>
+  <p class="org">B.S. Mechanical Engineering, Honors Program | GPA: 3.79 | Cal Poly Golf Engineers &amp; Agentic Engineering</p>
+  <p class="org">Coursework: Subtractive Manufacturing (IME 145/146), Materials Joining, Materials Engineering with lab; in progress (Fall 2026): Statics, Design Using Solid Modeling (SolidWorks), Applied Programming for ME</p>
   <ul>
     <li>Honors research-track program; Learn by Doing curriculum with hands-on manufacturing, CNC machining, and design from first year</li>
-    <li>Built multi-component mechanisms (piston, Geneva wheel, CNC-machined screwdriver) with full tolerance stack-up analysis and GD&amp;T</li>
+    <li>Built multi-component mechanisms (piston, Geneva wheel, CNC-machined screwdriver) with tolerance stack-up analysis and GD&amp;T</li>
+    <li>Designed a low-cost, accessible door handle for one-handed users in Cal Poly's Red Brick dorms; PLA base, TPU head</li>
   </ul>
 </div>
 <div class="entry">
@@ -199,97 +173,130 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
     <span class="role">Oaks Christian School – Institute of Engineering</span>
     <span class="when">Sep 2022 – Jun 2025</span>
   </div>
-  <p class="org">Engineering Pathway: 6 multi-month applied design projects | GPA: 3.92 UW / 4.10 W</p>
-</div>
-
-<h2>TECHNICAL SKILLS</h2>
-<div class="skills">
-  <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 40+ designs), SolidWorks, AutoCAD, Autodesk CFD</p>
-  <p><b>Manufacturing:</b> 3-axis HAAS CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, carbon-analog composite &amp; concrete casting</p>
-  <p><b>Methods:</b> GD&amp;T, tolerance stack-up analysis, DFM, rapid iterative prototyping, design-test-refine, cost modeling</p>
-  <p><b>Software:</b> Python, HTML/CSS, Git</p>
-  <p><b>Certification:</b> Haas CNC Certification Program – Basic Mill Operator, online coursework completed (Haas Automation, 2026); 12 chapters of CNC safety, setup, and machine operation</p>
-  <p><b>Languages:</b> English (native); German (beginner, actively learning)</p>
-</div>
-
-<h2>MANUFACTURING &amp; PROTOTYPING PROJECTS</h2>
-<div class="entry">
-  <div class="row">
-    <span class="role">CNC Milled Golf Putter – Full CAD-to-Part Build</span>
-    <span class="when">2024 – 2025</span>
-  </div>
-  <p class="org">3-Axis HAAS CNC, Fusion 360, DFM</p>
-  <ul>
-    <li>Designed and machined a novel putter geometry from 6061 aluminum on a 3-axis HAAS CNC; ran iterative PLA prototypes to validate geometry before the final aluminum production part</li>
-    <li>Performed DFM and cost analysis: modeled warehouse-scale unit cost at $15.78 vs. $50–150 retail</li>
-    <li>Selected 1 of 8 finalists from 40+ students; presented the build and process at Capstone Night to 200+ alumni and industry professionals and several hundred students</li>
-  </ul>
-</div>
-<div class="entry">
-  <div class="row">
-    <span class="role">Wave Energy Converter – Rack &amp; Pinion Generator</span>
-    <span class="when">2023</span>
-  </div>
-  <p class="org">Bridgeport Mill, Fusion 360, Fluid Dynamics</p>
-  <ul>
-    <li>Designed and machined a wave-oscillation-to-electrical-power generator with a five-person team; manufactured all components to tolerance on a Bridgeport mill</li>
-    <li>Took 1st place with the highest measured output of three teams: 15 V per motor at 1:12 scale, 360 V scaled</li>
-    <li>Applied fluid dynamics and energy-transfer analysis; modeled the full assembly in Fusion 360 and AutoCAD with tolerance documentation</li>
-  </ul>
-</div>
-<div class="entry">
-  <div class="row">
-    <span class="role">Chameleon Ramps – Product Design &amp; Manufacturing</span>
-    <span class="when">2019 – Present</span>
-  </div>
-  <p class="org">Fusion 360, Casting, Iterative Prototyping<span class="right"><a class="site" href="https://www.chameleonramps.com">chameleonramps.com</a></span></p>
-  <ul>
-    <li>6-year iterative development program: designed 40+ unique products and developed proprietary casting techniques, reducing material waste ~30%</li>
-    <li>Ran a systematic design-test-refine loop across 4–6 prototype generations per product; 1358 orders fulfilled and $50,000+ in revenue</li>
-  </ul>
-</div>
-<div class="entry">
-  <div class="row">
-    <span class="role">SMC Trading Bot – Autonomous Options Execution</span>
-    <span class="when">2025 – Present</span>
-  </div>
-  <p class="org">Python, Options &amp; Futures, Broker APIs, SQLite, Backtesting</p>
-  <ul>
-    <li>Built an autonomous Python system that parses unstructured options alerts and places live orders against a funded Webull brokerage account, with risk limits, position sizing, and state reconciled from broker fills; a second lane trades futures on Tradovate</li>
-    <li>A misread alert becomes a real order, so every parse and order path is pinned by a regression suite of 2,015 tests before it reaches the live account</li>
-    <li>Selected strategy parameters on their worst case across two disjoint validation windows rather than their best, using a custom backtesting harness: the best-fit choice is how a system that backtests well loses money live</li>
-  </ul>
+  <p class="org">Engineering Pathway: 6 multi-month applied design projects | GPA: 3.92 UW / 4.10 W<span class="right">Malibu, CA</span></p>
 </div>
 
 <h2>EXPERIENCE</h2>
 <div class="entry">
-  <div class="row"><span class="role">CEO &amp; Founder</span><span class="when">Jun 2026 – Present</span></div>
-  <p class="org"><a class="site" href="https://www.campusnative.com">Campus Native</a><span class="right">San Luis Obispo, CA</span></p>
-  <ul><li>Founded and ran a digital marketplace; recruited and led a 4-person intern team across engineering, marketing, and content</li></ul>
+  <div class="row">
+    <span class="role">WERC Design Contest Team Lead – NASA Artemis Wireless Capacitive Charger</span>
+    <span class="when">2026 – Present</span>
+  </div>
+  <p class="org">Cal Poly SLO<span class="right">San Luis Obispo, CA</span></p>
+  <ul>
+    <li>Lead a 12-person graduate/undergraduate team developing a 1 kW capacitive charger for NASA's Artemis lunar rover</li>
+    <li>Set schedule and integrate power, coupler, controls, and structures; develop plate-based alignment sensing for rover docking</li>
+    <li>Targets: 80%+ efficiency across a 100 mm gap at full scale, 25 W at 70%+ on the bench; dust, vacuum, -203°C to 54°C</li>
+  </ul>
 </div>
+<!-- The clearance leads in bold: the one sanctioned content exception to
+     "bold is structure". Submitted / in process only, never granted. -->
 <div class="entry">
-  <div class="row"><span class="role">Data Analyst</span><span class="when">Mar 2023 – Present</span></div>
+  <div class="row"><span class="role">Mechanical Engineering Intern</span><span class="when">2025 – Present</span></div>
   <p class="org">All Domain Integration (ADI) – Aerospace Engineering<span class="right">Remote</span></p>
   <ul>
-    <li><b>Active Secret security clearance</b>: granted for work on a classified contract</li>
-    <li>3+ year engagement with an aerospace engineering firm: track and report web traffic and user-behavior data in Google Analytics, and turn that data into content and search-visibility decisions</li>
+    <li><b>SCI eligible · Submitted for Top Secret clearance</b></li>
+    <li>Support mission systems engineers on Space Force and Air Force efforts as part of a SETA contractor team</li>
+    <li>Use locally hosted large language models (LLMs) to analyze satellite sensor data and draw knowledge-based conclusions</li>
   </ul>
 </div>
 <div class="entry">
-  <div class="row"><span class="role">Business Partner</span><span class="when">May 2023 – Jul 2024</span></div>
-  <p class="org">Ashersells LLC<span class="right">Malibu, CA</span></p>
-  <ul><li>Helped scale operations to $500,000+ annual revenue; built Python automation for logistics and order processing</li></ul>
+  <div class="row"><span class="role">Founder &amp; CEO</span><span class="when">2019 – 2026</span></div>
+  <p class="org">Chameleon Ramps · <a class="site" href="https://www.chameleonramps.com">chameleonramps.com</a><span class="right">Malibu, CA</span></p>
+  <ul>
+    <li>Designed 40+ concrete fingerboard obstacles ($10–$50 each); proprietary molding process cut material waste ~40%</li>
+    <li>Generated $39,600 in revenue across 627 orders by running a design-test-refine loop of 4–6 prototype generations per product, modeling in Fusion 360 and 3D printing prototypes to build robust, reusable molds for repeat production</li>
+    <li>Grew revenue 30% via a 7-creator sponsorship program; co-designed Recycled Ramps collaboration; shipped to 15 countries</li>
+    <li>Cast concrete range produced entirely in-house, mold design included; the quarter pipe was the hardest mold to release, which drove a redesign of the draft angles</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="row"><span class="role">CEO &amp; Founder</span><span class="when">Jun 2026 – Present</span></div>
+  <p class="org">Campus Native · <a class="site" href="https://www.campusnative.com">campusnative.com</a><span class="right">San Luis Obispo, CA</span></p>
+  <ul>
+    <li>Founded and ran a digital marketplace connecting students with campus tour guides</li>
+    <li>Recruited a 4-person intern team across engineering, marketing, and content; set their priorities, reviewed their work, led the build of the listing and booking flow</li>
+  </ul>
 </div>
 
-<h2>LEADERSHIP &amp; INTERNATIONAL PROFILE</h2>
+<h2>ENGINEERING PROJECTS</h2>
+<div class="entry">
+  <div class="row">
+    <span class="role">CNC-Milled Golf Putter – Full CAD-to-Part Build</span>
+    <span class="when">2025</span>
+  </div>
+  <p class="org">3-axis Haas CNC, Fusion 360, DFM · Oaks Christian capstone</p>
+  <ul>
+    <li>Designed and machined a novel putter from 6061 in two ops with adaptive toolpaths validated with 12 PLA prototypes</li>
+    <li>Designed a scooping cavity whose undercuts drove the toolpath strategy; cut the 3-degree loft angle on a 3D-printed shim</li>
+    <li>Modeled unit cost at $18.56 vs. $250 retail; 1 of 8 finalists (40+ students), presented to 200+ alumni at Capstone Night</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="row">
+    <span class="role">Wave Energy Converter – Team Lead</span>
+    <span class="when">2023</span>
+  </div>
+  <p class="org">Bridgeport mill, Fusion 360, fluid dynamics · Oaks Christian</p>
+  <ul>
+    <li>Led a five-person team to a 1st place win of five teams, designing and machining a 1:12-scale rack-and-pinion wave energy converter, with all parts made to tolerance in-house</li>
+    <li>Prototype produced 120 V at 1:12 scale (15 V per motor), projecting 360 V at full scale</li>
+    <li>Applied fluid dynamics and energy-transfer analysis; modeled the full assembly in Fusion 360 and AutoCAD</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="row">
+    <span class="role">Apricot Lane Farms – Net-Zero Carbon Shipping Container Space</span>
+    <span class="when">Mar – May 2024</span>
+  </div>
+  <p class="org">AutoCAD, Autodesk CFD, Project Management · Oaks Christian</p>
+  <ul>
+    <li>Selected as 1 of 3 students to design a net-zero carbon workspace for Apricot Lane Farms; farm chose the L-shaped design</li>
+    <li>Analyzed structural integrity of container walls with cutouts and roof overhang; assessed solar needs with the farmers</li>
+    <li>Drafted the floor plan in AutoCAD with an ADA-accessible restroom and incinerating toilet; built a 1:10-scale model</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="row">
+    <span class="role">Water Distribution System – Cerro de Agua, Nicaragua</span>
+    <span class="when">Mar – Jun 2023</span>
+  </div>
+  <p class="org">Autodesk CFD, Geospatial Analysis, Cost Analysis · Oaks Christian</p>
+  <ul>
+    <li>Designed a gravity-fed water distribution network for a village in Nicaragua, including tank siting from a site survey</li>
+    <li>Selected 1 of 5 main presenters from 40 classmates; presented to Cerro de Agua city officials, school administration, and engineering alumni</li>
+  </ul>
+</div>
+
+<h2>TECHNICAL SKILLS</h2>
+<div class="skills">
+  <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 55+ designs), SolidWorks (2+ years, CSWA), AutoCAD, Autodesk CFD</p>
+  <p><b>Manufacturing:</b> 3-axis Haas CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, composite &amp; concrete casting</p>
+  <p><b>Methods:</b> GD&amp;T (ASME Y14.5), DFM, tolerance stack-up analysis, iterative prototyping, design-test-refine, cost modeling</p>
+  <p><b>AI:</b> Claude Code, Codex, and Gemini via agentic workflows in Antigravity IDE</p>
+  <p><b>Software:</b> Python, Git, MATLAB, Linux, HTML/CSS</p>
+  <p><b>Certification:</b> Haas CNC Certification Program – Basic Mill Operator, online coursework completed (Haas Automation, 2026)</p>
+  <p><b>Languages:</b> English (native); German (beginner, actively learning)</p>
+</div>
+
+<h2>AWARDS</h2>
 <ul class="profile">
-  <li><b>Cal Poly Honors Program</b> – Admitted Fall 2026; selective research-focused program with faculty mentorship</li>
-  <li><b>Eagle Scout</b> – Boy Scouts of America (2025); Eagle rank, Senior Patrol Leader 2 years; 15 years leadership</li>
-  <li><b>Dean's List</b> – Cal Poly SLO, all three quarters (Fall / Winter / Spring 2025–26)</li>
-  <li><b>1st Place, Noodle Bridge Competition</b> – won by a 38.5% margin</li>
-  <li><b>Internationally Mobile</b> – U.S. Air Force family; 9 relocations across 7 states and territories; adapts quickly to new environments and teams</li>
-  <li><b>Community Service</b> – 4+ years bimonthly meal service to unhoused community; 2021–present</li>
-</ul>`;
+  <li><b>Capstone Finalist (CNC putter)</b> – 1 of 8 from 40+ students, Oaks Christian, 2025</li>
+  <li><b>1st Place, Wave Energy Converter</b> – 1st of 5 teams, Oaks Christian, 2023</li>
+  <li><b>President's Honors List</b> – Cal Poly SLO, 2026; awarded for Dean's List three consecutive quarters</li>
+  <li><b>Cal Poly Honors Program</b> – selective research-track admission, 2026</li>
+  <li><b>1st Place, Noodle Bridge Design</b> – Cal Poly SLO, Nov 2025; won by a 38.5% margin</li>
+</ul>
+
+<h2>LEADERSHIP &amp; ACTIVITIES</h2>
+<ul class="profile">
+  <li><b>Eagle Scout</b> – Boy Scouts of America (2025); Senior Patrol Leader; 15 years in the program</li>
+  <li><b>Internationally Mobile</b> – U.S. Air Force family; 9 relocations across 7 states and territories</li>
+  <li><b>Volunteering</b> – Meal Outreach, St. Aidan's Church (5+ years)</li>
+</ul>
+
+<h2>INTERESTS</h2>
+<p class="interests"><span class="i">Backpacking – 500 mi</span> | <span class="i">Weightlifting – 355 lb squat</span> | <span class="i">Poker – 3rd of 126, Cal Poly tournament</span> | <span class="i">Watercolor/Drawing – 3 contest wins</span></p>`;
 
 const only = process.argv.find((a) => a.startsWith("--only="))?.split("=")[1];
 const picked = only ? { [only]: VARIANTS[only] } : VARIANTS;

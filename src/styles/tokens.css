@@ -161,10 +161,3 @@
   color-scheme: light;
 }
 
-/* German runs ~30% longer; ease the display sizes so long compounds
- * (Gesamtfahrzeugentwicklung) do not force awkward breaks. */
-[data-lang="de"] {
-  --t-4xl: 3.75rem;
-  --t-3xl: 3rem;
-  --t-2xl: 2.125rem;
-}

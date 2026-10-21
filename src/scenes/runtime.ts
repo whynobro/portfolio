@@ -13,7 +13,10 @@ import type { TranslationKey } from "../i18n/en";
  * between reliable full-page screenshots and half-drawn ones.
  */
 
-const mounted = new WeakMap<HTMLElement, SceneModule>();
+// A Map, not a WeakMap: it is swept for scenes whose element has left the
+// document (a project room re-renders its whole view) so their animation
+// loop does not keep running against a detached canvas.
+const mounted = new Map<HTMLElement, SceneModule>();
 const loading = new WeakSet<HTMLElement>();
 
 const shotsMode = (): boolean => document.documentElement.dataset["shots"] === "1";
@@ -81,9 +84,14 @@ export function initScenes(): void {
   };
 
   const viewObserver = new MutationObserver((records) => {
+    for (const el of [...mounted.keys()]) if (!el.isConnected) unmount(el);
     for (const rec of records) {
       const view = rec.target as HTMLElement;
-      if (view.hidden) continue;
+      if (view.hidden) {
+        // A hidden view's scenes stop animating; they remount when it returns.
+        for (const el of view.querySelectorAll<HTMLElement>("[data-scene]")) unmount(el);
+        continue;
+      }
       for (const el of view.querySelectorAll<HTMLElement>("[data-scene]")) {
         void mount(el).then(() => remeasure(el));
       }
@@ -119,7 +127,11 @@ export function initScenes(): void {
       for (const entry of entries) {
         const el = entry.target as HTMLElement;
         if (entry.isIntersecting) void mount(el);
-        else if (entry.boundingClientRect.top > window.innerHeight * 2) unmount(el);
+        else if (
+          entry.boundingClientRect.top > window.innerHeight * 2 ||
+          entry.boundingClientRect.bottom < -window.innerHeight
+        )
+          unmount(el);
       }
     },
     { rootMargin: "200px 0px 200px 0px" },

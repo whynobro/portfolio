@@ -1,5 +1,14 @@
 # Resume inventory, everything that could go on a resume
 
+> **Figures updated 2026-10-21.** The master resume (Oct 16, in Documents/Career/Resumes)
+> and the Oct 2026 transcript now win over any figure below that disagrees. Current
+> values: GPA **3.79**; graduation **expected May 2028**; Ramps **$39,600 / 627 orders /
+> ~40% waste / 15 countries / 2019–2026**; putter **$18.56 vs $250 retail, two ops, 12 PLA
+> prototypes**; wave **1st of 5 teams, 120 V at 1:12 (15 V/motor), 360 V projected**; WERC
+> team lead (12 people), targets only; ADI Mechanical Engineering Intern. Dynamics is not
+> yet taken (Spring 2027). The portfolio link on every document points at the root.
+
+
 **Purpose: this is the SUPERSET, not a resume.** No single document uses all of
 it. When Michael asks for a resume for a specific internship, select from here
 against that posting and leave the rest out. A resume that includes everything
@@ -557,14 +566,15 @@ column.** If a draft disagrees with this table, the draft is wrong.
 | --- | --- | --- |
 | Putter machine | 4-axis HAAS | **3-axis HAAS** (confirmed against the capstone poster, 2026-08-01) |
 | Clearance | "Active Secret, granted" / "Top Secret" bare | **TS submitted and in process, SCI eligible** (2026-09-18). Nothing granted. |
-| Ramps revenue | $50,000+ / $25,000+ / $30,000 | **$26,500** (2026-09-18) |
-| Ramps waste cut | ~30% | **~45%** (2026-09-18) |
-| Ramps orders | *(absent)* | **1358 orders** |
+| Ramps revenue | $50,000+ / $25,000+ / $30,000 / $26,500 | **$39,600** (master, 2026-10-16) |
+| Ramps waste cut | ~30% / ~45% | **~40%** (master, 2026-10-16) |
+| Ramps orders | 1358 | **627 orders** (master, 2026-10-16) |
+| Cal Poly GPA | 3.78 / 3.80 | **3.79** (transcript 3.786, 2026-10-20) |
 | Execution system tests | 190 tests | **2,015 tests passing** (2026-08-06) |
 | Execution system status | paper trading | **options live, futures in demo** |
 | Capstone Night audience | 300+ / 250 | **200+ alumni and industry professionals, several hundred students** |
-| Putter cost saving | "533% cost reduction" | **$15.78 vs $50–150 retail** (a reduction cannot exceed 100%; retired 2026-08-02) |
-| Cal Poly graduation | Jun 2029 | **May 2029** (confirmed by Michael 2026-09-14; corrected on all four generators) |
+| Putter cost saving | "533% cost reduction" / $15.78 vs $50–150 | **$18.56 vs $250 retail** (master, 2026-10-16) |
+| Cal Poly graduation | Jun 2029 / May 2029 | **Expected May 2028** (master, 2026-10-16) |
 
 **Do not publish**: any account state from the execution system (P&L, balances,
 win rates, account ID), and never present its backtest figure as realised

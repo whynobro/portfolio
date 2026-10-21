@@ -1,5 +1,5 @@
 /**
- * Boot entry: styles, i18n, router, scene runtime.
+ * Boot entry: styles, router, scene runtime.
  */
 import "./styles/tokens.css";
 import "./styles/base.css";
@@ -8,7 +8,6 @@ import "./styles/frame.css";
 import "./styles/chrome.css";
 import "./styles/games.css";
 import "./styles/case.css";
-import { initI18n } from "./i18n";
 import { initRouter } from "./router";
 import { initScenes } from "./scenes/runtime";
 import { initAwards } from "./awards";
@@ -16,11 +15,9 @@ import { initProjects } from "./projects";
 import { initResume } from "./resume";
 
 function boot(): void {
-  initI18n();
   initAwards();
-  // Both resume buttons are in the static markup, so this does not care about
-  // the router. It must follow initI18n: it reads the resolved language to
-  // decide whether to serve the resume or the Lebenslauf.
+  // The document buttons are in the static markup, so this does not care
+  // about the router.
   initResume();
   // Before the router: it asks the projects module to resolve `/work/<slug>`
   // on the very first render, which happens inside initRouter.

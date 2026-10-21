@@ -5,7 +5,8 @@ import type { Page } from "playwright";
  * one-line data edit, that's what makes the loop actually get used.
  */
 
-export type Lang = "en" | "de";
+/** English only since the 2026-10 makeover; kept as a type so filenames stay stable. */
+export type Lang = "en";
 export type ViewportKey = "desktop" | "mobile" | "wide";
 
 export type Shot = {
@@ -13,7 +14,6 @@ export type Shot = {
   name: string;
   /** Hash route, e.g. "#/work/cnc". Empty string for the landing page. */
   route: string;
-  /** Defaults to both languages. */
   langs?: Lang[];
   /** Defaults to desktop + mobile (wide is opt-in; it's mostly for the landing). */
   viewports?: ViewportKey[];
@@ -31,10 +31,9 @@ export type Shot = {
 export const VIEWPORTS: Record<ViewportKey, { width: number; height: number }> = {
   // Recruiter on a laptop.
   desktop: { width: 1280, height: 900 },
-  // Worst case for German text overflow, scrutinize these.
+  // A phone: where most recruiters open the link.
   mobile: { width: 390, height: 844 },
-  // HWA engineers sit at docked monitors; a hero that reads at 1280 can look
-  // sparse at 1920.
+  // Docked monitors: a hero that reads at 1280 can look sparse at 1920.
   wide: { width: 1920, height: 1080 },
 };
 
@@ -51,10 +50,12 @@ export const SHOTS: Shot[] = [
   // A room per work. These run long, the putter's is five plates below the
   // text, so they are captured at the fold rather than full-page; a 7000px
   // PNG is not something a human or an agent reads usefully.
+  { name: "work-werc", route: "#/work/werc", fullPage: false },
   { name: "work-cnc", route: "#/work/cnc", fullPage: false },
   { name: "work-ramps", route: "#/work/ramps", fullPage: false },
   { name: "work-wave", route: "#/work/wave", fullPage: false },
   { name: "work-bot", route: "#/work/bot", fullPage: false },
   { name: "work-campus", route: "#/work/campus", fullPage: false },
   { name: "work-water", route: "#/work/water", fullPage: false },
+  { name: "work-door", route: "#/work/door", fullPage: false },
 ];

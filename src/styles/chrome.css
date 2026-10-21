@@ -158,30 +158,6 @@
   flex: none;
 }
 
-/* ---- Language toggle ----------------------------------------------------- */
-.lang {
-  display: flex;
-  border: 1px solid rgba(237, 230, 216, 0.28);
-}
-.lang__btn {
-  padding: var(--s-1) var(--s-3);
-  min-block-size: 34px;
-  min-inline-size: 4.5ch;
-  font-family: var(--font-sans);
-  font-size: var(--t-xs);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: rgba(237, 230, 216, 0.6);
-  transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
-}
-.lang__btn[aria-pressed="true"] {
-  background: var(--gilt);
-  color: var(--plate);
-}
-.lang__btn:hover[aria-pressed="false"] {
-  color: var(--plate-ink);
-}
-
 /* ---- Footer -------------------------------------------------------------- */
 .colophon {
   background: var(--plate);
