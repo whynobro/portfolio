@@ -470,3 +470,43 @@
     text-align: start;
   }
 }
+
+/* ---- The opening (src/intro.ts) ------------------------------------------ */
+#intro canvas {
+  display: block;
+}
+.intro__label {
+  position: absolute;
+  inset-inline-start: var(--s-6);
+  inset-block-end: var(--s-6);
+  margin: 0;
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(205, 228, 255, 0.75);
+}
+.intro__skip {
+  position: absolute;
+  inset-inline-end: var(--s-6);
+  inset-block-end: var(--s-6);
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(205, 228, 255, 0.8);
+  background: transparent;
+  border: 1px solid rgba(205, 228, 255, 0.35);
+  cursor: pointer;
+}
+.intro__skip:hover,
+.intro__skip:focus-visible {
+  color: #fff;
+  border-color: #fff;
+}
+@media (max-width: 560px) {
+  /* Stacked on a phone: the caption sits above the Skip button, not beside it. */
+  .intro__label {
+    inset-block-end: calc(var(--s-6) + 3rem);
+  }
+}

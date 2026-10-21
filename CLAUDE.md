@@ -129,6 +129,18 @@ hidden, and those scrolled far away.
   photograph stays the no-JS picture and the scene turns opaque only once
   mounted (`[data-ready]`).
 
+## The opening
+
+`src/intro.ts`: the putter goes from line drawing to stock block to cut part
+under a night sky, then dawn turns the sky into the gallery wall (~4.2 s).
+The head script in `index.html` gates it: landing route only, once per
+session (`sessionStorage.intro`), never with `?shots=1` or reduced motion,
+and a 7 s fallback timer uncovers the page if the module never runs. Any
+click, key, scroll or Skip ends it. It uses the shared `src/lib/mesh-raster.ts`
+renderer, the same one as the putter scene. The cutter path is a stand-in
+(contour rings) until Michael's posted G-code (`assets-src/putter/*.nc`)
+replaces it. Preview: `node scripts/make-intro-video.mjs [out.mp4] [w] [h]`.
+
 ## The two playable pieces
 
 Unframed and uncaptioned under the portrait: toys, not works. Their names live
