@@ -271,7 +271,7 @@ export const en = {
   "award.presidents.title": "President's Honors List",
   "award.presidents.issuer": "California Polytechnic State University, San Luis Obispo",
   "award.presidents.body":
-    "Awarded for reaching the Dean's List in all three quarters of the 2025–26 academic year.",
+    "Awarded for a 3.50+ GPA in all three quarters of the 2025–26 academic year.",
   "award.honors.title": "Cal Poly Honors Program",
   "award.honors.issuer": "California Polytechnic State University, San Luis Obispo",
   "award.honors.body":
