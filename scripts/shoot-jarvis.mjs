@@ -1,5 +1,5 @@
 /**
- * Captures the execution system's operator dashboard for the gallery wall.
+ * Captures the SMC Trading Bot's operator dashboard for the gallery wall.
  *
  *   node scripts/shoot-jarvis.mjs
  *

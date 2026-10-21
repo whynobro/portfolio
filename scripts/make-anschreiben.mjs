@@ -34,7 +34,7 @@
  * subordinate clauses are exactly where non-native German gives itself away.
  *
  * Every claim is carried by the CV and the portfolio: the single setup, the
- * unit cost, the 1st place, the 1553 tests, the 40+ products. The letter argues
+ * unit cost, the 1st place, the 2,015 tests, the 40+ products. The letter argues
  * from them rather than restating the CV.
  *
  * The portfolio URL appears TWICE on purpose, once in the opening paragraph
@@ -108,7 +108,7 @@ const DE = `
   Ich messe lieber, als zu vermuten. Unser Fünferteam hat einen Wellenenergie-Wandler gebaut und jedes
   Bauteil maßhaltig auf der Bridgeport-Fräsmaschine selbst gefertigt; er belegte den <b>1. Platz</b> mit
   der höchsten gemessenen Leistung von drei Teams. In der Software halte ich es genauso. Mein
-  Handelssystem läuft im Produktivbetrieb hinter 1553 Tests, und die Parameter habe ich nach ihrem
+  Handelssystem läuft im Produktivbetrieb hinter 2.015 Tests, und die Parameter habe ich nach ihrem
   <b>ungünstigsten</b> Ergebnis über zwei getrennte Zeiträume gewählt, nicht nach ihrem besten. Eine Zahl,
   die nur an einem guten Tag hält, ist keine Zahl, der ich traue.
 </p>
@@ -186,7 +186,7 @@ const EN = `
   I would rather measure than assume. Our five-person team built a wave energy converter and machined
   every part to tolerance ourselves on a Bridgeport mill; it took <b>first place</b> with the highest
   measured output of three teams. I work the same way in software. My trading system runs in production
-  behind 1553 tests, and I chose its parameters on their <b>worst</b> result across two separate
+  behind 2,015 tests, and I chose its parameters on their <b>worst</b> result across two separate
   validation windows rather than their best, because a number that only holds up on a good day is not a
   number I trust.
 </p>

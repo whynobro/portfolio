@@ -23,15 +23,37 @@ the two current variants. This file holds the *content pool*.
    lists more bullets than any one resume should use.
 5. **Cut skills** in §5 to what the posting names plus what the chosen projects
    evidence. An unevidenced skill line is noise.
-6. **Never shrink type to fit; cut content instead.** 10pt on the two-page
-   documents, 9.6pt on the one-pager, and that is the floor. (This mistake has
+6. **Bold is structure only** (2026-09-14): entry titles, skills labels, award
+   labels, plus the Secret clearance as the single content exception.
+   Never bold a figure inside a sentence.
+7. **Never shrink type to fit; cut content instead.** Times New Roman at
+   10.5pt on every English document, and that is the floor. (This mistake has
    been made once already.)
+
+**Naming** (2026-09-14): the ONE-PAGE document is the **Resume**
+(`Michael-Fischbach-Resume-1Page.pdf`) and the two-page long-form document is
+the **CV** (`Michael-Fischbach-CV.pdf`, `-CV-Abroad`, `-CV-HWA`). They used to
+both be called Resume, which made attaching the wrong one easy.
 
 **The one-pager already exists** (`scripts/make-cv-onepage.mjs`) and is the
 default send. It keeps only work carrying a checkable number: the putter,
 the wave converter, Chameleon Ramps and the execution system, with Ramps moved
 up into EXPERIENCE. If a posting wants a different four, start from that script
 rather than the two-page one.
+
+**The one-pager has NO objective section** (removed 2026-09-14). It asserted
+what the page proves below it: GPA and honors are in EDUCATION, and "CAD to
+finished metal, 3-axis CNC, tolerance analysis" restates the putter entry. The
+space went to the coursework bullet, the Campus Native intern team, and the
+putter's single-fixture consequence. The CV keeps its objective.
+
+**Cut from the one-pager on 2026-09-14** to make room for the clearance and the
+Haas certification, in cut order: the noodle bridge award (ranked #5 here and
+reads as first-year coursework), the SMC bot's broker plumbing (Webull /
+Tradovate / SQLite detail, least relevant to a mechanical posting), and two
+lines of the objective that merely asserted what Chameleon Ramps evidences
+directly below it. The page is now ~97.5% full. Anything added needs something
+cut; measure with `node tmp/measure-fit.mjs`.
 
 ### Selection cheatsheet
 
@@ -41,7 +63,7 @@ rather than the two-page one.
 | Design / CAD / product development | Putter or Ramps | Putter, Ramps, Doorknob |
 | Simulation / CFD / analysis | Water distribution | Water, Wave, Net-Zero |
 | Software / data / automation | Execution system | Execution system, Campus Native, Ramps |
-| Business / operations / startup | Ramps or Campus Native | Ramps, Campus Native, Execution system |
+| Business / operations / startup | Ramps or Campus Native | Ramps (+ sponsored-athlete channel, §4.3), Campus Native, Execution system |
 | Sustainability / energy | Wave | Wave, Net-Zero, Water |
 | Motorsport / vehicle development | Putter | Putter, Wave, Execution system |
 
@@ -81,15 +103,34 @@ Pick one. These are mutually exclusive framings, not stackable.
 | Phone | 805-703-8250 |
 | Email | `mef126906@icloud.com` |
 | Portfolio | michaelfischbach.dev |
-| LinkedIn | linkedin.com/in/michael-fischbach |
+| LinkedIn | linkedin.com/in/mefisch |
 | Chameleon Ramps | <https://www.chameleonramps.com> |
 | Campus Native | <https://www.campusnative.com> |
 | Location | Malibu, CA |
 
 Every resume hyperlinks LinkedIn, the portfolio, and both company names, in
-`#0563c1` underlined. The company links are the cheapest credibility on the
-page: a reader who doubts "1358 orders fulfilled" can go look. Check both
-return 200 before shipping.
+**black, underlined** (changed from `#0563c1` blue on 2026-09-11). They are
+still real clickable anchors; the underline is what marks them. The phone
+number is underlined to match but is deliberately NOT a link: a tel: URL does
+nothing in a desktop PDF reader.
+
+**LinkedIn shows its FULL URL** (`www.linkedin.com/in/mefisch`),
+changed 2026-09-14 from the word "LinkedIn". Michael hands out printed copies,
+where a hyperlinked word is a dead end: the reader cannot see where it goes and
+cannot type it in. The slug changed from `michael-fischbach` to `mefisch` on
+2026-09-14; it is a live identifier, so it was corrected on every document
+including the Apple resume, the Lebenslauf and the portfolio page. The location/eligibility line sits in its own centred
+`.location` block rather than after a `<br>`, so it can carry a real margin
+matching the h1's, which is what makes the header's two gaps even. The company
+links are the cheapest credibility on the page: a reader who doubts "1358
+orders fulfilled" can go look. Check both return 200 before shipping.
+
+**On the one-pager, Chameleon Ramps shows its domain and Campus Native does
+not** (Michael's call, 2026-09-14): the Ramps line reads
+`Chameleon Ramps · chameleonramps.com`, Campus Native stays a bare linked
+company name. This asymmetry is DELIBERATE, do not "fix" it. The domain sits
+after the company name on the left because the right-hand slot carries the
+location on every EXPERIENCE entry.
 
 **Eligibility lines** · include only when relevant:
 
@@ -102,7 +143,7 @@ return 200 before shipping.
 
 ## 3. Education
 
-**California Polytechnic State University, San Luis Obispo** · Sep 2025 – Jun 2029
+**California Polytechnic State University, San Luis Obispo** · Sep 2025 – May 2029
 B.S. Mechanical Engineering, Honors Program | GPA 3.78 | Dean's List: Fall, Winter, Spring
 
 Bullet pool:
@@ -180,33 +221,90 @@ Best pick for energy, sustainability, or "designed and built a test rig".
 The business/ownership story. Strongest evidence of sustained independent work.
 
 - Six-year iterative development program: designed **40+ unique products** and
-  developed proprietary casting techniques, reducing material waste **~30%** `[M]`
+  developed proprietary casting techniques, reducing material waste **~45%** `[M]`
 - Ran a systematic design-test-refine loop across 4–6 prototype generations per
-  product; **1358 orders fulfilled** and **$50,000+ in revenue** `[M]`
+  product; **1358 orders fulfilled** and **$26,500 in revenue** `[M]`
+
+> **Figures corrected 2026-09-18** (confirmed by Michael): revenue is **$26,500**,
+> not $50,000+, and the waste reduction is **~45%**, not ~30%. The $50k figure
+> entered this file as a correction to an older $25k/$30k and was carried forward
+> on trust; Michael's current number is $26,500. `make-cv-en.mjs` and
+> `make-cv-onepage.mjs` still render $50,000+ / ~30% and must be updated before
+> either is sent.
 - Cast concrete range produced entirely in-house, mould design included
 - The quarter pipe was the hardest mould in the range to release, which drove a
   redesign of the draft angles
 
-### 4.4 Autonomous Execution System (SMC bot)
+**Sponsored-athlete channel** · 4 recurring partners at a time, rotated over the
+six years. Fingerboard creators on Instagram: `@hawaii.fb`, `@abstrakt.fb`,
+`@icefingaz`, `@soles.fb`. Product was shipped to them; they produced promotional
+content. `@hawaii.fb` was signed at ~3K followers and is now at ~143K.
 
-`2025 – Present · Python, real-time data, SQLite, backtesting`
+Preferred phrasing, folded into the revenue bullet rather than given its own:
+
+- …**1358 orders fulfilled** and **$50,000+ in revenue** through a self-built
+  sponsored-athlete channel of 4 recurring partners
+
+> **Do not write this as "managed a team of 4."** They were gifted-product
+> sponsorships, not reports: no hiring, no pay, no reviews, no schedule. The
+> claim does not survive the interview question "how did you handle an
+> underperformer", and a stretch here contaminates the figures beside it, which
+> are the strongest thing on the page. Michael already has two more defensible
+> leadership claims (the Campus Native intern team, Senior Patrol Leader), so a
+> third adds nothing.
+>
+> **Do not claim the 3K → 143K growth as a result.** He signed the creator early;
+> the creator grew. Correlation, and a reader spots it immediately.
+>
+> **This is cover-letter and interview material, not resume material.** Spoken,
+> "I picked him at 3K and he's at 143K now" is a good judgment-and-talent-spotting
+> story. Compressed to a resume line it reads as inflation. The one thing worth
+> the resume space is the *channel*, which shows distribution was built into the
+> manufacturing business rather than bolted on. Weakest for pure mechanical-design
+> postings; cut it first there. Worth including for business, operations,
+> startup, marketing or consumer-product postings.
+>
+> German/EU CVs are more literal about titles than US ones, so the
+> "managed a team" framing lands *worse* abroad, not better. The channel phrasing
+> above is the safe version in both markets, no divergence needed.
+
+### 4.4 SMC Trading Bot – Autonomous Options Execution
+
+`2025 – Present · Python, options & futures, broker APIs, SQLite, backtesting`
 
 For software, data, automation or "systems thinking" postings.
 
-- Built an autonomous Python system that ingests real-time data feeds and
-  executes decisions through an external API, with risk limits, state
-  persistence, and a custom backtesting harness
-- **1553 tests passing** in production; parameters selected on their **worst
-  case** across two disjoint validation windows rather than their best `[M]`
-- Options live, futures in demo
-- Runs 24/7 on a VPS; parses unstructured alerts into structured orders
-- Backtested against polygon.io historical data
+**The name is "SMC Trading Bot"** (2026-08-06). It was "Autonomous Execution
+System" on every document until then; that name hid what it does, so a reader
+could not tell it trades options against a real brokerage. Do not reintroduce
+it. The subtitle carries the engineering claim on resumes, where the bare name
+means nothing to a recruiter: `SMC Trading Bot – Autonomous Options Execution`.
+
+- Built an autonomous Python system that parses unstructured options alerts and
+  places live orders against a **funded Webull brokerage account**, with risk
+  limits, position sizing, and state reconciled from broker fills; a second lane
+  trades **futures on Tradovate**
+- A misread alert becomes a real order, so every parse and order path is pinned
+  by a regression suite of **2,015 tests** before it reaches the live account
+- Selected strategy parameters on their **worst case** across two disjoint
+  validation windows rather than their best, using a custom backtesting harness:
+  the best-fit choice is how a system that backtests well loses money live `[M]`
+- Options live on real money; futures autonomous on a Tradovate demo account
+  (the options brokerage has no futures order entry)
+- Runs 24/7 on a VPS; nine analyst channels, each with its own parser grammar
+
+> **Never state the test count bare** (2026-08-06). "2,015 tests passing" means
+> nothing to a non-engineer and reads as busywork to an engineer. It only lands
+> attached to the consequence: every fill spends real money, so the order path
+> is pinned by tests before it reaches the account. Same rule for the wall label
+> and the room's Result row.
 
 > **Never publish account state**: no P&L, cash balance, per-analyst win rates,
-> or account ID. The "+137% backtest" figure in Michael's own notes is a
-> backtest, not realised return. Do not put it on a resume. The defensible
-> claims are the test count, the live/demo status, and the worst-case parameter
-> selection.
+> or account ID. Naming the *brokers* (Webull, Tradovate) is fine and is
+> deliberate; naming the account or its value is not. The "+137% backtest"
+> figure in Michael's own notes is a backtest, not realised return. Do not put
+> it on a resume. The defensible claims are the test count (in context), the
+> live/demo status, and the worst-case parameter selection.
 
 ### 4.5 Water Distribution System: Cerro de Agua, Nicaragua
 
@@ -232,7 +330,15 @@ OR a job, not both.
 
 - Founded and operate a digital marketplace connecting students with campus
   tour guides, live at campusnative.com
-- Lead a 4-person intern team across engineering, marketing, and content
+- Recruited a 4-person intern team across engineering, marketing, and content;
+  sets their priorities, reviews their work, and led the build of the listing
+  and booking flow (confirmed with Michael 2026-09-14)
+
+> **This one IS a real management claim, unlike the Chameleon Ramps sponsored
+> athletes in §4.3.** He recruited them, assigns and reviews their work, and
+> led the product build with them. It survives the "how did you handle an
+> underperformer" interview question, which the athlete channel does not. The
+> interns are unpaid (credit/equity), so do not imply salaried reports.
 - Guides set their own rates; the platform handles listing and booking
 
 ### 4.7 Net-Zero Shipping Container: Apricot Lane Farms
@@ -273,6 +379,25 @@ Cut to what the posting names plus what the chosen projects evidence.
 | Software | Python, HTML/CSS, Git |
 | Languages | English (native); German (beginner, actively learning) |
 
+**Certification**
+
+- **Haas CNC Certification Program, Basic Mill Operator** · Haas Automation ·
+  2026 · online coursework completed (12 chapters of video + quiz, 100%
+  required per quiz to advance)
+
+> **Say "online coursework completed", never "Haas Certified Machinist".** Haas
+> awards the *certification* only after an in-person hands-on exam at a Haas
+> Factory Outlet, where you demonstrate the concepts on a real machine. Michael
+> did the virtual program only. The distinction is one an experienced
+> machinist reading the page knows, and it sits directly beside "3-axis HAAS
+> CNC machining" in the skills block, so an overclaim here undermines a real
+> skill. If he later sits the HFO hands-on exam, this becomes
+> "Haas CNC Certification, Basic Mill Operator" with no qualifier.
+>
+> It pairs well with the putter (machined on a 3-axis HAAS), which is why it is
+> worth its line on the one-pager: the certificate and the part corroborate
+> each other.
+
 **DFA (Design for Assembly) was removed on 2026-08-02 and should not come
 back.** It sat next to DFM as "DFM/DFA" and read as padding one method into
 two: nothing in §4 is an assembly-heavy project, so there is no entry a reader
@@ -297,10 +422,52 @@ Situational additions, only when true for the target and evidenced:
 - Founded and operate a digital marketplace; lead a 4-person intern team across
   engineering, marketing, and content
 
-**Digital Media Manager, All Domain Integration (ADI), Aerospace Engineering** · Remote · Mar 2023 – Present
+**Data Analyst, All Domain Integration (ADI), Aerospace Engineering** · Remote · Mar 2023 – Present
 
-- 3+ year engagement with an aerospace engineering firm: website management,
-  SEO strategy, and digital communications
+- **Top Secret clearance submitted and in process; SCI eligible** — sponsored by
+  ADI for work on a classified contract. Nothing is granted yet.
+- 3+ year engagement with an aerospace engineering firm: track and report web
+  traffic and user-behavior data in Google Analytics, and turn that data into
+  content and search-visibility decisions
+
+> **Title is Data Analyst as of 2026-09-14** (was Digital Media Manager), on
+> the English CV and one-pager. It is a title correction, not a role change:
+> same work, same Mar 2023 start.
+>
+> **Do not inflate the analytics work into data engineering.** It is Google
+> Analytics: traffic and user-behaviour reporting that feeds content and SEO
+> decisions. Pipelines, modelling or "big data" phrasing would not survive
+> "walk me through your analysis", and this bullet sits one line under the Top
+> Secret clearance, where a soft claim contaminates a hard one. Measured,
+> reported, acted on is the honest framing and already reads as analytical
+> rather than social-media work.
+>
+> The German Lebenslauf still says Digital Media Manager with the old
+> website/SEO bullet. Michael scoped this change to the English documents;
+> update the German one before sending it anywhere.
+
+> **NOTHING IS GRANTED. The TS is submitted and in process; Michael is SCI
+> eligible** (confirmed by Michael 2026-09-18, superseding the "Active Secret,
+> granted 2026-09-15" entry that stood here). That earlier line was wrong and is
+> retired: do not restore it, and do not write "Active Secret", "holds a
+> clearance", or any phrasing in the past tense.
+>
+> **The status word is load-bearing, not the level.** A clearance claim is
+> checked directly against DISS, so stating a granted clearance that does not
+> exist is a false statement on a federal-contracting matter and ends the
+> application. "Top Secret Clearance (In Process) | SCI Eligible" is the approved
+> header (Michael's call, 2026-09-18) and the ADI bullet spells it out as
+> submitted. Never drop the "(In Process)" qualifier to save space, and never add
+> a polygraph. Reword only when the status actually changes.
+>
+> **`make-cv-en.mjs` and `make-cv-onepage.mjs` still render "Active Secret
+> security clearance: granted".** Both are wrong as of 2026-09-18 and must be
+> fixed before either document is sent anywhere.
+>
+> **The clearance is the reason ADI is back on the one-pager**, after being cut
+> there as "marketing, not engineering evidence". A clearance with no employer
+> attached is unverifiable, so the entry carries it. Lead the bullet with the
+> clearance, not the digital-media duties.
 
 > **Keep this for anything aerospace or defence.** The function is marketing,
 > but "three years working with an aerospace engineering firm" is a door-opener
@@ -319,7 +486,7 @@ Situational additions, only when true for the target and evidenced:
 >
 > **Both ADI and Ashersells are cut from the current one-pager.** That was a
 > call made for a mechanical-design target, where they lose to a $15.78 unit
-> cost and 1553 tests. It is NOT a permanent judgement: for an aerospace,
+> cost and 2,015 tests. It is NOT a permanent judgement: for an aerospace,
 > software or operations posting, put them back.
 
 **Founder, Chameleon Ramps** · 2019 – Present
@@ -389,12 +556,15 @@ column.** If a draft disagrees with this table, the draft is wrong.
 | Claim | Wrong version | Correct |
 | --- | --- | --- |
 | Putter machine | 4-axis HAAS | **3-axis HAAS** (confirmed against the capstone poster, 2026-08-01) |
-| Ramps revenue | $25,000+ / $30,000 | **$50,000+** |
+| Clearance | "Active Secret, granted" / "Top Secret" bare | **TS submitted and in process, SCI eligible** (2026-09-18). Nothing granted. |
+| Ramps revenue | $50,000+ / $25,000+ / $30,000 | **$26,500** (2026-09-18) |
+| Ramps waste cut | ~30% | **~45%** (2026-09-18) |
 | Ramps orders | *(absent)* | **1358 orders** |
-| Execution system tests | 190 tests | **1553 tests passing** |
+| Execution system tests | 190 tests | **2,015 tests passing** (2026-08-06) |
 | Execution system status | paper trading | **options live, futures in demo** |
 | Capstone Night audience | 300+ / 250 | **200+ alumni and industry professionals, several hundred students** |
 | Putter cost saving | "533% cost reduction" | **$15.78 vs $50–150 retail** (a reduction cannot exceed 100%; retired 2026-08-02) |
+| Cal Poly graduation | Jun 2029 | **May 2029** (confirmed by Michael 2026-09-14; corrected on all four generators) |
 
 **Do not publish**: any account state from the execution system (P&L, balances,
 win rates, account ID), and never present its backtest figure as realised

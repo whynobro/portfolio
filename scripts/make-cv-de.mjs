@@ -74,9 +74,10 @@ const html = `<!doctype html><meta charset="utf-8">
 
 <h1>Michael Fischbach</h1>
 <p class="contact">
-  Malibu, Kalifornien, USA · +1 805 703 8250 · mef126906@icloud.com<br>
+  Malibu, Kalifornien, USA · +1 805 703 8250 ·
+  <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a><br>
   <a href="https://michaelfischbach.dev">michaelfischbach.dev</a> ·
-  <a href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a><br>
+  <a href="https://www.linkedin.com/in/mefisch/">LinkedIn</a><br>
   US-Staatsbürger · Aufenthaltstitel für ein studienbezogenes Praktikum in Deutschland möglich
 </p>
 
@@ -93,7 +94,7 @@ const html = `<!doctype html><meta charset="utf-8">
 <div class="block">
   <div class="row">
     <span class="role">California Polytechnic State University, San Luis Obispo</span>
-    <span class="when">09/2025 – 06/2029</span>
+    <span class="when">09/2025 – 05/2029</span>
   </div>
   <p class="org">B.Sc. Maschinenbau, Honors-Programm · Notendurchschnitt 3,78 von 4,0 · Dean's List in allen drei Quartalen</p>
   <ul>
@@ -147,13 +148,14 @@ const html = `<!doctype html><meta charset="utf-8">
 </div>
 <div class="block">
   <div class="row">
-    <span class="role">Autonomes Ausführungssystem</span>
+    <span class="role">SMC Trading Bot – autonome Optionsausführung</span>
     <span class="when">2025 – heute</span>
   </div>
-  <p class="org">Python · Echtzeitdaten · SQLite · Backtesting</p>
+  <p class="org">Python · Optionen und Futures · Broker-APIs · SQLite · Backtesting</p>
   <ul>
-    <li>Python-System, das Echtzeitdaten verarbeitet und Entscheidungen über eine externe Schnittstelle ausführt, mit Risikogrenzen, Zustandspersistenz und eigenem Backtesting</li>
-    <li><b>1553 Tests</b> laufen im Produktivbetrieb; Parameter nach ihrem <b>ungünstigsten</b> Ergebnis über zwei getrennte Validierungszeiträume gewählt, nicht nach ihrem besten</li>
+    <li>Python-System, das unstrukturierte Optionsmeldungen auswertet und daraus Live-Orders über ein reales Webull-Depot auslöst, mit Risikogrenzen, Positionsgrößen und aus den Broker-Ausführungen abgeglichenem Bestand; eine zweite Strecke handelt Futures über Tradovate</li>
+    <li>Eine falsch gelesene Meldung wird zur realen Order, daher sichert eine Regressionssuite von <b>2.015 Tests</b> jeden Parser- und Orderweg ab, bevor er das Live-Depot erreicht</li>
+    <li>Parameter nach ihrem <b>ungünstigsten</b> Ergebnis über zwei getrennte Validierungszeiträume gewählt, nicht nach ihrem besten, mit eigenem Backtesting</li>
   </ul>
 </div>
 

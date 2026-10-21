@@ -136,9 +136,12 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
   built around. It is now generated (`--only=hwa`) rather than hand-made, but
   it is still a **committed copy**: regenerating does NOT update the site until
   the new PDF is copied over `src/assets/docs/resume.pdf`.
-- **`scripts/make-cv-en.mjs` renders three resumes from ONE template**, so the
-  figures cannot drift apart: `-Resume.pdf` (US), `-Resume-Abroad.pdf`
-  (international), `-Resume-HWA.pdf` (the site's). They differ in **exactly two
+- **`scripts/make-cv-en.mjs` renders three CVs from ONE template**, so the
+  figures cannot drift apart: `-CV.pdf` (US), `-CV-Abroad.pdf`
+  (international), `-CV-HWA.pdf` (the site's). **They are named CV, not Resume,
+  since 2026-09-14**: these are the two-page long-form documents, and the
+  one-pager from `make-cv-onepage.mjs` is the RESUME. The filename is the only
+  thing telling them apart in a recruiter's downloads folder. They differ in **exactly two
   strings**, the objective and the eligibility line. Only the HWA one names an
   employer, and only it belongs on the site; handing this portfolio's reader a
   generic resume would be a downgrade.
@@ -146,24 +149,35 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
   *selection* rather than a different objective, which is why it is its own
   script. It drops whole entries (the high school, the two non-engineering
   jobs, the Nicaragua system, the Doorknob-Inator) and keeps only work carrying
-  a checkable number. Both it and the two-page versions fit their page with
-  under 5px to spare, so **any content added to either will overflow**: measure
-  after editing, and cut something rather than shrinking the type.
-- **Contact links are real PDF anchors, and LinkedIn + the portfolio are
-  visibly blue.** They are `<a>` elements, so Chromium writes `/Annots` link
-  objects a reader can click, and both carry `class="link"` for `#0563c1`
-  underlined (Word's hyperlink colour). This is deliberate and was asked for
-  twice: a PDF gives no hover cue and no cursor change, so an unstyled link is
-  invisible as a link, and "LinkedIn" in body colour reads as just a word. The
-  portfolio link only pays off if a recruiter clicks it. **The email stays in
-  body colour** — it is already recognisable as an address, and a third blue
-  run turns the centred header into a link bar. LinkedIn shows as the word
-  "LinkedIn"; the portfolio keeps its URL visible because it is short and is
-  the thing being advertised. **Chameleon Ramps and Campus Native link to their
-  live sites** in the same blue (`a.site`): both businesses are real and
-  inspectable, which only pays off if a reader clicks through. Verify both
-  still return 200 before shipping a resume — a dead link on a resume is worse
-  than no link.
+  a checkable number. After the 2026-09-14 pass (clearance + Haas
+  certification added) the one-pager fills ~97.5% of its page with ~24px of
+  headroom, so **it is effectively full**: anything added now needs something
+  else cut. Measure with `node tmp/measure-fit.mjs` after editing, and cut
+  content rather than shrinking the type.
+- **Contact links are real PDF anchors, and every link is BLACK with an
+  underline.** They are `<a>` elements, so Chromium writes `/Annots` link
+  objects a reader can click. **Black, not blue, asked for 2026-09-11**, which
+  supersedes the earlier `#0563c1` rule: the resume prints as one colour and
+  reads as a print-native document rather than a web page. The underline now
+  carries the job of marking a link alone, so **never drop
+  `text-decoration: underline`** while the colour matches body text. **LinkedIn
+  shows its FULL URL** (`www.linkedin.com/in/mefisch`), changed
+  2026-09-14 from the word "LinkedIn": Michael hands out printed copies, where
+  a hyperlinked word is a dead end because the reader can neither see where it
+  goes nor type it in. The portfolio likewise keeps its URL visible. Both are
+  centred, so a printed page reads as deliberate rather than truncated.
+  **The location/eligibility line is its own centred `.location` block**, not
+  text after a `<br>` inside `.contact`: only a block can take a real margin,
+  and that margin is set to the h1's (1mm one-pager / 1.2mm CV) so the gap
+  above the location matches the gap under the name. **Chameleon Ramps and Campus
+  Native link to their live sites** (`a.site`, also black): both businesses are
+  real and inspectable, which only pays off if a reader clicks through. Verify
+  both still return 200 before shipping a resume, a dead link on a resume is
+  worse than no link. **The phone number is underlined but is NOT a link**
+  (2026-09-14): the underline makes the four header items read as one
+  consistent row, while a `tel:` URL does nothing in the desktop PDF readers a
+  recruiter uses, so linking it would promise a click that silently fails.
+  Style it with `.contact .tel`, never by wrapping it in an anchor.
 - **The portfolio link shows `michaelfischbach.dev` on every document, but
   only HWA's documents point at the root.** The visible text is always the
   bare domain: that is the address worth advertising, and a subpath in print
@@ -172,8 +186,8 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
 
   | Document | Target |
   | --- | --- |
-  | `-Resume-HWA.pdf` (and the site's `resume.pdf`), Lebenslauf, Anschreiben | `PORTFOLIO_HWA` = the root |
-  | `-Resume.pdf`, `-Resume-Abroad.pdf`, `-Resume-1Page.pdf`, the Apple documents, and any future per-employer document that is not HWA's | `PORTFOLIO_GENERAL` = `/general/` |
+  | `-CV-HWA.pdf` (and the site's `resume.pdf`), Lebenslauf, Anschreiben | `PORTFOLIO_HWA` = the root |
+  | `-CV.pdf`, `-CV-Abroad.pdf`, `-Resume-1Page.pdf`, the Apple documents, and any future per-employer document that is not HWA's | `PORTFOLIO_GENERAL` = `/general/` |
 
   The rule is the document, not the language: a document that NAMES HWA sends
   its reader to the entrance that also names HWA. Everything else goes to
@@ -188,7 +202,7 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
   reading the markup:
 
   ```sh
-  python3 -c "import re,sys; d=open(sys.argv[1],'rb').read(); print(sorted(set(re.findall(rb'/URI\s*\((.*?)\)', d))))" Michael-Fischbach-Resume.pdf
+  python3 -c "import re,sys; d=open(sys.argv[1],'rb').read(); print(sorted(set(re.findall(rb'/URI\s*\((.*?)\)', d))))" Michael-Fischbach-CV.pdf
   ```
 
   Remember both committed copies: `src/assets/docs/resume.pdf` (HWA) and
@@ -201,13 +215,24 @@ Live: <https://michaelfischbach.dev> (HWA, the submitted link) ·
   targeted resume, pick against the posting, and leave the rest out. Pasting
   the whole inventory in produces a resume that argues nothing. It is also the
   authority on figures: it carries the table of what older PDFs got wrong.
+- **Bold is STRUCTURE, not emphasis** (asked 2026-09-14). It marks entry titles
+  (`.role`), the skills-block labels (`CAD / CAE:`, `Manufacturing:`, …), the
+  award/leadership labels that open those bullets, and the HWA posting name in
+  that variant's objective. **The one content exception is the Secret
+  clearance**, which leads its bullet in bold on both documents. Inside running
+  body text, bold NOTHING: no figures, no counts, no superlatives. Bolding
+  every number made the page restless and, because everything was emphasised,
+  emphasised nothing. The figures carry themselves.
+
 - **A resume is never made to fit by shrinking the type.** An earlier pass here
   invented its own layout and drove the body to 8.1pt to force one page, which
   produced something nobody would read. Every English document uses the same
   layout (centred name, ruled section headings, entries indented from the rule
-  with the date flush right) at 10pt for the two-page versions and 9.6pt for
-  the one-pager, which is the floor. The one-pager reaches one page by dropping
-  whole entries, never by compressing type. Cut content if it must be shorter.
+  with the date flush right) in **Times New Roman at 10.5pt**, which is the
+  floor. Times was asked for on 2026-09-11, replacing Helvetica/Arial: it sets
+  narrower, which is what paid for tighter spacing at a LARGER point size than
+  the 10pt/9.6pt it replaced. The one-pager reaches one page by dropping whole
+  entries, never by compressing type. Cut content if it must be shorter.
 
 ## The frame
 
@@ -355,8 +380,8 @@ Six works. Sources in `assets-src/<folder>/`.
 | CNC-milled putter | `putter/` | 11 converted photos, the Fusion CAM export, the STL behind the turning piece, and the capstone poster exported from `CapstonePoster_MichaelFischbach.pptx` (PowerPoint COM, 4x slide size, see the wave row for why posters are prepped at 2600px/q88). Capstone drawing still has a mint-green slide background baked in. The poster's 3-axis HAAS is correct (confirmed 2026-08-01); the site, the resume PDF and both dictionaries were corrected from 4-axis to match. |
 | Chameleon Ramps | `ramps/` | 11 product photos. `p4` (Beachside Bank on wet rock) and `p9` (quarter pipe against foliage) are the strongest. |
 | Wave energy converter | `wave/` | inside / base views, the cutaway, and the capstone poster rendered from `wec-report.pdf` at 200dpi. The poster hangs full width at the foot of the room and must stay readable, so it is the one image prepped at 2600px / q88. |
-| SMC execution system | `smc-bot/` | Poster DRAWN by `scripts/make-bot-poster.mjs` (SVG -> PNG, both languages, ~270 KB each as AVIF): the only poster on the site that is not a scan, so it is the only one that exists in German too, switched by a tab in the room. |
-| SMC execution system (capture) | `smc-bot/` | Jarvis operator display, captured from the live dashboard over Tailscale by `scripts/shoot-jarvis.mjs`. **Account figures are never published** — see the rule below. |
+| SMC Trading Bot | `smc-bot/` | Poster DRAWN by `scripts/make-bot-poster.mjs` (SVG -> PNG, both languages, ~270 KB each as AVIF): the only poster on the site that is not a scan, so it is the only one that exists in German too, switched by a tab in the room. |
+| SMC Trading Bot (capture) | `smc-bot/` | Jarvis operator display, captured from the live dashboard over Tailscale by `scripts/shoot-jarvis.mjs`. **Account figures are never published** — see the rule below. |
 | Campus Native | `campus-native/` | The live site at <https://www.campusnative.com>, captured by `scripts/shoot-campus.mjs`. The logo it replaced showed the brand, not the software the label calls live. |
 | Water distribution system | `nicaragua/` | Gravity-fed network, tank siting on the site survey. |
 
@@ -364,13 +389,27 @@ Deliberately **not** on the wall: the Net-Zero shipping container (removed at
 Michael's request, 2026-07-29), Doorknob-Inator and the noodle bridge (the last
 two too slight as works). The noodle bridge lives in the awards room instead.
 
-**The execution system's dashboard is a live real-money display, so no capture
+**The bot is named "SMC Trading Bot" and its documents must say what it trades**
+(2026-08-06). It was "Autonomous Execution System" everywhere until then, a name
+that hid the whole point: it trades OPTIONS against a funded Webull brokerage
+account, with a second lane on Tradovate for futures. Naming the brokers is
+deliberate; naming the account or its value is not (see the next rule). The
+English resumes carry `SMC Trading Bot – Autonomous Options Execution`, because
+the bare name means nothing to a recruiter.
+
+**The test count never appears bare.** "2,015 tests" reads as busywork on its
+own. It only lands attached to its consequence: every fill spends real money, so
+the parse and order path is pinned by tests before it reaches the live account.
+That is the phrasing on the resumes, the wall label's `data-measured` span and
+the room's Result row; keep them saying the same thing.
+
+**The bot's dashboard is a live real-money display, so no capture
 of it may publish account state** — realized/unrealized P&L, cash balance,
 per-analyst win rates, the account ID. Shoot the architecture instead (masthead,
 link status, position table, analyst grid), and never retouch a figure into a
 better one: an edited P&L on a portfolio is a fabricated financial record, which
 is a firing-and-rescinded-offer problem rather than a design choice. The
-verifiable claims (1553 tests, options live, worst-case parameter selection over
+verifiable claims (2,015 tests, options live, worst-case parameter selection over
 two disjoint windows) are what the label carries.
 
 The putter room carries a **rotating 3D piece** built from the capstone's own
@@ -395,8 +434,11 @@ Sources disagree; these are current. The resume is stale on several points.
   `assets-src/wave/wec-report.pdf`). A five-person team, so the room says so.
 - Chameleon Ramps: since 2019, 40+ products, **1358 orders fulfilled**, **$50k revenue** (resume says $25k,
   LinkedIn $30k; $50k is Michael's current figure).
-- Execution system: **1553 tests passing**, **options live, futures in demo**.
-  Resume says "190 tests, paper trading" — badly understated.
+- SMC Trading Bot: **2,015 tests passing** (measured 2026-08-06 by running
+  `python -m pytest tests/ -q` in `C:\Users\micha\smc-trade-bot`; the site said
+  1553 and the bot's own notes said 1599, both stale). **Options live on a
+  funded Webull account, futures autonomous on a Tradovate demo account.**
+  Re-measure before quoting it; do not copy the figure forward on trust.
 - Noodle bridge: 1st place, won by a 38.5% margin.
 - US citizen, eligible for a German study-related internship residence permit.
 

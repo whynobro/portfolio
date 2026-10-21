@@ -1,5 +1,5 @@
 /**
- * Draws the execution system's capstone-style poster, in both languages.
+ * Draws the SMC Trading Bot's capstone-style poster, in both languages.
  *
  *   node scripts/make-bot-poster.mjs
  *
@@ -276,12 +276,16 @@ function col3(x, y, w, L) {
   out += textBlock(x, cy + BODY, L.result, { size: BODY, width: w, lh: 1.5 });
   cy += blockHeight(L.result, w, BODY, 1.5) + GAP_BLOCK + 20;
 
-  // The measured figures, two by two.
-  out += figure(x, cy, "1553", L.f.tests);
-  out += figure(x + 270, cy, "9", L.f.channels, C.accent);
+  // The measured figures. The tests tile gets a ROW TO ITSELF: its label has to
+  // say what the tests guard (a bare count reads as busywork, and a bare "2,015"
+  // reads as a year), and that caption is far wider than the 270px pitch the
+  // other three sit on. Sharing the row overprinted it onto "CHANNELS".
+  out += figure(x, cy, L.f.testsValue, L.f.tests);
   cy += 130;
-  out += figure(x, cy, "27k", L.f.lines, C.accent);
-  out += figure(x + 270, cy, "24/7", L.f.uptime, C.green);
+  out += figure(x, cy, "9", L.f.channels, C.accent);
+  out += figure(x + 270, cy, "27k", L.f.lines, C.accent);
+  cy += 130;
+  out += figure(x, cy, "24/7", L.f.uptime, C.green);
   cy += 76;
 
   out += panel(x, cy, w, 118);
@@ -369,9 +373,9 @@ function poster(L) {
  * phrase: German runs about a third longer, and a poster has no room to grow.
  */
 const EN = {
-  title: "Autonomous Execution System",
-  subtitle: "From a message in a chat channel to a live order, with no human in the loop",
-  byline: "Python · live options execution",
+  title: "SMC Trading Bot",
+  subtitle: "From a message in a chat channel to a live options order at the brokerage, with no human in the loop",
+  byline: "Python · live options execution on a funded account",
   discordChannel: "alerts",
   discordToday: "today",
   discordNote: "Example in the source format. Real alerts are not reproduced.",
@@ -406,14 +410,16 @@ const EN = {
   challenge:
     "The parser is the hard part, but reconciliation is the subtle one. What an alert says will happen and what the broker actually fills are different facts, and only the second one is real. State is rebuilt from broker fills on every cycle, so a missed message or a partial fill cannot leave the system believing in a position it does not hold.\n\nParameters were chosen on their WORST case across two disjoint validation windows rather than their best on either, because picking the best fit is how a system that looks excellent in a backtest loses money in the market.",
   result:
-    "1553 tests pass in the production suite. The options lane runs live against a funded account; the futures lane runs against a paper broker, because the brokerage API has no futures order entry. The operator dashboard is read-only telemetry.",
-  f: { tests: "TESTS PASSING", channels: "CHANNELS", lines: "LINES OF PYTHON", uptime: "ON A VPS" },
+    "2,015 tests pass in the production suite. The options lane runs live against a funded account; the futures lane runs against a paper broker, because the brokerage API has no futures order entry. The operator dashboard is read-only telemetry.",
+  // Comma-grouped: a bare "2015" under a one-word label reads as a YEAR, which
+  // is the one misreading a figure tile cannot survive.
+  f: { testsValue: "2,015", tests: "TESTS GUARDING A LIVE ACCOUNT", channels: "CHANNELS", lines: "LINES OF PYTHON", uptime: "ON A VPS" },
 };
 
 const DE = {
-  title: "Autonomes Ausführungssystem",
-  subtitle: "Von der Nachricht im Chat-Kanal zur Live-Order, ohne menschlichen Eingriff",
-  byline: "Python · Optionen im Live-Betrieb",
+  title: "SMC Trading Bot",
+  subtitle: "Von der Nachricht im Chat-Kanal zur Live-Optionsorder beim Broker, ohne menschlichen Eingriff",
+  byline: "Python · Optionen live über ein reales Depot",
   discordChannel: "alerts",
   discordToday: "heute",
   discordNote: "Beispiel im Originalformat. Echte Meldungen werden nicht wiedergegeben.",
@@ -448,8 +454,8 @@ const DE = {
   challenge:
     "Der Parser ist der schwierige Teil, der Abgleich der subtile. Was eine Meldung ankündigt und was der Broker tatsächlich ausführt, sind zwei verschiedene Tatsachen, und nur die zweite zählt. Der Zustand wird in jedem Zyklus aus den Broker-Ausführungen neu aufgebaut. So kann eine verpasste Nachricht oder eine Teilausführung das System nicht in dem Glauben lassen, es halte eine Position, die es nicht hat.\n\nDie Parameter wurden nach ihrem SCHLECHTESTEN Ergebnis aus zwei disjunkten Validierungsfenstern gewählt, nicht nach ihrem besten. Die beste Anpassung ist der Weg, auf dem ein im Backtest hervorragendes System im Markt Geld verliert.",
   result:
-    "1553 Tests laufen in der Produktivsuite durch. Die Optionen laufen live auf einem gedeckten Konto, die Futures gegen einen Paper-Broker, da die Broker-API keine Futures-Order-Eingabe bietet. Die Betriebsanzeige ist reine Telemetrie.",
-  f: { tests: "TESTS BESTANDEN", channels: "KANÄLE", lines: "ZEILEN PYTHON", uptime: "AUF EINEM VPS" },
+    "2.015 Tests laufen in der Produktivsuite durch. Die Optionen laufen live auf einem gedeckten Konto, die Futures gegen einen Paper-Broker, da die Broker-API keine Futures-Order-Eingabe bietet. Die Betriebsanzeige ist reine Telemetrie.",
+  f: { testsValue: "2.015", tests: "TESTS SICHERN EIN REALES DEPOT", channels: "KANÄLE", lines: "ZEILEN PYTHON", uptime: "AUF EINEM VPS" },
 };
 
 await mkdir(OUT, { recursive: true });

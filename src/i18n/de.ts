@@ -38,7 +38,9 @@ export const de = {
 
   "fact.gpa": "GPA · Honors-Programm",
   "fact.products": "Produkte in Serie",
-  "fact.tests": "automatisierte Tests, System live",
+  // Kurz gehalten: die Kennzahlenspalte ist schmal. "reales Handelsdepot" und
+  // sogar "reales Depot" brechen dort mitten im Wort um ("REA-LES").
+  "fact.tests": "Tests · Depot im Live-Betrieb",
 
   "cta.work": "Sammlung ansehen",
   "cta.contact": "Kontakt",
@@ -79,10 +81,10 @@ export const de = {
   "proj.wave.body":
     "Ein Zahnstangen-Ritzel-Generator, der Wellenbewegung in elektrische Energie wandelt. Alle Bauteile im Eigenbau auf einer Bridgeport-Fräse gefertigt.",
   "proj.wave.meta": "1. Platz",
-  "proj.bot.title": "Autonomes Ausführungssystem",
+  "proj.bot.title": "SMC Trading Bot",
   "proj.bot.body":
-    "Ein Python-System, das Live-Daten aufnimmt und autonom ausführt. Die Parameter wurden nach ihrem schlechtesten Ergebnis aus zwei disjunkten Validierungsfenstern gewählt, nicht nach ihrem besten.",
-  "proj.bot.meta": "Optionen live",
+    "Ein Python-System, das Optionsmeldungen im Fließtext liest und die Orders selbst über ein reales Depot ausführt, ohne menschlichen Eingriff. Die Parameter wurden nach ihrem schlechtesten Ergebnis aus zwei disjunkten Validierungsfenstern gewählt, nicht nach ihrem besten.",
+  "proj.bot.meta": "Optionen live, echtes Geld",
   "proj.campus.title": "Campus Native",
   "proj.campus.body":
     "Ein produktiver Marktplatz für studentisch geführte Campus-Touren: sechzehn Datenmodelle und Zahlungsabwicklung. Doppelbuchungen verhindert eine Datenbank-Bedingung, nicht die Anwendungslogik.",
@@ -155,21 +157,21 @@ export const de = {
   "case.wave.outcome":
     "Der Prototyp lieferte 15 Volt pro Motor im Maßstab 1:12, hochgerechnet 360 Volt bei voller Baugröße. Das war die höchste gemessene Leistung der drei Teams und gewann den 1. Platz.",
 
-  // Ausführungssystem
+  // SMC Trading Bot
   "case.bot.lede":
-    "Ein Python-System, das Live-Meldungen liest, ihre Handelbarkeit prüft und ohne menschlichen Eingriff ausführt.",
+    "Ein Python-System, das Optionsmeldungen beim Eingang liest, ihre Handelbarkeit prüft und die Order ohne menschlichen Eingriff über ein reales Depot ausführt.",
   "case.bot.role": "Architektur und Umsetzung",
-  "case.bot.tools": "Python · SQLite · systemd auf einem VPS",
-  "case.bot.scope": "Optionen live · Futures im Demobetrieb",
-  "case.bot.result": "1553 Tests",
+  "case.bot.tools": "Python · Webull- und Tradovate-API · SQLite · systemd auf einem VPS",
+  "case.bot.scope": "Optionen live über ein reales Depot · Futures im Demobetrieb",
+  "case.bot.result": "2.015 Tests sichern ein reales Depot",
   "case.bot.brief":
-    "Aus einem Strom formloser, von Menschen geschriebener Meldungen werden korrekte Orders. Oder gar keine.",
+    "Aus einem Strom formloser, von Menschen geschriebener Optionsmeldungen werden korrekte Orders. Oder gar keine. Es geht um echtes Geld, also muss der zweite Fall genauso zuverlässig sein wie der erste.",
   "case.bot.approach1":
-    "Der Parser ist der schwierige Teil: Die Eingabe ist Fließtext von Menschen unter Zeitdruck, und ein falsch gelesener Strike ist eine reale Order auf das Falsche. Jeder Kanal hat seine eigene Grammatik. Maßgeblich ist der Ausführungsstand des Brokers, nie der Text der Meldung.",
+    "Der Parser ist der schwierige Teil: Die Eingabe ist Fließtext von Menschen unter Zeitdruck, und ein falsch gelesener Strike ist eine reale Order auf den falschen Kontrakt. Jeder Kanal hat seine eigene Grammatik und wird an echten Meldungen durch Tests abgesichert, bevor er an das Depot darf. Die Positionsgröße ergibt sich aus festem Budget und harter Kontraktgrenze, nie aus dem Nachdruck einer Meldung; Uneindeutiges wird übersprungen statt geraten.",
   "case.bot.approach2":
-    "Die Parameter wurden nach ihrem schlechtesten Ergebnis aus zwei disjunkten Validierungsfenstern gewählt, nicht nach ihrem besten. Die beste Anpassung ist der Weg, auf dem ein im Backtest hervorragendes System im Markt Geld verliert.",
+    "Was eine Meldung ankündigt und was die Bank tatsächlich ausführt, sind zwei verschiedene Tatsachen. Nur die zweite zählt. Der Bestand wird in jedem Zyklus aus den Ausführungen des Brokers neu aufgebaut, damit eine verpasste Meldung oder eine Teilausführung das System nicht an eine Position glauben lässt, die es nicht hält. Die Parameter wurden nach ihrem schlechtesten Ergebnis aus zwei disjunkten Validierungsfenstern gewählt, nicht nach ihrem besten: Die beste Anpassung ist der Weg, auf dem ein im Backtest hervorragendes System im Markt Geld verliert.",
   "case.bot.outcome":
-    "1553 Tests laufen in der Produktivsuite durch. Optionen laufen live, Futures gegen einen Paper-Broker. Die Betriebsanzeige oben ist reine Telemetrie: Die Steuerung liegt woanders.",
+    "Die Optionen laufen live über ein reales Webull-Depot, die Futures autonom über ein Tradovate-Demokonto, da die Options-API keine Futures-Orders kennt. Weil jede Ausführung echtes Geld bewegt, sichert eine Regressionssuite von 2.015 Tests den gesamten Orderweg ab. Die Betriebsanzeige oben ist reine Telemetrie: Die Steuerung liegt woanders.",
 
   // Campus Native
   "case.campus.lede":
@@ -246,7 +248,7 @@ export const de = {
   "alt.wave.poster": "Das Capstone-Poster des Based-Sea WEC: Aufgabe, Vorgehen, Probleme, Fazit",
   "cap.wave.poster": "Vorgestellt bei der Capstone Night der Oaks Christian School, Mai 2023.",
 
-  "alt.bot.poster": "Ein Poster des Ausführungssystems: der Weg einer Meldung von Discord bis zur ausgelösten Order, mit Parser, Absicherung und Positionsgröße",
+  "alt.bot.poster": "Ein Poster des Trading-Bots: der Weg einer Optionsmeldung von Discord bis zur beim Broker ausgelösten Order, mit Parser, Absicherung und Positionsgröße",
   "cap.bot.poster": "Das System als Poster: der Weg einer Meldung von der Chat-Nachricht zur ausgelösten Order.",
   "cap.bot.posterHint": "EN / DE ändert nur die Sprache des Posters, nicht die der Seite.",
   "alt.bot.hero": "Die Betriebsanzeige: Broker-Verbindung und ausgeführte Orders",

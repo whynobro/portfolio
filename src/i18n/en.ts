@@ -29,7 +29,7 @@ export const en = {
 
   "fact.gpa": "GPA · Honors Program",
   "fact.products": "products to market",
-  "fact.tests": "automated tests, system live",
+  "fact.tests": "tests guarding a live trading account",
 
   "cta.work": "View the collection",
   "cta.contact": "Contact",
@@ -70,10 +70,10 @@ export const en = {
   "proj.wave.body":
     "A rack-and-pinion generator turning wave oscillation into electrical power, every component machined in-house on a Bridgeport mill.",
   "proj.wave.meta": "1st place",
-  "proj.bot.title": "Autonomous Execution System",
+  "proj.bot.title": "SMC Trading Bot",
   "proj.bot.body":
-    "A Python system that ingests live data and executes autonomously, with parameters chosen on their worst case across two disjoint validation windows rather than their best.",
-  "proj.bot.meta": "options live",
+    "A Python system that reads options alerts written in prose and places the orders itself, against a funded brokerage account, with no human in the loop. Parameters were chosen on their worst case across two disjoint validation windows rather than their best.",
+  "proj.bot.meta": "options live, real money",
   "proj.campus.title": "Campus Native",
   "proj.campus.body":
     "A production marketplace for student-led campus tours: sixteen data models and payment handling, with double-booking prevented by a database constraint rather than application logic.",
@@ -148,21 +148,21 @@ export const en = {
   "case.wave.outcome":
     "The prototype produced 15 volts per motor at 1:12 scale, which is 360 volts if the same arrangement is built full size. It was the highest measured output of the three competing teams and took first place.",
 
-  // Execution system
+  // SMC Trading Bot
   "case.bot.lede":
-    "A Python system that reads live alerts, decides whether they are tradeable, and executes without a human in the loop.",
+    "A Python system that reads options alerts as they are posted, decides whether each one is tradeable, and places the order on a real brokerage account with no human in the loop.",
   "case.bot.role": "Architecture and implementation",
-  "case.bot.tools": "Python · SQLite · systemd on a VPS",
-  "case.bot.scope": "Options live · futures in demo",
-  "case.bot.result": "1553 tests",
+  "case.bot.tools": "Python · Webull and Tradovate APIs · SQLite · systemd on a VPS",
+  "case.bot.scope": "Options live on a funded account · futures on a demo account",
+  "case.bot.result": "2,015 tests guarding a live account",
   "case.bot.brief":
-    "Take a stream of informal, human-written alerts and turn it into orders that are correct, or into nothing at all.",
+    "Take a stream of informal, human-written options alerts and turn it into orders that are correct, or into nothing at all. The money is real, so the second outcome has to be as reliable as the first.",
   "case.bot.approach1":
-    "The parser is the hard part: the input is prose written by people in a hurry, and a misread strike is a real order for the wrong thing. Every channel has its own grammar, and the state that matters is what the broker reports as filled, never what the alert said would happen.",
+    "The parser is the hard part: the input is prose written by people in a hurry, and a misread strike is a real order for the wrong contract. Every channel has its own grammar, so each one is pinned by tests against real messages before it is allowed near the account. Position size comes from a fixed budget and a hard contract cap, never from how confident an alert sounds, and anything ambiguous is skipped rather than guessed.",
   "case.bot.approach2":
-    "Parameters were chosen on their worst case across two disjoint validation windows rather than their best on either. Picking the best fit is how a system that looks excellent in a backtest loses money in the market.",
+    "What an alert says will happen and what the brokerage actually fills are different facts, and only the second is real. State is rebuilt from broker fills on every cycle, so a missed message or a partial fill cannot leave the system believing in a position it does not hold. Parameters were chosen on their worst case across two disjoint validation windows rather than their best on either: picking the best fit is how a system that looks excellent in a backtest loses money in the market.",
   "case.bot.outcome":
-    "1553 tests pass in the production suite. The options lane runs live, the futures lane runs against a paper broker, and the operator display above is read-only telemetry, and the controls live elsewhere.",
+    "The options lane runs live against a funded Webull account; the futures lane runs autonomously on a Tradovate demo account, because the options brokerage has no futures order entry. Because every fill spends real money, the whole order path is held by a regression suite of 2,015 tests. The operator display above is read-only telemetry: the controls live elsewhere.",
 
   // Campus Native
   "case.campus.lede":
@@ -238,7 +238,7 @@ export const en = {
   "alt.wave.poster": "The Based-Sea WEC capstone poster: task, strategy, problems and conclusions",
   "cap.wave.poster": "Presented at Capstone Night, Oaks Christian School, May 2023.",
 
-  "alt.bot.poster": "A poster of the execution system: the path an alert takes from Discord to a placed order, with the parser, safety and sizing stages",
+  "alt.bot.poster": "A poster of the trading bot: the path an options alert takes from Discord to an order placed at the brokerage, with the parser, safety and sizing stages",
   "cap.bot.poster": "The system drawn as a poster: an alert's path from a chat message to a placed order.",
   "cap.bot.posterHint": "EN / DE switches the poster's language only, not the site's.",
   "alt.bot.hero": "The operator display: broker link status and filled orders",

@@ -1,5 +1,5 @@
 /**
- * Renders the three English resumes.
+ * Renders the three English CVs (the LONG documents, two pages).
  *
  *   node scripts/make-cv-en.mjs              all three
  *   node scripts/make-cv-en.mjs --only=us    just the domestic one
@@ -8,9 +8,16 @@
  *
  * Writes to the repo root (gitignored: build outputs, not sources):
  *
- *   Michael-Fischbach-Resume.pdf           US applications
- *   Michael-Fischbach-Resume-Abroad.pdf    internships outside the US
- *   Michael-Fischbach-Resume-HWA.pdf       the HWA AG application
+ *   Michael-Fischbach-CV.pdf           US applications
+ *   Michael-Fischbach-CV-Abroad.pdf    internships outside the US
+ *   Michael-Fischbach-CV-HWA.pdf       the HWA AG application
+ *
+ * NAMED "CV", NOT "RESUME", since 2026-09-14. These are the two-page long-form
+ * documents; `make-cv-onepage.mjs` builds the one-page RESUME, which is the
+ * default send. The filename is the only thing that distinguishes them in a
+ * recruiter's downloads folder, so the split is deliberate: attaching the
+ * wrong one is the failure mode this naming prevents. The documents' own
+ * headings are unchanged, only the filenames differ.
  *
  * All three differ in exactly three places, the objective, the work-eligibility
  * line and where the portfolio link points, and are otherwise the same
@@ -26,8 +33,8 @@
  *
  * TWO of these are served by the site, and both are manual copies:
  *
- *   Michael-Fischbach-Resume-HWA.pdf -> src/assets/docs/resume.pdf
- *   Michael-Fischbach-Resume.pdf     -> src/assets/docs/resume-general.pdf
+ *   Michael-Fischbach-CV-HWA.pdf -> src/assets/docs/resume.pdf
+ *   Michael-Fischbach-CV.pdf     -> src/assets/docs/resume-general.pdf
  *
  * Nothing does that automatically. Do not point the site root at anything but
  * the HWA one.
@@ -44,7 +51,7 @@
  *
  *   3-axis HAAS, not 4-axis   (confirmed against the capstone poster 2026-08-01)
  *   $50,000+ ramps revenue    (an older resume said $25k, LinkedIn $30k)
- *   1553 tests passing        (an older resume said 190, and "paper trading")
+ *   2,015 tests passing        (an older resume said 190, and "paper trading")
  *   200+ alumni, several hundred students (was "300+")
  *
  * The putter's cost saving is stated as "$15.78 vs. $50-150 retail" and NEVER
@@ -60,7 +67,7 @@ import { PORTFOLIO_GENERAL, PORTFOLIO_HWA, PORTFOLIO_TEXT } from "./portfolio-li
 /** The objective, eligibility line and portfolio target are the ONLY per-variant copy. */
 const VARIANTS = {
   us: {
-    out: "Michael-Fischbach-Resume.pdf",
+    out: "Michael-Fischbach-CV.pdf",
     eligibility: "Malibu, CA",
     portfolio: PORTFOLIO_GENERAL,
     objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking a
@@ -70,7 +77,7 @@ const VARIANTS = {
       loop is something owned end to end rather than observed.`,
   },
   intl: {
-    out: "Michael-Fischbach-Resume-Abroad.pdf",
+    out: "Michael-Fischbach-CV-Abroad.pdf",
     eligibility: "Malibu, CA | U.S. Citizen | eligible for study-related internship visas",
     portfolio: PORTFOLIO_GENERAL,
     objective: `Mechanical Engineering student (Cal Poly Honors, 3.78 GPA) seeking an
@@ -92,7 +99,7 @@ const VARIANTS = {
    * one set of figures.
    */
   hwa: {
-    out: "Michael-Fischbach-Resume-HWA.pdf",
+    out: "Michael-Fischbach-CV-HWA.pdf",
     eligibility: "Malibu, CA | U.S. Citizen (eligible for EU internship visa)",
     // The only document that targets the root: this is the one HWA receives,
     // and the root is the page that application links to.
@@ -109,66 +116,68 @@ const VARIANTS = {
 const page = (v) => `<!doctype html><meta charset="utf-8">
 <title>Michael Fischbach — Resume</title>
 <style>
-  @page { size: Letter; margin: 14mm 15mm }
+  @page { size: Letter; margin: 11mm 13mm }
   * { box-sizing: border-box }
   body {
-    margin: 0; font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 10pt; line-height: 1.4; color: #000;
+    margin: 0; font-family: "Times New Roman", Times, serif;
+    font-size: 10.5pt; line-height: 1.28; color: #000;
   }
   h1 {
-    font-size: 21pt; margin: 0 0 2mm; font-weight: 700;
+    font-size: 20pt; margin: 0 0 1.2mm; font-weight: 700;
     text-align: center; letter-spacing: .01em;
   }
-  .contact { font-size: 9pt; text-align: center; margin: 0 0 4mm; line-height: 1.45 }
+  .contact { font-size: 9.5pt; text-align: center; margin: 0 0 1.2mm; line-height: 1.3 }
+  /* Own centred block rather than a <br> inside .contact, so it can take a
+     real margin: set to the h1's 1.2mm so the two header gaps match. */
+  .location { font-size: 9.5pt; text-align: center; margin: 0 0 2.6mm; line-height: 1.3 }
   /* Real anchors, so Chromium writes /Annots link objects into the PDF and the
    * reader can click them.
    *
-   * LinkedIn and the portfolio are blue and underlined ON PURPOSE. A PDF gives
-   * no hover cue and no cursor change, so an unstyled link is invisible as a
-   * link: "LinkedIn" in body colour just reads as the word LinkedIn. The whole
-   * value of the portfolio link is that a recruiter clicks it, and being
-   * obviously clickable is worth more than looking print-native.
-   *
-   * #0563c1 rather than pure blue: it is Word's hyperlink colour, so the
-   * document reads as an ordinary resume rather than a web page, and it still
-   * has enough contrast on white to survive a greyscale print.
-   *
-   * The email stays in body colour. It is already recognisable as an address,
-   * and a third blue run in one centred line turns the header into a link bar. */
-  .contact a { color: inherit; text-decoration: none }
-  .contact a.link { color: #0563c1; text-decoration: underline }
-  /* The two companies Michael runs link to their live sites. Same blue as the
-   * header, for the same reason: a reader who cannot tell it is a link will
-   * not click it, and the whole point is that these businesses are real and
-   * inspectable. The company NAME is the anchor rather than a bare URL, so the
-   * line stays readable on paper. */
-  a.site { color: #0563c1; text-decoration: underline }
+   * Links are BLACK, not blue (asked for 2026-09-11, superseding the earlier
+   * blue). They keep the underline, so they still read as links on the page
+   * and stay clickable in the PDF, but the document prints as one colour and
+   * reads as a print-native resume rather than a web page. The phone number
+   * stays plain text: a tel: link does nothing in the desktop PDF readers a
+   * recruiter actually uses. */
+  .contact a { color: #000; text-decoration: underline }
+  .contact a.link { color: #000; text-decoration: underline }
+  /* The phone is underlined to match the three links beside it, but is NOT an
+   * anchor: a tel: URL does nothing in the desktop PDF readers a recruiter
+   * uses, so linking it would promise a click that silently fails. Styling
+   * only, for a consistent header row (asked for 2026-09-14).
+   * NOTE: no backticks in this block, the whole page is a template literal. */
+  .contact .tel { text-decoration: underline }
+  /* The two companies Michael runs link to their live sites. The company NAME
+   * is the anchor rather than a bare URL, so the line stays readable on paper. */
+  a.site { color: #000; text-decoration: underline }
   h2 {
-    font-size: 11pt; font-weight: 700; margin: 4mm 0 1.6mm;
-    border-bottom: 1.2px solid #000; padding-bottom: 1mm;
+    font-size: 11.5pt; font-weight: 700; margin: 2.6mm 0 1.1mm;
+    border-bottom: 1px solid #000; padding-bottom: .6mm;
   }
   /* Entries sit indented from the section rule, which is what gives this
    * layout its structure. The date rides flush right on the title line. */
-  .entry { margin: 0 0 2.6mm 5mm; break-inside: avoid; page-break-inside: avoid }
+  .entry { margin: 0 0 1.7mm 4mm; break-inside: avoid; page-break-inside: avoid }
   .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8mm }
-  .role { font-weight: 700; font-size: 10.5pt }
-  .when { font-size: 9.5pt; white-space: nowrap }
-  .org { font-style: italic; font-size: 9.5pt; margin: .3mm 0 1mm }
+  .role { font-weight: 700; font-size: 11pt }
+  .when { font-size: 10pt; white-space: nowrap }
+  .org { font-style: italic; font-size: 10pt; margin: .2mm 0 .6mm }
   .org .right { float: right; font-style: italic }
   ul { margin: 0; padding: 0; list-style: none }
-  li { margin: 0 0 .9mm; padding-left: 3.4mm; text-indent: -3.4mm }
+  li { margin: 0 0 .5mm; padding-left: 3.2mm; text-indent: -3.2mm }
   li::before { content: "• " }
   .objective { margin: 0 0 1mm }
-  .skills p { margin: 0 0 1mm }
-  .profile { margin-left: 5mm }
+  .skills p { margin: 0 0 .5mm }
+  .profile { margin-left: 4mm }
 </style>
 
 <h1>Michael Fischbach</h1>
 <p class="contact">
-  805-703-8250 | <a href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
-  <a class="link" href="https://www.linkedin.com/in/michael-fischbach/">LinkedIn</a> |
-  <a class="link" href="${v.portfolio}">${PORTFOLIO_TEXT}</a><br>${v.eligibility}
+  <span class="tel">805-703-8250</span> |
+  <a class="link" href="mailto:mef126906@icloud.com">mef126906@icloud.com</a> |
+  <a class="link" href="https://www.linkedin.com/in/mefisch/">www.linkedin.com/in/mefisch</a> |
+  <a class="link" href="${v.portfolio}">${PORTFOLIO_TEXT}</a>
 </p>
+<p class="location">${v.eligibility}</p>
 
 <h2>OBJECTIVE</h2>
 <p class="objective">${v.objective}</p>
@@ -177,7 +186,7 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <div class="entry">
   <div class="row">
     <span class="role">California Polytechnic State University, San Luis Obispo</span>
-    <span class="when">Sep 2025 – Jun 2029</span>
+    <span class="when">Sep 2025 – May 2029</span>
   </div>
   <p class="org">B.S. Mechanical Engineering, Honors Program | GPA: 3.78 | Dean's List: Fall, Winter, Spring</p>
   <ul>
@@ -199,6 +208,7 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
   <p><b>Manufacturing:</b> 3-axis HAAS CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, carbon-analog composite &amp; concrete casting</p>
   <p><b>Methods:</b> GD&amp;T, tolerance stack-up analysis, DFM, rapid iterative prototyping, design-test-refine, cost modeling</p>
   <p><b>Software:</b> Python, HTML/CSS, Git</p>
+  <p><b>Certification:</b> Haas CNC Certification Program – Basic Mill Operator, online coursework completed (Haas Automation, 2026); 12 chapters of CNC safety, setup, and machine operation</p>
   <p><b>Languages:</b> English (native); German (beginner, actively learning)</p>
 </div>
 
@@ -240,13 +250,14 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 </div>
 <div class="entry">
   <div class="row">
-    <span class="role">Autonomous Execution System</span>
+    <span class="role">SMC Trading Bot – Autonomous Options Execution</span>
     <span class="when">2025 – Present</span>
   </div>
-  <p class="org">Python, Real-Time Data, SQLite, Backtesting</p>
+  <p class="org">Python, Options &amp; Futures, Broker APIs, SQLite, Backtesting</p>
   <ul>
-    <li>Built an autonomous Python system that ingests real-time data feeds and executes decisions through an external API, with risk limits, state persistence, and a custom backtesting harness</li>
-    <li><b>1553 tests passing</b> in production; parameters selected on their worst case across two disjoint validation windows rather than their best</li>
+    <li>Built an autonomous Python system that parses unstructured options alerts and places live orders against a funded Webull brokerage account, with risk limits, position sizing, and state reconciled from broker fills; a second lane trades futures on Tradovate</li>
+    <li>A misread alert becomes a real order, so every parse and order path is pinned by a regression suite of 2,015 tests before it reaches the live account</li>
+    <li>Selected strategy parameters on their worst case across two disjoint validation windows rather than their best, using a custom backtesting harness: the best-fit choice is how a system that backtests well loses money live</li>
   </ul>
 </div>
 
@@ -254,12 +265,15 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <div class="entry">
   <div class="row"><span class="role">CEO &amp; Founder</span><span class="when">Jun 2026 – Present</span></div>
   <p class="org"><a class="site" href="https://www.campusnative.com">Campus Native</a><span class="right">San Luis Obispo, CA</span></p>
-  <ul><li>Founded and operate a digital marketplace; lead a 4-person intern team across engineering, marketing, and content</li></ul>
+  <ul><li>Founded and ran a digital marketplace; recruited and led a 4-person intern team across engineering, marketing, and content</li></ul>
 </div>
 <div class="entry">
-  <div class="row"><span class="role">Digital Media Manager</span><span class="when">Mar 2023 – Present</span></div>
+  <div class="row"><span class="role">Data Analyst</span><span class="when">Mar 2023 – Present</span></div>
   <p class="org">All Domain Integration (ADI) – Aerospace Engineering<span class="right">Remote</span></p>
-  <ul><li>3+ year engagement with an aerospace engineering firm: website management, SEO strategy, and digital communications</li></ul>
+  <ul>
+    <li><b>Active Secret security clearance</b>: granted for work on a classified contract</li>
+    <li>3+ year engagement with an aerospace engineering firm: track and report web traffic and user-behavior data in Google Analytics, and turn that data into content and search-visibility decisions</li>
+  </ul>
 </div>
 <div class="entry">
   <div class="row"><span class="role">Business Partner</span><span class="when">May 2023 – Jul 2024</span></div>
