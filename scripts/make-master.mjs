@@ -442,7 +442,7 @@ ${note(`Duplicate of the EXPERIENCE entry. Use one placement, not both. The draf
 
 <h2>TECHNICAL SKILLS</h2>
 <div class="skills">
-  <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 40+ designs), SolidWorks (CSWA), AutoCAD, Autodesk CFD</p>
+  <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 40+ designs), SolidWorks, AutoCAD, Autodesk CFD</p>
   <p><b>Manufacturing:</b> 3-axis HAAS CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, carbon-analog composite &amp; concrete casting</p>
   <p><b>Methods:</b> GD&amp;T, tolerance stack-up analysis, DFM, rapid iterative prototyping, design-test-refine, cost modeling</p>
   <p><b>Software:</b> Python, HTML/CSS, Git, MATLAB</p>
@@ -463,8 +463,8 @@ ${note(`<b>Cut this block to what the posting names plus what the chosen project
   directly beside "3-axis HAAS CNC machining", so an overclaim there undermines a
   real skill.
   <b>DFA was removed 2026-08-02 and should not come back</b>: no entry here is
-  assembly-heavy enough to carry it. <b>Verify the CSWA</b> is actually sat before
-  leaving it on the CAD line; the internship plan lists it as a to-do.`)}
+  assembly-heavy enough to carry it. <b>No CSWA</b>: Michael has not taken it (confirmed 2026-10-21), so it
+  stays off every CAD line until he has.`)}
 
 <h2>AWARDS</h2>
 <ul class="awards">

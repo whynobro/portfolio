@@ -188,7 +188,7 @@ const html = `<!doctype html><meta charset="utf-8">
 
 <h2>TECHNICAL SKILLS</h2>
 <div class="skills">
-  <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 55+ designs), SolidWorks (2+ years, CSWA), AutoCAD, Autodesk CFD</p>
+  <p><b>CAD / CAE:</b> Fusion 360 (6+ years, 55+ designs), SolidWorks (2+ years), AutoCAD, Autodesk CFD</p>
   <p><b>Manufacturing:</b> 3-axis Haas CNC machining, Bridgeport mill, lathe, FDM/SLA 3D printing, composite &amp; concrete casting</p>
   <p><b>Methods:</b> GD&amp;T (ASME Y14.5), DFM, tolerance stack-up analysis, iterative prototyping, cost modeling</p>
   <p><b>AI:</b> Claude Code, Codex, and Gemini via agentic workflows in Antigravity IDE | <b>Software:</b> Python, Git, MATLAB, Linux</p>

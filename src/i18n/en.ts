@@ -179,15 +179,15 @@ export const en = {
 
   // Doorknob-Inator
   "case.door.lede":
-    "A low-cost lever adapter that lets residents with one hand, or no hands, open the round knobs in Cal Poly's Red Brick dorms.",
+    "A low-cost lever part that fits over a round door knob and helps people with one arm open the doors in Cal Poly's Red Brick dorms.",
   "case.door.role": "Design and CAD, team of four · Cal Poly ME 128",
   "case.door.tools": "Fusion 360 · FDM printing (PLA and TPU)",
   "case.door.material": "PLA base, TPU head",
   "case.door.status": "Final print fitted to a dorm knob",
   "case.door.brief":
-    "A round knob needs grip and wrist torque. Someone with one hand, or carrying something, or without hands at all, cannot open it, and the Red Brick dorms are full of them.",
+    "A round knob needs grip and wrist torque. Someone with one arm, or with their hands full, struggles to open it, and the Red Brick dorms are full of them.",
   "case.door.approach1":
-    "A lever multiplies torque, so the brief became: how short can the arm be and still turn the knob with a push from a forearm or an elbow. The design also had to cost little enough to fit on every handle in a building, and look like something a resident would actually leave on the door.",
+    "A lever multiplies torque, so the brief became: how short can the lever be and still let one arm turn the knob with little force. The design also had to cost little enough to fit on every handle in a building, and look like something a resident would actually leave on the door.",
   "case.door.approach2":
     "It went through three generations: a flexible cup mock-up, a TPU design with flexible arms that gripped the knob, and the final PLA base with a TPU head, with each collet sized to the knob and rubber inlays for grip.",
   "case.door.outcome":

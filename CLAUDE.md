@@ -249,6 +249,7 @@ Current as of 2026-10-21; the master resume and transcript win any conflict.
 - Clearance: Top Secret submitted / in process, SCI eligible. Nothing granted.
 - Putter capstone: 1 of 8 finalists from 40+, Capstone Night to 200+ alumni.
 - Noodle bridge: 1st place, 38.5% margin. Eagle Scout 2025.
+- No CSWA: never taken (confirmed 2026-10-21); keep it off every document.
 - US citizen.
 
 ## Commands
