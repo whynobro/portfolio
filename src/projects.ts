@@ -134,6 +134,10 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.status", bodyKeys: ["case.werc.outcome"] },
     ],
     galleryLarge: true,
+    // The full-scale side and top views hang beside the approach: they are the
+    // drawing that text describes (vertical wall, receiver on the nose,
+    // oversized station plates), and they fill the wall under the hero.
+    galleryLeadInPictures: 1,
     gallery: [
       { img: "werc-full-scale", w: 1466, h: 1520, aspect: "frame--square", altKey: "alt.werc.full", capKey: "cap.werc.full" },
       { img: "werc-coupler", w: 1525, h: 1667, aspect: "frame--square", altKey: "alt.werc.coupler", capKey: "cap.werc.coupler" },
@@ -681,7 +685,11 @@ function render(slug: string): void {
     // A room can lift the first plate (or first few) into the picture column to
     // fill the wall under a short hero, and leave the rest at the foot.
     const lead = project.galleryLeadInPictures ?? 0;
-    if (lead > 0) pictures.append(buildGallery(project.gallery.slice(0, lead), "case__gallery--aside"));
+    if (lead > 0) {
+      pictures.append(
+        buildGallery(project.gallery.slice(0, lead), "case__gallery--aside", project.galleryLarge),
+      );
+    }
     const rest = project.gallery.slice(lead);
     if (rest.length) {
       host.append(buildGallery(rest, project.galleryLarge ? "case__gallery--large" : "", project.galleryLarge));
