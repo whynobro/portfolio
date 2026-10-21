@@ -265,6 +265,7 @@ node scripts/make-cv-en.mjs --only=us # CV -> copy to src/assets/docs/cv.pdf
 node scripts/make-master.mjs          # master content pool
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
 node scripts/shoot-campus.mjs         # re-shoot campusnative.com
+node scripts/make-werc-video.mjs [out.mp4]  # WERC animation as a shareable MP4 (dev server running)
 ```
 
 ## Deploy
