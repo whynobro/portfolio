@@ -135,7 +135,7 @@ export const en = {
   "case.bot.role": "Architecture and implementation",
   "case.bot.tools": "Python · Webull and Tradovate APIs · SQLite · systemd on a VPS",
   "case.bot.scope": "Options live on a funded account · futures on a demo account",
-  "case.bot.result": "2,015 tests guarding a live account",
+  "case.bot.result": "2,208 tests guarding a live account",
   "case.bot.brief":
     "Take a stream of informal, human-written options alerts and turn it into orders that are correct, or into nothing at all. The money is real, so the second outcome has to be as reliable as the first.",
   "case.bot.approach1":
@@ -143,7 +143,7 @@ export const en = {
   "case.bot.approach2":
     "What an alert says will happen and what the brokerage actually fills are different facts, and only the second is real. State is rebuilt from broker fills on every cycle, so a missed message or a partial fill cannot leave the system believing in a position it does not hold. Parameters were chosen on their worst case across two disjoint validation windows rather than their best on either: picking the best fit is how a system that looks excellent in a backtest loses money in the market.",
   "case.bot.outcome":
-    "The options lane runs live against a funded Webull account, 24/7 on a VPS; the futures lane runs autonomously on a Tradovate demo account. Because every fill spends real money, the whole order path is held by a regression suite of 2,015 tests. The operator display above is read-only telemetry: the controls live elsewhere.",
+    "The options lane runs live against a funded Webull account, 24/7 on a VPS; the futures lane runs autonomously on a Tradovate demo account. Because every fill spends real money, the whole order path is held by a regression suite of 2,208 tests. The operator display above is read-only telemetry: the controls live elsewhere.",
 
   // Campus Native
   "case.campus.lede":

@@ -7,6 +7,7 @@
 > prototypes**; wave **1st of 5 teams, 120 V at 1:12 (15 V/motor), 360 V projected**; WERC
 > team lead (12 people), targets only; ADI Mechanical Engineering Intern. Dynamics is not
 > yet taken (Spring 2027). The portfolio link on every document points at the root.
+> Bot tests: **2,208 passing** (measured 2026-10-21).
 
 
 **Purpose: this is the SUPERSET, not a resume.** No single document uses all of
