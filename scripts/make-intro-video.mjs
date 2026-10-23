@@ -17,7 +17,7 @@ const OUT = process.argv[2] ?? "Michael-Fischbach-Intro.mp4";
 const W = +(process.argv[3] ?? 1920);
 const H = +(process.argv[4] ?? 1080);
 const FPS = 30;
-const SECONDS = 5.2; // intro plus its fade, with a beat of the page after
+const SECONDS = 14.4; // the whole montage and its hand-off, with a beat of the page after
 
 const ffmpeg = execFileSync("python", ["-c", "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())"])
   .toString()
@@ -42,7 +42,7 @@ await page.addInitScript(() => {
     for (const cb of run) cb(now);
   };
 });
-await page.goto("http://localhost:5173/");
+await page.goto(process.env.URL || "http://localhost:5173/"); // URL=...?hero=night for that mock-up
 await page.waitForTimeout(2500); // let the mesh chunk arrive; the clock is frozen
 
 const dir = await mkdtemp(path.join(tmpdir(), "intro-"));

@@ -68,6 +68,7 @@ export const en = {
     "Animation: a lunar rover drives up to a charging wall, aligns on the plates and charges across the gap.",
   "cap.werc.scene":
     "The docking sequence the controls subteam owns, drawn from the report: lidar approach, fine alignment on plate capacitance, pre-tune, then charge.",
+  "alt.werc.still": "The lunar rover docked at the charging wall, power crossing the gap to its nose plates",
   "alt.werc.full": "Side and top views of the full-scale charging wall on a FLIP-class rover, drawn to scale",
   "cap.werc.full": "Full scale, to scale: the receiver on the rover's nose, the station wall and the bump stops.",
   "alt.werc.bench": "Isometric drawing of the bench prototype: a small rover and charging wall inside the cooler envelope",

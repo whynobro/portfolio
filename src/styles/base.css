@@ -149,3 +149,8 @@ a {
   opacity: 1 !important;
   transform: none !important;
 }
+
+/* A smaller section title, for the toys row at the foot of the home view. */
+.display.display--small {
+  font-size: var(--t-2xl);
+}

@@ -302,6 +302,9 @@ const MANIFEST = [
   // --- WERC lunar charger: the team's report figures, drawn to scale ---
   // Diagrams, not photographs: fine linework and small type, so they keep
   // their native width and a higher quality than the photographs get.
+  // A still of the docking animation (scripts/make-werc-video.mjs draws the
+  // same scene), mid-charge: the room's hero frame and the wall tile's picture.
+  { name: "werc-still", src: "assets-src/werc/still.png", width: 1500, quality: 72 },
   { name: "werc-full-scale", src: "assets-src/werc/full-scale.png", width: 1466, quality: 70 },
   { name: "werc-bench", src: "assets-src/werc/bench-iso.png", width: 1491, quality: 70 },
   { name: "werc-system", src: "assets-src/werc/system.png", width: 1500, quality: 70 },

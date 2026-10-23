@@ -65,7 +65,10 @@ function phaseAt(t: number): { i: number; p: number } {
 
 const ease = (x: number): number => (x < 0.5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2);
 
-export default function createWercScene(): SceneModule {
+/** The phase start times, for a caller that plays the sequence itself. */
+export const WERC_STARTS = STARTS;
+
+export default function createWercScene(): SceneModule & { renderAt(at: number): void } {
   let root: HTMLElement;
   let canvas: HTMLCanvasElement;
   let g: CanvasRenderingContext2D | null = null;
@@ -406,6 +409,12 @@ export default function createWercScene(): SceneModule {
     renderStatic() {
       t = STATIC_T;
       draw(STATIC_T);
+    },
+
+    /** Paint the sequence at time `at` (seconds into the cycle); the intro
+     *  plays the scene this way, at its own pace. */
+    renderAt(at: number) {
+      draw(((at % CYCLE) + CYCLE) % CYCLE);
     },
 
     dispose() {

@@ -119,7 +119,7 @@ const PROJECTS: Project[] = [
     slug: "werc",
     titleKey: "proj.werc.title",
     ledeKey: "case.werc.lede",
-    hero: { img: "werc-bench", w: 1491, h: 1007, aspect: "frame--landscape", altKey: "alt.werc.bench" },
+    hero: { img: "werc-still", w: 1500, h: 1000, aspect: "frame--landscape", altKey: "alt.werc.still" },
     wideScene: { id: "werc", capKey: "cap.werc.scene" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.werc.role" },

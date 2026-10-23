@@ -47,12 +47,16 @@
     <script>
       // Before first paint: screenshot mode, and whether the opening plays.
       // It plays only on the landing route, once per browser session, never
-      // in screenshot mode and never with reduced motion. A fallback timer
+      // in screenshot mode and never with reduced motion. A 16 s fallback timer
       // uncovers the page even if the intro's module never runs.
       (function () {
         var el = document.documentElement;
-        var shots = new URLSearchParams(location.search).get("shots") === "1";
+        var q = new URLSearchParams(location.search);
+        var shots = q.get("shots") === "1";
         if (shots) el.dataset.shots = "1";
+        // Hand-off mock-up being decided: ?hero=night dresses the entrance as
+        // night so the intro lifts onto the same sky. Default: dawn.
+        if (q.get("hero") === "night") el.dataset.hero = "night";
         try {
           var landing = location.hash === "" || location.hash === "#/";
           var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -61,7 +65,7 @@
             el.dataset.intro = "play";
             setTimeout(function () {
               delete el.dataset.intro;
-            }, 7000);
+            }, 16000);
           }
         } catch (e) {
           /* storage blocked: no intro, the page simply shows */
@@ -200,106 +204,32 @@
               </div>
 
               <div class="btn-row">
-                <a class="btn btn--gilt" href="#/work"
-                  >View the collection</a
-                >
-                <a class="btn" href="#/contact"
-                  >Contact</a
-                >
                 <!-- href and filename are set by src/resume.ts, which imports the
                      PDFs so the bundler hashes them. -->
-                <a class="btn btn--resume" data-doc="resume">Resume</a>
+                <a class="btn btn--gilt" data-doc="resume">Resume</a>
                 <a class="btn" data-doc="cv">CV</a>
-              </div>
-            </div>
-
-            <!-- ===== INTERACTIVE WORKS =====
-                 A grid item of .entrance, placed in row two of the portrait's
-                 column, so the pair sits left and the row ends level with the
-                 contact button rather than pushing the page down. Deliberately
-                 unframed and uncaptioned: they are toys, not works on the wall,
-                 and a gilt frame around a playable board would read as a claim
-                 the six pieces below have earned and these have not. -->
-            <div class="entrance__play" id="games">
-              <!-- With no captions these are the only names a screen reader has
-                   for the two boards. -->
-              <div
-                class="playable"
-                data-scene="tictactoe"
-                role="group"
-               
-                aria-label="Unbeatable Tic-Tac-Toe"
-              ></div>
-              <!-- The ring toss and its nudge share a wrapper so the hint can be
-                   positioned against the TOY rather than against the whole row,
-                   and so it never widens the row and pushes the boards apart. -->
-              <div class="playable-wrap">
-                <div
-                  class="playable"
-                  data-scene="ringtoss"
-                  role="group"
-                 
-                  aria-label="Water Ring Toss"
-                ></div>
-                <!-- Points back at the ring toss: the pump and the side jets are
-                     drawn ON the toy, so nothing about it says "press me" until
-                     you already know. The arrow is decorative (`alt=""`) because
-                     the instruction beside it carries the meaning. -->
-                <p class="play-hint">
-                  <picture>
-                    <source srcset="./src/assets/img/arrow-red.avif" type="image/avif" />
-                    <img
-                      class="play-hint__arrow"
-                      src="./src/assets/img/arrow-red.png"
-                      alt=""
-                      width="691"
-                      height="854"
-                      decoding="async"
-                    />
-                  </picture>
-                  <span class="play-hint__text"
-                    >Press the buttons, it really works</span
-                  >
-                </p>
+                <a class="btn" href="#/contact">Contact</a>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ================= THE COLLECTION ================= -->
-        <section class="page section section--after-entrance" id="work">
-          <div class="intro">
-            <span class="eyebrow">The collection</span>
-            <h2 class="display">
-              Works in Mechanical Engineering
-            </h2>
-            <p class="intro__lede">
-              Eight pieces I designed, built and measured. Each one says what
-              it was for and what came out of it.
-            </p>
-            <!-- How much of the wall has been walked. Filled by src/progress.ts
-                 as each room is opened, and hidden from assistive tech: the bar
-                 is a picture of the count beside it, so announcing it as a
-                 progressbar on every navigation would be noise. The label is
-                 written by JS, so the no-JS document simply omits it. -->
-            <div class="progress" id="work-progress" aria-hidden="true">
-              <span class="progress__label"></span>
-              <span class="progress__track">
-                <span class="progress__fill"></span>
-              </span>
-            </div>
-          </div>
-
-          <div class="works">
+        <!-- ================= FEATURED =================
+             The two works hung large, straight after the entrance, so the
+             first screen shows work and not only a biography: the NASA
+             charger (current, team lead) and the putter (CAD to metal). -->
+        <section class="page section section--featured" aria-labelledby="featured-title">
+          <span class="eyebrow" id="featured-title">Featured</span>
+          <div class="works works--featured">
             <a class="work" href="#/work/werc">
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
                     <img
-                      src="./src/assets/img/werc-bench.avif"
-                      width="1491"
-                      height="1007"
-                      alt="The bench prototype of the lunar rover charger: a small rover parked at a charging wall"
+                      src="./src/assets/img/werc-still.avif"
+                      width="1500"
+                      height="1000"
+                      alt="The lunar rover docked at the charging wall, power crossing the gap to its nose plates"
                       loading="lazy"
                       decoding="async"
                     />
@@ -366,7 +296,34 @@
                 </p>
               </div>
             </a>
+          </div>
+        </section>
 
+        <!-- ================= THE COLLECTION ================= -->
+        <section class="page section section--after-entrance" id="work">
+          <div class="intro">
+            <span class="eyebrow">The collection</span>
+            <h2 class="display">
+              Works in Mechanical Engineering
+            </h2>
+            <p class="intro__lede">
+              Everything else I designed, built and measured. Each one says
+              what it was for and what came out of it.
+            </p>
+            <!-- How much of the wall has been walked. Filled by src/progress.ts
+                 as each room is opened, and hidden from assistive tech: the bar
+                 is a picture of the count beside it, so announcing it as a
+                 progressbar on every navigation would be noise. The label is
+                 written by JS, so the no-JS document simply omits it. -->
+            <div class="progress" id="work-progress" aria-hidden="true">
+              <span class="progress__label"></span>
+              <span class="progress__track">
+                <span class="progress__fill"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="works">
             <a class="work" href="#/work/ramps">
               <div class="frame frame--landscape">
                 <div class="frame__mat">
@@ -596,6 +553,59 @@
             </a>
           </div>
         </section>
+
+        <!-- ================= OFF THE WALL =================
+             The two toys, moved out of the entrance so they do not sit beside
+             the headline figures. Unframed and uncaptioned: toys, not works. -->
+        <section class="page section section--play" aria-labelledby="play-title">
+          <div class="intro intro--small">
+            <span class="eyebrow">Off the wall</span>
+            <h2 class="display display--small" id="play-title">Two toys, built for fun</h2>
+          </div>
+            <div class="play-row" id="games">
+              <!-- With no captions these are the only names a screen reader has
+                   for the two boards. -->
+              <div
+                class="playable"
+                data-scene="tictactoe"
+                role="group"
+               
+                aria-label="Unbeatable Tic-Tac-Toe"
+              ></div>
+              <!-- The ring toss and its nudge share a wrapper so the hint can be
+                   positioned against the TOY rather than against the whole row,
+                   and so it never widens the row and pushes the boards apart. -->
+              <div class="playable-wrap">
+                <div
+                  class="playable"
+                  data-scene="ringtoss"
+                  role="group"
+                 
+                  aria-label="Water Ring Toss"
+                ></div>
+                <!-- Points back at the ring toss: the pump and the side jets are
+                     drawn ON the toy, so nothing about it says "press me" until
+                     you already know. The arrow is decorative (`alt=""`) because
+                     the instruction beside it carries the meaning. -->
+                <p class="play-hint">
+                  <picture>
+                    <source srcset="./src/assets/img/arrow-red.avif" type="image/avif" />
+                    <img
+                      class="play-hint__arrow"
+                      src="./src/assets/img/arrow-red.png"
+                      alt=""
+                      width="691"
+                      height="854"
+                      decoding="async"
+                    />
+                  </picture>
+                  <span class="play-hint__text"
+                    >Press the buttons, it really works</span
+                  >
+                </p>
+              </div>
+            </div>
+        </section>
       </div>
 
       <!-- ================= A PROJECT ROOM =================
@@ -821,7 +831,7 @@
             rel="noopener"
             >LinkedIn</a
           >
-          <a class="btn btn--resume" data-doc="resume">Resume</a>
+          <a class="btn" data-doc="resume">Resume</a>
           <a class="btn" data-doc="cv">Full CV</a>
         </div>
       </article>
