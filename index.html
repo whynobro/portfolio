@@ -47,7 +47,7 @@
     <script>
       // Before first paint: screenshot mode, and whether the opening plays.
       // It plays only on the landing route, once per browser session, never
-      // in screenshot mode and never with reduced motion. A 16 s fallback timer
+      // in screenshot mode and never with reduced motion. A 26 s fallback timer
       // uncovers the page even if the intro's module never runs.
       (function () {
         var el = document.documentElement;
@@ -65,7 +65,7 @@
             el.dataset.intro = "play";
             setTimeout(function () {
               delete el.dataset.intro;
-            }, 16000);
+            }, 26000);
           }
         } catch (e) {
           /* storage blocked: no intro, the page simply shows */

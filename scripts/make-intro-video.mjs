@@ -17,7 +17,7 @@ const OUT = process.argv[2] ?? "Michael-Fischbach-Intro.mp4";
 const W = +(process.argv[3] ?? 1920);
 const H = +(process.argv[4] ?? 1080);
 const FPS = 30;
-const SECONDS = 20.2; // the whole montage (13.65 x PACE) and its hand-off, with a beat after
+const SECONDS = 23.0; // the whole montage and its hand-off, with a beat after
 
 const ffmpeg = execFileSync("python", ["-c", "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())"])
   .toString()

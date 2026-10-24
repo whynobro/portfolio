@@ -24,8 +24,9 @@ import { clearFrame, createFrame, createMeshRaster, projectPoint, type Frame, ty
  *   night  the entrance itself is night (styles in chrome.css), so the cover
  *          lifts onto the same sky and only the montage's objects dissolve.
  *
- * TOOLPATH: until posted G-code from the Fusion CAM setups exists, the cutter
- * follows contour rings around the part as an illustration.
+ * TOOLPATH: the cutter follows the REAL program Fusion posted for the Haas
+ * TM-1P (src/scenes/putter/toolpath.ts, from scripts/prep-toolpath.mjs), and
+ * the caption names the live operation and tool.
  */
 
 /**
@@ -38,17 +39,16 @@ const at = (r: readonly number[]): [number, number] => [r[0]! * PACE, r[1]! * PA
 
 // Scene windows, seconds after the putter mesh arrives.
 const S = {
-  putter: at([0.3, 4.2]),
-  werc: at([3.9, 6.5]),
-  ramps: at([6.2, 8.3]),
-  wave: at([8.0, 9.7]),
-  bot: at([9.4, 11.1]),
-  finale: at([10.8, 13.4]),
+  putter: at([0.3, 5.1]),
+  werc: at([4.8, 7.4]),
+  ramps: at([7.1, 10.1]),
+  wave: at([9.8, 11.5]),
+  bot: at([11.2, 12.9]),
+  finale: at([12.6, 15.2]),
 };
-const P = { draw: at([0.3, 1.4]), dims: at([0.9, 1.5]), stock: at([1.4, 1.7]), cut: at([1.7, 3.5]) };
-const HANDOFF = at([12.3, 13.3]);
+const P = { draw: at([0.3, 1.4]), dims: at([0.9, 1.5]), stock: at([1.4, 1.7]), cut: at([1.7, 4.4]) };
+const HANDOFF = at([14.1, 15.1]);
 const END = HANDOFF[1] + 0.35;
-const LAYERS = 6;
 
 // Model extents, in the mesh's unit-cube coordinates (114.3 mm = 1.0).
 const HX = 63.26 / 114.3 / 2;
@@ -120,40 +120,18 @@ function stockBox(top: number): Float32Array {
   return new Float32Array(out);
 }
 
-/** One contour ring around the part at a given inset, as a closed polyline. */
-function ring(inset: number): number[][] {
-  const x = HX + MARGIN - inset, z = HZ + MARGIN - inset;
-  return [[-x, -z], [x, -z], [x, z], [-x, z], [-x, -z]];
-}
-const LAYER_PATH = [...ring(0.012), ...ring(0.006)];
-
-/** A point a fraction `f` of the way along a polyline. */
-function along(path: number[][], f: number): { pt: number[]; upto: number } {
-  const lens: number[] = [];
-  let total = 0;
-  for (let i = 1; i < path.length; i++) {
-    const l = Math.hypot(path[i]![0]! - path[i - 1]![0]!, path[i]![1]! - path[i - 1]![1]!);
-    lens.push(l);
-    total += l;
-  }
-  let d = f * total;
-  for (let i = 0; i < lens.length; i++) {
-    if (d <= lens[i]!) {
-      const k = d / lens[i]!;
-      const a = path[i]!, b = path[i + 1]!;
-      return { pt: [a[0]! + (b[0]! - a[0]!) * k, a[1]! + (b[1]! - a[1]!) * k], upto: i };
-    }
-    d -= lens[i]!;
-  }
-  return { pt: path[path.length - 1]!, upto: path.length - 2 };
-}
 
 // The wall's pictures, for the ramps scene and the finale. Resolved at build
 // time so the bundler hashes them; the browser already caches them for the page.
 const IMAGES = import.meta.glob<string>("./assets/img/*.avif", { eager: true, query: "?url", import: "default" });
 const WALL_WORKS = ["werc-still", "putter-hero", "ramps-bank", "wave-inside", "bot-display", "campus-logo", "water-site", "door-final-cad"];
+/** The Ramps scene opens on a quick mosaic of the range. */
+const RAMPS_MOSAIC = [
+  "ramps-studio-set", "ramps-moss", "ramps-eggz", "ramps-collab",
+  "ramps-gravel", "ramps-chameleon-ledge", "ramps-bank-studio", "ramps-chameleon-black",
+];
 /** Pictures used by a scene but not hung in the finale. */
-const EXTRA_PICS = ["ramps-site"];
+const EXTRA_PICS = ["ramps-site", ...RAMPS_MOSAIC];
 
 const ALERT = "BTO SPY 590C 11/21 @ 1.35";
 const BOT_LINES = [
@@ -255,10 +233,21 @@ export function initIntro(): void {
   // clock waits for the part to arrive.
   let t0 = 0;
   let ready = false;
-  void import("./scenes/putter/mesh").then((m) => {
+  let path: Float32Array | null = null;
+  let pathOps: { name: string; tool: string; start: number }[] = [];
+  /** Point where finishing starts: the stock is fully cleared by then. */
+  let roughEnd = 1;
+  let liveOp = "";
+  void Promise.all([import("./scenes/putter/mesh"), import("./scenes/putter/toolpath")]).then(([m, tp]) => {
     const v = m.vertices();
     part = createMeshRaster(v);
     edges = featureEdges(v);
+    path = tp.toolpath();
+    pathOps = tp.TOOLPATH_OPS;
+    // The program's first move plunges to full depth (a helical entry), so
+    // "deepest so far" would clear the whole block at once. The stock steps
+    // down through the roughing passes instead, and is gone by the finish.
+    roughEnd = pathOps.find((o) => /steep|scallop|contour|parallel/i.test(o.name))?.start ?? path.length / 3;
     ready = true;
     t0 = performance.now();
   });
@@ -312,10 +301,10 @@ export function initIntro(): void {
 
     const stockIn = span(t, P.stock);
     const cutK = span(t, P.cut);
-    const layer = Math.min(LAYERS - 1, Math.floor(cutK * LAYERS));
-    const inLayer = cutK * LAYERS - layer;
     const top = HY + 0.02;
-    const cutY = cutK >= 1 ? -HY - 0.004 : top - ((top + HY) * (layer + ease(clamp(inLayer * 1.25 - 0.1)))) / LAYERS;
+    const nPts = path ? path.length / 3 : 0;
+    const idx = Math.min(nPts - 1, Math.floor(cutK * nPts));
+    const cutY = cutK > 0 ? lerp(top, -HY - 0.004, ease(clamp(idx / roughEnd))) : top;
     if (stockIn > 0) {
       clearFrame(frame);
       if (cutK > 0) {
@@ -357,22 +346,32 @@ export function initIntro(): void {
       }
     }
 
-    if (cutK > 0 && cutK < 1) {
-      const { pt: at, upto } = along(LAYER_PATH, clamp(inLayer));
+    liveOp = "";
+    if (cutK > 0 && cutK < 1 && path) {
+      for (const o of pathOps) if (idx >= o.start) liveOp = `${o.name} · ${o.tool}`;
+      // The trail: the last few hundred points of the real program. A move
+      // above the stock is a retract, so the line breaks there.
       g!.globalAlpha = a;
       g!.strokeStyle = ACCENT + "0.9)";
-      g!.lineWidth = 1.5;
+      g!.lineWidth = 1.3;
       g!.beginPath();
-      const s0 = pt(LAYER_PATH[0]![0]!, cutY, LAYER_PATH[0]![1]!);
-      g!.moveTo(s0[0]!, s0[1]!);
-      for (let i = 1; i <= upto; i++) {
-        const q = pt(LAYER_PATH[i]![0]!, cutY, LAYER_PATH[i]![1]!);
-        g!.lineTo(q[0]!, q[1]!);
+      let pen = false;
+      for (let i = Math.max(0, idx - 420); i <= idx; i++) {
+        const y = path[i * 3 + 1]!;
+        if (y > top + 0.01) {
+          pen = false;
+          continue;
+        }
+        const q = pt(path[i * 3]!, y, path[i * 3 + 2]!);
+        if (pen) g!.lineTo(q[0]!, q[1]!);
+        else g!.moveTo(q[0]!, q[1]!);
+        pen = true;
       }
-      const tip = pt(at[0]!, cutY, at[1]!);
-      g!.lineTo(tip[0]!, tip[1]!);
       g!.stroke();
-      const up = pt(at[0]!, cutY + 0.3, at[1]!);
+      const at = [path[idx * 3]!, path[idx * 3 + 2]!];
+      const tipY = path[idx * 3 + 1]!;
+      const tip = pt(at[0]!, tipY, at[1]!);
+      const up = pt(at[0]!, tipY + 0.3, at[1]!);
       const shank = g!.createLinearGradient(tip[0]! - 5, 0, tip[0]! + 5, 0);
       shank.addColorStop(0, "#6d737c");
       shank.addColorStop(0.5, "#e7ebf0");
@@ -391,8 +390,11 @@ export function initIntro(): void {
       g!.fillStyle = hot;
       g!.fillRect(tip[0]! - 16, tip[1]! - 16, 32, 32);
       g!.globalAlpha = 1;
-      for (let k = 0; k < 3; k++) {
-        sparks.push({ x: tip[0]!, y: tip[1]!, vx: (rand() - 0.5) * 220, vy: -rand() * 160, life: 0.35 });
+      // Chips only while the tool is in the material, not on a retract.
+      if (tipY <= top) {
+        for (let k = 0; k < 3; k++) {
+          sparks.push({ x: tip[0]!, y: tip[1]!, vx: (rand() - 0.5) * 220, vy: -rand() * 160, life: 0.35 });
+        }
       }
     }
   }
@@ -456,11 +458,39 @@ export function initIntro(): void {
     const gap = r.h * 0.06;
     const photoR = tall ? { x: r.x, y: r.y, w: r.w, h: r.h } : { x: r.x, y: r.y, w: r.h, h: r.h };
     g!.save();
-    g!.globalAlpha = a;
+
+    // First the range: a mosaic that pops in tile by tile, then gives way to
+    // the product, the shop and the headline. Times below are story seconds.
+    const toLayout = ease(clamp((k - 1.25) / 0.45));
+    if (toLayout < 1) {
+      const cols = tall ? 2 : 4;
+      const rows = RAMPS_MOSAIC.length / cols;
+      const mw = tall ? W * 0.86 : Math.min(W * 0.84, 1180);
+      const cw = mw / cols;
+      const ch = tall ? cw * 0.62 : cw * 0.72;
+      const mx = (W - mw) / 2, my = tall ? H * 0.27 : H / 2 - (rows * ch) / 2 + H * 0.04;
+      RAMPS_MOSAIC.forEach((name, i) => {
+        const img = pics.get(name);
+        if (!img?.complete || !img.naturalWidth) return;
+        const pop = ease(clamp((k - i * 0.1) / 0.3));
+        if (pop <= 0) return;
+        const x = mx + (i % cols) * cw, y = my + Math.floor(i / cols) * ch;
+        const z = lerp(1.18, 1.04, clamp(k / 1.7));
+        const cr = cw / ch;
+        const sw = Math.min(img.naturalWidth, img.naturalHeight * cr) / z;
+        const sh = sw / cr;
+        g!.globalAlpha = a * pop * (1 - toLayout);
+        g!.drawImage(img, (img.naturalWidth - sw) / 2, (img.naturalHeight - sh) / 2, sw, sh, x + 2, y + 2, cw - 4, ch - 4);
+      });
+    }
+    // The layout's own clock starts as the mosaic leaves.
+    const kl = k - 1.25;
+    g!.globalAlpha = a * toLayout;
+    const la = a * toLayout;
 
     // The product photograph, with a slow push in.
     if (photo?.complete && photo.naturalWidth) {
-      const zoom = lerp(1, 1.1, clamp(k / 2.1));
+      const zoom = lerp(1, 1.1, clamp(kl / 1.8));
       const cr = photoR.w / photoR.h;
       const sw = Math.min(photo.naturalWidth, photo.naturalHeight * cr) / zoom;
       const sh = sw / cr;
@@ -470,13 +500,13 @@ export function initIntro(): void {
 
     // The live shop, in a browser window, sliding in beside it.
     if (site?.complete && site.naturalWidth) {
-      const slide = ease(clamp((k - 0.35) / 0.6));
+      const slide = ease(clamp((kl - 0.2) / 0.5));
       const bw = tall ? r.w : r.w - r.h - gap;
       const bx = (tall ? r.x : r.x + r.h + gap) + (1 - slide) * r.w * 0.08;
       const bar = Math.max(14, (tall ? bw * 0.62 : r.h) * 0.07);
       const bh = tall ? bar + bw * 0.5 : Math.min(r.h, bar + bw * (site.naturalHeight / site.naturalWidth));
       const by = tall ? r.y + r.h + gap : r.y + (r.h - bh) / 2;
-      g!.globalAlpha = a * slide;
+      g!.globalAlpha = la * slide;
       g!.fillStyle = "#e9e6df";
       g!.fillRect(bx, by, bw, bar);
       for (let i = 0; i < 3; i++) {
@@ -507,6 +537,7 @@ export function initIntro(): void {
     g!.font = `500 ${Math.max(11, big * 0.2)}px ${MONO}`;
     g!.fillStyle = "rgba(150, 210, 235, 0.95)";
     g!.textBaseline = "top";
+    if (tall) g!.globalAlpha = la;
     const facts = `${Math.round(627 * c)} ORDERS · ${Math.round(15 * c)} COUNTRIES · 40+ PRODUCTS I DESIGNED`;
     const below = tall ? r.y + r.h + gap * 2 + r.w * 0.5 + Math.max(14, r.w * 0.62 * 0.07) : r.y + r.h + big * 0.35;
     if (tall) {
@@ -756,6 +787,7 @@ export function initIntro(): void {
           text = c;
         }
       }
+      if (liveOp) text = `Real toolpath · ${liveOp} · Haas TM-1P`;
       if (label.textContent !== text) label.textContent = text;
       label.style.opacity = String(alpha * (1 - hand));
     }
