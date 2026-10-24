@@ -304,6 +304,9 @@ const MANIFEST = [
   // their native width and a higher quality than the photographs get.
   // A still of the docking animation (scripts/make-werc-video.mjs draws the
   // same scene), mid-charge: the room's hero frame and the wall tile's picture.
+  // chameleonramps.com, captured by tmp/shoot-ramps.mjs with the Wix banner
+  // and chat bubble cropped off: the shop as a customer sees it.
+  { name: "ramps-site", src: "assets-src/ramps/site-home-crop.png", width: 1440, quality: 70 },
   { name: "werc-still", src: "assets-src/werc/still.png", width: 1500, quality: 72 },
   { name: "werc-full-scale", src: "assets-src/werc/full-scale.png", width: 1466, quality: 70 },
   { name: "werc-bench", src: "assets-src/werc/bench-iso.png", width: 1491, quality: 70 },

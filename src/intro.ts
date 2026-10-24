@@ -28,18 +28,26 @@ import { clearFrame, createFrame, createMeshRaster, projectPoint, type Frame, ty
  * follows contour rings around the part as an illustration.
  */
 
+/**
+ * Pace. Every window below is in "story seconds" and is multiplied by this,
+ * so the whole montage slows or quickens together. 1.45 after the first cut
+ * proved too quick to follow (2026-10-23).
+ */
+const PACE = 1.45;
+const at = (r: readonly number[]): [number, number] => [r[0]! * PACE, r[1]! * PACE];
+
 // Scene windows, seconds after the putter mesh arrives.
 const S = {
-  putter: [0.3, 4.2],
-  werc: [3.9, 6.5],
-  ramps: [6.2, 8.0],
-  wave: [7.7, 9.5],
-  bot: [9.2, 11.0],
-  finale: [10.7, 13.4],
-} as const;
-const P = { draw: [0.3, 1.4], dims: [0.9, 1.5], stock: [1.4, 1.7], cut: [1.7, 3.5] };
-const HANDOFF = [12.3, 13.3] as const;
-const END = 13.65;
+  putter: at([0.3, 4.2]),
+  werc: at([3.9, 6.5]),
+  ramps: at([6.2, 8.3]),
+  wave: at([8.0, 9.7]),
+  bot: at([9.4, 11.1]),
+  finale: at([10.8, 13.4]),
+};
+const P = { draw: at([0.3, 1.4]), dims: at([0.9, 1.5]), stock: at([1.4, 1.7]), cut: at([1.7, 3.5]) };
+const HANDOFF = at([12.3, 13.3]);
+const END = HANDOFF[1] + 0.35;
 const LAYERS = 6;
 
 // Model extents, in the mesh's unit-cube coordinates (114.3 mm = 1.0).
@@ -144,6 +152,8 @@ function along(path: number[][], f: number): { pt: number[]; upto: number } {
 // time so the bundler hashes them; the browser already caches them for the page.
 const IMAGES = import.meta.glob<string>("./assets/img/*.avif", { eager: true, query: "?url", import: "default" });
 const WALL_WORKS = ["werc-still", "putter-hero", "ramps-bank", "wave-inside", "bot-display", "campus-logo", "water-site", "door-final-cad"];
+/** Pictures used by a scene but not hung in the finale. */
+const EXTRA_PICS = ["ramps-site"];
 
 const ALERT = "BTO SPY 590C 11/21 @ 1.35";
 const BOT_LINES = [
@@ -181,7 +191,7 @@ export function initIntro(): void {
   const sparks: { x: number; y: number; vx: number; vy: number; life: number }[] = [];
 
   const pics = new Map<string, HTMLImageElement>();
-  for (const name of WALL_WORKS) {
+  for (const name of [...WALL_WORKS, ...EXTRA_PICS]) {
     const url = IMAGES[`./assets/img/${name}.avif`];
     if (!url) continue;
     const img = new Image();
@@ -293,7 +303,7 @@ export function initIntro(): void {
     if (!part || !edges || !frame || !og) return;
     const side = off.width / rdpr;
     const scale = side * 0.74;
-    const view: View = { angle: 3.3 + t * 0.22, tilt: -0.55, scale, cx: side / 2, cy: side / 2 };
+    const view: View = { angle: 3.3 + (t / PACE) * 0.22, tilt: -0.55, scale, cx: side / 2, cy: side / 2 };
     const ox = (W - side) / 2, oy = (H - side) / 2 - H * 0.03;
     const pt = (x: number, y: number, z: number): number[] => {
       const p = projectPoint(view, x, y, z, 1);
@@ -423,7 +433,7 @@ export function initIntro(): void {
   function wercScene(t: number, a: number): void {
     if (!werc || !wercCanvas) return;
     const r = panel(21 / 9, 0.8);
-    werc.renderAt(wercStart + (t - S.werc[0]) * 2.4);
+    werc.renderAt(wercStart + ((t - S.werc[0]) / PACE) * 2.4);
     const z = lerp(0.97, 1, ease(span(t, [S.werc[0], S.werc[0] + 0.6])));
     g!.globalAlpha = a;
     g!.drawImage(wercCanvas, r.x + (r.w * (1 - z)) / 2, r.y + (r.h * (1 - z)) / 2, r.w * z, r.h * z);
@@ -431,39 +441,82 @@ export function initIntro(): void {
     g!.globalAlpha = 1;
   }
 
-  // ---- Ramps: the product, with its numbers counting up --------------------
+  // ---- Ramps: the headline figure, the product and the shop -----------------
   function ramps(t: number, a: number): void {
-    const img = pics.get("ramps-bank");
-    if (!img?.complete || !img.naturalWidth) return;
-    const side = Math.min(H * 0.56, W * 0.6);
-    const r = { x: (W - side) / 2, y: (H - side) / 2 - H * 0.03, w: side, h: side };
-    const k = span(t, S.ramps);
-    const zoom = lerp(1, 1.12, k);
-    const sw = img.naturalWidth / zoom, sh = img.naturalHeight / zoom;
+    const photo = pics.get("ramps-bank");
+    const site = pics.get("ramps-site");
+    const k = (t - S.ramps[0]) / PACE;
+    // Side by side on a wide screen; stacked on a tall one, where side by
+    // side left both pictures too small to read.
+    const tall = H > W;
+    const pw = tall ? W * 0.84 : 0;
+    const r = tall
+      ? { x: (W - pw) / 2, y: H * 0.26, w: pw, h: pw * 0.62 }
+      : panel(16 / 7, 0.84);
+    const gap = r.h * 0.06;
+    const photoR = tall ? { x: r.x, y: r.y, w: r.w, h: r.h } : { x: r.x, y: r.y, w: r.h, h: r.h };
+    g!.save();
     g!.globalAlpha = a;
-    g!.drawImage(img, (img.naturalWidth - sw) / 2, (img.naturalHeight - sh) / 2, sw, sh, r.x, r.y, r.w, r.h);
-    const shade = g!.createLinearGradient(0, r.y + r.h * 0.55, 0, r.y + r.h);
-    shade.addColorStop(0, "rgba(4,6,11,0)");
-    shade.addColorStop(1, "rgba(4,6,11,0.85)");
-    g!.fillStyle = shade;
-    g!.fillRect(r.x, r.y, r.w, r.h);
-    const c = ease(span(t, [S.ramps[0] + 0.3, S.ramps[0] + 1.3]));
-    const big = Math.max(22, side * 0.1);
+
+    // The product photograph, with a slow push in.
+    if (photo?.complete && photo.naturalWidth) {
+      const zoom = lerp(1, 1.1, clamp(k / 2.1));
+      const cr = photoR.w / photoR.h;
+      const sw = Math.min(photo.naturalWidth, photo.naturalHeight * cr) / zoom;
+      const sh = sw / cr;
+      g!.drawImage(photo, (photo.naturalWidth - sw) / 2, (photo.naturalHeight - sh) / 2, sw, sh, photoR.x, photoR.y, photoR.w, photoR.h);
+      outline(photoR, 1);
+    }
+
+    // The live shop, in a browser window, sliding in beside it.
+    if (site?.complete && site.naturalWidth) {
+      const slide = ease(clamp((k - 0.35) / 0.6));
+      const bw = tall ? r.w : r.w - r.h - gap;
+      const bx = (tall ? r.x : r.x + r.h + gap) + (1 - slide) * r.w * 0.08;
+      const bar = Math.max(14, (tall ? bw * 0.62 : r.h) * 0.07);
+      const bh = tall ? bar + bw * 0.5 : Math.min(r.h, bar + bw * (site.naturalHeight / site.naturalWidth));
+      const by = tall ? r.y + r.h + gap : r.y + (r.h - bh) / 2;
+      g!.globalAlpha = a * slide;
+      g!.fillStyle = "#e9e6df";
+      g!.fillRect(bx, by, bw, bar);
+      for (let i = 0; i < 3; i++) {
+        g!.fillStyle = ["#e0645a", "#e3b341", "#5fc05a"][i]!;
+        g!.beginPath();
+        g!.arc(bx + bar * (0.6 + i * 0.55), by + bar / 2, bar * 0.18, 0, Math.PI * 2);
+        g!.fill();
+      }
+      g!.fillStyle = "#6f675c";
+      g!.font = `500 ${bar * 0.48}px ${MONO}`;
+      g!.textAlign = "left";
+      g!.textBaseline = "middle";
+      g!.fillText("chameleonramps.com", bx + bar * 2.4, by + bar / 2);
+      g!.drawImage(site, 0, 0, site.naturalWidth, site.naturalWidth * ((bh - bar) / bw), bx, by + bar, bw, bh - bar);
+      outline({ x: bx, y: by, w: bw, h: bh }, 1);
+      g!.globalAlpha = a;
+    }
+
+    // The headline: revenue counting up, the rest beneath it.
+    const c = ease(clamp((k - 0.2) / 1.1));
+    const big = Math.max(30, Math.min(W * 0.06, 84));
+    const hy = r.y - big * 0.45;
     g!.fillStyle = "#fff";
+    g!.font = `600 ${big}px ${SERIF}`;
+    g!.textAlign = "center";
     g!.textBaseline = "alphabetic";
-    g!.textAlign = "left";
-    g!.font = `500 ${big}px ${MONO}`;
-    g!.fillText(String(Math.round(627 * c)), r.x + side * 0.06, r.y + r.h - side * 0.1);
-    g!.textAlign = "right";
-    g!.fillText(String(Math.round(15 * c)), r.x + r.w - side * 0.06, r.y + r.h - side * 0.1);
-    g!.font = `500 ${Math.max(10, big * 0.3)}px ${MONO}`;
-    g!.fillStyle = "rgba(233,227,214,0.8)";
-    g!.textAlign = "left";
-    g!.fillText("ORDERS SHIPPED", r.x + side * 0.06, r.y + r.h - side * 0.05);
-    g!.textAlign = "right";
-    g!.fillText("COUNTRIES", r.x + r.w - side * 0.06, r.y + r.h - side * 0.05);
-    outline(r, a);
-    g!.globalAlpha = 1;
+    g!.fillText(`$${Math.round(39600 * c).toLocaleString("en-US")} in revenue`, W / 2, hy);
+    g!.font = `500 ${Math.max(11, big * 0.2)}px ${MONO}`;
+    g!.fillStyle = "rgba(150, 210, 235, 0.95)";
+    g!.textBaseline = "top";
+    const facts = `${Math.round(627 * c)} ORDERS · ${Math.round(15 * c)} COUNTRIES · 40+ PRODUCTS I DESIGNED`;
+    const below = tall ? r.y + r.h + gap * 2 + r.w * 0.5 + Math.max(14, r.w * 0.62 * 0.07) : r.y + r.h + big * 0.35;
+    if (tall) {
+      // Two lines on a phone: the one-line version runs off the screen.
+      g!.fillText(`${Math.round(627 * c)} ORDERS · ${Math.round(15 * c)} COUNTRIES`, W / 2, below);
+      g!.fillText("40+ PRODUCTS I DESIGNED", W / 2, below + Math.max(11, big * 0.2) * 1.5);
+    } else {
+      g!.fillText(facts, W / 2, below);
+    }
+    g!.restore();
   }
 
   // ---- Wave: float, rack, pinion, volts ------------------------------------
@@ -524,7 +577,7 @@ export function initIntro(): void {
     g!.lineTo(px + u * 3.2, py);
     g!.stroke();
     g!.strokeRect(px + u * 3.2, py - u * 0.9, u * 2.2, u * 1.8);
-    const volts = Math.round(120 * ease(span(t, [S.wave[0] + 0.2, S.wave[0] + 1.3])));
+    const volts = Math.round(120 * ease(span(t, [S.wave[0] + 0.2 * PACE, S.wave[0] + 1.3 * PACE])));
     g!.fillStyle = "#fff";
     g!.font = `500 ${u * 0.75}px ${MONO}`;
     g!.textAlign = "center";
@@ -539,7 +592,7 @@ export function initIntro(): void {
   // ---- Bot: an alert becomes an order --------------------------------------
   function bot(t: number, a: number): void {
     const r = panel(16 / 9, 0.6);
-    const k = t - S.bot[0];
+    const k = (t - S.bot[0]) / PACE;
     g!.save();
     g!.globalAlpha = a;
     g!.fillStyle = "rgba(8, 11, 18, 0.92)";
@@ -607,7 +660,7 @@ export function initIntro(): void {
     const gy = H * 0.5 - gridH / 2 + H * 0.08;
     names.forEach((n, i) => {
       const img = pics.get(n);
-      const lit = ease(span(t, [S.finale[0] + 0.1 + i * 0.12, S.finale[0] + 0.5 + i * 0.12])) * a * (1 - hand);
+      const lit = ease(span(t, [S.finale[0] + (0.1 + i * 0.12) * PACE, S.finale[0] + (0.5 + i * 0.12) * PACE])) * a * (1 - hand);
       if (!img?.complete || !img.naturalWidth || lit <= 0) return;
       const x = gx + (i % cols) * (tw + gap), y = gy + Math.floor(i / cols) * (th + gap);
       const ir = img.naturalWidth / img.naturalHeight, cr = tw / th;
@@ -622,7 +675,7 @@ export function initIntro(): void {
     g!.globalAlpha = 1;
 
     // The name: centred above the wall, then gliding onto the page's heading.
-    const nameIn = ease(span(t, [S.finale[0] + 0.2, S.finale[0] + 0.9])) * a;
+    const nameIn = ease(span(t, [S.finale[0] + 0.2 * PACE, S.finale[0] + 0.9 * PACE])) * a;
     const big = Math.min(W * 0.075, 96);
     const target = nameTarget();
     const k = ease(hand);
@@ -652,7 +705,7 @@ export function initIntro(): void {
   const CAPTIONS: [readonly number[], string][] = [
     [S.putter, "CNC putter · CAD to 6061 on a 3-axis Haas · $18.56 per unit"],
     [S.werc, "NASA Artemis lunar rover charger · team lead · model values"],
-    [S.ramps, "Chameleon Ramps · 40+ products · 2019–2026"],
+    [S.ramps, "Chameleon Ramps · my cast-concrete company · 2019–2026"],
     [S.wave, "Wave energy converter · team lead · 1st of 5 teams"],
     [S.bot, "SMC trading bot · options live, real money"],
     [S.finale, "Michael Fischbach · mechanical engineering"],
