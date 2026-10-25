@@ -106,8 +106,6 @@ const MANIFEST = [
   // --- Chameleon Ramps: real product photography, all SQUARE at source ---
   { name: "ramps-bank", src: "assets-src/ramps/p4.jpg", width: 1400, height: 1400, quality: 72 },
   { name: "ramps-quarter", src: "assets-src/ramps/p9.jpg", width: 1400, height: 1400, quality: 72 },
-  { name: "ramps-alt1", src: "assets-src/ramps/p5.jpg", width: 1200, height: 1200, quality: 70 },
-  { name: "ramps-alt2", src: "assets-src/ramps/p8.jpg", width: 1200, height: 1200, quality: 70 },
 
   // The whole range in one frame, which no single product shot can show: forty
   // designs is the claim on the label, and this is the evidence for it.
@@ -302,6 +300,23 @@ const MANIFEST = [
   // --- WERC lunar charger: the team's report figures, drawn to scale ---
   // Diagrams, not photographs: fine linework and small type, so they keep
   // their native width and a higher quality than the photographs get.
+  // A still of the docking animation (scripts/make-werc-video.mjs draws the
+  // same scene), mid-charge: the room's hero frame and the wall tile's picture.
+  // chameleonramps.com, captured by tmp/shoot-ramps.mjs with the Wix banner
+  // and chat bubble cropped off: the shop as a customer sees it.
+  // --- Chameleon Ramps, the 2026-10-23 batch: product shots, the CAD render,
+  // the collab drop poster, the two chameleon shots. Room gallery + intro mosaic.
+  { name: "ramps-cad", src: "assets-src/ramps/cad-render.png", width: 756, quality: 70 },
+  { name: "ramps-studio-set", src: "assets-src/ramps/studio-set.jpg", width: 1400, quality: 66 },
+  { name: "ramps-bank-studio", src: "assets-src/ramps/bank-studio.jpg", width: 1200, quality: 66 },
+  { name: "ramps-moss", src: "assets-src/ramps/ledge-moss.jpg", width: 1200, quality: 66 },
+  { name: "ramps-eggz", src: "assets-src/ramps/eggz-custom.jpg", width: 1400, quality: 66 },
+  { name: "ramps-collab", src: "assets-src/ramps/collab-drop.jpg", width: 750, quality: 72 },
+  { name: "ramps-gravel", src: "assets-src/ramps/range-gravel.jpg", width: 1200, quality: 66 },
+  { name: "ramps-chameleon-ledge", src: "assets-src/ramps/chameleon-ledge.jpg", width: 750, quality: 70 },
+  { name: "ramps-chameleon-black", src: "assets-src/ramps/chameleon-black.jpg", width: 1400, quality: 66 },
+  { name: "ramps-site", src: "assets-src/ramps/site-home-crop.png", width: 1440, quality: 70 },
+  { name: "werc-still", src: "assets-src/werc/still.png", width: 1500, quality: 72 },
   { name: "werc-full-scale", src: "assets-src/werc/full-scale.png", width: 1466, quality: 70 },
   { name: "werc-bench", src: "assets-src/werc/bench-iso.png", width: 1491, quality: 70 },
   { name: "werc-system", src: "assets-src/werc/system.png", width: 1500, quality: 70 },

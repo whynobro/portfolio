@@ -1,19 +1,15 @@
 import type { SceneContext, SceneModule } from "../types";
 import { vertices } from "./mesh";
 import { subscribe, unsubscribe } from "../../lib/raf";
+import { clearFrame, createFrame, createMeshRaster, type Frame } from "../../lib/mesh-raster";
 
 /**
  * The putter head, turning slowly, drawn from the capstone's own STL.
  *
- * Rendered with a z-buffered software rasteriser on a 2D canvas rather than
- * WebGL. The model is 8538 triangles at a few hundred pixels: sorting them by
- * depth and filling them is well inside frame budget, and it avoids shipping a
- * shader pipeline, a context-loss path and a fallback for the machines that
- * refuse WebGL. The single-file build stays honest too, since there is nothing
- * to load.
- *
- * Lighting is a single fixed lamp at the upper left, the same direction the
- * gilt frames are lit from, so the piece agrees with the room it hangs in.
+ * Rendered by the shared z-buffered rasteriser in src/lib/mesh-raster.ts (also
+ * used by the opening intro), so there is nothing to load and no WebGL path.
+ * The lamp is fixed at the upper left, the direction the gilt frames are lit
+ * from, so the piece agrees with the room it hangs in.
  */
 export default function createPutterScene(): SceneModule {
   let root: HTMLElement;
@@ -24,19 +20,9 @@ export default function createPutterScene(): SceneModule {
   let width = 0;
   let height = 0;
 
-  const verts = vertices();
-  const triCount = verts.length / 9;
-
-  // Per-triangle scratch, allocated once: the draw loop must not allocate.
-  const depth = new Float32Array(triCount);
-  const shade = new Float32Array(triCount);
-  /** Specular highlight per face, added on top of the diffuse tone. */
-  const spec = new Float32Array(triCount);
-  const visible = new Uint8Array(triCount);
-  const proj = new Float32Array(triCount * 9); // x,y,z per vertex, screen space
-  /** Depth buffer and pixel buffer, both reallocated only on resize. */
-  let zbuf: Float32Array | null = null;
-  let image: ImageData | null = null;
+  const raster = createMeshRaster(vertices());
+  /** Pixel and depth buffers, reallocated only on resize. */
+  let frame: Frame | null = null;
 
   /**
    * The starting angle presents the scooping face to the viewer. At 0.6 the
@@ -51,203 +37,22 @@ export default function createPutterScene(): SceneModule {
   let dragging = false;
   let lastX = 0;
 
-  // A fixed lamp, upper left and slightly in front, normalised.
-  const LX = -0.42, LY = -0.66, LZ = 0.62;
-
-  function project(): void {
-    const s = Math.min(width, height) * 0.92;
-    const cxp = width / 2;
-    const cyp = height / 2;
-    const cos = Math.cos(angle);
-    const sin = Math.sin(angle);
-    /*
-     * A gentle tilt DOWN onto the part, so the top face and the scooping
-     * cavity both read.
-     *
-     * Negative. With the projection's Y flip in place, a positive tilt raises
-     * the camera below the part and shows the floor of the scoop pocket, which
-     * is the one surface a putter never presents to anyone.
-     */
-    const TILT = -0.55;
-    const ct = Math.cos(TILT);
-    const st = Math.sin(TILT);
-
-    for (let t = 0; t < triCount; t++) {
-      const base = t * 9;
-      let zsum = 0;
-      let zmin = 0;
-
-      // Rotate about Y, then tilt about X, and project orthographically: the
-      // part is small relative to the viewing distance, so perspective would be
-      // a distortion rather than a cue.
-      for (let k = 0; k < 3; k++) {
-        const i = base + k * 3;
-        const x = verts[i]!;
-        const y = verts[i + 1]!;
-        const z = verts[i + 2]!;
-
-        const rx = x * cos + z * sin;
-        const rz = z * cos - x * sin;
-        const ry = y * ct - rz * st;
-        const fz = y * st + rz * ct;
-
-        proj[t * 9 + k * 3] = cxp + rx * s;
-        // NEGATED: the model is Z-up out of Fusion and the screen's Y runs
-        // down, so mapping the rotated height straight to screen Y stood the
-        // part on its head. Tilting the other way is not the same fix; that
-        // just looks at the underside.
-        proj[t * 9 + k * 3 + 1] = cyp - ry * s;
-        proj[t * 9 + k * 3 + 2] = fz;
-        zsum += fz;
-        if (k === 0 || fz < zmin) zmin = fz;
-      }
-      /*
-       * Sort on the NEAREST vertex, biased by the centroid.
-       *
-       * A pure centroid sort is the textbook painter's algorithm and it fails
-       * exactly where this part is interesting: on the scooping cavity's curved
-       * wall, neighbouring triangles have almost identical centroid depths, so
-       * their order flickers and a fringe of far-side faces shows through the
-       * near side. Weighting toward the closest vertex breaks those ties the
-       * way the eye expects.
-       */
-      depth[t] = zmin * 0.7 + (zsum / 3) * 0.3;
-
-      // Face normal from the model vertices, for flat shading.
-      const e1x = verts[base + 3]! - verts[base]!;
-      const e1y = verts[base + 4]! - verts[base + 1]!;
-      const e1z = verts[base + 5]! - verts[base + 2]!;
-      const e2x = verts[base + 6]! - verts[base]!;
-      const e2y = verts[base + 7]! - verts[base + 1]!;
-      const e2z = verts[base + 8]! - verts[base + 2]!;
-      let nx = e1y * e2z - e1z * e2y;
-      let ny = e1z * e2x - e1x * e2z;
-      let nz = e1x * e2y - e1y * e2x;
-      const len = Math.hypot(nx, ny, nz) || 1;
-      nx /= len; ny /= len; nz /= len;
-
-      const rnx = nx * cos + nz * sin;
-      const rnz = nz * cos - nx * sin;
-      const rny = ny * ct - rnz * st;
-
-      /*
-       * Light BOTH sides of every face.
-       *
-       * Lighting only the front and clamping the rest to zero left every
-       * interior surface pure black, so the part read as a hollow shell rather
-       * than as a solid piece of aluminium: the scooping cavity in particular
-       * looked like a hole punched through it. The STL's winding is not
-       * reliable enough to trust for facing here, so the lamp is applied to the
-       * absolute angle and a floor of ambient keeps unlit faces readable.
-       */
-      const lambert = Math.abs(rnx * LX + rny * LY + rnz * LZ);
-      shade[t] = 0.18 + lambert * 0.82;
-      /*
-       * Blinn-Phong highlight against a viewer straight down the Z axis. A
-       * machined 6061 face reads as METAL only once it catches a hot, tight
-       * highlight; diffuse shading alone made the part look like grey plastic.
-       * Same absolute-value treatment as the lamp, for the same winding reason.
-       */
-      const hx = LX, hy = LY, hz = LZ + 1;
-      const hl = Math.hypot(hx, hy, hz);
-      const nh = Math.abs(rnx * hx + rny * hy + rnz * hz) / hl;
-      spec[t] = nh ** 48;
-
-      /*
-       * Back-face culling, from the screen-space winding of the projected
-       * triangle.
-       *
-       * Without it the painter's algorithm still PAINTS the far side of the
-       * part: on a curved wall like the scooping cavity, back faces at almost
-       * exactly the same depth as the front ones win the sort at random and
-       * show through as a ragged fringe along the curve. Culling them first is
-       * both the correct fix and roughly half the triangles.
-       */
-      const o = t * 9;
-      const wind =
-        (proj[o + 3]! - proj[o]!) * (proj[o + 7]! - proj[o + 1]!) -
-        (proj[o + 4]! - proj[o + 1]!) * (proj[o + 6]! - proj[o]!);
-      // Flipping the projected Y above reverses screen-space winding, so the
-      // sign of this test follows it.
-      visible[t] = wind > 0 ? 1 : 0;
-    }
-
-  }
-
-  /**
-   * Scanline rasteriser with a per-pixel depth buffer.
-   *
-   * The painter's algorithm was drawing the far wall of the scooping cavity
-   * over the near one: on a curved surface, neighbouring triangles differ in
-   * centroid depth by less than the error in comparing them, so no sort order
-   * is stable and a ragged fringe follows the curve. Sorting cannot fix that,
-   * because the triangles genuinely interleave in depth. Testing depth per
-   * PIXEL is the thing that actually resolves it, and at this triangle count it
-   * still runs comfortably inside a frame.
+  /*
+   * A gentle tilt DOWN onto the part, so the top face and the scooping cavity
+   * both read. Negative: with the projection's Y flip, a positive tilt looks
+   * up at the floor of the scoop pocket, which a putter never presents.
    */
-  function draw(): void {
-    if (!ctx2d || !image || !zbuf) return;
-    const w = Math.round(width * dpr);
-    const h = Math.round(height * dpr);
-    const px = image.data;
-
-    px.fill(0);
-    zbuf.fill(Infinity);
-
-    for (let t = 0; t < triCount; t++) {
-      if (!visible[t]) continue;
-      const o = t * 9;
-
-      const x0 = proj[o]! * dpr, y0 = proj[o + 1]! * dpr, z0 = proj[o + 2]!;
-      const x1 = proj[o + 3]! * dpr, y1 = proj[o + 4]! * dpr, z1 = proj[o + 5]!;
-      const x2 = proj[o + 6]! * dpr, y2 = proj[o + 7]! * dpr, z2 = proj[o + 8]!;
-
-      let minX = Math.max(0, Math.floor(Math.min(x0, x1, x2)));
-      let maxX = Math.min(w - 1, Math.ceil(Math.max(x0, x1, x2)));
-      let minY = Math.max(0, Math.floor(Math.min(y0, y1, y2)));
-      let maxY = Math.min(h - 1, Math.ceil(Math.max(y0, y1, y2)));
-      if (minX > maxX || minY > maxY) continue;
-
-      const areaFull = (x1 - x0) * (y2 - y0) - (y1 - y0) * (x2 - x0);
-      if (areaFull === 0) continue;
-      const inv = 1 / areaFull;
-
-      const lum = shade[t]!;
-      const hi = spec[t]! * 120;
-      const base = 52 + lum * 168;
-      const cr = Math.min(255, Math.round(base * 0.98 + hi));
-      const cg = Math.min(255, Math.round(base + hi));
-      const cb = Math.min(255, Math.round(base * 1.05 + hi));
-
-      for (let y = minY; y <= maxY; y++) {
-        for (let x = minX; x <= maxX; x++) {
-          // Barycentric coordinates at the pixel centre.
-          const cxp2 = x + 0.5, cyp2 = y + 0.5;
-          const w0 = ((x1 - cxp2) * (y2 - cyp2) - (y1 - cyp2) * (x2 - cxp2)) * inv;
-          const w1 = ((x2 - cxp2) * (y0 - cyp2) - (y2 - cyp2) * (x0 - cxp2)) * inv;
-          const w2 = 1 - w0 - w1;
-          if (w0 < 0 || w1 < 0 || w2 < 0) continue;
-
-          const z = w0 * z0 + w1 * z1 + w2 * z2;
-          const idx = y * w + x;
-          if (z >= zbuf[idx]!) continue;
-          zbuf[idx] = z;
-
-          const p4 = idx * 4;
-          px[p4] = cr;
-          px[p4 + 1] = cg;
-          px[p4 + 2] = cb;
-          px[p4 + 3] = 255;
-        }
-      }
-    }
-
-    ctx2d.putImageData(image, 0, 0);
-  }
+  const TILT = -0.55;
 
   function render(): void {
-    project();
-    draw();
+    if (!ctx2d || !frame) return;
+    raster.setView(
+      { angle, tilt: TILT, scale: Math.min(width, height) * 0.92, cx: width / 2, cy: height / 2 },
+      dpr,
+    );
+    clearFrame(frame);
+    raster.draw(frame);
+    ctx2d.putImageData(frame.image, 0, 0);
   }
 
   function size(w: number, h: number): void {
@@ -261,10 +66,7 @@ export default function createPutterScene(): SceneModule {
     ctx2d = canvas.getContext("2d");
     // No CTM: the rasteriser works in device pixels and writes the backing
     // store directly, and putImageData ignores the transform in any case.
-    const bw = canvas.width;
-    const bh = canvas.height;
-    zbuf = new Float32Array(bw * bh);
-    image = ctx2d ? ctx2d.createImageData(bw, bh) : null;
+    frame = ctx2d ? createFrame(ctx2d, canvas.width, canvas.height) : null;
     render();
   }
 

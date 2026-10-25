@@ -45,14 +45,54 @@
     />
     <meta name="twitter:card" content="summary_large_image" />
     <script>
-      // Screenshot mode, set before first paint so the capture never sees a
-      // frame of the live animation.
-      if (new URLSearchParams(location.search).get("shots") === "1")
-        document.documentElement.dataset.shots = "1";
+      // Before first paint: screenshot mode, and whether the opening plays.
+      // The opening is OFF for visitors: it plays only when asked for with
+      // ?intro=1, on the landing route, never in screenshot mode and never
+      // with reduced motion. A 26 s fallback timer uncovers the page even if
+      // the intro's module never runs.
+      (function () {
+        var el = document.documentElement;
+        var q = new URLSearchParams(location.search);
+        var shots = q.get("shots") === "1";
+        if (shots) el.dataset.shots = "1";
+        // Hand-off mock-up being decided: ?hero=night dresses the entrance as
+        // night so the intro lifts onto the same sky. Default: dawn.
+        if (q.get("hero") === "night") el.dataset.hero = "night";
+        try {
+          var landing = location.hash === "" || location.hash === "#/";
+          var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+          if (!shots && landing && !still && q.get("intro") === "1") {
+            el.dataset.intro = "play";
+            setTimeout(function () {
+              delete el.dataset.intro;
+            }, 26000);
+          }
+        } catch (e) {
+          /* matchMedia unavailable: no intro, the page simply shows */
+        }
+      })();
     </script>
+    <style>
+      /* Inline so the cover is up before the stylesheet loads. */
+      #intro { display: none; }
+      html[data-intro="play"] { overflow: hidden; }
+      html[data-intro="play"] #intro {
+        display: block; position: fixed; inset: 0; z-index: 1000; background: #04060b;
+        transition: opacity 0.45s ease;
+      }
+      #intro.intro--out { opacity: 0; pointer-events: none; }
+    </style>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- The opening (src/intro.ts): the putter from drawing to part under a
+         night sky. Shown only when the head script set data-intro="play". -->
+    <div id="intro">
+      <canvas aria-hidden="true"></canvas>
+      <p class="intro__label mono" aria-hidden="true"></p>
+      <button class="intro__skip" type="button">Skip intro</button>
+    </div>
 
     <header class="masthead">
       <div class="page masthead__inner">
@@ -164,106 +204,32 @@
               </div>
 
               <div class="btn-row">
-                <a class="btn btn--gilt" href="#/work"
-                  >View the collection</a
-                >
-                <a class="btn" href="#/contact"
-                  >Contact</a
-                >
                 <!-- href and filename are set by src/resume.ts, which imports the
                      PDFs so the bundler hashes them. -->
-                <a class="btn btn--resume" data-doc="resume">Resume</a>
+                <a class="btn btn--gilt" data-doc="resume">Resume</a>
                 <a class="btn" data-doc="cv">CV</a>
-              </div>
-            </div>
-
-            <!-- ===== INTERACTIVE WORKS =====
-                 A grid item of .entrance, placed in row two of the portrait's
-                 column, so the pair sits left and the row ends level with the
-                 contact button rather than pushing the page down. Deliberately
-                 unframed and uncaptioned: they are toys, not works on the wall,
-                 and a gilt frame around a playable board would read as a claim
-                 the six pieces below have earned and these have not. -->
-            <div class="entrance__play" id="games">
-              <!-- With no captions these are the only names a screen reader has
-                   for the two boards. -->
-              <div
-                class="playable"
-                data-scene="tictactoe"
-                role="group"
-               
-                aria-label="Unbeatable Tic-Tac-Toe"
-              ></div>
-              <!-- The ring toss and its nudge share a wrapper so the hint can be
-                   positioned against the TOY rather than against the whole row,
-                   and so it never widens the row and pushes the boards apart. -->
-              <div class="playable-wrap">
-                <div
-                  class="playable"
-                  data-scene="ringtoss"
-                  role="group"
-                 
-                  aria-label="Water Ring Toss"
-                ></div>
-                <!-- Points back at the ring toss: the pump and the side jets are
-                     drawn ON the toy, so nothing about it says "press me" until
-                     you already know. The arrow is decorative (`alt=""`) because
-                     the instruction beside it carries the meaning. -->
-                <p class="play-hint">
-                  <picture>
-                    <source srcset="./src/assets/img/arrow-red.avif" type="image/avif" />
-                    <img
-                      class="play-hint__arrow"
-                      src="./src/assets/img/arrow-red.png"
-                      alt=""
-                      width="691"
-                      height="854"
-                      decoding="async"
-                    />
-                  </picture>
-                  <span class="play-hint__text"
-                    >Press the buttons, it really works</span
-                  >
-                </p>
+                <a class="btn" href="#/contact">Contact</a>
               </div>
             </div>
           </div>
         </section>
 
-        <!-- ================= THE COLLECTION ================= -->
-        <section class="page section section--after-entrance" id="work">
-          <div class="intro">
-            <span class="eyebrow">The collection</span>
-            <h2 class="display">
-              Works in Mechanical Engineering
-            </h2>
-            <p class="intro__lede">
-              Eight pieces I designed, built and measured. Each one says what
-              it was for and what came out of it.
-            </p>
-            <!-- How much of the wall has been walked. Filled by src/progress.ts
-                 as each room is opened, and hidden from assistive tech: the bar
-                 is a picture of the count beside it, so announcing it as a
-                 progressbar on every navigation would be noise. The label is
-                 written by JS, so the no-JS document simply omits it. -->
-            <div class="progress" id="work-progress" aria-hidden="true">
-              <span class="progress__label"></span>
-              <span class="progress__track">
-                <span class="progress__fill"></span>
-              </span>
-            </div>
-          </div>
-
-          <div class="works">
+        <!-- ================= FEATURED =================
+             The two works hung large, straight after the entrance, so the
+             first screen shows work and not only a biography: the NASA
+             charger (current, team lead) and the putter (CAD to metal). -->
+        <section class="page section section--featured" aria-labelledby="featured-title">
+          <span class="eyebrow" id="featured-title">Featured</span>
+          <div class="works works--featured">
             <a class="work" href="#/work/werc">
               <div class="frame frame--landscape">
                 <div class="frame__mat">
                   <div class="frame__win">
                     <img
-                      src="./src/assets/img/werc-bench.avif"
-                      width="1491"
-                      height="1007"
-                      alt="The bench prototype of the lunar rover charger: a small rover parked at a charging wall"
+                      src="./src/assets/img/werc-still.avif"
+                      width="1500"
+                      height="1000"
+                      alt="The lunar rover docked at the charging wall, power crossing the gap to its nose plates"
                       loading="lazy"
                       decoding="async"
                     />
@@ -330,7 +296,32 @@
                 </p>
               </div>
             </a>
+          </div>
+        </section>
 
+        <!-- ================= THE COLLECTION ================= -->
+        <section class="page section section--after-entrance" id="work">
+          <div class="intro">
+            <span class="eyebrow">The collection</span>
+            <h2 class="display">Projects</h2>
+            <p class="intro__lede">
+              Everything else I designed, built and measured. Each one says
+              what it was for and what came out of it.
+            </p>
+            <!-- How much of the wall has been walked. Filled by src/progress.ts
+                 as each room is opened, and hidden from assistive tech: the bar
+                 is a picture of the count beside it, so announcing it as a
+                 progressbar on every navigation would be noise. The label is
+                 written by JS, so the no-JS document simply omits it. -->
+            <div class="progress" id="work-progress" aria-hidden="true">
+              <span class="progress__label"></span>
+              <span class="progress__track">
+                <span class="progress__fill"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="works">
             <a class="work" href="#/work/ramps">
               <div class="frame frame--landscape">
                 <div class="frame__mat">
@@ -500,65 +491,60 @@
               </div>
             </a>
 
-            <a class="work" href="#/work/water">
-              <div class="frame frame--landscape">
-                <div class="frame__mat">
-                  <div class="frame__win">
-                    <img
-                      src="./src/assets/img/water-site.avif"
-                      width="1400"
-                      height="933"
-                      alt="Gravity-fed water distribution system, tank siting"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="label">
-                <div class="label__rule"></div>
-                <h3 class="label__title">
-                  Water Distribution System
-                </h3>
-                <p class="label__body">
-                  A gravity-fed distribution network for a rural community in
-                  Nicaragua: source survey, tank siting and pipe routing worked
-                  out from the terrain rather than from a standard layout.
-                </p>
-                <p class="label__meta">
-                  <span>Nicaragua</span> ·
-                  <span>gravity-fed</span>
-                </p>
-              </div>
-            </a>
-            <a class="work" href="#/work/door">
-              <div class="frame frame--landscape">
-                <div class="frame__mat">
-                  <div class="frame__win">
-                    <img
-                      src="./src/assets/img/door-final-cad.avif"
-                      width="740"
-                      height="642"
-                      alt="The Doorknob-Inator in CAD: a lever clamped around a round door knob"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div class="label">
-                <div class="label__rule"></div>
-                <h3 class="label__title">Doorknob-Inator</h3>
-                <p class="label__body">
-                  A printed lever part that fits over a round knob and helps
-                  people with one arm open the doors in Cal Poly's Red Brick
-                  dorms. Three
-                  generations, from a cup mock-up to a PLA base with a TPU head.
-                </p>
-                <p class="label__meta">Fusion 360 · PLA and TPU · ME 128</p>
-              </div>
-            </a>
           </div>
+        </section>
+
+        <!-- ================= OFF THE WALL =================
+             The two toys, moved out of the entrance so they do not sit beside
+             the headline figures. Unframed and uncaptioned: toys, not works. -->
+        <section class="page section section--play" aria-labelledby="play-title">
+          <div class="intro intro--small">
+            <span class="eyebrow">Off the wall</span>
+            <h2 class="display display--small" id="play-title">Two toys, built for fun</h2>
+          </div>
+            <div class="play-row" id="games">
+              <!-- With no captions these are the only names a screen reader has
+                   for the two boards. -->
+              <div
+                class="playable"
+                data-scene="tictactoe"
+                role="group"
+               
+                aria-label="Unbeatable Tic-Tac-Toe"
+              ></div>
+              <!-- The ring toss and its nudge share a wrapper so the hint can be
+                   positioned against the TOY rather than against the whole row,
+                   and so it never widens the row and pushes the boards apart. -->
+              <div class="playable-wrap">
+                <div
+                  class="playable"
+                  data-scene="ringtoss"
+                  role="group"
+                 
+                  aria-label="Water Ring Toss"
+                ></div>
+                <!-- Points back at the ring toss: the pump and the side jets are
+                     drawn ON the toy, so nothing about it says "press me" until
+                     you already know. The arrow is decorative (`alt=""`) because
+                     the instruction beside it carries the meaning. -->
+                <p class="play-hint">
+                  <picture>
+                    <source srcset="./src/assets/img/arrow-red.avif" type="image/avif" />
+                    <img
+                      class="play-hint__arrow"
+                      src="./src/assets/img/arrow-red.png"
+                      alt=""
+                      width="691"
+                      height="854"
+                      decoding="async"
+                    />
+                  </picture>
+                  <span class="play-hint__text"
+                    >Press the buttons, it really works</span
+                  >
+                </p>
+              </div>
+            </div>
         </section>
       </div>
 
@@ -590,6 +576,38 @@
         <div class="intro">
           <span class="eyebrow">About</span>
           <h1 class="display">Profile</h1>
+        </div>
+
+        <!-- Three photographs in a row under the heading. All are prepped to the
+             same 3:2 crop, so the row bottoms out on one line: an odd ratio in
+             the set would show immediately as a ragged edge. Uncaptioned and
+             unframed — they are the person, not the work, and a gilt frame
+             around a holiday photograph would claim what the wall has earned. -->
+        <div class="about-row">
+          <img
+            src="./src/assets/img/about-1.avif"
+            width="1200"
+            height="800"
+            loading="lazy"
+            decoding="async"
+            alt="On a boat in Alaska, looking out at the mountains"
+          />
+          <img
+            src="./src/assets/img/about-2.avif"
+            width="1200"
+            height="800"
+            loading="lazy"
+            decoding="async"
+            alt="On the beach in California"
+          />
+          <img
+            src="./src/assets/img/about-3.avif"
+            width="1200"
+            height="800"
+            loading="lazy"
+            decoding="async"
+            alt="Sitting out past the break, waiting on a wave"
+          />
         </div>
         <div class="prose prose--centred stack">
           <p>
@@ -641,18 +659,6 @@
                   Support mission systems engineers on Space Force and Air Force
                   efforts as part of a SETA contractor team. Use locally hosted
                   language models to analyse satellite sensor data.
-                </p>
-              </div>
-            </div>
-            <div class="cv__entry">
-              <p class="cv__when mono">2026 – now</p>
-              <div>
-                <h3 class="cv__role">Founder and CEO</h3>
-                <p class="cv__org">Campus Native · campusnative.com</p>
-                <p class="cv__body">
-                  A live marketplace connecting prospective students with
-                  student tour guides. Recruited and direct a four-person intern
-                  team across engineering, marketing and content.
                 </p>
               </div>
             </div>
@@ -731,37 +737,6 @@
           </section>
         </div>
 
-        <!-- Three photographs in a row under the text. All are prepped to the
-             same 3:2 crop, so the row bottoms out on one line: an odd ratio in
-             the set would show immediately as a ragged edge. Uncaptioned and
-             unframed — they are the person, not the work, and a gilt frame
-             around a holiday photograph would claim what the wall has earned. -->
-        <div class="about-row">
-          <img
-            src="./src/assets/img/about-1.avif"
-            width="1200"
-            height="800"
-            loading="lazy"
-            decoding="async"
-            alt="On a boat in Alaska, looking out at the mountains"
-          />
-          <img
-            src="./src/assets/img/about-2.avif"
-            width="1200"
-            height="800"
-            loading="lazy"
-            decoding="async"
-            alt="On the beach in California"
-          />
-          <img
-            src="./src/assets/img/about-3.avif"
-            width="1200"
-            height="800"
-            loading="lazy"
-            decoding="async"
-            alt="Sitting out past the break, waiting on a wave"
-          />
-        </div>
       </article>
 
       <!-- ================= CONTACT ================= -->
@@ -785,7 +760,7 @@
             rel="noopener"
             >LinkedIn</a
           >
-          <a class="btn btn--resume" data-doc="resume">Resume</a>
+          <a class="btn" data-doc="resume">Resume</a>
           <a class="btn" data-doc="cv">Full CV</a>
         </div>
       </article>

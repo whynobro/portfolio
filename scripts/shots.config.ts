@@ -56,6 +56,4 @@ export const SHOTS: Shot[] = [
   { name: "work-wave", route: "#/work/wave", fullPage: false },
   { name: "work-bot", route: "#/work/bot", fullPage: false },
   { name: "work-campus", route: "#/work/campus", fullPage: false },
-  { name: "work-water", route: "#/work/water", fullPage: false },
-  { name: "work-door", route: "#/work/door", fullPage: false },
 ];

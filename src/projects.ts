@@ -119,7 +119,7 @@ const PROJECTS: Project[] = [
     slug: "werc",
     titleKey: "proj.werc.title",
     ledeKey: "case.werc.lede",
-    hero: { img: "werc-bench", w: 1491, h: 1007, aspect: "frame--landscape", altKey: "alt.werc.bench" },
+    hero: { img: "werc-still", w: 1500, h: 1000, aspect: "frame--landscape", altKey: "alt.werc.still" },
     wideScene: { id: "werc", capKey: "cap.werc.scene" },
     specs: [
       { labelKey: "case.spec.role", valueKey: "case.werc.role" },
@@ -240,32 +240,21 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.result", bodyKeys: ["case.ramps.outcome"] },
     ],
     link: { href: "https://www.chameleonramps.com", labelKey: "case.link.ramps" },
+    // CAD to product first, then the range, then the brand: the order a
+    // product actually went through.
     gallery: [
-      {
-        img: "ramps-quarter",
-        w: 1400,
-        h: 1400, aspect: "frame--square",
-        altKey: "alt.ramps.quarter",
-        capKey: "cap.ramps.quarter",
-      },
-      { img: "ramps-alt1", w: 1200, h: 1200, aspect: "frame--square", altKey: "alt.ramps.alt1", capKey: "cap.ramps.alt1" },
-      { img: "ramps-alt2", w: 1200, h: 1200, aspect: "frame--square", altKey: "alt.ramps.alt2", capKey: "cap.ramps.alt2" },
-      {
-        img: "ramps-range",
-        w: 1400,
-        h: 1050,
-        aspect: "frame--landscape",
-        altKey: "alt.ramps.range",
-        capKey: "cap.ramps.range",
-      },
-      {
-        img: "ramps-chameleon",
-        w: 1100,
-        h: 1100,
-        aspect: "frame--square",
-        altKey: "alt.ramps.chameleon",
-        capKey: "cap.ramps.chameleon",
-      },
+      { img: "ramps-cad", w: 756, h: 463, aspect: "frame--landscape", altKey: "alt.ramps.cad", capKey: "cap.ramps.cad" },
+      { img: "ramps-studio-set", w: 1400, h: 1050, aspect: "frame--slide", altKey: "alt.ramps.studio", capKey: "cap.ramps.studio" },
+      { img: "ramps-quarter", w: 1400, h: 1400, aspect: "frame--square", altKey: "alt.ramps.quarter", capKey: "cap.ramps.quarter" },
+      { img: "ramps-bank-studio", w: 900, h: 1200, aspect: "frame--photo", altKey: "alt.ramps.bankStudio", capKey: "cap.ramps.bankStudio" },
+      { img: "ramps-moss", w: 900, h: 1200, aspect: "frame--photo", altKey: "alt.ramps.moss", capKey: "cap.ramps.moss" },
+      { img: "ramps-eggz", w: 1400, h: 1050, aspect: "frame--slide", altKey: "alt.ramps.eggz", capKey: "cap.ramps.eggz" },
+      { img: "ramps-range", w: 1400, h: 1050, aspect: "frame--landscape", altKey: "alt.ramps.range", capKey: "cap.ramps.range" },
+      { img: "ramps-gravel", w: 900, h: 1200, aspect: "frame--photo", altKey: "alt.ramps.gravel", capKey: "cap.ramps.gravel" },
+      { img: "ramps-collab", w: 750, h: 750, aspect: "frame--square", altKey: "alt.ramps.collab", capKey: "cap.ramps.collab" },
+      { img: "ramps-chameleon-ledge", w: 750, h: 797, aspect: "frame--square", altKey: "alt.ramps.chameleonLedge", capKey: "cap.ramps.chameleonLedge" },
+      { img: "ramps-chameleon", w: 1100, h: 1100, aspect: "frame--square", altKey: "alt.ramps.chameleon", capKey: "cap.ramps.chameleon" },
+      { img: "ramps-chameleon-black", w: 1400, h: 1050, aspect: "frame--slide", altKey: "alt.ramps.chameleonBlack", capKey: "cap.ramps.chameleonBlack" },
     ],
   },
 
@@ -390,51 +379,6 @@ const PROJECTS: Project[] = [
     galleryInPictures: true,
   },
 
-  {
-    slug: "water",
-    titleKey: "proj.water.title",
-    ledeKey: "case.water.lede",
-    hero: { img: "water-site", w: 1400, h: 933, aspect: "frame--landscape", altKey: "alt.water.hero" },
-    specs: [
-      { labelKey: "case.spec.role", valueKey: "case.water.role" },
-      { labelKey: "case.spec.tools", valueKey: "case.water.tools" },
-      { labelKey: "case.spec.scope", valueKey: "case.water.scope" },
-      { labelKey: "case.spec.result", valueKey: "case.water.result", measured: true },
-    ],
-    sections: [
-      { hKey: "case.h.brief", bodyKeys: ["case.water.brief"] },
-      { hKey: "case.h.approach", bodyKeys: ["case.water.approach1", "case.water.approach2"] },
-      { hKey: "case.h.result", bodyKeys: ["case.water.outcome"] },
-    ],
-    gallery: [
-      { img: "water-1", w: 1400, h: 933, aspect: "frame--slide", altKey: "alt.water.map", capKey: "cap.water.map" },
-    ],
-    galleryInPictures: true,
-  },
-
-  {
-    slug: "door",
-    titleKey: "proj.door.title",
-    ledeKey: "case.door.lede",
-    hero: { img: "door-final-cad", w: 740, h: 642, aspect: "frame--slide", altKey: "alt.door.hero" },
-    specs: [
-      { labelKey: "case.spec.role", valueKey: "case.door.role" },
-      { labelKey: "case.spec.tools", valueKey: "case.door.tools" },
-      { labelKey: "case.spec.material", valueKey: "case.door.material" },
-      { labelKey: "case.spec.status", valueKey: "case.door.status" },
-    ],
-    sections: [
-      { hKey: "case.h.brief", bodyKeys: ["case.door.brief"] },
-      { hKey: "case.h.approach", bodyKeys: ["case.door.approach1", "case.door.approach2"] },
-      { hKey: "case.h.status", bodyKeys: ["case.door.outcome"] },
-    ],
-    gallery: [
-      { img: "door-mockup", w: 1050, h: 1400, aspect: "frame--photo", altKey: "alt.door.mockup", capKey: "cap.door.mockup" },
-      { img: "door-first-cad", w: 952, h: 612, aspect: "frame--landscape", altKey: "alt.door.first", capKey: "cap.door.first" },
-      { img: "door-print", w: 1050, h: 1400, aspect: "frame--photo", altKey: "alt.door.print", capKey: "cap.door.print" },
-      { img: "door-installed", w: 720, h: 1280, aspect: "frame--photo", altKey: "alt.door.installed", capKey: "cap.door.installed" },
-    ],
-  },
 ];
 
 const bySlug = new Map(PROJECTS.map((p) => [p.slug, p]));

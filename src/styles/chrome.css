@@ -221,7 +221,7 @@
    * instead of pushing the whole row down. */
   .entrance__intro {
     grid-column: 2;
-    grid-row: 1 / span 2;
+    grid-row: 1;
   }
 }
 
@@ -282,25 +282,14 @@
  * portrait's own column, so they sit left and the entrance row ends level with
  * the contact button instead of pushing the page down.
  */
-.entrance__play {
-  margin-block-start: var(--s-12);
+/* The toys' own row at the foot of the home view (moved out of the entrance
+ * so they do not sit beside the headline figures). */
+.play-row {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: end;
-  gap: var(--s-6);
-}
-@media (min-width: 900px) {
-  .entrance__play {
-    /* Row two of the first column: directly under the portrait, with the
-     * introduction alongside in column two. Set down from the portrait rather
-     * than tucked under it, the toys read as a separate, quieter thing when
-     * they are not crowding the frame above them. */
-    grid-column: 1;
-    grid-row: 2;
-    justify-content: flex-start;
-    margin-block-start: var(--s-16);
-  }
+  gap: var(--s-12);
 }
 
 /* ---- Quick facts --------------------------------------------------------- */
@@ -391,22 +380,6 @@
   border-color: var(--gilt-lo);
   color: #fff;
 }
-/*
- * The resume button, in the accent's complement so it reads as the warm
- * counterpart to the gilt CTA rather than competing with it. Solid rather than
- * outlined because it sits beside the outlined Contact button and the pair has
- * to be told apart at a glance.
- */
-.btn--resume {
-  border-color: var(--accent-comp);
-  background: var(--accent-comp);
-  color: var(--plate);
-}
-.btn--resume:hover {
-  background: var(--accent-comp-lo);
-  border-color: var(--accent-comp-lo);
-  color: #fff;
-}
 
 .btn-row {
   display: flex;
@@ -469,4 +442,93 @@
   .award__figure {
     text-align: start;
   }
+}
+
+/* ---- The opening (src/intro.ts) ------------------------------------------ */
+#intro canvas {
+  display: block;
+}
+.intro__label {
+  position: absolute;
+  inset-inline-start: var(--s-6);
+  inset-block-end: var(--s-6);
+  margin: 0;
+  font-size: var(--t-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(205, 228, 255, 0.75);
+}
+.intro__skip {
+  position: absolute;
+  inset-inline-end: var(--s-6);
+  inset-block-end: var(--s-6);
+  padding: var(--s-2) var(--s-4);
+  font-family: var(--font-mono);
+  font-size: var(--t-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(205, 228, 255, 0.8);
+  background: transparent;
+  border: 1px solid rgba(205, 228, 255, 0.35);
+  cursor: pointer;
+}
+.intro__skip:hover,
+.intro__skip:focus-visible {
+  color: #fff;
+  border-color: #fff;
+}
+@media (max-width: 560px) {
+  /* Stacked on a phone: the caption sits above the Skip button, not beside it. */
+  .intro__label {
+    inset-block-end: calc(var(--s-6) + 3rem);
+  }
+}
+
+/* ---- Night entrance (hand-off mock-up: ?hero=night) ----------------------- */
+/*
+ * The entrance as the night sky the intro plays under, so the cover lifts onto
+ * the same sky. The gallery below stays the warm wall: walking out of the
+ * night into the gallery. Full-bleed via a pseudo-element, since the section
+ * itself is capped at the page width.
+ */
+html[data-hero="night"] {
+  overflow-x: clip;
+}
+html[data-hero="night"] #view-home > .section:first-child {
+  position: relative;
+  isolation: isolate;
+  padding-block-end: var(--s-24);
+}
+html[data-hero="night"] #view-home > .section:first-child::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0 calc(50% - 50vw);
+  background:
+    radial-gradient(1px 1px at 23px 41px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 141px 97px, rgba(255, 255, 255, 0.7) 50%, transparent 51%),
+    radial-gradient(1.5px 1.5px at 77px 163px, #fff 50%, transparent 51%),
+    radial-gradient(1px 1px at 189px 23px, rgba(255, 255, 255, 0.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 61px 211px, rgba(255, 255, 255, 0.6) 50%, transparent 51%),
+    linear-gradient(#04060b, #141a28 85%, var(--wall));
+  background-size: 230px 230px, 230px 230px, 230px 230px, 230px 230px, 230px 230px, 100% 100%;
+}
+html[data-hero="night"] .entrance__name {
+  color: #fff;
+}
+html[data-hero="night"] .entrance__bio {
+  color: rgba(237, 230, 216, 0.82);
+}
+html[data-hero="night"] .facts__value {
+  color: #fff;
+}
+html[data-hero="night"] .facts__label {
+  color: rgba(237, 230, 216, 0.6);
+}
+html[data-hero="night"] .facts {
+  border-color: rgba(237, 230, 216, 0.2);
+}
+html[data-hero="night"] #view-home > .section:first-child .btn:not(.btn--gilt) {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
 }
