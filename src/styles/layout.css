@@ -177,7 +177,7 @@
  * wants ~60ch, and three photographs at that width would be postage stamps.
  */
 .about-row {
-  margin-block-start: var(--s-12);
+  margin-block-end: var(--s-12);
   margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
