@@ -113,7 +113,12 @@ channel** and prints the slice value; never guess it.
 `runtime.ts` (`[data-scene]`). `src/lib/raf.ts` caps animating scenes at **4**
 (two toys + two live wall frames); `subscribe()` returns false past the cap.
 The runtime disposes scenes whose element left the document or whose view is
-hidden, and those scrolled far away.
+hidden, and those scrolled far away. It watches each view's `hidden` AND its
+children, so a re-rendered room's scene mounts and gets resize events.
+
+- **`dispose()` removes EVERYTHING `mount()` added to the root** (wrapper
+  included): every return to a view remounts, and a leftover node stacks.
+  Verify with a round trip: the root keeps exactly one child.
 
 - **Putter** (`putter`): the capstone's STL as a quantised mesh
   (`scripts/prep-mesh.mjs`), drawn by a z-buffered software rasteriser on a 2D
