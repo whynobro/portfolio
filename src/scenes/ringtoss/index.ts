@@ -86,6 +86,8 @@ const SEAT_LEAN = 0.42;
 type Peg = { x: number; y: number; r: number; h: number };
 
 function createScene(): SceneModule {
+  /** The scene's one child of the root; dispose() must take it with it. */
+  let wrap: HTMLDivElement | null = null;
   let canvas: HTMLCanvasElement | null = null;
   let c: CanvasRenderingContext2D | null = null;
   let button: HTMLButtonElement | null = null;
@@ -757,7 +759,7 @@ function createScene(): SceneModule {
 
       tr = sc.t as unknown as (k: string) => string;
 
-      const wrap = document.createElement("div");
+      wrap = document.createElement("div");
       wrap.className = "ring";
 
       // Score above the toy, so it is read before the piece.
@@ -913,10 +915,12 @@ function createScene(): SceneModule {
     dispose() {
       if (tick) unsubscribe(tick);
       tick = null;
-      button?.remove();
-      sideBtn?.remove();
-      scoreEl?.remove();
-      canvas?.remove();
+      // Remove the whole wrapper, not just its children. Leaving the empty
+      // `.ring` behind (it is block-size 100%) meant that coming back from a
+      // project room remounted a second wrapper BELOW the stale one, and the
+      // toy was drawn a full box-height down, over the heading.
+      wrap?.remove();
+      wrap = null;
       canvas = null;
       c = null;
       button = null;
