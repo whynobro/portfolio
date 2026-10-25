@@ -143,8 +143,10 @@ toolpath with the live operation and tool captioned), WERC docking, Ramps
 wave rack-and-pinion, bot alert-to-order (labelled illustrative), then the
 finale wall and the name handing off to the page heading (baseline-aligned).
 Hand-off mock-ups: dawn (default) or night (`?hero=night`, night entrance in
-chrome.css); undecided. The head script gates it: landing route only, once
-per session, never with `?shots=1` or reduced motion; a 26 s fallback
+chrome.css); undecided. **Off for visitors**: the head script plays it only
+with `?intro=1`, on the landing route, never with `?shots=1` or reduced
+motion (turning it on for everyone means restoring the once-per-session
+`sessionStorage` gate); a 26 s fallback
 uncovers the page if the module never runs (raise it if the montage grows).
 Any click, key, scroll or Skip ends it.
 

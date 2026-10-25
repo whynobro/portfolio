@@ -46,9 +46,10 @@
     <meta name="twitter:card" content="summary_large_image" />
     <script>
       // Before first paint: screenshot mode, and whether the opening plays.
-      // It plays only on the landing route, once per browser session, never
-      // in screenshot mode and never with reduced motion. A 26 s fallback timer
-      // uncovers the page even if the intro's module never runs.
+      // The opening is OFF for visitors: it plays only when asked for with
+      // ?intro=1, on the landing route, never in screenshot mode and never
+      // with reduced motion. A 26 s fallback timer uncovers the page even if
+      // the intro's module never runs.
       (function () {
         var el = document.documentElement;
         var q = new URLSearchParams(location.search);
@@ -60,15 +61,14 @@
         try {
           var landing = location.hash === "" || location.hash === "#/";
           var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-          if (!shots && landing && !still && !sessionStorage.getItem("intro")) {
-            sessionStorage.setItem("intro", "1");
+          if (!shots && landing && !still && q.get("intro") === "1") {
             el.dataset.intro = "play";
             setTimeout(function () {
               delete el.dataset.intro;
             }, 26000);
           }
         } catch (e) {
-          /* storage blocked: no intro, the page simply shows */
+          /* matchMedia unavailable: no intro, the page simply shows */
         }
       })();
     </script>
