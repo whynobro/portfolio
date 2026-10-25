@@ -379,51 +379,6 @@ const PROJECTS: Project[] = [
     galleryInPictures: true,
   },
 
-  {
-    slug: "water",
-    titleKey: "proj.water.title",
-    ledeKey: "case.water.lede",
-    hero: { img: "water-site", w: 1400, h: 933, aspect: "frame--landscape", altKey: "alt.water.hero" },
-    specs: [
-      { labelKey: "case.spec.role", valueKey: "case.water.role" },
-      { labelKey: "case.spec.tools", valueKey: "case.water.tools" },
-      { labelKey: "case.spec.scope", valueKey: "case.water.scope" },
-      { labelKey: "case.spec.result", valueKey: "case.water.result", measured: true },
-    ],
-    sections: [
-      { hKey: "case.h.brief", bodyKeys: ["case.water.brief"] },
-      { hKey: "case.h.approach", bodyKeys: ["case.water.approach1", "case.water.approach2"] },
-      { hKey: "case.h.result", bodyKeys: ["case.water.outcome"] },
-    ],
-    gallery: [
-      { img: "water-1", w: 1400, h: 933, aspect: "frame--slide", altKey: "alt.water.map", capKey: "cap.water.map" },
-    ],
-    galleryInPictures: true,
-  },
-
-  {
-    slug: "door",
-    titleKey: "proj.door.title",
-    ledeKey: "case.door.lede",
-    hero: { img: "door-final-cad", w: 740, h: 642, aspect: "frame--slide", altKey: "alt.door.hero" },
-    specs: [
-      { labelKey: "case.spec.role", valueKey: "case.door.role" },
-      { labelKey: "case.spec.tools", valueKey: "case.door.tools" },
-      { labelKey: "case.spec.material", valueKey: "case.door.material" },
-      { labelKey: "case.spec.status", valueKey: "case.door.status" },
-    ],
-    sections: [
-      { hKey: "case.h.brief", bodyKeys: ["case.door.brief"] },
-      { hKey: "case.h.approach", bodyKeys: ["case.door.approach1", "case.door.approach2"] },
-      { hKey: "case.h.status", bodyKeys: ["case.door.outcome"] },
-    ],
-    gallery: [
-      { img: "door-mockup", w: 1050, h: 1400, aspect: "frame--photo", altKey: "alt.door.mockup", capKey: "cap.door.mockup" },
-      { img: "door-first-cad", w: 952, h: 612, aspect: "frame--landscape", altKey: "alt.door.first", capKey: "cap.door.first" },
-      { img: "door-print", w: 1050, h: 1400, aspect: "frame--photo", altKey: "alt.door.print", capKey: "cap.door.print" },
-      { img: "door-installed", w: 720, h: 1280, aspect: "frame--photo", altKey: "alt.door.installed", capKey: "cap.door.installed" },
-    ],
-  },
 ];
 
 const bySlug = new Map(PROJECTS.map((p) => [p.slug, p]));

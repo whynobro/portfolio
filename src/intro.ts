@@ -124,7 +124,7 @@ function stockBox(top: number): Float32Array {
 // The wall's pictures, for the ramps scene and the finale. Resolved at build
 // time so the bundler hashes them; the browser already caches them for the page.
 const IMAGES = import.meta.glob<string>("./assets/img/*.avif", { eager: true, query: "?url", import: "default" });
-const WALL_WORKS = ["werc-still", "putter-hero", "ramps-bank", "wave-inside", "bot-display", "campus-logo", "water-site", "door-final-cad"];
+const WALL_WORKS = ["werc-still", "putter-hero", "ramps-bank", "wave-inside", "bot-display", "campus-logo"];
 /** The Ramps scene opens on a quick mosaic of the range. */
 const RAMPS_MOSAIC = [
   "ramps-studio-set", "ramps-moss", "ramps-eggz", "ramps-collab",
@@ -680,7 +680,7 @@ export function initIntro(): void {
 
   function finale(t: number, a: number, hand: number): void {
     const names = WALL_WORKS;
-    const cols = W > H ? 4 : 2;
+    const cols = W > H ? 3 : 2;
     const rows = Math.ceil(names.length / cols);
     const tw = Math.min((W * 0.8) / cols, 260);
     const th = tw * 0.66;

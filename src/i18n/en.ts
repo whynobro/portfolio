@@ -29,8 +29,6 @@ export const en = {
   "proj.wave.title": "Wave Energy Converter",
   "proj.bot.title": "SMC Trading Bot",
   "proj.campus.title": "Campus Native",
-  "proj.water.title": "Water Distribution System",
-  "proj.door.title": "Doorknob-Inator",
 
   // ---- The project rooms -------------------------------------------------
   "case.eyebrow": "From the collection",
@@ -162,38 +160,6 @@ export const en = {
   "case.campus.outcome":
     "The site is live at campusnative.com and handles the booking and payment path end to end.",
 
-  // Water distribution
-  "case.water.lede":
-    "A gravity-fed water distribution network for a rural community in Nicaragua, routed from the terrain itself.",
-  "case.water.role": "Design and analysis · final presenter",
-  "case.water.tools": "Autodesk CFD · geospatial survey · cost analysis",
-  "case.water.scope": "Cerro de Agua, Nicaragua",
-  "case.water.result": "1 of 5 presenters",
-  "case.water.brief":
-    "Get clean water from a source to a community without a pump, which means the landscape has to do the work.",
-  "case.water.approach1":
-    "The tank site sets everything downstream: too low and the far end of the network has no pressure, too high and the run from the source becomes the problem instead. Siting it came out of the survey rather than a standard layout.",
-  "case.water.approach2":
-    "Pipe routing and diameters were worked from the head available at each branch, with the cost of the pipe treated as part of the design rather than as an afterthought.",
-  "case.water.outcome":
-    "The work was presented to city officials in Cerro de Agua alongside school administration and alumni working in engineering. I was one of five main presenters from a class of forty.",
-
-  // Doorknob-Inator
-  "case.door.lede":
-    "A low-cost lever part that fits over a round door knob and helps people with one arm open the doors in Cal Poly's Red Brick dorms.",
-  "case.door.role": "Design and CAD, team of four · Cal Poly ME 128",
-  "case.door.tools": "Fusion 360 · FDM printing (PLA and TPU)",
-  "case.door.material": "PLA base, TPU head",
-  "case.door.status": "Final print fitted to a dorm knob",
-  "case.door.brief":
-    "A round knob needs grip and wrist torque. Someone with one arm, or with their hands full, struggles to open it, and the Red Brick dorms are full of them.",
-  "case.door.approach1":
-    "A lever multiplies torque, so the brief became: how short can the lever be and still let one arm turn the knob with little force. The design also had to cost little enough to fit on every handle in a building, and look like something a resident would actually leave on the door.",
-  "case.door.approach2":
-    "It went through three generations: a flexible cup mock-up, a TPU design with flexible arms that gripped the knob, and the final PLA base with a TPU head, with each collet sized to the knob and rubber inlays for grip.",
-  "case.door.outcome":
-    "The final print fits a Red Brick knob. Presented to the ME 128 class and instructor.",
-
   // Alt text and captions for the rooms
   "alt.putter.hero": "The finished aluminium putter head on the green",
   "alt.putter.cad": "The finished putter head modelled in CAD, shaded",
@@ -260,19 +226,7 @@ export const en = {
   "cap.campus.guides": "Guides listed at Cal Poly, with the rate each one sets for a tour.",
   "alt.campus.hero": "The Campus Native marketplace, live at campusnative.com",
 
-  "alt.water.hero": "The distribution system on the site survey",
-  "alt.water.map": "The network schematic: source, two tanks, and the same network labelled with pressures",
-  "cap.water.map": "The network, and the same network with the pressure at every node.",
 
-  "alt.door.hero": "The final Doorknob-Inator design in CAD: a black lever clamped around a brass knob",
-  "alt.door.installed": "The printed adapter fitted to a dorm door knob",
-  "cap.door.installed": "The final print, fitted to a Red Brick knob.",
-  "alt.door.print": "The printed final adapter, black PLA base with red TPU grip inserts",
-  "cap.door.print": "The final print: PLA base, TPU head.",
-  "alt.door.first": "The first CAD design: a TPU lever with flexible arms around the knob",
-  "cap.door.first": "Generation two: flexible TPU arms that grip the knob.",
-  "alt.door.mockup": "The first mock-up: a flexible cup taped to a long handle, held against a knob",
-  "cap.door.mockup": "Generation one: a cup and a long handle, to find the lever length.",
 
   // Awards
   "award.capstone.title": "Capstone Finalist: CNC Milled Putter",

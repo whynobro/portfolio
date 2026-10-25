@@ -300,12 +300,14 @@
     margin-block-start: calc(var(--s-3) - var(--s-16));
   }
 }
-/* The six that follow hang three across on a wide screen: smaller than the
- * featured pair, so the wall reads in order of weight, and half the scroll. */
+/* The four that follow hang two by two on a wide screen, on a narrower wall
+ * than the featured pair so the frames come out smaller and the wall reads in
+ * order of weight. Three across would leave the fourth alone on its own row. */
 @media (min-width: 1180px) {
   .works:not(.works--featured) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: var(--s-16) var(--s-8);
+    max-inline-size: 920px;
+    margin-inline: auto;
+    gap: var(--s-16) var(--s-12);
   }
   .works:not(.works--featured) > .work > .label {
     margin-block-start: calc(var(--s-3) - var(--s-16));
