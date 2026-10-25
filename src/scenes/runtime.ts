@@ -40,6 +40,13 @@ async function mount(el: HTMLElement): Promise<void> {
   loading.add(el);
   try {
     const mod = await load();
+    // The view can be hidden (or the room re-rendered) while the module loads.
+    // Mounting anyway left a live scene in a hidden view, holding one of the
+    // four animation slots, with nothing left to dispose it. Screenshot mode
+    // mounts hidden views on purpose, so it is exempt.
+    if (!shotsMode() && (!el.isConnected || el.closest<HTMLElement>("[data-view]")?.hidden)) {
+      return;
+    }
     const scene = mod.default();
 
     const still = shotsMode() || prefersReducedMotion();
@@ -83,22 +90,50 @@ export function initScenes(): void {
     if (box.width > 0 && box.height > 0) scene.resize?.(box.width, box.height);
   };
 
+  // Filled in below outside screenshot mode. A project room builds new scene
+  // elements every time it renders, long after this function ran, so each one
+  // is handed to the observers as it appears: without that, a room's scene
+  // never heard about a resize and drew its old backing store squashed into
+  // the new box.
+  let io: IntersectionObserver | null = null;
+  let ro: ResizeObserver | null = null;
+  const tracked = new WeakSet<HTMLElement>();
+  const track = (el: HTMLElement): void => {
+    if (tracked.has(el)) return;
+    tracked.add(el);
+    io?.observe(el);
+    ro?.observe(el);
+  };
+  const untrack = (el: HTMLElement): void => {
+    io?.unobserve(el);
+    ro?.unobserve(el);
+  };
+
+  // Watches `hidden` AND the views' children. Going from one room straight to
+  // another (address bar, history) re-renders #view-project without ever
+  // hiding it, so watching `hidden` alone left the new room's stage empty.
   const viewObserver = new MutationObserver((records) => {
-    for (const el of [...mounted.keys()]) if (!el.isConnected) unmount(el);
-    for (const rec of records) {
-      const view = rec.target as HTMLElement;
+    for (const el of [...mounted.keys()]) {
+      if (!el.isConnected) {
+        unmount(el);
+        untrack(el);
+      }
+    }
+    const views = new Set(records.map((rec) => rec.target as HTMLElement));
+    for (const view of views) {
       if (view.hidden) {
         // A hidden view's scenes stop animating; they remount when it returns.
         for (const el of view.querySelectorAll<HTMLElement>("[data-scene]")) unmount(el);
         continue;
       }
       for (const el of view.querySelectorAll<HTMLElement>("[data-scene]")) {
+        track(el);
         void mount(el).then(() => remeasure(el));
       }
     }
   });
   for (const view of document.querySelectorAll<HTMLElement>("[data-view]")) {
-    viewObserver.observe(view, { attributes: true, attributeFilter: ["hidden"] });
+    viewObserver.observe(view, { attributes: true, attributeFilter: ["hidden"], childList: true });
   }
 
   // Screenshot mode: mount everything now, no observer, no animation.
@@ -122,7 +157,7 @@ export function initScenes(): void {
   // Asymmetric margins give hysteresis: a scene mounts slightly before it is
   // visible and is not torn down the instant it leaves, so scrolling back and
   // forth across a boundary doesn't thrash mount/dispose.
-  const io = new IntersectionObserver(
+  io = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         const el = entry.target as HTMLElement;
@@ -137,21 +172,20 @@ export function initScenes(): void {
     { rootMargin: "200px 0px 200px 0px" },
   );
 
-  for (const el of nodes) io.observe(el);
-
   // Resize is debounced and observed per container: window.resize misses
-  // container-driven changes and fires on mobile URL-bar collapse.
+  // container-driven changes and fires on mobile URL-bar collapse. Sizes are
+  // collected across the debounce rather than taken from the last callback
+  // alone, which dropped any element that resized only in an earlier one.
   let resizeTimer = 0;
-  const ro = new ResizeObserver((entries) => {
+  const pending = new Map<HTMLElement, DOMRectReadOnly>();
+  ro = new ResizeObserver((entries) => {
+    for (const entry of entries) pending.set(entry.target as HTMLElement, entry.contentRect);
     clearTimeout(resizeTimer);
     resizeTimer = window.setTimeout(() => {
-      for (const entry of entries) {
-        const el = entry.target as HTMLElement;
-        const scene = mounted.get(el);
-        const box = entry.contentRect;
-        scene?.resize?.(box.width, box.height);
-      }
+      for (const [el, box] of pending) mounted.get(el)?.resize?.(box.width, box.height);
+      pending.clear();
     }, 100);
   });
-  for (const el of nodes) ro.observe(el);
+
+  for (const el of nodes) track(el);
 }
