@@ -221,7 +221,7 @@
    * instead of pushing the whole row down. */
   .entrance__intro {
     grid-column: 2;
-    grid-row: 1;
+    grid-row: 1 / span 2;
   }
 }
 
@@ -278,18 +278,32 @@
 }
 
 /*
- * The two playable pieces, side by side under the portrait and in the
- * portrait's own column, so they sit left and the entrance row ends level with
- * the contact button instead of pushing the page down.
+ * The handheld hangs in the portrait's own column, under the portrait, in the
+ * space the longer introduction leaves there. On a phone it follows the
+ * buttons. Larger here than the fixed .playable box: it is the entrance's toy.
  */
-/* The toy's own row at the foot of the home view (moved out of the entrance
- * so they do not sit beside the headline figures). */
-.play-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: end;
-  gap: var(--s-12);
+.entrance__play {
+  display: grid;
+  justify-items: center;
+  margin-block-start: var(--s-4);
+}
+.entrance__play .playable {
+  inline-size: auto;
+  block-size: auto;
+}
+.entrance__play .handheld-tile__ds {
+  width: 228px;
+}
+.entrance__play .handheld-tile__screen {
+  width: 178px;
+}
+@media (min-width: 900px) {
+  .entrance__play {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    margin-block-start: var(--s-12);
+  }
 }
 
 /* ---- Quick facts --------------------------------------------------------- */

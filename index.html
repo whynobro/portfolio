@@ -177,6 +177,30 @@
                 <a class="btn" href="#/contact">Contact</a>
               </div>
             </div>
+            <!-- The one toy, in the space under the portrait. Unframed and
+                 uncaptioned: a toy, not a work, so the aria-label is its only
+                 name for a screen reader. The handheld is a button: the game
+                 opens over the page and its Exit button (or Esc) closes it. -->
+            <div class="entrance__play" id="games">
+              <button
+                type="button"
+                class="playable handheld-tile"
+                data-handheld
+                aria-label="Play Pocket Gallery, a handheld game about these projects"
+              >
+                <span class="handheld-tile__ds" aria-hidden="true">
+                  <span class="handheld-tile__lid">
+                    <span class="handheld-tile__screen"><img src="./src/assets/img/handheld-poster.png" alt="" width="256" height="192" decoding="async" /></span>
+                  </span>
+                  <span class="handheld-tile__hinge"></span>
+                  <span class="handheld-tile__base">
+                    <span class="handheld-tile__pad"></span>
+                    <span class="handheld-tile__press">PRESS A</span>
+                    <span class="handheld-tile__ab"></span>
+                  </span>
+                </span>
+              </button>
+            </div>
           </div>
         </section>
 
@@ -455,40 +479,6 @@
             </a>
 
           </div>
-        </section>
-
-        <!-- ================= OFF THE WALL =================
-             The one toy, at the foot of the home view so it does not sit
-             beside the headline figures. Unframed and uncaptioned: a toy, not
-             a work. -->
-        <section class="page section section--play" aria-labelledby="play-title">
-          <div class="intro intro--small">
-            <span class="eyebrow">Off the wall</span>
-            <h2 class="display display--small" id="play-title">Built for fun</h2>
-          </div>
-            <div class="play-row" id="games">
-              <!-- With no caption the aria-label is the toy's only name for a
-                   screen reader. The handheld is a button: the game opens
-                   over the page and its Exit button (or Esc) closes it. -->
-              <button
-                type="button"
-                class="playable handheld-tile"
-                data-handheld
-                aria-label="Play Pocket Gallery, a handheld game about these projects"
-              >
-                <span class="handheld-tile__ds" aria-hidden="true">
-                  <span class="handheld-tile__lid">
-                    <span class="handheld-tile__screen"><img src="./src/assets/img/handheld-poster.png" alt="" width="256" height="192" decoding="async" /></span>
-                  </span>
-                  <span class="handheld-tile__hinge"></span>
-                  <span class="handheld-tile__base">
-                    <span class="handheld-tile__pad"></span>
-                    <span class="handheld-tile__press">PRESS A</span>
-                    <span class="handheld-tile__ab"></span>
-                  </span>
-                </span>
-              </button>
-            </div>
         </section>
       </div>
 

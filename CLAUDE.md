@@ -149,8 +149,9 @@ was, is in `docs/archive/opening-shelved.md`.
 
 ## The playable piece
 
-One toy, unframed and uncaptioned in "Off the wall" at the foot of the home
-view: a toy, not a work. Its name lives only as an `aria-label`. The ring toss
+One toy, unframed and uncaptioned, under the portrait in the entrance
+(`.entrance__play`, grid row 2 of column 1; after the buttons on a phone): a
+toy, not a work. Its name lives only as an `aria-label`. The ring toss
 was removed at Michael's request (2026-10-25); tic-tac-toe before it.
 
 - **The box is fixed** (`.playable`), never a fraction of the column.
