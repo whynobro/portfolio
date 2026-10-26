@@ -8,12 +8,14 @@ import "./styles/frame.css";
 import "./styles/chrome.css";
 import "./styles/games.css";
 import "./styles/case.css";
+import "./styles/handheld.css";
 import { initRouter } from "./router";
 import { initScenes } from "./scenes/runtime";
 import { initAwards } from "./awards";
 import { initProjects } from "./projects";
 import { initResume } from "./resume";
 import { initIntro } from "./intro";
+import { initHandheld } from "./handheld/tile";
 
 function boot(): void {
   // First, so the opening starts drawing before the page below is built.
@@ -27,6 +29,7 @@ function boot(): void {
   initProjects();
   initRouter();
   initScenes();
+  initHandheld();
   document.documentElement.dataset["booted"] = "1";
 }
 

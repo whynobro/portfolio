@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "shots": "tsx scripts/screenshot.ts",
-    "verify:ttt": "node scripts/verify-tictactoe.mjs"
+    "verify:handheld": "node scripts/verify-handheld.mjs"
   },
   "devDependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",

@@ -9,12 +9,6 @@
 export const en = {
   // Interactive works. The two boards are shown unframed and uncaptioned, so
   // the titles survive only as accessible names for the regions.
-  "game.ttt.status.thinking": "Thinking…",
-  "game.ttt.status.yourTurn": "Your move",
-  "game.ttt.status.draw": "Draw: the best result available",
-  "game.ttt.status.aiWins": "Michael wins",
-  "game.ttt.status.demo": "Playing itself. Take a square to interrupt",
-  "game.ttt.reset": "New game",
   "game.ring.button": "Press to pump",
   "game.ring.score": "Score",
   "game.ring.side": "Side jets",

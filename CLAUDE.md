@@ -42,15 +42,17 @@ fix history go in `docs/`.
 - **Gilt (`--gilt`) is the accent; `--measured` (oxblood) marks measured
   results and nothing else.** A model prediction or a status is NOT measured:
   the WERC room uses a `Status` row with no `measured` flag. The
-  one sanctioned colour exception is the tic-tac-toe board (red/green marks).
+  one sanctioned colour exception is Pocket Gallery's pixel art (its own palette).
 - **WERC figures are model predictions until the bench is built and tested.**
   Every place that quotes 1 kW / 87% / 25 W / 78% says "model" or "target";
   the scene's readout carries "MODEL VALUES · NOT TO SCALE". Full scale: 1 kW
   across 100 mm (75–150), 80% required. Bench: 25 W across 25 mm, 70% required.
 - **Reduced motion suppresses autonomous motion only.** Every scene paints a
   full static frame via `renderStatic()` and stays interactive on input.
-- **Claims on labels must be true and, where testable, tested.** "Unbeatable"
-  tic-tac-toe is backed by `npm run verify:ttt` (exhaustive play).
+- **Claims on labels must be true and, where testable, tested.** Every figure a
+  Pocket Gallery battle move quotes must appear in `src/i18n/en.ts`:
+  `npm run verify:handheld` (in CI) checks each one. Change a figure on the
+  site, change it in `src/handheld/data.ts` too.
 - **Every room must stay reachable on a phone.** `.masthead__inner` and
   `.masthead__nav` both wrap; never fix an overflow by removing a route.
 - **The bot's dashboard is a live real-money display**: no capture may publish
@@ -160,6 +162,15 @@ Unframed and uncaptioned under the portrait: toys, not works. Their names live
 only as `aria-label`s.
 
 - **The box is fixed** (`.playable`), never a fraction of the column.
+- **Pocket Gallery** (`src/handheld/`): a DS-style Pokemon-like game, ORIGINAL
+  art only (never Nintendo sprites, names, ROMs or screenshots in the repo).
+  The wall tile is a `button[data-handheld]` with a poster; the game is a lazy
+  chunk (~60 KB gz) opened in a modal `<dialog>`, closed by Exit or Esc, and
+  saved to localStorage. Six trainers = the six works on the wall; adding or
+  removing a work means `data.ts`, `art/map.ts` and the art. Read
+  `docs/handheld.md` before changing it. Verify:
+  `npm run verify:handheld`, then with the dev server up
+  `node scripts/playtest-handheld.mjs` (plays it end to end, asserts results).
 - **Ring toss sizes from the CANVAS, not the root**, and its forces scale with
   tank height. Pump and jets are drawn on the toy; the `.ring__pump-a11y`
   buttons exist for keyboard and screen readers. `__ring.state()` exposes the
@@ -216,7 +227,8 @@ src/router.ts                  view switching, focus management, titles
 src/awards.ts                  awards room, ranked by weight
 src/projects.ts                the six project rooms, rendered from data
 src/resume.ts                  points the Resume and CV buttons at the PDFs
-src/scenes/{tictactoe,ringtoss,putter,werc}/   SceneModule implementations
+src/scenes/{ringtoss,putter,werc}/   SceneModule implementations
+src/handheld/                  Pocket Gallery: game.ts engine, data.ts copy, art/*
 src/styles/                    tokens, base, layout (incl. About .cv), frame, chrome, games, case
 public/general/index.html      redirect for old /general/ links
 scripts/prep-images.mjs        manifest-driven raster -> AVIF + JPEG fallback
@@ -227,7 +239,7 @@ scripts/make-cv-en.mjs         the three CVs (US is the site's CV button)
 scripts/make-master.mjs        the master content pool PDF (never sent)
 scripts/portfolio-link.mjs     the href every document's portfolio link uses
 scripts/make-bot-poster.mjs    draws the bot poster from real source
-scripts/verify-tictactoe.mjs   exhaustive proof the engine cannot lose
+scripts/verify-handheld.mjs    game figures vs en.ts, sprite grids, map reachability
 scripts/make-icons.mjs         favicon set + link-preview card
 docs/resume-inventory.md       every resume-able fact; SELECT from it
 docs/archive/                  HWA-era CLAUDE.md and German terminology
@@ -283,7 +295,9 @@ Current as of 2026-10-21; the master resume and transcript win any conflict.
 npm run dev          # vite dev server on :5173
 npm run build        # tsc --noEmit && vite build -> dist/
 npm run shots        # screenshot loop (dev server must be running)
-npm run verify:ttt   # prove the tic-tac-toe engine never loses
+npm run verify:handheld   # Pocket Gallery figures, art and map
+node scripts/playtest-handheld.mjs [url]   # play the game end to end (dev server running)
+node scripts/make-handheld-poster.mjs [url] # redraw the wall tile's poster
 node scripts/prep-images.mjs [name]   # whole manifest, or one entry
 node scripts/make-cv-onepage.mjs      # one-page resume -> copy to src/assets/docs/resume.pdf
 node scripts/make-cv-en.mjs --only=us # CV -> copy to src/assets/docs/cv.pdf

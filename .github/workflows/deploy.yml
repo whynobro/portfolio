@@ -32,6 +32,11 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      # Every figure the handheld game quotes must be one the site states, and
+      # its art and map must be well formed.
+      - name: Verify Pocket Gallery
+        run: node scripts/verify-handheld.mjs
+
       - name: Build (site root)
         run: npx vite build
 

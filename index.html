@@ -504,14 +504,26 @@
           </div>
             <div class="play-row" id="games">
               <!-- With no captions these are the only names a screen reader has
-                   for the two boards. -->
-              <div
-                class="playable"
-                data-scene="tictactoe"
-                role="group"
-               
-                aria-label="Unbeatable Tic-Tac-Toe"
-              ></div>
+                   for the two toys. The handheld is a button: the game opens
+                   over the page and its Exit button (or Esc) closes it. -->
+              <button
+                type="button"
+                class="playable handheld-tile"
+                data-handheld
+                aria-label="Play Pocket Gallery, a handheld game about these projects"
+              >
+                <span class="handheld-tile__ds" aria-hidden="true">
+                  <span class="handheld-tile__lid">
+                    <span class="handheld-tile__screen"><img src="./src/assets/img/handheld-poster.png" alt="" width="256" height="192" decoding="async" /></span>
+                  </span>
+                  <span class="handheld-tile__hinge"></span>
+                  <span class="handheld-tile__base">
+                    <span class="handheld-tile__pad"></span>
+                    <span class="handheld-tile__press">PRESS A</span>
+                    <span class="handheld-tile__ab"></span>
+                  </span>
+                </span>
+              </button>
               <!-- The ring toss and its nudge share a wrapper so the hint can be
                    positioned against the TOY rather than against the whole row,
                    and so it never widens the row and pushes the boards apart. -->
