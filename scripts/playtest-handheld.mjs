@@ -138,6 +138,80 @@ async function winBattle(page, id, shots) {
   await page.close();
 }
 
+// ---- Regressions from review: B at a choice, keyboard on the mirror, saves, input ----
+{
+  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  page.on("pageerror", (e) => errors.push("regress: " + e.message));
+  // A stale or tampered save: right ids, wrong slots, absurd coins.
+  await page.goto(url);
+  await page.evaluate(() =>
+    localStorage.setItem("pocket-gallery.v1", JSON.stringify({ v: 1, coins: 1e999, owned: ["tee", "cap", "wrench"], equip: { hat: "tee", outfit: "cap", tool: "cap" }, met: [], beaten: [], inspected: [] })),
+  );
+  await open(page);
+  await until(page, (s) => s.mode === "walk" && !s.dialog);
+  let s = await state(page);
+  check("tampered save: loads with safe equipment", s.equip.hat === "cap" && s.equip.outfit === "tee" && s.equip.tool === "none" && s.coins === 0, JSON.stringify({ e: s.equip, c: s.coins }));
+
+  // B at "Leave the gallery?" must STAY.
+  await page.keyboard.down("ArrowDown");
+  await page.waitForFunction(() => window.__pocket.state().choice !== null || window.__pocket.state().dialog !== null, null, { timeout: 8000 }).catch(() => {});
+  await page.keyboard.up("ArrowDown");
+  s = await until(page, (st) => st.choice !== null, { limit: 8000 });
+  await page.keyboard.press("x");
+  await sleep(page, 600);
+  s = await state(page);
+  check("B at the leave prompt stays in the game", (await page.evaluate(() => document.querySelector("dialog.hh")?.open)) && s.player.y < 17, JSON.stringify(s.player));
+  await until(page, (st) => st.mode === "walk" && !st.dialog);
+
+  // Two activations in one frame start one battle.
+  await page.evaluate(() => {
+    window.__pocket.activate("work-cnc");
+    window.__pocket.activate("work-ramps");
+  });
+  s = await until(page, (st) => st.menu);
+  const head = await page.evaluate(() => [...document.querySelectorAll("[data-mirror] button")].map((b) => b.textContent).join("|"));
+  check("double tap starts one battle", head.includes("TWO OPS") && !head.includes("REVENUE"), head.slice(0, 80));
+
+  // Screen-reader mirror: activating a move keeps focus in the mirror, and Z still advances.
+  await page.locator('[data-mirror] button[data-key="move-0"]').focus();
+  await page.keyboard.press("Enter");
+  await sleep(page, 300);
+  const inMirror = await page.evaluate(() => !!document.activeElement?.closest("[data-mirror]"));
+  check("mirror keeps focus after a move", inMirror);
+  s = await until(page, (st) => st.menu, { limit: 20000 });
+  check("Z advances text from the mirror", s.menu);
+
+  // Enter on the on-screen B button runs, not asks.
+  await page.locator('[data-btn="B"]').focus();
+  await page.keyboard.press("Enter");
+  await sleep(page, 400);
+  s = await state(page);
+  check("Enter on B runs away", (s.dialog ?? "").includes("got away"), s.dialog ?? "no dialog");
+  await until(page, (st) => st.scene === "world" && st.mode === "walk" && !st.dialog);
+  await page.close();
+}
+
+// ---- Layout: desktop, short laptop, phone landscape --------------------------------
+for (const vp of [{ width: 1366, height: 650 }, { width: 1280, height: 900 }, { width: 844, height: 390 }, { width: 390, height: 844 }]) {
+  const page = await browser.newPage({ viewport: vp });
+  await open(page);
+  await sleep(page, 400);
+  const m = await page.evaluate(() => {
+    const d = document.querySelector("dialog.hh");
+    const top = document.querySelector(".hh__screen--top").getBoundingClientRect();
+    const bot = document.querySelector(".hh__screen--bottom").getBoundingClientRect();
+    const ds = document.querySelector(".hh__ds").getBoundingClientRect();
+    const inside = (sel) => { const r = document.querySelector(sel).getBoundingClientRect(); return r.left >= ds.left - 0.5 && r.right <= ds.right + 0.5; };
+    return { sx: d.scrollWidth - d.clientWidth, top: Math.round(top.width), bot: Math.round(bot.width), pad: inside(".hh__dpad"), btns: inside(".hh__btns") };
+  });
+  const name = `${vp.width}x${vp.height}`;
+  await page.screenshot({ path: `${out}/layout-${name}.png` });
+  check(`layout ${name}: no sideways scroll`, m.sx <= 0, `overflow ${m.sx}px`);
+  check(`layout ${name}: screens match and are usable`, m.top === m.bot && m.top >= 180, `top ${m.top} bottom ${m.bot}`);
+  check(`layout ${name}: controls inside the shell`, m.pad && m.btns);
+  await page.close();
+}
+
 // ---- Reduced motion -------------------------------------------------------------
 {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 }, reducedMotion: "reduce" });

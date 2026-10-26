@@ -103,7 +103,7 @@ html.hh-open {
   overflow: hidden;
 }
 .hh {
-  --sw: min(512px, calc(100vw - 280px), calc((100dvh - 210px) / 1.5));
+  --sw: min(512px, calc(100vw - 330px), calc((100dvh - 210px) / 1.5));
   width: 100vw;
   max-width: 100vw;
   height: 100dvh;
@@ -175,7 +175,7 @@ html.hh-open {
 .hh__ds {
   align-self: center;
   display: grid;
-  width: calc(var(--sw) + 232px);
+  width: calc(var(--sw) + 290px);
   max-width: 100%;
   filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.5));
 }
@@ -294,7 +294,7 @@ html.hh-open {
 
 @media (max-width: 819px) {
   .hh {
-    --sw: min(512px, calc(100vw - 48px), calc((100dvh - 330px) / 1.5));
+    --sw: min(512px, calc(100vw - 64px), calc((100dvh - 330px) / 1.5));
   }
   .hh__keys {
     display: none;
@@ -309,6 +309,37 @@ html.hh-open {
   }
   .hh__base > .hh__bezel {
     justify-self: center;
+  }
+}
+/* A phone on its side has no height for a stacked handheld: open it flat,
+ * top screen beside the bottom one, controls flanking the bottom screen. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .hh {
+    --sw: min(512px, calc((100vw - 420px) / 2), calc((100dvh - 120px) / 0.75));
+  }
+  .hh__keys {
+    display: none;
+  }
+  .hh__ds {
+    width: auto;
+    grid-template-columns: auto auto;
+    align-items: stretch;
+    column-gap: 10px;
+  }
+  .hh__hinge,
+  .hh__label {
+    display: none;
+  }
+  .hh__lid,
+  .hh__base {
+    padding: 10px 12px;
+    border-radius: 16px;
+    align-content: center;
+  }
+  .hh__base {
+    grid-template-columns: auto auto auto;
+    grid-template-areas: "pad scr btn";
+    column-gap: 12px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

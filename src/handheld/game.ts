@@ -190,7 +190,12 @@ export class Game {
 
   // ---- Input ------------------------------------------------------------------
 
-  press(b: Button): void {
+  /**
+   * A or B. `fromTop` is a tap on the top screen: it advances text and talks,
+   * but never presses whatever is focused on the bottom screen, or one tap too
+   * many in the shop would put your purchase straight back.
+   */
+  press(b: Button, fromTop = false): void {
     if (this.dialog) {
       this.advance();
       return;
@@ -198,9 +203,11 @@ export class Game {
     if (this.choice) {
       const c = this.choice;
       this.choice = null;
-      c.res(b === "A" ? c.sel : c.options.length - 1);
+      // B is "back out": the first option, which every choice makes the safe one.
+      c.res(b === "A" ? c.sel : 0);
       return;
     }
+    if (fromTop && this.bottom !== "menu") return;
     if (this.bottom === "battle" && this.battle?.menu) {
       if (b === "A") this.regions[this.focus]?.act();
       else void this.run();
@@ -423,7 +430,8 @@ export class Game {
   private async spotted(n: Actor, dist: number): Promise<void> {
     this.mode = "script";
     n.emote = EMOTE_BANG;
-    await this.wait(this.o.reducedMotion ? 300 : 700);
+    // Not motion: the "!" must be seen even with reduced motion on.
+    await this.tween(this.o.reducedMotion ? 400 : 700, () => {}, true);
     n.emote = null;
     for (let i = 1; i < dist; i++) await this.step(n, n.dir);
     this.player.dir = OPP[n.dir];
@@ -505,8 +513,8 @@ export class Game {
     return this.tween(ms, () => {});
   }
 
-  private tween(ms: number, fn: (p: number) => void): Promise<void> {
-    if (this.o.reducedMotion && ms > 0) {
+  private tween(ms: number, fn: (p: number) => void, always = false): Promise<void> {
+    if (this.o.reducedMotion && ms > 0 && !always) {
       fn(1);
       return Promise.resolve();
     }
@@ -1212,7 +1220,6 @@ export class Game {
   }
 
   private bottomMenu(g: CanvasRenderingContext2D, regions: Region[]): void {
-    const inBattleFlow = this.mode === "script" || this.scene !== "world";
     const tabs: ["works" | "wardrobe", string][] = [["works", "WORKS"], ["wardrobe", "WARDROBE"]];
     tabs.forEach(([id, label], i) => {
       this.button(g, regions, { key: `tab-${id}`, x: 4 + i * 82, y: 2, w: 78, h: 18, act: () => (this.tab = id) }, label, this.tab === id ? ACCENT : UI_PANEL);
@@ -1241,7 +1248,8 @@ export class Game {
           label: `${p.name}${beaten ? ", seen" : met ? ", met" : ""}: battle now`,
           x, y, w: 80, h: 80,
           act: () => {
-            if (inBattleFlow) return;
+            // Read at activation, not at draw: two taps in one frame must not start two battles.
+            if (this.mode !== "walk" || this.scene !== "world" || this.dialog) return;
             void this.script(this.fight(p, beaten));
           },
         });
@@ -1259,11 +1267,13 @@ export class Game {
       drawText(g, FONT_SMALL, label, 84, y + 2, UI_DIM);
       const owned = ITEMS.filter((it) => it.kind === kind && this.owns(it.id));
       owned.forEach((it, i) => {
-        const x = 84 + i * 28;
+        // Seven hats must fit: 84 + 6 * 24 + 22 = 250, inside the 256 px screen.
+        const x = 84 + i * 24;
         const on = this.equipped(it);
-        panel(g, x, y + 10, 26, 26, on ? ACCENT : UI_PANEL, "#0f1519", on ? ACCENT_HI : UI_LINE);
-        blit(g, bake([ICONS[it.id]]), x + 5, y + 15);
-        regions.push({ key: `wear-${it.id}`, label: `${on ? "Take off" : "Wear"} ${it.name}`, x, y: y + 10, w: 26, h: 26, act: () => this.equip(it) });
+        panel(g, x, y + 10, 22, 22, on ? ACCENT : UI_PANEL, "#0f1519", on ? ACCENT_HI : UI_LINE);
+        blit(g, bake([ICONS[it.id]]), x + 3, y + 13);
+        const label = it.kind === "tool" ? `${on ? "Put away" : "Use"} ${it.name}` : `${on ? "Wearing" : "Wear"} ${it.name}`;
+        regions.push({ key: `wear-${it.id}`, label, x, y: y + 10, w: 22, h: 22, act: () => this.equip(it) });
       });
       if (owned.length === 0) drawText(g, FONT_SMALL, "NONE YET", 84, y + 20, "#6d8592");
     });

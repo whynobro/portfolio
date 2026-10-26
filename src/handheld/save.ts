@@ -1,5 +1,5 @@
 import type { HatId, OutfitId, ProjectId, ToolId } from "./art/types";
-import { PROJECT_IDS } from "./art/types";
+import { HAT_IDS, OUTFIT_IDS, PROJECT_IDS, TOOL_IDS } from "./art/types";
 import { ITEMS } from "./data";
 
 /**
@@ -40,13 +40,14 @@ export function loadSave(): Save {
     const raw = localStorage.getItem(KEY);
     if (!raw) return s;
     const d = JSON.parse(raw) as Partial<Save>;
-    if (typeof d.coins === "number" && d.coins >= 0) s.coins = Math.floor(d.coins);
+    if (typeof d.coins === "number" && Number.isFinite(d.coins) && d.coins >= 0) s.coins = Math.min(999999, Math.floor(d.coins));
     if (Array.isArray(d.owned)) s.owned = [...new Set([...s.owned, ...d.owned.filter((x) => ITEMS.some((i) => i.id === x))])];
     if (d.equip) {
-      const owns = (id: string) => s.owned.includes(id);
-      if (d.equip.hat && owns(d.equip.hat)) s.equip.hat = d.equip.hat;
-      if (d.equip.outfit && owns(d.equip.outfit)) s.equip.outfit = d.equip.outfit;
-      if (d.equip.tool && (d.equip.tool === "none" || owns(d.equip.tool))) s.equip.tool = d.equip.tool;
+      // Owned AND the right kind: a hat id in the outfit slot would crash the renderer.
+      const owns = (id: unknown, ids: readonly string[]) => typeof id === "string" && ids.includes(id) && s.owned.includes(id);
+      if (owns(d.equip.hat, HAT_IDS)) s.equip.hat = d.equip.hat as HatId;
+      if (owns(d.equip.outfit, OUTFIT_IDS)) s.equip.outfit = d.equip.outfit as OutfitId;
+      if (d.equip.tool === "none" || owns(d.equip.tool, TOOL_IDS)) s.equip.tool = d.equip.tool as ToolId;
     }
     if (Array.isArray(d.met)) s.met = d.met.filter(isProject);
     if (Array.isArray(d.beaten)) s.beaten = d.beaten.filter(isProject);

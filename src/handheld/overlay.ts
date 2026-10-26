@@ -67,9 +67,8 @@ function wire(el: HTMLDialogElement, g: Game): void {
   el.addEventListener("keydown", (e) => {
     // Enter and Space on a real button (Exit, the screen-reader mirror) do
     // what that button does; every other key still plays the game.
-    const onButton = (e.target as HTMLElement).closest("[data-exit], [data-mirror]");
+    const onButton = (e.target as HTMLElement).closest("[data-exit], [data-mirror], [data-btn], [data-dir]");
     if (onButton && (e.key === "Enter" || e.key === " ")) return;
-    if ((e.target as HTMLElement).closest("[data-mirror]")) return;
     const dir = KEYS[e.key];
     if (dir) {
       e.preventDefault();
@@ -121,7 +120,7 @@ function wire(el: HTMLDialogElement, g: Game): void {
   const top = el.querySelector<HTMLCanvasElement>(".hh__screen--top");
   top?.addEventListener("pointerdown", (e) => {
     e.preventDefault();
-    g.press("A");
+    g.press("A", true);
   });
   const bottom = el.querySelector<HTMLCanvasElement>(".hh__screen--bottom");
   bottom?.addEventListener("pointerdown", (e) => {
@@ -134,13 +133,25 @@ function wire(el: HTMLDialogElement, g: Game): void {
 function mirrorRegions(regions: Region[]): void {
   const m = dlg?.querySelector<HTMLElement>("[data-mirror]");
   if (!m) return;
+  // Rebuilding removes the button that was just pressed; keep focus on the
+  // same region (or the same position) so a keyboard user is not dropped on <body>.
+  const active = document.activeElement;
+  const had = active instanceof HTMLElement && m.contains(active) ? active : null;
+  const hadKey = had?.dataset["key"];
+  const hadIndex = had ? Array.from(m.children).indexOf(had) : -1;
   m.textContent = "";
   for (const r of regions) {
     const b = document.createElement("button");
     b.type = "button";
+    b.dataset["key"] = r.key;
     b.textContent = r.label;
     b.addEventListener("click", () => game?.activate(r.key));
     m.append(b);
+  }
+  if (had) {
+    const same = Array.from(m.querySelectorAll<HTMLButtonElement>("button")).find((b) => b.dataset["key"] === hadKey);
+    const next = same ?? (m.children[Math.min(hadIndex, m.children.length - 1)] as HTMLElement | undefined);
+    (next ?? dlg)?.focus();
   }
 }
 
@@ -148,8 +159,15 @@ function startLoop(): void {
   if (tick || !game) return;
   const g = game;
   tick = (dt: number) => {
-    g.tick(dt);
-    g.draw();
+    // The shared loop drives every scene on the page: a throw here would stop
+    // the putter and the ring toss too. Log once, close the game, keep the page.
+    try {
+      g.tick(dt);
+      g.draw();
+    } catch (err) {
+      console.error("Pocket Gallery stopped", err);
+      closeHandheld();
+    }
   };
   if (!subscribe(tick)) {
     // The shared loop is full (four live scenes): the game owns the screen
