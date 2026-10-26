@@ -14,12 +14,9 @@ import { initScenes } from "./scenes/runtime";
 import { initAwards } from "./awards";
 import { initProjects } from "./projects";
 import { initResume } from "./resume";
-import { initIntro } from "./intro";
 import { initHandheld } from "./handheld/tile";
 
 function boot(): void {
-  // First, so the opening starts drawing before the page below is built.
-  initIntro();
   initAwards();
   // The document buttons are in the static markup, so this does not care
   // about the router.

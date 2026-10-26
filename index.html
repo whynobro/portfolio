@@ -45,54 +45,14 @@
     />
     <meta name="twitter:card" content="summary_large_image" />
     <script>
-      // Before first paint: screenshot mode, and whether the opening plays.
-      // It plays only on the landing route, once per browser session, never
-      // in screenshot mode and never with reduced motion. A 26 s fallback timer
-      // uncovers the page even if the intro's module never runs.
-      (function () {
-        var el = document.documentElement;
-        var q = new URLSearchParams(location.search);
-        var shots = q.get("shots") === "1";
-        if (shots) el.dataset.shots = "1";
-        // Hand-off mock-up being decided: ?hero=night dresses the entrance as
-        // night so the intro lifts onto the same sky. Default: dawn.
-        if (q.get("hero") === "night") el.dataset.hero = "night";
-        try {
-          var landing = location.hash === "" || location.hash === "#/";
-          var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-          if (!shots && landing && !still && !sessionStorage.getItem("intro")) {
-            sessionStorage.setItem("intro", "1");
-            el.dataset.intro = "play";
-            setTimeout(function () {
-              delete el.dataset.intro;
-            }, 26000);
-          }
-        } catch (e) {
-          /* storage blocked: no intro, the page simply shows */
-        }
-      })();
-    </script>
-    <style>
-      /* Inline so the cover is up before the stylesheet loads. */
-      #intro { display: none; }
-      html[data-intro="play"] { overflow: hidden; }
-      html[data-intro="play"] #intro {
-        display: block; position: fixed; inset: 0; z-index: 1000; background: #04060b;
-        transition: opacity 0.45s ease;
+      // Before first paint: screenshot mode.
+      if (new URLSearchParams(location.search).get("shots") === "1") {
+        document.documentElement.dataset.shots = "1";
       }
-      #intro.intro--out { opacity: 0; pointer-events: none; }
-    </style>
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-
-    <!-- The opening (src/intro.ts): the putter from drawing to part under a
-         night sky. Shown only when the head script set data-intro="play". -->
-    <div id="intro">
-      <canvas aria-hidden="true"></canvas>
-      <p class="intro__label mono" aria-hidden="true"></p>
-      <button class="intro__skip" type="button">Skip intro</button>
-    </div>
 
     <header class="masthead">
       <div class="page masthead__inner">
