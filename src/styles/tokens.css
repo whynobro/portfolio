@@ -90,6 +90,11 @@
   --gilt-hi: #6fc4de;
   --gilt: #2596be;
   --gilt-lo: #17698a;
+  /* The accent's complement (hue 197 -> 22), for the LinkedIn button and
+   * nothing else. Copper, not oxblood: --measured stays unmistakable. White
+   * text on it is 5.2:1. */
+  --gilt-comp: #af521d;
+  --gilt-comp-lo: #8e4115;
 
 
   /* ---- Caption plate --------------------------------------------------- */

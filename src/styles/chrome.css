@@ -282,7 +282,7 @@
  * portrait's own column, so they sit left and the entrance row ends level with
  * the contact button instead of pushing the page down.
  */
-/* The toys' own row at the foot of the home view (moved out of the entrance
+/* The toy's own row at the foot of the home view (moved out of the entrance
  * so they do not sit beside the headline figures). */
 .play-row {
   display: flex;
@@ -370,14 +370,26 @@
   background: var(--ink);
   color: var(--wall);
 }
+/* White text from the start, on the deep stop: white on the bright cyan is
+ * only 3.4:1, under AA at this size; on --gilt-lo it is 6.1:1. */
 .btn--gilt {
-  border-color: var(--gilt);
-  background: var(--gilt);
-  color: var(--plate);
+  border-color: var(--gilt-lo);
+  background: var(--gilt-lo);
+  color: #fff;
 }
 .btn--gilt:hover {
-  background: var(--gilt-lo);
-  border-color: var(--gilt-lo);
+  background: #0f4f69;
+  border-color: #0f4f69;
+  color: #fff;
+}
+.btn--linkedin {
+  border-color: var(--gilt-comp);
+  background: var(--gilt-comp);
+  color: #fff;
+}
+.btn--linkedin:hover {
+  background: var(--gilt-comp-lo);
+  border-color: var(--gilt-comp-lo);
   color: #fff;
 }
 
@@ -528,7 +540,7 @@ html[data-hero="night"] .facts__label {
 html[data-hero="night"] .facts {
   border-color: rgba(237, 230, 216, 0.2);
 }
-html[data-hero="night"] #view-home > .section:first-child .btn:not(.btn--gilt) {
+html[data-hero="night"] #view-home > .section:first-child .btn:not(.btn--gilt):not(.btn--linkedin) {
   color: #fff;
   border-color: rgba(255, 255, 255, 0.55);
 }

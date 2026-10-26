@@ -9,7 +9,6 @@ import type { SceneFactory } from "./types";
  * saves CPU even when it no longer saves bytes.
  */
 export const REGISTRY: Record<string, () => Promise<{ default: SceneFactory }>> = {
-  ringtoss: () => import("./ringtoss/index"),
   putter: () => import("./putter/index"),
   werc: () => import("./werc/index"),
 };

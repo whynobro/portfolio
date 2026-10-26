@@ -15,7 +15,7 @@
  *
  * Print-specific handling that matters:
  *   - `?shots=1` force-mounts the canvas scenes and paints a static frame, so
- *     the toys appear instead of two empty boxes.
+ *     the live frames appear instead of empty boxes.
  *   - Lazy images are scrolled into view first; a print pass does NOT trigger
  *     `loading="lazy"` on its own and the plates would come out blank.
  *   - The masthead, footer and language toggle are hidden: they are navigation
@@ -87,7 +87,7 @@ const PRINT_CSS = `
  * The cover.
  *
  * Its job is to make the LIVE SITE the obvious next click: the pages that
- * follow are a printed record of an interactive portfolio, and the two toys and
+ * follow are a printed record of an interactive portfolio, and the handheld game and
  * the turning putter do not survive being flattened. The URL is stated twice,
  * once as a heading and once as a real PDF link annotation, because a reader
  * with the file open on a laptop will click it and a reader holding a printout
@@ -100,7 +100,7 @@ const COVER = {
     role: "Mechanical Engineering · Cal Poly San Luis Obispo",
     lead: "This document is a printed record of an interactive portfolio.",
     cta: "The live version is at",
-    note: "Two of the pieces are playable and one turns in 3D; none of that survives print. Everything else, the photographs, the drawings and the figures, is reproduced here in full.",
+    note: "One piece is a playable handheld game and one turns in 3D; neither survives print. Everything else, the photographs, the drawings and the figures, is reproduced here in full.",
     contents: "Contents",
     rooms: [
       "CNC-milled putter",

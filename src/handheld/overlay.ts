@@ -160,7 +160,7 @@ function startLoop(): void {
   const g = game;
   tick = (dt: number) => {
     // The shared loop drives every scene on the page: a throw here would stop
-    // the putter and the ring toss too. Log once, close the game, keep the page.
+    // the putter and the charger too. Log once, close the game, keep the page.
     try {
       g.tick(dt);
       g.draw();

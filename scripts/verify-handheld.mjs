@@ -38,7 +38,7 @@ const enDigits = en.replace(/,(?=\d{3})/g, "");
 const { PROJECTS } = await load("src/handheld/data.ts");
 let figures = 0;
 for (const p of PROJECTS) {
-  for (const m of p.moves) {
+  for (const m of [...p.moves, ...(p.counters ?? []).map((c) => ({ name: c.name, lines: [c.line] }))]) {
     for (const line of m.lines) {
       for (const raw of line.match(/\d[\d,.]*\d|\d/g) ?? []) {
         const n = raw.replace(/,(?=\d{3})/g, "").replace(/\.$/, "");

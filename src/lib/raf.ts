@@ -14,9 +14,9 @@ let frame = 0;
 let last = 0;
 
 /**
- * Hard cap on simultaneously animating scenes. Four: the two toys at the
- * entrance and the two live frames on the wall (the turning putter and the
- * charger) can all be on screen together.
+ * Hard cap on simultaneously animating scenes. Four: the handheld game (while
+ * its dialog is open), the two live frames on the wall (the turning putter and the
+ * charger) and one spare.
  */
 const MAX_ACTIVE = 4;
 

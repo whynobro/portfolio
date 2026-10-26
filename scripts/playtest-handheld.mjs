@@ -48,11 +48,17 @@ async function until(page, done, { act, limit = 60000 } = {}) {
   }
 }
 
+let lowestHp = 1;
+let zeroHp = false;
 async function winBattle(page, id, shots) {
   await page.evaluate((k) => window.__pocket.activate(k), `work-${id}`);
   let moves = 0;
   await until(page, (s) => s.scene === "world" && s.mode === "walk" && !s.dialog, {
     act: async (s) => {
+      if (s.myHp !== null) {
+        lowestHp = Math.min(lowestHp, s.myHp);
+        if (s.myHp <= 0) zeroHp = true;
+      }
       if (!s.menu) return false;
       await page.evaluate((k) => window.__pocket.activate(k), `move-${moves}`);
       if (shots && moves === 0) {
@@ -90,6 +96,8 @@ async function winBattle(page, id, shots) {
   check("battle: all four moves asked", moves === 4, `moves=${moves}`);
   check("battle: win pays 100 coins", s.coins === 100, `coins=${s.coins}`);
   check("battle: work marked seen", s.beaten.includes("cnc"));
+  check("battle: the work hits back (your HP drops)", lowestHp < 0.9, `lowest ${lowestHp}`);
+  check("battle: your HP never reaches zero", !zeroHp && lowestHp > 0, `lowest ${lowestHp}`);
   await page.screenshot({ path: `${out}/3-after-battle.png` });
 
   // Walk to the gift-shop counter: left along the entrance row, then face up.
@@ -180,6 +188,24 @@ async function winBattle(page, id, shots) {
   check("mirror keeps focus after a move", inMirror);
   s = await until(page, (st) => st.menu, { limit: 20000 });
   check("Z advances text from the mirror", s.menu);
+
+  // B twice, mid-animation, gets you out of a battle you just started.
+  await until(page, (st) => st.menu, { limit: 20000 });
+  await page.keyboard.press("x");
+  await until(page, (st) => st.scene === "world" && st.mode === "walk" && !st.dialog, { limit: 20000 });
+  await page.evaluate(() => window.__pocket.activate("work-wave"));
+  await page.waitForFunction(() => window.__pocket.state().scene === "battle", null, { timeout: 8000 });
+  await sleep(page, 400);
+  await page.keyboard.press("x");
+  await sleep(page, 150);
+  await page.keyboard.press("x");
+  const t0 = Date.now();
+  await page.waitForFunction(() => { const st = window.__pocket.state(); return st.scene === "world" && st.mode === "walk"; }, null, { timeout: 15000 }).catch(() => {});
+  s = await state(page);
+  check("B twice in the intro runs back to the room", s.scene === "world" && !s.beaten.includes("wave"), `${s.scene} after ${Date.now() - t0} ms`);
+  await until(page, (st) => st.mode === "walk" && !st.dialog);
+  await page.evaluate(() => window.__pocket.activate("work-cnc"));
+  await until(page, (st) => st.menu);
 
   // Enter on the on-screen B button runs, not asks.
   await page.locator('[data-btn="B"]').focus();

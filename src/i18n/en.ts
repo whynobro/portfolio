@@ -7,12 +7,6 @@
  * docs/resume-inventory.md before changing one.
  */
 export const en = {
-  // Interactive works. The two boards are shown unframed and uncaptioned, so
-  // the titles survive only as accessible names for the regions.
-  "game.ring.button": "Press to pump",
-  "game.ring.score": "Score",
-  "game.ring.side": "Side jets",
-
   // {n} and {total} are substituted in src/progress.ts.
   "work.progress": "{n} of {total} viewed",
   "work.progressDone": "Completed · all {total} viewed",

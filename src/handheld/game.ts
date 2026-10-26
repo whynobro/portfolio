@@ -86,9 +86,18 @@ interface Battle {
   plateFoe: number;
   plateMe: number;
   frameThrow: { x: number; y: number; a: number } | null;
-  bolt: { x: number; t: number } | null;
+  bolt: { x: number; y: number; t: number } | null;
   menu: boolean;
   done: (() => void) | null;
+  /** The visitor's HP, 0..1. Counterattacks take it down but never to zero: you always win. */
+  myHp: number;
+  meBlink: boolean;
+  meShake: number;
+  /** 0..1: the work lunging at the visitor during its counterattack. */
+  lunge: number;
+  countered: number;
+  /** B was pressed mid-sequence: leave at the next menu. */
+  wantRun: boolean;
 }
 
 interface Dialog {
@@ -196,6 +205,11 @@ export class Game {
    * many in the shop would put your purchase straight back.
    */
   press(b: Button, fromTop = false): void {
+    if (b === "B" && this.battle) {
+      const atMenu = this.battle.menu;
+      this.runSoon();
+      if (atMenu) return;
+    }
     if (this.dialog) {
       this.advance();
       return;
@@ -279,6 +293,7 @@ export class Game {
       choice: this.choice?.options ?? null,
       menu: this.battle?.menu ?? false,
       hp: this.battle?.hp ?? null,
+      myHp: this.battle?.myHp ?? null,
       busy: this.tweens.length > 0,
       coins: this.save.coins,
       equip: { ...this.save.equip },
@@ -321,6 +336,13 @@ export class Game {
     }
     for (const a of this.all()) this.stepActor(a, dt);
     const dl = this.dialog;
+    // After B in a battle, nothing waits for another press: text skips itself
+    // until the battle can run.
+    if (dl && this.battle?.wantRun) {
+      dl.n = Infinity;
+      dl.typing = false;
+      dl.auto = 0;
+    }
     if (dl) {
       const total = (dl.pages[dl.page] ?? []).join("\n").length;
       if (dl.typing) {
@@ -621,7 +643,7 @@ export class Game {
       p, rematch, asked: p.moves.map(() => false), hp: 1,
       foeOn: false, foeScale: 0, foeWhite: 0, foeDy: 0, foeAlpha: 1, blink: false, shake: 0,
       trainerOff: 180, meOff: -180, pose: 0, plateFoe: 0, plateMe: 0, frameThrow: null, bolt: null,
-      menu: false, done: null,
+      menu: false, done: null, myHp: 1, meBlink: false, meShake: 0, lunge: 0, countered: 0, wantRun: false,
     };
     this.battle = b;
     this.bottom = "battle";
@@ -665,6 +687,10 @@ export class Game {
     const b = this.battle;
     if (!b) return;
     b.menu = true;
+    if (b.wantRun) {
+      void this.run();
+      return;
+    }
     this.prompt = `What will you ask ${b.p.name}?`;
     const next = b.asked.findIndex((a) => !a);
     this.focus = next >= 0 ? next : 0;
@@ -695,20 +721,47 @@ export class Game {
     await this.tween(650, (q) => (b.hp = lerp(from, to, q)));
     await intro;
     await this.say(m.superEffective ? [...m.lines, "It's super effective!"] : m.lines);
-    if (left === 0) await this.victory();
-    else this.menuOn();
+    if (left === 0) {
+      await this.victory();
+      return;
+    }
+    if (!b.wantRun) await this.counter();
+    this.menuOn();
   }
 
-  /** The move's animation, chosen by its type. */
-  private async attack(type: MoveType): Promise<void> {
+  /** The work hits back: a lunge, its type's effect on the visitor, a blink, some HP. */
+  private async counter(): Promise<void> {
+    const b = this.battle;
+    const c = b?.p.counters[b.countered % b.p.counters.length];
+    if (!b || !c) return;
+    b.countered++;
+    const intro = this.say(`${b.p.name} used ${c.name}!`, false, 700);
+    await this.tween(300, (q) => (b.lunge = Math.sin(q * Math.PI)));
+    b.lunge = 0;
+    await this.attack(b.p.types[b.countered % 2] ?? b.p.types[0], true);
+    await this.tween(420, (q) => {
+      b.meBlink = Math.floor(q * 6) % 2 === 0;
+      b.meShake = Math.sin(q * Math.PI * 6) * (1 - q) * 4;
+    });
+    b.meBlink = false;
+    b.meShake = 0;
+    // Three counters at most 22% each never empty the bar; the floor makes sure.
+    const from = b.myHp, to = Math.max(0.12, b.myHp - rand(0.14, 0.22));
+    await this.tween(600, (q) => (b.myHp = lerp(from, to, q)));
+    await intro;
+    await this.say(c.line);
+  }
+
+  /** The move's animation, chosen by its type; `fromFoe` aims it at the visitor. */
+  private async attack(type: MoveType, fromFoe = false): Promise<void> {
     const b = this.battle;
     if (!b) return;
     const col = TYPE_COLORS[type];
     const hi = shade(col, 0.45);
-    const sx = ME_X + 34, sy = ME_Y - 70, tx = FOE_X, ty = FOE_Y - 30;
+    const [sx, sy, tx, ty] = fromFoe ? [FOE_X - 16, FOE_Y - 30, ME_X + 8, 96] : [ME_X + 34, ME_Y - 70, FOE_X, FOE_Y - 30];
     if (this.o.reducedMotion) return;
     if (type === "POWER") {
-      b.bolt = { x: tx, t: 0 };
+      b.bolt = { x: tx, y: ty, t: 0 };
       await this.tween(260, (q) => b.bolt && (b.bolt.t = q));
       b.bolt = null;
       this.burst(tx, ty, "#ffe27a", 18, 140);
@@ -791,6 +844,18 @@ export class Game {
       }
     }
     await this.leaveBattle();
+  }
+
+  /**
+   * B (or RUN) in a battle. At the menu it runs at once; mid-animation or
+   * mid-text it is remembered and the battle ends at the next menu, so two
+   * quick presses of B always get you back to the room.
+   */
+  private runSoon(): void {
+    const b = this.battle;
+    if (!b) return;
+    if (b.menu) void this.run();
+    else b.wantRun = true;
   }
 
   private async run(): Promise<void> {
@@ -987,7 +1052,8 @@ export class Game {
       g.beginPath();
       g.rect(0, 0, W, FOE_Y + 6);
       g.clip();
-      g.drawImage(c, Math.round(FOE_X - w / 2 + b.shake), Math.round(FOE_Y + 2 - h + b.foeDy), Math.round(w), Math.round(h));
+      const lx = -b.lunge * 18, ly = b.lunge * 6;
+      g.drawImage(c, Math.round(FOE_X - w / 2 + b.shake + lx), Math.round(FOE_Y + 2 - h + b.foeDy + ly), Math.round(w), Math.round(h));
       g.restore();
     }
     if (b.frameThrow) {
@@ -998,10 +1064,10 @@ export class Game {
       g.drawImage(f, -8, -8);
       g.restore();
     }
-    if (b.bolt) this.drawBolt(b.bolt.x, b.bolt.t);
+    if (b.bolt) this.drawBolt(b.bolt.x, b.bolt.y, b.bolt.t);
     const me = this.backCanvas(b.pose);
     // Cut at the waist like a B/W back sprite: the waist sits on the text box's top edge.
-    blit(g, me, ME_X - me.width + b.meOff, 146 - me.height * 2, false, 2);
+    if (!b.meBlink) blit(g, me, ME_X - me.width + b.meOff + b.meShake, 146 - me.height * 2, false, 2);
     this.drawFoePlate(b);
     this.drawMePlate(b);
   }
@@ -1018,11 +1084,11 @@ export class Game {
     return c;
   }
 
-  private drawBolt(x: number, t: number): void {
+  private drawBolt(x: number, toY: number, t: number): void {
     const g = this.top;
     g.fillStyle = "#ffe27a";
     let px = x + 10;
-    const end = Math.round((FOE_Y - 30) * Math.min(1, t * 1.6));
+    const end = Math.round(toY * Math.min(1, t * 1.6));
     for (let y = 0; y < end; y += 6) {
       const nx = x + ((y / 6) % 2 ? -8 : 8);
       for (let k = 0; k < 6; k++) g.fillRect(Math.round(lerp(px, nx, k / 6)) - 1, y + k, 3, 1);
@@ -1050,7 +1116,8 @@ export class Game {
   private drawFoePlate(b: Battle): void {
     if (b.plateFoe <= 0) return;
     const g = this.top;
-    const x = Math.round(lerp(-130, 6, b.plateFoe)), y = 8;
+    // Under the work it describes, sliding in from the right.
+    const x = Math.round(lerp(W + 10, 126, b.plateFoe)), y = 108;
     panel(g, x, y, 124, 34, PAPER, FRAME, "#dfe6ea");
     drawText(g, FONT, b.p.name, x + 7, y + 4, INK, INK_SHADOW);
     let cx = x + 7;
@@ -1068,14 +1135,17 @@ export class Game {
   private drawMePlate(b: Battle): void {
     if (b.plateMe <= 0) return;
     const g = this.top;
-    const x = Math.round(lerp(W + 10, 126, b.plateMe)), y = 104;
+    // Above the visitor, sliding in from the left.
+    const x = Math.round(lerp(-130, 6, b.plateMe)), y = 8;
     panel(g, x, y, 124, 34, PAPER, FRAME, "#dfe6ea");
     const lv = 1 + this.save.beaten.length;
     drawText(g, FONT, "VISITOR", x + 7, y + 4, INK, INK_SHADOW);
     const lvText = `Lv${lv}`;
     drawText(g, FONT, lvText, x + 117 - measure(FONT, lvText), y + 4, INK, INK_SHADOW);
     drawText(g, FONT_SMALL, "HP", x + 7, y + 17, "#e8b432");
-    this.hpBar(g, x + 20, y + 16, 96, 1);
+    this.hpBar(g, x + 20, y + 16, 60, b.myHp);
+    const hp = `${Math.max(1, Math.round(b.myHp * 100))}/100`;
+    drawText(g, FONT_SMALL, hp, x + 117 - measure(FONT_SMALL, hp), y + 17, INK);
     drawText(g, FONT_SMALL, "EXP", x + 7, y + 26, ACCENT);
     g.fillStyle = FRAME;
     g.fillRect(x + 24, y + 26, 94, 4);
@@ -1297,8 +1367,8 @@ export class Game {
         m.name, TYPE_COLORS[m.type], on && !asked, asked ? "ASKED" : m.type,
       );
     });
-    this.button(g, regions, { key: "view", label: "View this project's room", x: 4, y: 134, w: 122, h: 26, act: () => this.o.onViewRoom(b.p.slug) }, "VIEW ROOM", "#8a7a5a", true);
-    this.button(g, regions, { key: "run", label: "Run", x: 130, y: 134, w: 122, h: 26, act: () => void this.run() }, "RUN", "#4a5462", on);
+    this.button(g, regions, { key: "view", label: "Full story: close the game and open this project's page", x: 4, y: 134, w: 122, h: 26, act: () => this.o.onViewRoom(b.p.slug) }, "FULL STORY ↗", "#8a7a5a", true);
+    this.button(g, regions, { key: "run", label: "Run back to the gallery", x: 130, y: 134, w: 122, h: 26, act: () => this.runSoon() }, "RUN", "#4a5462", true, "OR PRESS B");
     drawText(g, FONT_SMALL, "EVERY FIGURE HERE IS FROM THE SITE", 6, 172, UI_DIM);
   }
 

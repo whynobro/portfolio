@@ -43,6 +43,8 @@ export interface GameProject {
   win: string;
   rematch: string;
   moves: Move[];
+  /** What the work hits back with after each question. Flavour, but any figure must still be true. */
+  counters: { name: string; line: string }[];
 }
 
 export const PROJECTS: GameProject[] = [
@@ -56,6 +58,7 @@ export const PROJECTS: GameProject[] = [
     intro: "Our rover has to recharge itself at the lunar South Pole. No cables!",
     win: "That's the whole plan. The bench gets built in January.",
     rematch: "Back for another look at the charger?",
+    counters: [{ name: "MOON DUST", line: "Charged dust clings to you. The vertical plates shed it, though." }, { name: "COLD SNAP", line: "Lunar shadow chills you to the bone." }, { name: "FIELD LINES", line: "You feel a tingle at 6.78 MHz." }],
     moves: [
       { name: "TEAM LEAD", type: "CONTROLS", lines: ["MICHAEL leads the 12-person team, on controls and integration.", "NASA Artemis task, WERC 2027."] },
       { name: "SELF-PARK", type: "CONTROLS", lines: ["The rover parks itself nose-first against a charging wall.", "Four small capacitances steer its last few centimetres in."] },
@@ -73,6 +76,7 @@ export const PROJECTS: GameProject[] = [
     intro: "I cut this putter out of solid aluminium. Want to see?",
     win: "Every chip of it came off a Haas. Thanks for looking!",
     rematch: "Want to see the putter again?",
+    counters: [{ name: "CHIP SPRAY", line: "Hot aluminium chips fly at you!" }, { name: "COOLANT", line: "You are soaked in coolant." }, { name: "MIRROR FINISH", line: "The machined face dazzles you!" }],
     moves: [
       { name: "TWO OPS", type: "MACHINING", lines: ["Cut from a block of 6061 on a 3-axis Haas, in two operations."] },
       { name: "PROTOTYPES", type: "CAD", lines: ["Twelve PLA prototypes came before the metal one."] },
@@ -90,6 +94,7 @@ export const PROJECTS: GameProject[] = [
     intro: "Seven years of cast-concrete ramps, 2019 to 2026. Take a look!",
     win: "From CAD to a shipped object, forty times over.",
     rematch: "Back to browse the ramps?",
+    counters: [{ name: "CONCRETE DROP", line: "A cast-concrete ramp lands on your foot." }, { name: "TONGUE LASH", line: "The chameleon's tongue snaps at you!" }, { name: "COLOUR SHIFT", line: "It changes colour. You lose track of it." }],
     moves: [
       { name: "PRODUCT LINE", type: "DESIGN", lines: ["Over 40 designs, each taken from CAD to a shipped object."] },
       { name: "REVENUE", type: "BUSINESS", superEffective: true, lines: ["$39,600 in revenue across 627 orders."] },
@@ -107,6 +112,7 @@ export const PROJECTS: GameProject[] = [
     intro: "We turned the up-and-down of a wave into volts. Ready?",
     win: "First of five teams, on measured output. Not bad, right?",
     rematch: "Ride the wave one more time?",
+    counters: [{ name: "SPLASH", line: "A wave soaks you to the knees." }, { name: "UNDERTOW", line: "The float drags you up and down." }, { name: "SURGE", line: "A generator spins up and zaps you!" }],
     moves: [
       { name: "TEAM LEAD", type: "TEAM", lines: ["MICHAEL led a team of five, from design to manufacture."] },
       { name: "RACK+PINION", type: "ENERGY", lines: ["A float drives a rack. The rack turns two pinion stages.", "The pinions drive the generators."] },
@@ -124,6 +130,7 @@ export const PROJECTS: GameProject[] = [
     intro: "My bot places real trades on its own. No human in the loop.",
     win: "Correct orders, or nothing at all. That's the rule.",
     rematch: "The bot never sleeps. Another look?",
+    counters: [{ name: "FLASH FILL", line: "An order fills before you can blink." }, { name: "STOP LOSS", line: "It cuts its losses. And your HP." }, { name: "SKIP", line: "It skips anything ambiguous. Including your guard." }],
     moves: [
       { name: "PARSER", type: "SOFTWARE", lines: ["It reads options alerts as they post, and decides if each one is tradeable."] },
       { name: "LIVE ORDERS", type: "MARKETS", lines: ["Options run live on a funded Webull account, 24/7.", "Futures run on a Tradovate demo account."] },
@@ -141,6 +148,7 @@ export const PROJECTS: GameProject[] = [
     intro: "Campus tours led by real students. It's live right now!",
     win: "Book a person, not a slot. See you on campus!",
     rematch: "Want the tour again?",
+    counters: [{ name: "WALKING TOUR", line: "You walk the whole campus. Your feet hurt." }, { name: "BOOKED UP", line: "Every slot is taken. You wait in line." }, { name: "PIN DROP", line: "A giant map pin drops on you!" }],
     moves: [
       { name: "FOUNDER", type: "BUSINESS", lines: ["MICHAEL founded it, and led a 4-person intern team."] },
       { name: "MATCHMAKER", type: "SOFTWARE", lines: ["Guides are matched to visitors by major and interest."] },
