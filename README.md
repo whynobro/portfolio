@@ -18,7 +18,7 @@
   &nbsp;·&nbsp; <a href="#-project-layout">Layout</a>
 </p>
 
-The personal site of Michael Fischbach, a mechanical engineering student at Cal Poly San Luis Obispo. It is one page with hash-routed rooms: a landing wall, the eight works, an About room, an Awards room and Contact. Each work hangs in a photographed carved gilt frame with a serif caption, and a few of them run live scenes drawn right in the browser.
+The personal site of Michael Fischbach, a mechanical engineering student at Cal Poly San Luis Obispo. It is one page with hash-routed rooms: a landing wall, the six works, an About room, an Awards room and Contact. Each work hangs in a photographed carved gilt frame with a serif caption, and a few of them run live scenes drawn right in the browser.
 
 <p align="center"><img src=".github/media/home.png" alt="The landing room: a framed portrait beside the introduction" width="100%"></p>
 
@@ -29,9 +29,9 @@ The personal site of Michael Fischbach, a mechanical engineering student at Cal 
 | 🖼️ **A gallery, not a template** | Works hang in a photographed carved frame (a CSS `border-image`) with cast shadows and serif captions on a warm off-white wall. |
 | 🌙 **Live scenes** | The lunar-rover charging sequence and the CNC putter run as small canvas scenes on the wall and larger inside their rooms. |
 | 🔩 **A real part, rendered live** | The putter's STL is a quantised mesh drawn by a z-buffered software rasteriser on a plain 2D canvas. Drag or use the arrow keys to turn it. |
-| 🎮 **Two toys** | A ring toss with its own physics, and a tic-tac-toe engine that cannot lose. `npm run verify:ttt` proves it by exhaustive play. |
+| 🎮 **Pocket Gallery** | A DS-style handheld game with original pixel art: walk a gallery, battle a curator for each work by asking about its real figures, earn coins, buy gear. `npm run verify:handheld` checks every quoted figure against the site. |
 | 🧭 **Hash-routed rooms** | `#/work`, `#/about`, `#/awards`, `#/contact` and `#/work/<slug>`. No server rewrites needed, so it hosts anywhere static. |
-| 📄 **Resume and CV buttons** | Download the one-page resume or the two-page CV as PDFs straight from the landing room. |
+| 📄 **Resume and LinkedIn** | The one-page resume downloads from the landing room; the two-page CV is on the contact page. |
 | 🪶 **Small shell** | The HTML shell stays under 100 KB (CI fails the build otherwise). Photographs ship as hashed, lazy-loaded assets, not inlined. |
 | ♿ **Works without JS, respects reduced motion** | The wall carries every title, caption and figure in plain HTML. Scenes paint a full static frame under `prefers-reduced-motion`. |
 
@@ -54,7 +54,7 @@ npm run dev        # Vite dev server with hot reload
 | `npm run build` | Typecheck (`tsc --noEmit`), then build to `dist/` |
 | `npm run preview` | Serve the production build locally |
 | `npm run typecheck` | Typecheck only |
-| `npm run verify:ttt` | Exhaustively prove the tic-tac-toe engine cannot lose |
+| `npm run verify:handheld` | Check Pocket Gallery: figures against the site, sprite grids, map reachability |
 | `npm run shots` | Capture every route with Playwright (needs the dev server running) |
 
 Pushes to `main` run [the deploy workflow](.github/workflows/deploy.yml): install, typecheck, build, size and redirect checks, then publish to GitHub Pages. `public/CNAME` carries the custom domain.
@@ -79,7 +79,8 @@ src/main.ts                boot: awards, resume, projects, router, scenes
 src/router.ts              hash routing, focus management, titles
 src/projects.ts            the eight project rooms, rendered from data
 src/awards.ts              the awards room
-src/scenes/                putter, werc, tictactoe, ringtoss (lazy-mounted)
+src/scenes/                putter, werc (lazy-mounted)
+src/handheld/              Pocket Gallery: engine, copy, pixel art
 src/styles/                tokens, base, layout, frame, chrome, games, case
 src/assets/                photographs, PDFs (hashed by the bundler)
 public/                    CNAME, link-preview card, /general/ redirect
