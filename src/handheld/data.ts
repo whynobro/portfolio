@@ -80,7 +80,7 @@ export const PROJECTS: GameProject[] = [
     moves: [
       { name: "TWO OPS", type: "MACHINING", lines: ["Cut from a block of 6061 on a 3-axis Haas, in two operations."] },
       { name: "PROTOTYPES", type: "CAD", lines: ["Twelve PLA prototypes came before the metal one."] },
-      { name: "COST CUT", type: "MACHINING", superEffective: true, lines: ["Modelled unit cost: $18.56.", "The retail putter it was compared with: $250."] },
+      { name: "COST CUT", type: "MACHINING", superEffective: true, lines: ["Modelled unit cost: $40.18.", "The retail putter it was compared with: $250."] },
       { name: "FINALIST", type: "CAD", lines: ["One of 8 capstone finalists chosen from 40+.", "Presented at Capstone Night to over 200 alumni."] },
     ],
   },

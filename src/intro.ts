@@ -734,7 +734,7 @@ export function initIntro(): void {
   }
 
   const CAPTIONS: [readonly number[], string][] = [
-    [S.putter, "CNC putter · CAD to 6061 on a 3-axis Haas · $18.56 per unit"],
+    [S.putter, "CNC putter · CAD to 6061 on a 3-axis Haas · $40.18 per unit"],
     [S.werc, "NASA Artemis lunar rover charger · team lead · model values"],
     [S.ramps, "Chameleon Ramps · my cast-concrete company · 2019–2026"],
     [S.wave, "Wave energy converter · team lead · 15 V per motor"],

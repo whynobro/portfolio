@@ -229,7 +229,7 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
   <ul>
     <li>Designed and machined a novel putter from 6061 in two ops with adaptive toolpaths validated with 12 PLA prototypes</li>
     <li>Designed a scooping cavity whose undercuts drove the toolpath strategy; cut the 3-degree loft angle on a 3D-printed shim</li>
-    <li>Modeled unit cost at $18.56 vs. $250 retail; 1 of 8 finalists (40+ students), presented to 200+ alumni at Capstone Night</li>
+    <li>Modeled unit cost at $40.18 vs. $250 retail; 1 of 8 finalists (40+ students), presented to 200+ alumni at Capstone Night</li>
   </ul>
 </div>
 <div class="entry">

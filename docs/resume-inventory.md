@@ -3,7 +3,7 @@
 > **Figures updated 2026-10-21.** The master resume (Oct 16, in Documents/Career/Resumes)
 > and the Oct 2026 transcript now win over any figure below that disagrees. Current
 > values: GPA **3.79**; graduation **expected May 2028**; Ramps **$39,600 / 627 orders /
-> ~40% waste / 15 countries / 2019–2026**; putter **$18.56 vs $250 retail, two ops, 12 PLA
+> ~40% waste / 15 countries / 2019–2026**; putter **$40.18 vs $250 retail (corrected by Michael 2026-11-09, was $18.56), two ops, 12 PLA
 > prototypes**; wave **15 V per motor at 1:12, 360 V projected; NO placing, NO 120 V (invented, removed 2026-11-09)**; WERC
 > team lead (12 people), targets only; ADI Mechanical Engineering Intern. Dynamics is not
 > yet taken (Spring 2027). The portfolio link on every document points at the root.
@@ -599,7 +599,7 @@ column.** If a draft disagrees with this table, the draft is wrong.
 | Execution system tests | 190 tests | **2,015 tests passing** (2026-08-06) |
 | Execution system status | paper trading | **options live, futures in demo** |
 | Capstone Night audience | 300+ / 250 | **200+ alumni and industry professionals, several hundred students** |
-| Putter cost saving | "533% cost reduction" / $15.78 vs $50–150 | **$18.56 vs $250 retail** (master, 2026-10-16) |
+| Putter cost saving | "533% cost reduction" / $15.78 vs $50–150 | **$40.18 vs $250 retail** (Michael, 2026-11-09; $18.56 superseded) |
 | Cal Poly graduation | Jun 2029 / May 2029 | **Expected May 2028** (master, 2026-10-16) |
 
 **Do not publish**: any account state from the execution system (P&L, balances,

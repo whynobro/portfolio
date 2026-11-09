@@ -161,7 +161,7 @@ const html = `<!doctype html><meta charset="utf-8">
   <p class="org">3-axis Haas CNC, Fusion 360, DFM</p>
   <ul>
     <li>Designed and machined a novel putter from 6061 in two ops with adaptive toolpaths validated with 12 PLA prototypes</li>
-    <li>Modeled unit cost at $18.56 vs. $250 retail; 1 of 8 finalists (40+ students), presented to 200+ alumni at Capstone Night</li>
+    <li>Modeled unit cost at $40.18 vs. $250 retail; 1 of 8 finalists (40+ students), presented to 200+ alumni at Capstone Night</li>
   </ul>
 </div>
 <div class="entry">

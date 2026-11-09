@@ -77,7 +77,7 @@ export const en = {
   "case.putter.role": "Design, CAD, CAM and machining",
   "case.putter.tools": "Fusion 360 · 3-axis Haas · adaptive toolpaths · SolidWorks (2026 drawing and FEA)",
   "case.putter.material": "Aluminium 6061",
-  "case.putter.result": "$18.56 per unit",
+  "case.putter.result": "$40.18 per unit",
   "case.putter.brief":
     "A year-long capstone: take a product from a first sketch to a finished object, and account for what it would cost to make more than one.",
   "case.putter.approach1":
@@ -85,7 +85,7 @@ export const en = {
   "case.putter.approach2":
     "The scooping cavity is the feature that makes the putter its own object rather than a copy, and its undercuts are what drove the toolpath strategy: it had to be cuttable with the tools available, not only renderable.",
   "case.putter.outcome":
-    "The modelled unit cost is $18.56, against $250 retail for the putter it was compared with. The work was one of eight capstone finalists chosen from more than forty, presented at Capstone Night to over 200 alumni and hundreds of students.",
+    "The modelled unit cost is $40.18, against $250 retail for the putter it was compared with. The work was one of eight capstone finalists chosen from more than forty, presented at Capstone Night to over 200 alumni and hundreds of students.",
   "case.putter.rebuild1":
     "In 2026 I rebuilt the head in SolidWorks from the capstone's own STL, measuring the mesh into a parametric solid that matches its volume to 0.02%, and added the 3-degree loft the face is cut to in a third operation. Then I drew it the way I would hand it to the mill: datums on the sole, face and heel end, face flatness .002, a positioned hosel bore, the freeform scoop held to a .010 profile from the model, and a Ra 32 µin face that is never blasted.",
   "case.putter.rebuild2":
@@ -115,7 +115,7 @@ export const en = {
   "case.wave.material": "Machined steel and aluminium",
   "case.wave.result": "15 V per motor at 1:12 scale",
   "case.wave.brief":
-    "Design and build a wave-powered prototype, tune it for energy conversion, and measure what it actually produces. We based ours on Sea Based's buoy-and-anchor converter, swapping its linear generator for a cheaper rack and pinion.",
+    "Design and build a wave-powered prototype, tune it for energy conversion, and measure what it actually produces. We based ours on Sea Based's buoy-and-anchor converter, and used a rack and pinion to turn the buoy's up-and-down motion into rotation that spins the generator motors.",
   "case.wave.approach1":
     "A float drives a vertical rack; the rack turns two pinion stages; the pinions drive the generators. The mechanism is deliberately plain, because every extra stage between the wave and the armature is another place to lose energy to friction.",
   "case.wave.approach2":
