@@ -191,7 +191,7 @@ around a poor source. State filename and folder, minimum resolution, format,
 and how to verify it (real alpha: checkerboard squares scale with zoom).
 
 `assets-src/` is gitignored, per project: `putter/ ramps/ wave/ nicaragua/
-smc-bot/ campus-native/ werc/ doorknob/ brand/ misc/ docs/`, `inbox/` for
+smc-bot/ campus-native/ werc/ doorknob/ alf/ brand/ misc/ docs/`, `inbox/` for
 unsorted. `docs/` holds Michael's own bio and project text; read it before
 writing copy. Coursework CAD lives in
 `C:\Users\micha\OneDrive - Cal Poly\School\` (ME 2248 SolidWorks parts).
@@ -242,8 +242,8 @@ iPhone photos (sharp's libheif and System.Drawing both fail).
 
 ## Works on the wall
 
-Six, in this order, all in one "Projects" section: the first two hang large
-with a "Featured" tag (`.works--featured`, `.label__badge`), then four. Sources in `assets-src/<folder>/`.
+Seven, in this order, all in one "Projects" section: the first two hang large
+with a "Featured" tag (`.works--featured`, `.label__badge`), then five. Sources in `assets-src/<folder>/`.
 
 | Work | Slug | Notes |
 | --- | --- | --- |
@@ -251,11 +251,11 @@ with a "Featured" tag (`.works--featured`, `.label__badge`), then four. Sources 
 | CNC-milled putter | `cnc` | 3-axis Haas, two ops, 12 PLA prototypes, $18.56 vs $250 retail. Live STL on the wall and in the room. |
 | Chameleon Ramps | `ramps` | 2019–2026, 40+ products, $39,600 / 627 orders, ~40% waste cut, 15 countries. |
 | Wave energy converter | `wave` | Team lead of five, 1st of 5 teams, 120 V at 1:12 (15 V/motor), 360 V projected. Poster prepped at 2600px/q88 to stay readable. |
+| Container Pavilion, Apricot Lane Farms | `pavilion` | 2024 team design (AutoCAD, Chris Connell led electrical), rebuilt 2026 in SolidWorks + Python FEA. Sources from `OneDrive - Cal Poly\Internships\Portfolio\Apricot Lane Farms\` staged in `assets-src/alf/`. Every figure is a MODEL result: no oxblood. Poster = one-page summary PDF rasterised (`pdftoppm -r 240`). |
 | SMC Trading Bot | `bot` | Options live on funded Webull, futures on Tradovate demo. See the money rule above. |
 | Campus Native | `campus` | Live at campusnative.com; Michael founded it and led a 4-person intern team. |
 
-Deliberately **not** on the wall: the Net-Zero shipping container (removed at
-Michael's request, 2026-07-29), the Nicaragua water system and the
+Deliberately **not** on the wall: the Nicaragua water system and the
 Doorknob-Inator (removed 2026-10-25; their images and `prep-images` entries
 remain, and both stay on the PDF CVs), and the noodle bridge (awards room only).
 

@@ -15,6 +15,7 @@ export const en = {
   "proj.putter.title": "CNC-Milled Aluminium Putter",
   "proj.ramps.title": "Chameleon Ramps",
   "proj.wave.title": "Wave Energy Converter",
+  "proj.alf.title": "Container Pavilion, Apricot Lane Farms",
   "proj.bot.title": "SMC Trading Bot",
   "proj.campus.title": "Campus Native",
 
@@ -31,6 +32,7 @@ export const en = {
   "case.h.approach": "The approach",
   "case.h.result": "What it measured",
   "case.h.status": "Where it stands",
+  "case.h.model": "What the model showed",
   "case.link.ramps": "Visit chameleonramps.com",
   "case.link.campus": "Visit campusnative.com",
 
@@ -116,6 +118,43 @@ export const en = {
   "case.wave.outcome":
     "The 1:12-scale prototype produced 120 volts, 15 per motor, which projects to 360 volts built full size. It took first place of five teams.",
 
+  // Apricot Lane Farms pavilion: designed for the farm in 2024 (AutoCAD, team,
+  // physical model), rebuilt in SolidWorks and analysed in 2026. Never built
+  // full size, so every figure is a MODEL result and nothing here is oxblood.
+  "case.alf.lede":
+    "An off-grid restroom and shaded courtyard made from two shipping containers, with solar on the roofs and no sewer line at all.",
+  "case.alf.role": "Team project · layout, plans and elevations; later the SolidWorks model and FEA",
+  "case.alf.tools": "AutoCAD · SolidWorks assemblies, mates and API · Python FEA (NumPy, SciPy)",
+  "case.alf.scope": "Two 40 ft high-cube containers around a 40 × 32 ft courtyard, for Apricot Lane Farms",
+  "case.alf.status": "Designed 2024, physical model built · rebuilt and analysed 2026",
+  "case.alf.brief":
+    "Apricot Lane Farms wanted a place where visitors could sit, eat and use a real restroom without trenching a sewer line across the farm. Our team set two 40 ft high-cube containers in an L around a courtyard, under sliding shade cloth, with solar on both roofs. Container A holds an ADA restroom, incinerating toilets (power and a vent stack, no plumbing), a counter with a pass-through window, and the inverter and battery cabinet. Chris Connell led the electrical system; I drew the layout, plans and elevations in AutoCAD, and the team built a physical model.",
+  "case.alf.approach1":
+    "In 2026 I rebuilt the pavilion in SolidWorks to answer what the drawings could not. Container A carries a single-axis tracker: 11 modules on a torque tube in four bearings, held to exactly one freedom by concentric, coincident and angle mates. Its axis runs north-south, so it follows the sun all day; B's would run east-west and gain only a few percent, so B gets a fixed 20° array facing south. Sweeping the angle mate showed my first version, with the tube 450 mm above the roof, hitting the roof at about 30°. Raising the axis to 755 mm gave the full ±50° with 49 mm to spare.",
+  "case.alf.approach2":
+    "The two 16 ft openings that join container B to the courtyard remove most of its corrugated wall, and that wall is what stops a container racking. I wrote a plane-stress finite element model of it in Python: Q4 elements, with each rail, post and panel given a thickness matched to its bending stiffness. I checked the element against beam theory first (0.3% error), then ran a mesh study (0.3% change from a 25 mm to a 12.5 mm mesh).",
+  "case.alf.outcome":
+    "In the model, the openings cost 45 times the wall's racking stiffness: drift at the top rail goes from 0.015 mm to 0.69 mm under wind, and the peak panel stress from 8 to 98 MPa at the opening corners. An HSS 4×4×¼ frame around them cuts the drift 3.9 times, to 0.18 mm, and the hot spot to 39 MPa. Every case stays under 30% of Corten's 345 MPa yield. A 2D model cannot see panel buckling, so that is the next check I would run.",
+  "alt.alf.hero": "Rendering of the pavilion: two green shipping containers in an L around a shaded courtyard of picnic tables, solar panels on the roofs",
+  "alt.alf.tracker": "Close-up rendering of the single-axis tracker's torque tube and bearings on container A's roof",
+  "cap.alf.tracker": "Tracker A: one degree of freedom, ±50° of swing, 49 mm clear of the roof.",
+  "alt.alf.aerial": "Aerial rendering of the pavilion and its courtyard",
+  "cap.alf.aerial": "From above. The shade cloth runs on seven tracks and slides open like a curtain.",
+  "alt.alf.cutaway": "Cutaway rendering from above: the restroom and counter inside container A, tables in the courtyard",
+  "cap.alf.cutaway": "Cutaway: the ADA restroom with a 5 ft turning circle, a second stall and the counter.",
+  "alt.alf.plan": "AutoCAD plan and unfolded elevations of the two containers",
+  "cap.alf.plan": "My AutoCAD plan and unfolded elevations, before and after the wall cutouts (2024).",
+  "alt.alf.feaOpen": "Finite element stress plot of container B's wall with two openings, deformed under racking load",
+  "cap.alf.feaOpen": "The openings, unreinforced, under 1.2D + 1.0W racking (deformation ×100). Stress collects at the corners.",
+  "alt.alf.feaFramed": "The same finite element plot with a steel frame around the openings",
+  "cap.alf.feaFramed": "The same wall framed in HSS 4×4: drift down 3.9 times, corner stress from 98 to 39 MPa.",
+  "alt.alf.feaSummary": "Bar charts of racking drift, mid-opening sag and peak panel stress for the intact, opened and framed wall",
+  "cap.alf.feaSummary": "Intact, opened, framed: the three model results side by side.",
+  "alt.alf.site": "AutoCAD site plan of the pavilion beside the farm road, with the courtyard tables",
+  "cap.alf.site": "The site plan on the farm road, March 2024.",
+  "alt.alf.poster": "One-page summary of the pavilion: renderings, the AutoCAD plan, the tracker and the FEA results",
+  "cap.alf.poster": "The one-page summary. Equipment sizes in the model are representative, not as-built.",
+
   // SMC Trading Bot
   "case.bot.lede":
     "A Python system that reads options alerts as they are posted, decides whether each one is tradeable, and places the order on a real brokerage account with no human in the loop.",
@@ -180,12 +219,8 @@ export const en = {
   "cap.ramps.moss": "Ledges in the Ocean Collection style.",
   "alt.ramps.eggz": "A custom ledge with a painted Eggz logo on its face",
   "cap.ramps.eggz": "A custom piece, made to order.",
-  "alt.ramps.gravel": "Dozens of cast-concrete obstacles spread out on gravel",
-  "cap.ramps.gravel": "A production run, laid out to cure.",
   "alt.ramps.collab": "The Recycled Ramps x Chameleon collab drop poster, dated 11-17-21",
   "cap.ramps.collab": "The Recycled Ramps collaboration, co-designed, dropped 11-17-21.",
-  "alt.ramps.chameleonLedge": "A chameleon on a concrete ledge beside a fingerboard",
-  "cap.ramps.chameleonLedge": "The namesake again, on a ledge.",
   "alt.ramps.chameleonBlack": "A chameleon on a black ledge outdoors",
   "cap.ramps.chameleonBlack": "And on a black one.",
   "alt.ramps.range":

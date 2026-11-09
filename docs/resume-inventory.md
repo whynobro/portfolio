@@ -355,8 +355,20 @@ OR a job, not both.
 
 `Mar – May 2024 · Oaks Christian · Autodesk CFD, AutoCAD`
 
-Real client, sustainability framing. **Removed from the portfolio site** at
-Michael's request (2026-07-29), but still legitimate resume content.
+Real client, sustainability framing. Back on the portfolio site as
+"Container Pavilion, Apricot Lane Farms" (`#/work/pavilion`, 2026-11-09).
+
+2026 rebuild (Michael alone, MODEL results, never built full size):
+
+- Rebuilt the pavilion as a SolidWorks assembly; a single-axis tracker held to
+  one freedom by concentric, coincident and angle mates. Sweeping the angle
+  mate found a roof collision at ~30 deg (axis 450 mm); raised to 755 mm for
+  the full +/-50 deg with 49 mm clearance. Fixed 20 deg array on container B.
+- Wrote a Python plane-stress FEA (Q4) of container B's wall with two 16 ft
+  openings, verified against beam theory (0.3%) and a mesh study (0.3%):
+  openings cost 45x racking stiffness (drift 0.015 to 0.69 mm); an HSS
+  4x4x1/4 frame recovers 3.9x (0.18 mm) and cuts peak panel stress 98 to
+  39 MPa, all under 30% of Corten's 345 MPa yield.
 
 - Designed an L-shaped shipping-container unit for a real client with net-zero
   CO2 emissions and ADA accessibility as constraints

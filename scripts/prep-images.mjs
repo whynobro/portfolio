@@ -297,8 +297,6 @@ const MANIFEST = [
   { name: "ramps-moss", src: "assets-src/ramps/ledge-moss.jpg", width: 1200, quality: 66 },
   { name: "ramps-eggz", src: "assets-src/ramps/eggz-custom.jpg", width: 1400, quality: 66 },
   { name: "ramps-collab", src: "assets-src/ramps/collab-drop.jpg", width: 750, quality: 72 },
-  { name: "ramps-gravel", src: "assets-src/ramps/range-gravel.jpg", width: 1200, quality: 66 },
-  { name: "ramps-chameleon-ledge", src: "assets-src/ramps/chameleon-ledge.jpg", width: 750, quality: 70 },
   { name: "ramps-chameleon-black", src: "assets-src/ramps/chameleon-black.jpg", width: 1400, quality: 66 },
   { name: "ramps-site", src: "assets-src/ramps/site-home-crop.png", width: 1440, quality: 70 },
   { name: "werc-still", src: "assets-src/werc/still.png", width: 1500, quality: 72 },
@@ -308,6 +306,23 @@ const MANIFEST = [
   { name: "werc-retune", src: "assets-src/werc/retune.png", width: 1344, quality: 70 },
   { name: "werc-states", src: "assets-src/werc/states.png", width: 1500, quality: 70 },
   { name: "werc-coupler", src: "assets-src/werc/coupler.png", width: 1525, quality: 70 },
+
+  // --- Apricot Lane Farms container pavilion (2026-11-08 batch): renders of
+  // the SolidWorks rebuild, the 2024 AutoCAD drawings, the Python FEA plots and
+  // the one-page summary (rasterised from its PDF with pdftoppm -r 240).
+  // Drawings and plots carry alpha, so they flatten onto white.
+  { name: "alf-hero", src: "assets-src/alf/hero.png", width: 1600, height: 900, quality: 70 },
+  { name: "alf-tracker", src: "assets-src/alf/tracker_closeup.png", width: 1400, quality: 68 },
+  { name: "alf-aerial", src: "assets-src/alf/aerial.png", width: 1400, quality: 68 },
+  { name: "alf-cutaway", src: "assets-src/alf/cutaway.png", width: 1400, quality: 68 },
+  { name: "alf-plan", src: "assets-src/alf/Pllan (preview).png", width: 1273, fit: "contain", background: "#ffffff", quality: 70 },
+  // Padded to 16:9 in the screenshot's own ground (#212830, sampled) so it
+  // pairs with the renders instead of leaving a tall gap beside them.
+  { name: "alf-site", src: "assets-src/alf/Site plan screenshot 2024-03-05.png", width: 960, height: 540, fit: "contain", background: "#212830", quality: 74 },
+  { name: "alf-fea-open", src: "assets-src/alf/open_racking.png", width: 1600, fit: "contain", background: "#ffffff", quality: 72 },
+  { name: "alf-fea-framed", src: "assets-src/alf/framed_racking.png", width: 1600, fit: "contain", background: "#ffffff", quality: 72 },
+  { name: "alf-fea-summary", src: "assets-src/alf/summary.png", width: 1600, fit: "contain", background: "#ffffff", quality: 72 },
+  { name: "alf-poster", src: "assets-src/alf/summary-page-1.png", width: 2600, quality: 80 },
 
   // --- Doorknob-Inator: ME 128 slides, CAD and the printed part ---
   { name: "door-final-cad", src: "assets-src/doorknob/final-cad.png", width: 740, quality: 66 },

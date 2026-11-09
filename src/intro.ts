@@ -128,7 +128,7 @@ const WALL_WORKS = ["werc-still", "putter-hero", "ramps-bank", "wave-inside", "b
 /** The Ramps scene opens on a quick mosaic of the range. */
 const RAMPS_MOSAIC = [
   "ramps-studio-set", "ramps-moss", "ramps-eggz", "ramps-collab",
-  "ramps-gravel", "ramps-chameleon-ledge", "ramps-bank-studio", "ramps-chameleon-black",
+  "ramps-range", "ramps-chameleon", "ramps-bank-studio", "ramps-chameleon-black",
 ];
 /** Pictures used by a scene but not hung in the finale. */
 const EXTRA_PICS = ["ramps-site", ...RAMPS_MOSAIC];

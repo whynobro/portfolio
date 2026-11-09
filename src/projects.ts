@@ -250,9 +250,7 @@ const PROJECTS: Project[] = [
       { img: "ramps-moss", w: 900, h: 1200, aspect: "frame--photo", altKey: "alt.ramps.moss", capKey: "cap.ramps.moss" },
       { img: "ramps-eggz", w: 1400, h: 1050, aspect: "frame--slide", altKey: "alt.ramps.eggz", capKey: "cap.ramps.eggz" },
       { img: "ramps-range", w: 1400, h: 1050, aspect: "frame--landscape", altKey: "alt.ramps.range", capKey: "cap.ramps.range" },
-      { img: "ramps-gravel", w: 900, h: 1200, aspect: "frame--photo", altKey: "alt.ramps.gravel", capKey: "cap.ramps.gravel" },
       { img: "ramps-collab", w: 750, h: 750, aspect: "frame--square", altKey: "alt.ramps.collab", capKey: "cap.ramps.collab" },
-      { img: "ramps-chameleon-ledge", w: 750, h: 797, aspect: "frame--square", altKey: "alt.ramps.chameleonLedge", capKey: "cap.ramps.chameleonLedge" },
       { img: "ramps-chameleon", w: 1100, h: 1100, aspect: "frame--square", altKey: "alt.ramps.chameleon", capKey: "cap.ramps.chameleon" },
       { img: "ramps-chameleon-black", w: 1400, h: 1050, aspect: "frame--slide", altKey: "alt.ramps.chameleonBlack", capKey: "cap.ramps.chameleonBlack" },
     ],
@@ -307,6 +305,49 @@ const PROJECTS: Project[] = [
       aspect: "frame--slide",
       altKey: "alt.wave.poster",
       capKey: "cap.wave.poster",
+    },
+  },
+
+  {
+    slug: "pavilion",
+    titleKey: "proj.alf.title",
+    ledeKey: "case.alf.lede",
+    hero: { img: "alf-hero", w: 1600, h: 900, aspect: "frame--wide", altKey: "alt.alf.hero" },
+    specs: [
+      { labelKey: "case.spec.role", valueKey: "case.alf.role" },
+      { labelKey: "case.spec.tools", valueKey: "case.alf.tools" },
+      { labelKey: "case.spec.scope", valueKey: "case.alf.scope" },
+      // NOT measured: the tracker sweep and the FEA are model results, and the
+      // pavilion was designed, not built. No oxblood.
+      { labelKey: "case.spec.status", valueKey: "case.alf.status" },
+    ],
+    sections: [
+      { hKey: "case.h.brief", bodyKeys: ["case.alf.brief"] },
+      { hKey: "case.h.approach", bodyKeys: ["case.alf.approach1", "case.alf.approach2"] },
+      { hKey: "case.h.model", bodyKeys: ["case.alf.outcome"] },
+    ],
+    // FEA plots and AutoCAD sheets have small type: two-up, click for full size.
+    galleryLarge: true,
+    // Four renders and drawings hang under the hero, beside the long text;
+    // the FEA plates stay full width at the foot where their type can read.
+    galleryLeadInPictures: 4,
+    gallery: [
+      { img: "alf-tracker", w: 1400, h: 788, aspect: "frame--wide", altKey: "alt.alf.tracker", capKey: "cap.alf.tracker" },
+      { img: "alf-aerial", w: 1400, h: 788, aspect: "frame--wide", altKey: "alt.alf.aerial", capKey: "cap.alf.aerial" },
+      { img: "alf-cutaway", w: 1400, h: 788, aspect: "frame--wide", altKey: "alt.alf.cutaway", capKey: "cap.alf.cutaway" },
+      { img: "alf-site", w: 960, h: 540, aspect: "frame--wide", altKey: "alt.alf.site", capKey: "cap.alf.site" },
+      { img: "alf-fea-open", w: 1600, h: 480, aspect: "frame--wide", altKey: "alt.alf.feaOpen", capKey: "cap.alf.feaOpen" },
+      { img: "alf-fea-framed", w: 1600, h: 480, aspect: "frame--wide", altKey: "alt.alf.feaFramed", capKey: "cap.alf.feaFramed" },
+      { img: "alf-plan", w: 1273, h: 720, aspect: "frame--wide", altKey: "alt.alf.plan", capKey: "cap.alf.plan" },
+      { img: "alf-fea-summary", w: 1600, h: 517, aspect: "frame--wide", altKey: "alt.alf.feaSummary", capKey: "cap.alf.feaSummary" },
+    ],
+    poster: {
+      img: "alf-poster",
+      w: 2600,
+      h: 2009,
+      aspect: "frame--slide",
+      altKey: "alt.alf.poster",
+      capKey: "cap.alf.poster",
     },
   },
 
