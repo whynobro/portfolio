@@ -32,6 +32,7 @@ export const en = {
   "case.h.approach": "The approach",
   "case.h.result": "What it measured",
   "case.h.status": "Where it stands",
+  "case.h.rebuild": "The 2026 rebuild",
   "case.h.model": "What the model showed",
   "case.link.ramps": "Visit chameleonramps.com",
   "case.link.campus": "Visit campusnative.com",
@@ -74,7 +75,7 @@ export const en = {
   "case.putter.lede":
     "A putter head cut from a block of 6061 on a 3-axis Haas in two operations, with a cost model behind it.",
   "case.putter.role": "Design, CAD, CAM and machining",
-  "case.putter.tools": "Fusion 360 · 3-axis Haas · adaptive toolpaths",
+  "case.putter.tools": "Fusion 360 · 3-axis Haas · adaptive toolpaths · SolidWorks (2026 drawing and FEA)",
   "case.putter.material": "Aluminium 6061",
   "case.putter.result": "$18.56 per unit",
   "case.putter.brief":
@@ -85,6 +86,10 @@ export const en = {
     "The scooping cavity is the feature that makes the putter its own object rather than a copy, and its undercuts are what drove the toolpath strategy: it had to be cuttable with the tools available, not only renderable.",
   "case.putter.outcome":
     "The modelled unit cost is $18.56, against $250 retail for the putter it was compared with. The work was one of eight capstone finalists chosen from more than forty, presented at Capstone Night to over 200 alumni and hundreds of students.",
+  "case.putter.rebuild1":
+    "In 2026 I rebuilt the head in SolidWorks from the capstone's own STL, measuring the mesh into a parametric solid that matches its volume to 0.02%, and added the 3-degree loft the face is cut to in a third operation. Then I drew it the way I would hand it to the mill: datums on the sole, face and heel end, face flatness .002, a positioned hosel bore, the freeform scoop held to a .010 profile from the model, and a Ra 32 µin face that is never blasted.",
+  "case.putter.rebuild2":
+    "Then the checks that it works as a putter, all model or hand-calculation results. A 500 N load on the face, 1.7 times the peak of a hard 4 m/s putt, peaks at 28.7 MPa at the bore mouth: a factor of safety of 9.6 on 6061-T6. The first natural frequency with the bore clamped is 1,308 Hz, and the moment of inertia about the vertical axis is 2,878 g·cm². Two findings I would act on: at 207 g the head is light against the usual 330 to 370 g, and because the bore is vertical, the head meets the USGA lie rule only with a bent hosel, like the plumber's neck the capstone putter used.",
 
   // Chameleon Ramps
   "case.ramps.lede":
@@ -194,7 +199,7 @@ export const en = {
   "alt.putter.machining": "The head in the vise mid-cut, chips on the fixture",
   "alt.putter.loft": "The part tilted on a pink 3D-printed shim in the vise, set up to cut the loft angle",
   "alt.putter.inuse": "The putter in use at Westlake Golf Course",
-  "alt.putter.drawing": "The dimensioned engineering drawing",
+  "alt.putter.drawing": "Drawing MF-PUT-003: plan, face and profile views of the putter head with dimensions, datums, geometric tolerances and surface finish",
   "cap.putter.cad": "The model, before any of it existed in metal.",
   "alt.putter.poster": "The CNC Milled Putter capstone poster: abstract, process, challenges and conclusion",
   "cap.putter.poster": "Presented at Capstone Night, Oaks Christian School: one of eight finalists chosen from more than forty, to over 200 alumni and hundreds of students.",
@@ -204,7 +209,9 @@ export const en = {
   "cap.putter.machining": "Mid-cut on the 3-axis Haas.",
   "cap.putter.loft": "Cutting the 3-degree loft angle: the part sits on a 3D-printed shim rather than in a tilted fixture.",
   "cap.putter.inuse": "In use at Westlake Golf Course.",
-  "cap.putter.drawing": "The drawing the part was cut from.",
+  "cap.putter.drawing": "Drawing MF-PUT-003, made in 2026 from the rebuilt model: what I would hand to the mill. Click to open full size.",
+  "alt.putter.fea": "SolidWorks Simulation stress plot of the putter head under a load on the face, highest at the hosel bore",
+  "cap.putter.fea": "500 N on the face: 28.7 MPa at the bore mouth, factor of safety 9.6. Model result.",
 
   "alt.ramps.hero": "Beachside Bank, cast concrete, on wet rock",
   "alt.ramps.quarter": "A cast-concrete quarter pipe against foliage",

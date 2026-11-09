@@ -205,8 +205,9 @@ A room is one container (`#view-project`) re-rendered per slug from data in
 `src/projects.ts`; `initProjects()` runs BEFORE `initRouter()`. Unknown slugs
 fall through to the collection. The wall carries every work's title, text and
 figures inline, so the no-JS document is still a complete portfolio. Rooms can
-set `galleryLarge` (two-up, click to open full size, for report drawings) and
-`wideScene`.
+set `galleryLarge` (two-up, click to open full size, for report drawings),
+`wideScene`, and `poster` as an array (several full-width documents; `zoom`
+opens one full size).
 
 ```text
 index.html                     the only page; one [data-view] per room; static copy
@@ -248,7 +249,7 @@ with a "Featured" tag (`.works--featured`, `.label__badge`), then five. Sources 
 | Work | Slug | Notes |
 | --- | --- | --- |
 | Lunar Rover Wireless Charger | `werc` | WERC 2027 Task 4, NASA Artemis. Michael is team lead (12 people) and on Controls. Figures from the technical report (Oct 15 draft) in `assets-src/werc/`; gallery = its figures. All MODEL values. |
-| CNC-milled putter | `cnc` | 3-axis Haas, two ops, 12 PLA prototypes, $18.56 vs $250 retail. Live STL on the wall and in the room. |
+| CNC-milled putter | `cnc` | 3-axis Haas, two ops, 12 PLA prototypes, $18.56 vs $250 retail. Live STL on the wall and in the room. 2026 SolidWorks rebuild (3 deg loft, drawing MF-PUT-003, FEA): sources in `OneDrive - Cal Poly\Internships\Portfolio\CNC Putter\`, all MODEL results (no oxblood). |
 | Chameleon Ramps | `ramps` | 2019–2026, 40+ products, $39,600 / 627 orders, ~40% waste cut, 15 countries. |
 | Wave energy converter | `wave` | Team lead of five, 1st of 5 teams, 120 V at 1:12 (15 V/motor), 360 V projected. Poster prepped at 2600px/q88 to stay readable. |
 | Container Pavilion, Apricot Lane Farms | `pavilion` | 2024 team design (AutoCAD, Chris Connell led electrical), rebuilt 2026 in SolidWorks + Python FEA. Sources from `OneDrive - Cal Poly\Internships\Portfolio\Apricot Lane Farms\` staged in `assets-src/alf/`. Every figure is a MODEL result: no oxblood. Poster = one-page summary PDF rasterised (`pdftoppm -r 240`). |

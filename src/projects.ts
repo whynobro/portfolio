@@ -41,6 +41,8 @@ type Shot = {
   aspect: Aspect;
   altKey: TranslationKey;
   capKey?: TranslationKey;
+  /** Opens full size in a new tab on click (drawings with fine type). */
+  zoom?: boolean;
 };
 
 type Spec = { labelKey: TranslationKey; valueKey: TranslationKey; measured?: boolean };
@@ -105,7 +107,7 @@ type Project = {
    * A document shown full width at the foot of the room, where the gallery's
    * three-up prints would make it unreadable.
    */
-  poster?: Shot;
+  poster?: Shot | Shot[];
   /**
    * A scene id from the scene registry, mounted under the hero. The putter has
    * one: its own STL, turning, which is the only place on the site where a part
@@ -163,16 +165,30 @@ const PROJECTS: Project[] = [
       { hKey: "case.h.brief", bodyKeys: ["case.putter.brief"] },
       { hKey: "case.h.approach", bodyKeys: ["case.putter.approach1", "case.putter.approach2"] },
       { hKey: "case.h.result", bodyKeys: ["case.putter.outcome"] },
+      // Model and hand-calculation results only: nothing here is oxblood.
+      { hKey: "case.h.rebuild", bodyKeys: ["case.putter.rebuild1", "case.putter.rebuild2"] },
     ],
     scene: { id: "putter", capKey: "cap.putter.stl" },
-    poster: {
-      img: "putter-poster",
-      w: 2600,
-      h: 1950,
-      aspect: "frame--slide",
-      altKey: "alt.putter.poster",
-      capKey: "cap.putter.poster",
-    },
+    // The 2026 drawing first (the document a machinist reads), then the poster.
+    poster: [
+      {
+        img: "cnc-drawing",
+        w: 2200,
+        h: 1424,
+        aspect: "frame--landscape",
+        altKey: "alt.putter.drawing",
+        capKey: "cap.putter.drawing",
+        zoom: true,
+      },
+      {
+        img: "putter-poster",
+        w: 2600,
+        h: 1950,
+        aspect: "frame--slide",
+        altKey: "alt.putter.poster",
+        capKey: "cap.putter.poster",
+      },
+    ],
     gallery: [
       {
         img: "putter-cad",
@@ -211,13 +227,7 @@ const PROJECTS: Project[] = [
         altKey: "alt.putter.inuse",
         capKey: "cap.putter.inuse",
       },
-      {
-        img: "cnc-drawing",
-        w: 1600,
-        h: 1067, aspect: "frame--landscape",
-        altKey: "alt.putter.drawing",
-        capKey: "cap.putter.drawing",
-      },
+      { img: "putter-fea", w: 1330, h: 736, aspect: "frame--wide", altKey: "alt.putter.fea", capKey: "cap.putter.fea" },
     ],
   },
 
@@ -683,8 +693,10 @@ function render(slug: string): void {
 
   // The poster hangs full width at the foot: it is a document to be READ, and
   // at a third of the width in the print grid its body text would be unusable.
-  if (project.poster) {
-    const shot = project.poster;
+  // A room may hang more than one document (the putter: its drawing, then the
+  // capstone poster), each full width, in the order given.
+  const posters = project.poster ? ([] as Shot[]).concat(project.poster) : [];
+  for (const shot of posters) {
     const figure = document.createElement("figure");
     figure.className = "case__poster";
 
@@ -696,7 +708,18 @@ function render(slug: string): void {
     img.alt = t(shot.altKey);
     img.loading = "lazy";
     img.decoding = "async";
-    figure.append(img);
+    if (shot.zoom) {
+      // A drawing opens full size in a new tab, as the large gallery plates do.
+      const a = document.createElement("a");
+      a.className = "case__zoom";
+      a.href = img.src;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.append(img);
+      figure.append(a);
+    } else {
+      figure.append(img);
+    }
 
     if (shot.capKey) {
       const caption = document.createElement("figcaption");

@@ -209,6 +209,18 @@ machining, production or hardware.
 - Designed a scooping cavity whose undercuts drove the toolpath strategy
 - Cut the 3-degree loft angle on a 3D-printed shim rather than a tilted fixture
 
+2026 SolidWorks rebuild (Michael alone; MODEL or hand-calc results, not measured):
+
+- Rebuilt the head in SolidWorks from the capstone STL as a parametric solid
+  (volume within 0.02% of the mesh), added the 3 deg loft, and drew it to ASME
+  Y14.5 (drawing MF-PUT-003: datums sole/face/heel, face flatness .002,
+  positioned hosel bore, .010 surface profile on freeform surfaces, face Ra 32 uin)
+- SolidWorks Simulation: 500 N face load (1.7x a hard putt) gives 28.7 MPa at the
+  bore mouth, FoS 9.6 on 6061-T6; first mode 1,308 Hz with the bore clamped;
+  head 207 g, MOI 2,878 g cm2 about the vertical axis
+  > Plumber's neck hosel (.37 in shaft) per the capstone poster. 207 g is light
+  > (typical 330-370 g); say so if the weight comes up.
+
 ### 4.2 Wave Energy Converter: rack & pinion generator
 
 `Aug – Dec 2023 · Oaks Christian · Bridgeport mill, Fusion 360, fluid dynamics`

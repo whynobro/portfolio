@@ -93,15 +93,18 @@ const MANIFEST = [
   },
   // A drawing, so `contain`: cropping the title block off a drawing is worse
   // than a little padding. LOW RESOLUTION at source (660x432), wants re-export.
+  // The 2026 drawing MF-PUT-003 (SolidWorks, from the rebuilt model), replacing
+  // the low-resolution capstone drawing. Exported from the drawing PDF at 2x.
   {
     name: "cnc-drawing",
-    src: "assets-src/putter/capstone-drawing.jpeg",
-    width: 1600,
-    height: 1067,
+    src: "assets-src/putter/drawing-2026-11.png",
+    width: 2200,
     fit: "contain",
     background: "#ffffff",
-    quality: 80,
+    quality: 78,
   },
+  // SolidWorks Simulation static-impact plot from the same 2026 model.
+  { name: "putter-fea", src: "assets-src/putter/fea-stress-2026-11.png", width: 1330, quality: 72 },
 
   // --- Chameleon Ramps: real product photography, all SQUARE at source ---
   { name: "ramps-bank", src: "assets-src/ramps/p4.jpg", width: 1400, height: 1400, quality: 72 },
