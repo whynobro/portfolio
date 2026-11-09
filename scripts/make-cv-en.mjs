@@ -30,8 +30,8 @@
  * (2026-10-17), with the corrections of 2026-10-21 applied on top: GPA 3.79
  * (transcript 3.786), Expected May 2028, coursework split into completed and
  * in progress (Dynamics is not taken yet, so it is absent), and the wave
- * converter's 120 V stated as the 1:12 prototype with 360 V as the full-scale
- * projection.
+ * converter stated as 15 V per motor at 1:12 with 360 V as the full-scale
+ * projection (no placing, no 120 V: neither is real, Michael 2026-11-09).
  *
  * The master's rules bind this file:
  *   - Clearance is "in process" / "submitted" and "SCI eligible". Never
@@ -239,8 +239,8 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
   </div>
   <p class="org">Bridgeport mill, Fusion 360, fluid dynamics · Oaks Christian</p>
   <ul>
-    <li>Led a five-person team to a 1st place win of five teams, designing and machining a 1:12-scale rack-and-pinion wave energy converter, with all parts made to tolerance in-house</li>
-    <li>Prototype produced 120 V at 1:12 scale (15 V per motor), projecting 360 V at full scale</li>
+    <li>Led a five-person team designing and machining a 1:12-scale rack-and-pinion buoy-anchor wave energy converter, with all parts made in-house</li>
+    <li>Prototype produced 15 V per motor at 1:12 scale, projecting 360 V at full scale; split the team into task groups to hold the schedule</li>
     <li>Applied fluid dynamics and energy-transfer analysis; modeled the full assembly in Fusion 360 and AutoCAD</li>
   </ul>
 </div>
@@ -282,7 +282,6 @@ const page = (v) => `<!doctype html><meta charset="utf-8">
 <h2>AWARDS</h2>
 <ul class="profile">
   <li><b>Capstone Finalist (CNC putter)</b> – 1 of 8 from 40+ students, Oaks Christian, 2025</li>
-  <li><b>1st Place, Wave Energy Converter</b> – 1st of 5 teams, Oaks Christian, 2023</li>
   <li><b>President's Honors List</b> – Cal Poly SLO, 2026; awarded for Dean's List three consecutive quarters</li>
   <li><b>Cal Poly Honors Program</b> – selective research-track admission, 2026</li>
   <li><b>1st Place, Noodle Bridge Design</b> – Cal Poly SLO, Nov 2025; won by a 38.5% margin</li>

@@ -30,13 +30,6 @@ const AWARDS: Award[] = [
     figure: "1 of 8",
   },
   {
-    titleKey: "award.wave.title",
-    issuerKey: "award.wave.issuer",
-    date: "2023",
-    bodyKey: "award.wave.body",
-    figure: "1st of 5",
-  },
-  {
     titleKey: "award.presidents.title",
     issuerKey: "award.presidents.issuer",
     date: "2026",

@@ -4,7 +4,7 @@
 > and the Oct 2026 transcript now win over any figure below that disagrees. Current
 > values: GPA **3.79**; graduation **expected May 2028**; Ramps **$39,600 / 627 orders /
 > ~40% waste / 15 countries / 2019–2026**; putter **$18.56 vs $250 retail, two ops, 12 PLA
-> prototypes**; wave **1st of 5 teams, 120 V at 1:12 (15 V/motor), 360 V projected**; WERC
+> prototypes**; wave **15 V per motor at 1:12, 360 V projected; NO placing, NO 120 V (invented, removed 2026-11-09)**; WERC
 > team lead (12 people), targets only; ADI Mechanical Engineering Intern. Dynamics is not
 > yet taken (Spring 2027). The portfolio link on every document points at the root.
 > Bot tests: **2,208 passing** (measured 2026-10-21).
@@ -230,8 +230,10 @@ Best pick for energy, sustainability, or "designed and built a test rig".
 - Designed and machined a wave-oscillation-to-electrical-power generator with a
   **five-person team**; manufactured all components to tolerance on a Bridgeport
   mill
-- Took **1st place** with the highest measured output of three teams:
-  **15 V per motor at 1:12 scale, 360 V scaled** `[M]`
+- Measured **15 V per motor at 1:12 scale, 360 V scaled** `[M]` (2023 poster).
+  No placing: the "1st place" claim was not real (Michael, 2026-11-09)
+- Split the team into groups with assigned tasks after early overlap; kept the
+  build on schedule (poster)
 - Applied fluid dynamics and energy-transfer analysis; modelled the full
   assembly in Fusion 360 and AutoCAD with tolerance documentation
 - One rack driving two pinion stages, which is the whole design idea
@@ -538,7 +540,6 @@ on LinkedIn. Take from the top; stop when the space runs out.
 | # | Award | Issuer | Date | Why it ranks there |
 | --- | --- | --- | --- | --- |
 | 1 | Capstone Finalist (putter) | Oaks Christian | 2025 | **1 of 8 from 40+** `[M]`. Judged, competitive, and the work is engineering. The strongest thing here. |
-| 2 | 1st Place, Wave Energy Converter | Oaks Christian | 2023 | **1st of 3 teams, highest measured output** `[M]`. A win with a number behind it. |
 | 3 | President's Honors List | Cal Poly SLO | 2026 | Requires **Dean's List three consecutive quarters** `[M]`. Rarer than Dean's List and it supersedes it: never list both. |
 | 4 | Cal Poly Honors Program | Cal Poly SLO | 2026 | Selective admission to a research-track program. |
 | 5 | 1st Place, Noodle Bridge Design | Cal Poly SLO | Nov 2025 | Won by **38.5%** `[M]`, and the reasoning is real. But see the caveat below. |

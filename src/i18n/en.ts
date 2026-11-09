@@ -113,15 +113,15 @@ export const en = {
   "case.wave.role": "Team lead, team of five · design and manufacture",
   "case.wave.tools": "Fusion 360 · AutoCAD · Bridgeport mill",
   "case.wave.material": "Machined steel and aluminium",
-  "case.wave.result": "120 V at 1:12 scale",
+  "case.wave.result": "15 V per motor at 1:12 scale",
   "case.wave.brief":
-    "Five teams, one problem: get the most electrical power out of wave oscillation. The comparison was measured, not argued.",
+    "Design and build a wave-powered prototype, tune it for energy conversion, and measure what it actually produces. We based ours on Sea Based's buoy-and-anchor converter, swapping its linear generator for a cheaper rack and pinion.",
   "case.wave.approach1":
     "A float drives a vertical rack; the rack turns two pinion stages; the pinions drive the generators. The mechanism is deliberately plain, because every extra stage between the wave and the armature is another place to lose energy to friction.",
   "case.wave.approach2":
-    "Every component was machined in-house on a Bridgeport mill, which meant the tolerances had to be ones we could actually hold. A rack and pinion that binds converts nothing at all. The first gear ratio was wrong: the 50 rpm motor could not turn against it, so the design moved to 100 rpm.",
+    "Every component was machined in-house on a Bridgeport mill, which meant the tolerances had to be ones we could actually hold. A rack and pinion that binds converts nothing at all. A quick model of the rack and pinion showed the gear ratio was off, and we bought a 100 rpm motor to make up for it.",
   "case.wave.outcome":
-    "The 1:12-scale prototype produced 120 volts, 15 per motor, which projects to 360 volts built full size. It took first place of five teams.",
+    "The 1:12-scale prototype produced 15 volts per motor, which projects to 360 volts built full size. The harder problem was the team: early on too many of us were watching each other work, so we split into groups with assigned tasks, and that is what kept the build on schedule.",
 
   // Apricot Lane Farms pavilion: designed for the farm in 2024 (AutoCAD, team,
   // physical model), rebuilt in SolidWorks and analysed in 2026. Never built
@@ -263,10 +263,6 @@ export const en = {
   "award.capstone.issuer": "Oaks Christian School, Institute of Engineering",
   "award.capstone.body":
     "One of eight finalists chosen from more than forty capstone students, presented to over 200 alumni and industry professionals and hundreds of students.",
-  "award.wave.title": "1st Place: Wave Energy Converter",
-  "award.wave.issuer": "Oaks Christian School, Institute of Engineering",
-  "award.wave.body":
-    "First of five teams on measured output, converting wave oscillation to electrical power through a rack-and-pinion mechanism.",
   "award.presidents.title": "President's Honors List",
   "award.presidents.issuer": "California Polytechnic State University, San Luis Obispo",
   "award.presidents.body":

@@ -110,14 +110,14 @@ export const PROJECTS: GameProject[] = [
     trainer: "SAILOR",
     types: ["ENERGY", "TEAM"],
     intro: "We turned the up-and-down of a wave into volts. Ready?",
-    win: "First of five teams, on measured output. Not bad, right?",
+    win: "Fifteen volts a motor, at 1:12. Not bad, right?",
     rematch: "Ride the wave one more time?",
     counters: [{ name: "SPLASH", line: "A wave soaks you to the knees." }, { name: "UNDERTOW", line: "The float drags you up and down." }, { name: "SURGE", line: "A generator spins up and zaps you!" }],
     moves: [
       { name: "TEAM LEAD", type: "TEAM", lines: ["MICHAEL led a team of five, from design to manufacture."] },
       { name: "RACK+PINION", type: "ENERGY", lines: ["A float drives a rack. The rack turns two pinion stages.", "The pinions drive the generators."] },
-      { name: "120 VOLTS", type: "ENERGY", lines: ["The 1:12-scale prototype made 120 V, 15 V per motor.", "Built full size, that projects to 360 V."] },
-      { name: "FIRST PLACE", type: "TEAM", superEffective: true, lines: ["First place of five teams, on measured output."] },
+      { name: "15 VOLTS", type: "ENERGY", lines: ["The 1:12-scale prototype made 15 V per motor.", "Built full size, that projects to 360 V."] },
+      { name: "TASK GROUPS", type: "TEAM", superEffective: true, lines: ["Too many of us were watching each other work.", "Split into groups, the build kept its schedule."] },
     ],
   },
   {

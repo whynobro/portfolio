@@ -16,9 +16,9 @@
  *   Expected May 2028     earlier versions said May 2029 or Jun
  *   Coursework            completed vs. in progress stated honestly; Dynamics
  *                         is NOT taken yet (Spring 2027), so it is absent
- *   Wave energy           120 V is the 1:12 prototype (15 V per motor), 360 V
- *                         the full-scale projection; never "full-scale
- *                         performance at 120 V"
+ *   Wave energy           15 V per motor at 1:12, 360 V the full-scale
+ *                         projection (both on the 2023 poster). No placing
+ *                         and no 120 V: neither is real (Michael, 2026-11-09)
  *
  * Rules from the master content pool that bind this page: the clearance is
  * "in process" and "SCI eligible", never granted or "Active Secret"; the Haas
@@ -182,7 +182,7 @@ const html = `<!doctype html><meta charset="utf-8">
   </div>
   <p class="org">Bridgeport mill, Fusion 360, fluid dynamics</p>
   <ul>
-    <li>Led a five-person team to 1st of five teams, designing and machining a 1:12-scale rack-and-pinion converter, all parts made to tolerance in-house; prototype produced 120 V at 1:12 scale (15 V per motor), projecting 360 V at full scale</li>
+    <li>Led a five-person team designing and machining a 1:12-scale rack-and-pinion buoy-anchor converter, all parts made in-house; prototype produced 15 V per motor, projecting 360 V at full scale</li>
   </ul>
 </div>
 

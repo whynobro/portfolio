@@ -737,7 +737,7 @@ export function initIntro(): void {
     [S.putter, "CNC putter · CAD to 6061 on a 3-axis Haas · $18.56 per unit"],
     [S.werc, "NASA Artemis lunar rover charger · team lead · model values"],
     [S.ramps, "Chameleon Ramps · my cast-concrete company · 2019–2026"],
-    [S.wave, "Wave energy converter · team lead · 1st of 5 teams"],
+    [S.wave, "Wave energy converter · team lead · 15 V per motor"],
     [S.bot, "SMC trading bot · options live, real money"],
     [S.finale, "Michael Fischbach · mechanical engineering"],
   ];
