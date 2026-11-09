@@ -241,7 +241,7 @@ export const en = {
   "alt.wave.base": "The converter's base and mounting",
   "cap.wave.base": "The base, machined in-house on the Bridgeport.",
   "alt.wave.section": "A cutaway of the housing: the rack running between two pinion stages",
-  "alt.wave.poster": "The Based-Sea WEC capstone poster: task, strategy, problems and conclusions",
+  "alt.wave.poster": "The Capstone Night poster for both wave energy teams, buoy-anchor and pressure differentiation: task, strategy, problems and conclusions",
   "cap.wave.poster": "Presented at Capstone Night, Oaks Christian School, May 2023.",
 
   "alt.bot.poster": "A poster of the trading bot: the path an options alert takes from Discord to an order placed at the brokerage, with the parser, safety and sizing stages",
