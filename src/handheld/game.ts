@@ -11,7 +11,7 @@ import { loadSave, writeSave, type Save } from "./save";
 import { bake, blit, panel, shade, tint } from "./gfx";
 
 /**
- * Pocket Gallery: one gallery hall, six curators (the six works on the wall),
+ * Pocket Gallery: one gallery hall, five curators (works from the wall),
  * a gift shop. Battles are conversations: each move quotes one real figure and
  * knocks a quarter off the work's HP, and asking everything wins its coins.
  *
@@ -118,7 +118,7 @@ const SIGHT = 3;
 const TEXT_W = 232;
 const FOE_X = 188, FOE_Y = 104, ME_X = 64, ME_Y = 140;
 const EXTRAS: Partial<Record<ProjectId | "clerk", string[]>> = {
-  cnc: ["glasses"], ramps: ["tape"], wave: ["collar"], bot: ["headphones"], campus: ["map"], clerk: ["vest"],
+  cnc: ["glasses"], ramps: ["tape"], wave: ["collar"], bot: ["headphones"], clerk: ["vest"],
 };
 const INK = "#1b1a22", INK_SHADOW = "#c9d1d6", PAPER = "#fbfbf7", FRAME = "#2a2f3a";
 const UI_BG = "#22313a", UI_PANEL = "#2d4250", UI_LINE = "#456273", UI_TEXT = "#eef3f5", UI_DIM = "#9fb3bd", ACCENT = "#2596be", ACCENT_HI = "#6fc4de";
@@ -188,10 +188,10 @@ export class Game {
     const lines = fresh
       ? [
           "Welcome to the POCKET GALLERY!",
-          "Six curators are inside. Each one guards one of MICHAEL's projects.",
+          "Five curators are inside. Each one guards one of MICHAEL's projects.",
           "Ask about every figure to win their coins, then spend them at the gift shop.",
         ]
-      : [`Welcome back! You have ${s.coins} coins and have seen ${s.beaten.length} of 6 works.`];
+      : [`Welcome back! You have ${s.coins} coins and have seen ${s.beaten.length} of ${PROJECTS.length} works.`];
     void this.script(this.say(lines));
     // Paint the battle backdrop while the player reads the welcome, not at the first battle.
     window.setTimeout(() => this.backdrop(), 600);
@@ -493,7 +493,7 @@ export class Game {
     if (at(m.sign)) {
       void this.script(
         this.say([
-          "POCKET GALLERY. Six works by MICHAEL FISCHBACH, mechanical engineering, Cal Poly SLO.",
+          "POCKET GALLERY. Five works by MICHAEL FISCHBACH, mechanical engineering, Cal Poly SLO.",
           "Each curator stands by their work. Ask them everything.",
         ]),
       );

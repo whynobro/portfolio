@@ -159,7 +159,8 @@ was removed at Michael's request (2026-10-25); tic-tac-toe before it.
   art only (never Nintendo sprites, names, ROMs or screenshots in the repo).
   The wall tile is a `button[data-handheld]` with a poster; the game is a lazy
   chunk (~60 KB gz) opened in a modal `<dialog>`, closed by Exit or Esc, and
-  saved to localStorage. Six trainers = the six works on the wall; adding or
+  saved to localStorage. Five trainers: the wall's works minus the pavilion
+  (no game art yet); adding or
   removing a work means `data.ts`, `art/map.ts` and the art. Read
   `docs/handheld.md` before changing it. Verify:
   `npm run verify:handheld`, then with the dev server up
@@ -243,8 +244,8 @@ iPhone photos (sharp's libheif and System.Drawing both fail).
 
 ## Works on the wall
 
-Seven, in this order, all in one "Projects" section: the first two hang large
-with a "Featured" tag (`.works--featured`, `.label__badge`), then five. Sources in `assets-src/<folder>/`.
+Six, in this order, all in one "Projects" section: the first two hang large
+with a "Featured" tag (`.works--featured`, `.label__badge`), then four. Sources in `assets-src/<folder>/`.
 
 | Work | Slug | Notes |
 | --- | --- | --- |
@@ -254,11 +255,12 @@ with a "Featured" tag (`.works--featured`, `.label__badge`), then five. Sources 
 | Wave energy converter | `wave` | Team lead of five, 15 V per motor at 1:12, 360 V projected (2023 poster). **No placing and no 120 V: both were invented; Michael confirmed 2026-11-09. Never reintroduce.** Poster = the 12-name Capstone Night poster (both systems), from `assets-src/wave/capstone-poster.pdf`; the old 5-name "Based-Sea WEC" one is in `assets-src/wave/_old/`. Poster prepped at 2600px/q88 to stay readable. |
 | Container Pavilion, Apricot Lane Farms | `pavilion` | 2024 team design (AutoCAD, Chris Connell led electrical), rebuilt 2026 in SolidWorks + Python FEA. Sources from `OneDrive - Cal Poly\Internships\Portfolio\Apricot Lane Farms\` staged in `assets-src/alf/`. Every figure is a MODEL result: no oxblood. Poster = one-page summary PDF rasterised (`pdftoppm -r 240`). |
 | SMC Trading Bot | `bot` | Options live on funded Webull, futures on Tradovate demo. See the money rule above. |
-| Campus Native | `campus` | Live at campusnative.com; Michael founded it and led a 4-person intern team. |
 
 Deliberately **not** on the wall: the Nicaragua water system and the
 Doorknob-Inator (removed 2026-10-25; their images and `prep-images` entries
-remain, and both stay on the PDF CVs), and the noodle bridge (awards room only).
+remain, and both stay on the PDF CVs), Campus Native (removed 2026-11-10,
+site and Pocket Gallery; everything archived in `docs/archive/campus-native.md`,
+tag `campus-native-last`; still on the PDFs), and the noodle bridge (awards room only).
 
 ## Facts
 
@@ -294,7 +296,7 @@ node scripts/make-cv-onepage.mjs      # one-page resume -> copy to src/assets/do
 node scripts/make-cv-en.mjs --only=us # CV -> copy to src/assets/docs/cv.pdf
 node scripts/make-master.mjs          # master content pool
 node scripts/shoot-jarvis.mjs         # re-shoot the bot dashboard (needs Tailscale)
-node scripts/shoot-campus.mjs         # re-shoot campusnative.com
+node scripts/shoot-campus.mjs         # re-shoot campusnative.com (off the wall; archive only)
 node scripts/make-werc-video.mjs [out.mp4]  # WERC animation as a shareable MP4 (dev server running)
 ```
 

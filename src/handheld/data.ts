@@ -138,24 +138,6 @@ export const PROJECTS: GameProject[] = [
       { name: "WORST CASE", type: "MARKETS", lines: ["Parameters were picked on their worst case, never their best."] },
     ],
   },
-  {
-    id: "campus",
-    slug: "campus",
-    name: "CAMPUS NATIVE",
-    short: "CAMPUS",
-    trainer: "GUIDE",
-    types: ["SOFTWARE", "BUSINESS"],
-    intro: "Campus tours led by real students. It's live right now!",
-    win: "Book a person, not a slot. See you on campus!",
-    rematch: "Want the tour again?",
-    counters: [{ name: "WALKING TOUR", line: "You walk the whole campus. Your feet hurt." }, { name: "BOOKED UP", line: "Every slot is taken. You wait in line." }, { name: "PIN DROP", line: "A giant map pin drops on you!" }],
-    moves: [
-      { name: "FOUNDER", type: "BUSINESS", lines: ["MICHAEL founded it, and led a 4-person intern team."] },
-      { name: "MATCHMAKER", type: "SOFTWARE", lines: ["Guides are matched to visitors by major and interest."] },
-      { name: "NO DOUBLES", type: "SOFTWARE", lines: ["The database itself blocks double-booking, not the app."] },
-      { name: "LIVE SITE", type: "BUSINESS", lines: ["Live at campusnative.com, booking and payment end to end."] },
-    ],
-  },
 ];
 
 export const PROJECT_BY_ID = Object.fromEntries(PROJECTS.map((p) => [p.id, p])) as Record<ProjectId, GameProject>;

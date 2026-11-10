@@ -13,7 +13,8 @@ battle by asking about its figures, earn coins, spend them at the gift shop.
   `case.*` keys). `scripts/verify-handheld.mjs` fails CI on a number that is
   not in `en.ts` (or in its small `FACTS` list, each with a source). WERC
   POWER moves must say "model". Bot test count: never quoted here.
-- **Six works = six trainers**, in `PROJECTS` order. Off-wall works (water,
+- **Five trainers**, in `PROJECTS` order: the wall's works minus the
+  pavilion (no game art yet). Off-wall works (water, Campus Native,
   Doorknob-Inator) are not in the game.
 
 ## How a battle works

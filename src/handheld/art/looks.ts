@@ -80,13 +80,6 @@ export const TRAINERS: Record<ProjectId | "clerk", Character> = {
     outfit: "hoodie",
     brief: "TRADER: quant coder in a charcoal hoodie and headphones around the neck, white sneakers.",
   },
-  campus: {
-    look: { ...skin.fair, hair: "#7a3e22", hairShade: "#552813", top: "#2596be", topShade: "#17698a", topLight: "#6fc4de", bottom: "#d8d0bf", bottomShade: "#b3a991", shoe: "#5a4632", outline: OUTLINE },
-    hair: "long",
-    hat: null,
-    outfit: null,
-    brief: "GUIDE: campus tour guide in a cyan polo and khakis, holding a folded map.",
-  },
   clerk: {
     look: { ...skin.deep, hair: "#8a8a8a", hairShade: "#5f5f5f", top: "#7a2f3a", topShade: "#561f28", topLight: "#a04654", bottom: "#24212a", bottomShade: "#15131a", shoe: "#15131a", outline: OUTLINE },
     hair: "short",

@@ -45,33 +45,6 @@
   margin-block-start: var(--s-2);
 }
 
-/* ---- Brand-tinted rooms -------------------------------------------------- */
-/*
- * A room whose work IS a company takes that company's palette, by overriding
- * the accent TOKENS rather than by restating any rule: the eyebrow, the plate's
- * rule, the link, the back link and the focus ring all already draw from
- * `--gilt`, so they follow at once and nothing can be missed.
- *
- * Campus Native's colours, read off the mark and the live site rather than
- * guessed: a deep forest green (#2e4632 in the logo, #27453a on the site) and
- * the warm sand it pairs with (#c8b285).
- *
- * `--measured` is deliberately NOT touched. The oxblood means "this figure was
- * measured" everywhere on the site, and a room that recoloured it would be
- * making the one promise the palette is not allowed to break.
- */
-[data-brand="campus"] {
-  --gilt-hi: #6f8c6a;
-  --gilt: #2e4632;
-  --gilt-lo: #1e3122;
-  /* The sand, for the one place a second brand colour earns its place: the
-   * rule under the room's title. */
-  --brand-sand: #c8b285;
-}
-[data-brand="campus"] .case__title {
-  color: #24361f;
-}
-
 /*
  * The company's mark beside the room's title, for the two works that are
  * companies. Sized in `em` so it tracks the display face at every breakpoint,

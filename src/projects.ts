@@ -6,7 +6,7 @@ import { initProgress, markSeen } from "./progress";
 /**
  * The project rooms, reached by clicking a work on the wall.
  *
- * One container (`#view-project`) is re-rendered per slug rather than seven
+ * One container (`#view-project`) is re-rendered per slug rather than six
  * blocks of markup: the alternative is six more copies of the frame structure
  * in index.html, each needing its own `data-i18n` defaults, which is exactly
  * the kind of duplication the dictionaries exist to prevent. The awards room
@@ -396,38 +396,6 @@ const PROJECTS: Project[] = [
       altKey: "alt.bot.poster",
       capKey: "cap.bot.poster",
     },
-  },
-
-  {
-    slug: "campus",
-    titleKey: "proj.campus.title",
-    ledeKey: "case.campus.lede",
-    mark: "campus-mark",
-    brand: "campus",
-    hero: { img: "campus-logo", w: 1500, h: 1000, aspect: "frame--landscape", altKey: "alt.campus.hero" },
-    specs: [
-      { labelKey: "case.spec.role", valueKey: "case.campus.role" },
-      { labelKey: "case.spec.tools", valueKey: "case.campus.tools" },
-      { labelKey: "case.spec.scope", valueKey: "case.campus.scope" },
-      { labelKey: "case.spec.result", valueKey: "case.campus.result", measured: true },
-    ],
-    sections: [
-      { hKey: "case.h.brief", bodyKeys: ["case.campus.brief"] },
-      { hKey: "case.h.approach", bodyKeys: ["case.campus.approach1", "case.campus.approach2"] },
-      { hKey: "case.h.result", bodyKeys: ["case.campus.outcome"] },
-    ],
-    link: { href: "https://www.campusnative.com", labelKey: "case.link.campus" },
-    gallery: [
-      {
-        img: "campus-guides",
-        w: 1600,
-        h: 1067,
-        aspect: "frame--landscape",
-        altKey: "alt.campus.guides",
-        capKey: "cap.campus.guides",
-      },
-    ],
-    galleryInPictures: true,
   },
 
 ];

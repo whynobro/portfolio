@@ -38,8 +38,8 @@ export type Dir = "down" | "up" | "right"; // left is `right` mirrored
 /** stand, left foot forward, right foot forward */
 export type WalkFrames = [Sprite, Sprite, Sprite];
 
-export type ProjectId = "werc" | "cnc" | "ramps" | "wave" | "bot" | "campus";
-export const PROJECT_IDS: ProjectId[] = ["werc", "cnc", "ramps", "wave", "bot", "campus"];
+export type ProjectId = "werc" | "cnc" | "ramps" | "wave" | "bot";
+export const PROJECT_IDS: ProjectId[] = ["werc", "cnc", "ramps", "wave", "bot"];
 
 export type HairStyle = "short" | "long" | "spiky" | "bun" | "curly" | "buzz";
 export type HatId = "cap" | "hardhat" | "beanie" | "mortarboard" | "tophat" | "propeller" | "welding";

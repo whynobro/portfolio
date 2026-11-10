@@ -17,7 +17,6 @@ export const en = {
   "proj.wave.title": "Wave Energy Converter",
   "proj.alf.title": "Container Pavilion, Apricot Lane Farms",
   "proj.bot.title": "SMC Trading Bot",
-  "proj.campus.title": "Campus Native",
 
   // ---- The project rooms -------------------------------------------------
   "case.eyebrow": "From the collection",
@@ -35,7 +34,6 @@ export const en = {
   "case.h.rebuild": "The 2026 rebuild",
   "case.h.model": "What the model showed",
   "case.link.ramps": "Visit chameleonramps.com",
-  "case.link.campus": "Visit campusnative.com",
 
   // WERC: every performance figure is a MODEL prediction until the bench is
   // built and tested, and the copy must keep saying so.
@@ -176,22 +174,6 @@ export const en = {
   "case.bot.outcome":
     "The options lane runs live against a funded Webull account, 24/7 on a VPS; the futures lane runs autonomously on a Tradovate demo account. Because every fill spends real money, the whole order path is held by a regression suite of 2,208 tests. The operator display above is read-only telemetry: the controls live elsewhere.",
 
-  // Campus Native
-  "case.campus.lede":
-    "A marketplace for campus tours led by current students, live in production and taking real bookings.",
-  "case.campus.role": "Founder and CEO · led a 4-person intern team",
-  "case.campus.tools": "Next.js · PostgreSQL · Stripe",
-  "case.campus.scope": "16 data models",
-  "case.campus.result": "Live in production",
-  "case.campus.brief":
-    "The official campus tour is a script. Prospective students want the version from someone studying what they want to study.",
-  "case.campus.approach1":
-    "Sixteen data models carry universities, guides, availability, bookings and payouts. Guides set their own rates and are matched to visitors by major and interest, because that match is the entire reason to book a person rather than a slot. I recruited four interns across engineering, marketing and content, set their priorities and led the build of the listing and booking flow.",
-  "case.campus.approach2":
-    "Double-booking is prevented by a constraint in the database, not by a check in the application. Application-level checks lose the race the moment two people press the button at once; the database is the only place the answer can be decided exactly once.",
-  "case.campus.outcome":
-    "The site is live at campusnative.com and handles the booking and payment path end to end.",
-
   // Alt text and captions for the rooms
   "alt.putter.hero": "The finished aluminium putter head on the green",
   "alt.putter.cad": "The finished putter head modelled in CAD, shaded",
@@ -250,13 +232,6 @@ export const en = {
   "alt.bot.live":
     "The operator display running live: the broker link, the analyst grid and the open options positions",
   "cap.bot.live": "The display on the day the system first ran live against the broker.",
-
-  "alt.campus.guides":
-    "The marketplace listing guides at Cal Poly, each with their major, rating and rate per tour",
-  "cap.campus.guides": "Guides listed at Cal Poly, with the rate each one sets for a tour.",
-  "alt.campus.hero": "The Campus Native marketplace, live at campusnative.com",
-
-
 
   // Awards
   "award.capstone.title": "Capstone Finalist: CNC Milled Putter",
